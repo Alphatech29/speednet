@@ -6,6 +6,7 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { register } from "./../components/backendApis/auth/auth";
+import { NavLink } from "react-router-dom";
 
 const Register = () => {
   const [fullname, setFullname] = useState("");
@@ -19,56 +20,61 @@ const Register = () => {
 
  
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const formData = {
-      full_name: fullname,
-      email,
-      phone_number,
-      password,
-    };
-
-    const response = await register(formData);
-    
-    console.log("API Response:", response); // Debugging response
-
-    if (response?.success) {
-      toast.success("Registration successful!");
-    } else {
-      console.log("Error response:", response); // Debugging error response
-
-      // Extract the correct error message
-      if (response?.error?.errors && Array.isArray(response.error.errors)) {
-        response.error.errors.forEach((err) => toast.error(err)); // Show each error separately
-      } else if (response?.message) {
-        toast.error(response.message); // Fallback if no specific errors
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const formData = {
+        full_name: fullname,
+        email,
+        phone_number,
+        password,
+      };
+  
+      const response = await register(formData);
+  
+      console.log("API Response:", response); // Debugging response
+  
+      if (response?.success) {
+        toast.success("Registration successful!");
+  
+        // Reset form fields
+        setFullname("");
+        setEmail("");
+        setPhone("");
+        setPassword("");
+        setConfirmPassword("");
+        setAgree(false);
       } else {
-        toast.error("An unknown error occurred.");
+        console.log("Error response:", response); // Debugging error response
+  
+        if (response?.error?.errors && Array.isArray(response.error.errors)) {
+          response.error.errors.forEach((err) => toast.error(err));
+        } else if (response?.message) {
+          toast.error(response.message);
+        } else {
+          toast.error("An unknown error occurred.");
+        }
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+  
+      if (error.response) {
+        const errorData = error.response.data;
+        console.log("Axios Error Response:", errorData);
+  
+        if (errorData?.error?.errors && Array.isArray(errorData.error.errors)) {
+          errorData.error.errors.forEach((err) => toast.error(err));
+        } else if (errorData?.message) {
+          toast.error(errorData.message);
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
       }
     }
-  } catch (error) {
-    console.error("Registration error:", error);
-
-    if (error.response) {
-      const errorData = error.response.data;
-      console.log("Axios Error Response:", errorData); // Debugging Axios response
-
-      // Check if error structure is correct
-      if (errorData?.error?.errors && Array.isArray(errorData.error.errors)) {
-        errorData.error.errors.forEach((err) => toast.error(err));
-      } else if (errorData?.message) {
-        toast.error(errorData.message);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
-    } else {
-      toast.error("Network error. Please check your connection.");
-    }
-  }
-};
-
+  };
   
  
   return (
@@ -191,6 +197,7 @@ const Register = () => {
               Sign Up
             </Button>
           </form>
+          <div className="flex justify-center text-gray-300"><span >Already have an account? <NavLink to="/login" className="text-primary-600">Login</NavLink></span></div>
         </div>
       </div>
     </div>

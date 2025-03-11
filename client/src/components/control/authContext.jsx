@@ -1,65 +1,81 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve auth token from either localStorage or cookies
-    const token = localStorage.getItem("authToken") || Cookies.get("authToken");
-    const storedUserId = localStorage.getItem("userId") || Cookies.get("userId");
+    try {
+      // Retrieve auth token from either localStorage or cookies
+      const token = localStorage.getItem("authToken") || Cookies.get("authToken");
+      const storedUser = localStorage.getItem("user");
 
-    if (token && storedUserId) {
-      setAuthToken(token);
-      setUserId(storedUserId);
+      if (token && storedUser) {
+        setAuthToken(token);
+        setUser(JSON.parse(storedUser));
+      }
+
+      console.log("🔹 Retrieved from storage:", { token, storedUser });
+    } catch (error) {
+      console.error("❌ Error retrieving auth data:", error);
     }
   }, []);
 
-  const signIn = (token) => {
+  const signIn = ({ token, user }) => {
     try {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken?.userId;
-
-      // Store token & user ID in state
+      if (!token || !user) throw new Error("Invalid login response");
+  
+      console.log("🔹 Storing token & user:", { token, user });
+  
+      // Store token & user data in state
       setAuthToken(token);
-      setUserId(userId);
-      
+      setUser(user);
+  
+      console.log("🔹 After setting state:", { authToken: token, user });
+  
       // Store in localStorage
       localStorage.setItem("authToken", token);
-      localStorage.setItem("userId", userId);
-
+      localStorage.setItem("user", JSON.stringify(user));
+  
       // Store in cookies (expires in 7 days)
       Cookies.set("authToken", token, { expires: 7 });
-      Cookies.set("userId", userId, { expires: 7 });
-
-      // Redirect to dashboard
-      navigate("/user/dashboard");
+      Cookies.set("user", JSON.stringify(user), { expires: 7 });
+  
+      console.log("✅ Data successfully stored in localStorage & cookies.");
+  
+      setTimeout(() => {
+        navigate("/user/dashboard");
+      }, 2000);
     } catch (error) {
-      console.error("Invalid token:", error);
+      console.error("❌ Login Error:", error);
     }
   };
+  
 
   const logout = () => {
+    console.log("🔹 Logging out...");
+
     setAuthToken(null);
-    setUserId(null);
-    
+    setUser(null);
+
     // Remove from localStorage & cookies
     localStorage.removeItem("authToken");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("user");
     Cookies.remove("authToken");
-    Cookies.remove("userId");
+    Cookies.remove("user");
+
+    console.log("✅ User logged out successfully.");
 
     navigate("/auth/login");
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, userId, signIn, logout }}>
+    <AuthContext.Provider value={{ authToken, user, signIn, logout }}>
       {children}
     </AuthContext.Provider>
   );

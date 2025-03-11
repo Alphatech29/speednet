@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Button, Label } from "flowbite-react";
+import { Button, Label, Spinner } from "flowbite-react";
 import { NavLink } from 'react-router-dom';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { toast, ToastContainer } from "react-toastify";
@@ -8,7 +8,7 @@ import { login } from "./../components/backendApis/auth/auth";
 import { AuthContext } from "../components/control/authContext";
 
 const Login = () => {
-  const { loginUser } = useContext(AuthContext); // Use AuthContext
+  const { signIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -24,24 +24,34 @@ const Login = () => {
     }
 
     setLoading(true);
-    
+
     try {
       const response = await login({ email, password });
 
-      if (response.success) {
-        toast.success(response.message, { position: "top-right" });
+
+      if (response?.success && response?.data?.token && response?.data?.user) {
+        toast.success(response.message || "Login successful!", { position: "top-right" });
+
+
+        if (!signIn || typeof signIn !== "function") {
+          console.error("Error: signIn function is not available in AuthContext.");
+          toast.error("Internal error. Please try again later.");
+          return;
+        }
 
         // Store user data in AuthContext
-        loginUser(response.data.user, response.data.token);
+        signIn({ token: response.data.token, user: response.data.user });
 
-        // Redirect user
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 3000);
+        // Store user data in localStorage
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("storedUser", JSON.stringify(response.data.user));
+
       } else {
-        toast.error(response.message, { position: "top-right" });
+        console.error("Invalid API response:", response);
+        toast.error(response?.message || "Invalid server response", { position: "top-right" });
       }
     } catch (error) {
+      console.error("Login Error:", error);
       toast.error("An unexpected error occurred", { position: "top-right" });
     }
 
@@ -51,7 +61,7 @@ const Login = () => {
   return (
     <div className='h-screen w-full flex justify-between items-center bg-slate-700 px-20 py-5'>
       <ToastContainer />
-      <div className='w-1/2 bg-slate-500/50 h-full px-10 flex flex-col justify-between py-8 rounded-xl '>
+      <div className='w-1/2 bg-slate-500/50 h-full px-10 flex flex-col justify-between py-8 rounded-xl'>
         <div>
           <img src="" alt="" />
         </div>
@@ -112,14 +122,14 @@ const Login = () => {
               </a>
             </div>
 
-            <Button type="submit" className='bg-primary-600 border-none shadow-md py-1 text-pay' disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
+            <Button type="submit" className="bg-primary-600 border-none shadow-md py-1 text-pay flex items-center justify-center" disabled={loading}>
+              {loading ? <><Spinner size="sm" className="mr-2" /> Logging in...</> : "Login"}
             </Button>
 
             <div className="text-center">
               <p className="text-sm text-gray-300">
                 Don’t have an account?
-                <NavLink to="/register" className="text-primary-600 font-semibold hover:underline ml-1">Register</NavLink>  
+                <NavLink to="/register" className="text-primary-600 font-semibold hover:underline ml-1">Register</NavLink>
               </p>
             </div>
           </form>

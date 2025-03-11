@@ -3,10 +3,12 @@ import Home from "./views/home";
 import Login from "./views/login";
 import Layout from "./components/control/layout";
 import Register from "./views/register";
+import { AuthProvider } from "./components/control/authContext";
 
 function App() {
   return (
     <Router>
+      <AuthProvider>
       <Routes>
         <Route
           path="/"
@@ -33,6 +35,7 @@ function App() {
           }
         />
       </Routes>
+      </AuthProvider>
     </Router>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox } from "flowbite-react";
+import { Button } from "flowbite-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { HiEye, HiEyeOff } from "react-icons/hi";

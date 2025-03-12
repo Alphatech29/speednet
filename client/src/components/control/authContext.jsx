@@ -9,53 +9,59 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  // Function to check if token is expired
+  const isTokenExpired = (token) => {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+      return payload.exp * 1000 < Date.now(); // Compare expiry time
+    } catch (error) {
+      return true; // If there's an error decoding, assume token is invalid
+    }
+  };
+
   useEffect(() => {
     try {
-      // Retrieve auth token from either localStorage or cookies
       const token = localStorage.getItem("authToken") || Cookies.get("authToken");
       const storedUser = localStorage.getItem("user");
 
       if (token && storedUser) {
-        setAuthToken(token);
-        setUser(JSON.parse(storedUser));
+        if (isTokenExpired(token)) {
+          logout(); // Logout if token is expired
+        } else {
+          setAuthToken(token);
+          setUser(JSON.parse(storedUser));
+        }
       }
-
-      console.log("🔹 Retrieved from storage:", { token, storedUser });
     } catch (error) {
-      console.error("❌ Error retrieving auth data:", error);
+      console.error("Error retrieving auth data:", error);
     }
   }, []);
 
   const signIn = ({ token, user }) => {
     try {
       if (!token || !user) throw new Error("Invalid login response");
-  
-      console.log("🔹 Storing token & user:", { token, user });
-  
+
       // Store token & user data in state
       setAuthToken(token);
       setUser(user);
-  
-      console.log("🔹 After setting state:", { authToken: token, user });
-  
+
       // Store in localStorage
       localStorage.setItem("authToken", token);
       localStorage.setItem("user", JSON.stringify(user));
-  
+
       // Store in cookies (expires in 7 days)
       Cookies.set("authToken", token, { expires: 7 });
       Cookies.set("user", JSON.stringify(user), { expires: 7 });
-  
+
       console.log("✅ Data successfully stored in localStorage & cookies.");
-  
+
       setTimeout(() => {
         navigate("/user/dashboard");
       }, 2000);
     } catch (error) {
-      console.error("❌ Login Error:", error);
+      console.error("Login Error:", error);
     }
   };
-  
 
   const logout = () => {
     console.log("🔹 Logging out...");
@@ -70,7 +76,6 @@ const AuthProvider = ({ children }) => {
     Cookies.remove("user");
 
     console.log("✅ User logged out successfully.");
-
     navigate("/auth/login");
   };
 

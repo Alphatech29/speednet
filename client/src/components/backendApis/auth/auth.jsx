@@ -4,7 +4,7 @@ import axios from "axios";
 //api for register
 export const register = async (userData) => {
   try {
-    const response = await axios.post(`auth/register`, userData, {
+    const response = await axios.post(`register`, userData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +32,7 @@ export const register = async (userData) => {
 //api  for login
 export const login = async (userData) => {
   try {
-    const response = await axios.post(`auth/login`, userData, {
+    const response = await axios.post(`login`, userData, {
       headers: {
         "Content-Type": "application/json",
       },

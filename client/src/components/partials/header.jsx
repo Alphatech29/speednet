@@ -62,7 +62,7 @@ const Header = () => {
           </li>
         </ul>
 
-        <NavLink to="/login">
+        <NavLink to="/auth/login">
           <Button className="bg-primary-600 text-pay px-7 rounded-md">
             Login
           </Button>

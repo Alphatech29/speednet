@@ -12,7 +12,7 @@ const validateJWTConfig = () => {
 // Sign-in handler
 const login = async (req, res) => {
   try {
-    console.log("SignIn attempt:", req.body); // Log incoming request
+    console.log("SignIn attempt:", req.body); 
 
     const { email, password } = req.body;
 
@@ -24,7 +24,7 @@ const login = async (req, res) => {
       });
     }
 
-    validateJWTConfig(); // Ensure JWT_SECRET is configured
+    validateJWTConfig(); 
 
     const sanitizedInput = email.trim();
     const passwordInput = password.trim();

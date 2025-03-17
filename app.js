@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const pool = require("./model/db"); 
 const authRoute = require('./routes/auth');
+const generalRoute = require('./routes/general');
 
 dotenv.config(); 
 
@@ -29,6 +30,7 @@ app.use(
 
 // Define API routes
 app.use('/auth', authRoute);
+app.use('/products', generalRoute)
 
 
 // ✅ Apply bodyParser middleware for URL-encoded data

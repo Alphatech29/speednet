@@ -10,7 +10,7 @@ export const register = async (userData) => {
       },
     });
 
-    console.log("✅ Registration Success:", response.data);
+    console.log("Registration Success:", response.data);
 
     return {
       success: true,
@@ -18,7 +18,7 @@ export const register = async (userData) => {
       data: response.data,
     };
   } catch (error) {
-    console.error("❌ Registration Failed:", error.response?.data || error.message);
+    console.error(" Registration Failed:", error.response?.data || error.message);
 
     return {
       success: false,

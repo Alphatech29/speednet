@@ -6,6 +6,7 @@ import Register from "./views/register";
 import { AuthProvider } from "./components/control/authContext";
 import PrivateRoute from "./components/control/private";
 import UserRoute from "./userRoute/userRoute";
+import Marketplace from "./views/user/shop/marketplace/marketplace";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               </Layout>
             }
           />
+           <Route path="/marketplace" element={<Marketplace />} />
           <Route
             path="/auth/register"
             element={

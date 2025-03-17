@@ -12,7 +12,7 @@ const validateJWTConfig = () => {
 // Sign-in handler
 const login = async (req, res) => {
   try {
-    console.log("SignIn attempt:", req.body); 
+    console.log("SignIn attempt:", req.body);
 
     const { email, password } = req.body;
 
@@ -20,21 +20,17 @@ const login = async (req, res) => {
     if (!email?.trim() || !password?.trim()) {
       return res.status(400).json({
         code: "INVALID_CREDENTIALS",
-        message: "Email and Password are required"
+        message: "Email and Password are required",
       });
     }
 
-    validateJWTConfig(); 
+    validateJWTConfig();
 
     const sanitizedInput = email.trim();
     const passwordInput = password.trim();
 
-    // Database query to fetch user by email
-    const query = `
-      SELECT uid, email, password, full_name, phone_number
-      FROM users
-      WHERE email = ?
-    `;
+    // Fetch all user details dynamically
+    const query = `SELECT * FROM users WHERE email = ?`;
     
     console.log("Executing DB query...");
     const [results] = await pool.query(query, [sanitizedInput]);
@@ -52,22 +48,20 @@ const login = async (req, res) => {
       return res.status(401).json({ code: "INVALID_CREDENTIALS", message: "Incorrect password" });
     }
 
+    // Remove password from user object before sending response
+    delete user.password;
+
     // Generate JWT token
     const token = jwt.sign({ userId: user.uid }, process.env.JWT_SECRET, { expiresIn: "15m" });
 
-    // Return response with user details and token
+    // Return all user data dynamically
     return res.status(200).json({
       success: true,
-      user: {
-        userId: user.uid,
-        full_name: user.full_name,
-        email: user.email,
-        phone_number: user.phone_number
-      },
+      user, 
       tokenMetadata: {
-        expiresIn: 900
+        expiresIn: 900,
       },
-      token: token
+      token,
     });
   } catch (error) {
     console.error("System Error:", error.message);

@@ -7,15 +7,16 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [cart, setCart] = useState([]); // 🛒 Cart State
   const navigate = useNavigate();
 
   // Function to check if token is expired
   const isTokenExpired = (token) => {
     try {
-      const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
-      return payload.exp * 1000 < Date.now(); // Compare expiry time
+      const payload = JSON.parse(atob(token.split(".")[1])); 
+      return payload.exp * 1000 < Date.now(); 
     } catch (error) {
-      return true; // If there's an error decoding, assume token is invalid
+      return true;
     }
   };
 
@@ -23,13 +24,15 @@ const AuthProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("authToken") || Cookies.get("authToken");
       const storedUser = localStorage.getItem("user");
+      const storedCart = localStorage.getItem("cart");
 
       if (token && storedUser) {
         if (isTokenExpired(token)) {
-          logout(); // Logout if token is expired
+          logout(); 
         } else {
           setAuthToken(token);
           setUser(JSON.parse(storedUser));
+          setCart(storedCart ? JSON.parse(storedCart) : []); // Load cart from storage
         }
       }
     } catch (error) {
@@ -37,26 +40,53 @@ const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // 🛒 Function to Add to Cart
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const updatedCart = [...prevCart, product];
+      
+      // Save cart to localStorage & Cookies
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      Cookies.set("cart", JSON.stringify(updatedCart), { expires: 7 });
+
+      return updatedCart;
+    });
+  };
+
+  // 🛒 Function to Remove from Cart
+  const removeFromCart = (productId) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item.id !== productId);
+
+      // Update storage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      Cookies.set("cart", JSON.stringify(updatedCart), { expires: 7 });
+
+      return updatedCart;
+    });
+  };
+
   const signIn = ({ token, user }) => {
     try {
       if (!token || !user) throw new Error("Invalid login response");
 
-      // Store token & user data in state
       setAuthToken(token);
       setUser(user);
 
-      // Store in localStorage
       localStorage.setItem("authToken", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      // Store in cookies (expires in 7 days)
       Cookies.set("authToken", token, { expires: 7 });
       Cookies.set("user", JSON.stringify(user), { expires: 7 });
 
       console.log("✅ Data successfully stored in localStorage & cookies.");
 
       setTimeout(() => {
-        navigate("/user/dashboard");
+        if (user.role === "merchant") {
+          navigate("/user/dashboard"); 
+        } else {
+          navigate("/user/marketplace");
+        }
       }, 2000);
     } catch (error) {
       console.error("Login Error:", error);
@@ -68,19 +98,22 @@ const AuthProvider = ({ children }) => {
 
     setAuthToken(null);
     setUser(null);
+    setCart([]); // Clear cart on logout
 
-    // Remove from localStorage & cookies
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("cart");
+    
     Cookies.remove("authToken");
     Cookies.remove("user");
+    Cookies.remove("cart");
 
     console.log("✅ User logged out successfully.");
     navigate("/auth/login");
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, user, signIn, logout }}>
+    <AuthContext.Provider value={{ authToken, user, cart, addToCart, removeFromCart, signIn, logout }}>
       {children}
     </AuthContext.Provider>
   );

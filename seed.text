@@ -5,6 +5,33 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(20) UNIQUE,
     avatar VARCHAR(255) NOT NULL DEFAULT 'https://example.com/default-avatar.png',
+    role ENUM('admin', 'user', 'moderator') NOT NULL DEFAULT 'user',
+    account_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    merchant_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    referral_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE accounts (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    platform VARCHAR(255) NOT NULL,
+    logo_url VARCHAR(255) DEFAULT NULL,
+    email VARCHAR(100) DEFAULT NULL,
+    recovery_email VARCHAR(100) DEFAULT NULL,
+    username VARCHAR(100) DEFAULT NULL,
+    password VARCHAR(255) NOT NULL,
+    description TEXT DEFAULT NULL,
+    price DECIMAL(10,2) DEFAULT 0.00,
+    category VARCHAR(100) NOT NULL DEFAULT 'Other',
+    subscription_status VARCHAR(50) DEFAULT NULL,
+    expiry_date DATE DEFAULT NULL, 
+    two_factor_enabled BOOLEAN DEFAULT FALSE,
+    two_factor_description VARCHAR(255) DEFAULT NULL,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(uid) ON DELETE CASCADE
+);
+

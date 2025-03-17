@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../views/user/dashboard/dashboard';
 import Default from '../views/user/dashboard/Default';
-import Marketplace from '../views/user/marketplace/marketplace';
 import Wallet from '../views/user/wallet/wallet';
+import Marketplace from '../views/user/shop/marketplace/marketplace';
 
 
 

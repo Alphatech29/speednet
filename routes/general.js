@@ -5,7 +5,7 @@ const { getAllAccounts } = require("../controller/utility/accounts");
 
 
 // ------- General ---------//
-generalRoute.get("/account", getAllAccounts);
+generalRoute.get("/accounts", getAllAccounts);
 
 
 

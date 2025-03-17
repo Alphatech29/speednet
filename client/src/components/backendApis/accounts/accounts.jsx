@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllAccounts = async () => {
   try {
-    const response = await axios.get(`/products/account`, {
+    const response = await axios.get(`/general/accounts`, {
       headers: {
         "Content-Type": "application/json",
       },

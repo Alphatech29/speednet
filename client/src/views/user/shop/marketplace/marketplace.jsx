@@ -1,33 +1,48 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { BsEyeFill } from "react-icons/bs";
-import { AuthContext } from "../../../../components/control/authContext"; 
+import { AuthContext } from "../../../../components/control/authContext";
+import { getAllAccounts } from "../../../../components/backendApis/accounts/accounts";
 
 const Marketplace = () => {
-  const { addToCart, cart } = useContext(AuthContext); // Get addToCart and cart from context
+  const { addToCart, cart } = useContext(AuthContext);
+  const [products, setProducts] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); 
 
-  const products = [
-    {
-      id: 1,
-      name: "7 Years USA New York Facebook Account",
-      price: 50,
-      seller: "Alphatech",
-      image: "/image/facebook.png",
-    },
-    {
-      id: 2,
-      name: "10 Years USA Verified Instagram Account",
-      price: 75,
-      seller: "Alphatech",
-      image: "/image/facebook.png",
-    },
-    {
-      id: 3,
-      name: "10 Years USA Verified Instagram Account",
-      price: 75,
-      seller: "Alphatech",
-      image: "/image/facebook.png",
-    },
-  ];
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        const response = await getAllAccounts();
+        console.log("API Response:", response);
+  
+        // Ensure data exists and is an array
+        if (response && response.success && Array.isArray(response.data.data)) {
+          const formattedProducts = response.data.data.map((account) => ({
+            id: account.id,
+            name: account.title,
+            price: account.price,
+            seller: account.username, 
+            image: account.logo_url,
+            avatar: account.avatar,
+          }));
+  
+          setProducts(formattedProducts);
+        } else {
+          setError("Invalid response format.");
+        }
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        setError("Failed to fetch marketplace data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchAccounts();
+  }, []);
+  
+  
+  
 
   return (
     <div className="flex flex-col gap-4">
@@ -48,13 +63,17 @@ const Marketplace = () => {
         </div>
       </div>
 
+      {/* Loading & Error Handling */}
+      {loading && <div className="w-full h-screen justify-center items-center flex"><p className="text-white">Loading products...</p></div>}
+      {error && <div className="w-full h-screen justify-center items-center flex"><p className="text-red-500">{error}</p></div>}
+
       <div className="w-full grid grid-cols-5 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-3">
         {products.map((product) => {
           const isAdded = cart.some((item) => item.id === product.id);
           return (
             <div
               key={product.id}
-              className="flex gap-4 flex-col shadow-lg shadow-slate-950 p-2 rounded-lg w-48 bg-gray-700"
+              className="flex justify-between gap-4 flex-col shadow-lg shadow-slate-950 p-2 rounded-lg w-48 bg-gray-700"
             >
               <div className="w-full h-[120px]">
                 <img
@@ -69,7 +88,7 @@ const Marketplace = () => {
               <div className="flex justify-between items-center">
                 <div className="flex gap-2 items-center text-slate-200">
                   <img
-                    src="/image/user.png"
+                    src={product.avatar}
                     alt="Seller"
                     className="size-7 rounded-full shadow-lg shadow-white border border-white"
                   />
@@ -85,7 +104,9 @@ const Marketplace = () => {
                 </button>
                 <button
                   onClick={() => addToCart(product)}
-                  className={`flex gap-1 justify-start items-center rounded-sm py-1 px-2 text-[12px] text-white ${isAdded ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-600'}`}
+                  className={`flex gap-1 justify-start items-center rounded-sm py-1 px-2 text-[12px] text-white ${
+                    isAdded ? "bg-gray-500 cursor-not-allowed" : "bg-primary-600"
+                  }`}
                   disabled={isAdded}
                 >
                   {isAdded ? "Added" : "Add to cart"}

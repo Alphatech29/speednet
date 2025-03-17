@@ -1,15 +1,24 @@
 const pool = require('../../model/db');
 
-const getAllAccounts = async () => {
+const getAllAccounts = async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM accounts');
-    return rows;
+    const query = `
+      SELECT 
+        a.*, 
+        u.username, 
+        u.avatar 
+      FROM accounts AS a
+      LEFT JOIN users AS u ON a.user_id = u.uid
+    `;
+
+    const [rows] = await pool.query(query);
+
+    res.json({ success: true, data: rows });
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error(`Failed to fetch accounts: ${error.message}`);
+    res.status(500).json({ success: false, error: `Failed to fetch accounts: ${error.message}` });
   }
 };
-
 
 module.exports = {
   getAllAccounts

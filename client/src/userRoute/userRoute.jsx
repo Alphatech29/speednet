@@ -4,6 +4,7 @@ import Dashboard from '../views/user/dashboard/dashboard';
 import Default from '../views/user/dashboard/Default';
 import Wallet from '../views/user/wallet/wallet';
 import Marketplace from '../views/user/shop/marketplace/marketplace';
+import Order from '../views/user/purchase/order';
 
 
 
@@ -16,6 +17,7 @@ const UserRoute = () => {
         <Route path="dashboard" element={<Default />} />
         <Route path="marketplace" element={<Marketplace />} />
         <Route path="wallet" element={<Wallet />} />
+        <Route path='order' element={<Order/>}/>
         
 
         {/* GiftCard as a layout route with nested routes */}

@@ -36,7 +36,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/user/my-purchase"
+          to="/user/order"
           className='flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay'
         >
           <BiSolidPurchaseTag />

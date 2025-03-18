@@ -59,7 +59,7 @@ const login = async (req, res) => {
       success: true,
       user, 
       tokenMetadata: {
-        expiresIn: 900,
+        expiresIn: 90000000,
       },
       token,
     });

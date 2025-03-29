@@ -8,8 +8,6 @@ export const getAllAccounts = async () => {
       },
     });
 
-    console.log("Accounts fetched successfully:", response.data);
-
     return {
       success: true,
       message: "Accounts retrieved successfully!",

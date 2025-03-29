@@ -86,7 +86,7 @@ const Header = () => {
         {/* Profile Icon */}
         <span ref={profileRef} className="relative">
           <img
-            src={user.avatar}
+            src={user?.avatar}
             alt="Profile"
             loading="lazy"
             height="40"

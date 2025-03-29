@@ -1,27 +1,31 @@
-const db = require('../../models/db');
+const db = require("../../model/db"); 
 
-// Function to get user details based on the userUid
 const getUserDetails = async (req, res) => {
-  const userUid = req.params.userUid;
-
-  if (!userUid) {
-    console.warn('User UID not provided in request.');
-    return res.status(400).json({ error: 'User UID is required.' });
-  }
-
   try {
-    // Perform the query asynchronously with await
-    const [result] = await db.query('SELECT * FROM users WHERE uid = ?', [userUid]);
-
-    if (result.length > 0) {
-      res.json({ userDetails: result[0] });
-    } else {
-      console.warn(`User with UID ${userUid} not found.`);
-      res.status(404).json({ error: 'User not found' });
+    if (!req || !res) {
+      console.error("Request or response object is missing");
+      return;
     }
-  } catch (err) {
-    console.error('Database error:', err);
-    return res.status(500).json({ error: 'Something went wrong. Database error.' });
+
+    // Extract UID safely from params, query, or body
+    const uid = req.params?.uid || req.body?.uid || req.query?.uid;
+
+    // Validate UID (Ensure it's a number)
+    if (!uid || isNaN(uid)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    // Secure SQL Query using placeholders
+    const [rows] = await db.query("SELECT * FROM users WHERE uid = ?", [uid]);
+
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json(rows[0]);
+  } catch (error) {
+    console.error("Database error:", error.message || error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 

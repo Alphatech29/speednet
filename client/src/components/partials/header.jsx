@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <div className="header px-20 py-2 bg-white">
       <div className="flex w-full justify-between items-center pb-1 border-b-2 border-gray-200">
-        <img src="" alt="Company Logo" />
+        <img src="/image/favicon.png" className="w-36 h-12" />
 
         <ul className="flex space-x-10 text-base font-semibold font-sans">
           <li>

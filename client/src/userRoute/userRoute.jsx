@@ -1,10 +1,11 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../views/user/dashboard/dashboard';
-import Default from '../views/user/dashboard/Default';
 import Wallet from '../views/user/wallet/wallet';
 import Marketplace from '../views/user/shop/marketplace/marketplace';
 import Order from '../views/user/purchase/order';
+import Marchant from '../views/user/wallet/vendor';
+import Apply from '../views/user/merchant/apply';
 
 
 
@@ -14,10 +15,11 @@ const UserRoute = () => {
       {/* Parent route for User layout */}
       <Route path="/" element={<Dashboard/>}>
         {/* Other nested routes */}
-        <Route path="dashboard" element={<Default />} />
+        <Route path="dashboard" element={<Marchant />} />
         <Route path="marketplace" element={<Marketplace />} />
         <Route path="wallet" element={<Wallet />} />
         <Route path='order' element={<Order/>}/>
+        <Route path='become-a-marchant' element={<Apply/>}/>
         
 
         {/* GiftCard as a layout route with nested routes */}

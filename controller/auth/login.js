@@ -32,9 +32,7 @@ const login = async (req, res) => {
     // Fetch all user details dynamically
     const query = `SELECT * FROM users WHERE email = ?`;
     
-    console.log("Executing DB query...");
     const [results] = await pool.query(query, [sanitizedInput]);
-    console.log("DB query results:", results);
 
     if (!results || results.length === 0) {
       return res.status(404).json({ code: "USER_NOT_FOUND", message: "Account not found" });

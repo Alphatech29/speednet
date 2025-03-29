@@ -10,12 +10,12 @@ const Dashboard = () => {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex flex-col flex-grow bg-slate-600">
+      <div className="flex w-full flex-col flex-grow bg-slate-600">
         {/* Sticky Header */}
         <Hearder className="sticky top-0 z-10 bg-slate-600 shadow-md" />
 
         {/* Scrollable Outlet */}
-        <div className="flex-grow overflow-auto py-6 px-6">
+        <div className="flex-grow  overflow-auto py-6 px-6">
           <Outlet />
         </div>
       </div>

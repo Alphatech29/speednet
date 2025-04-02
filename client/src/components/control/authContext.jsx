@@ -20,8 +20,13 @@ const AuthProvider = ({ children }) => {
     try {
       const result = await getWebSettings();
       if (result?.success && result.data) {
-        setWebSettings(result.data);
-        localStorage.setItem("webSettings", JSON.stringify(result.data));
+        const storedWebSettings = JSON.parse(localStorage.getItem("webSettings"));
+
+        // Check if the data has changed
+        if (JSON.stringify(result.data) !== JSON.stringify(storedWebSettings)) {
+          setWebSettings(result.data);
+          localStorage.setItem("webSettings", JSON.stringify(result.data));
+        }
       } else {
         console.error("❌ Failed to load web settings:", result?.message);
       }
@@ -30,17 +35,8 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const isTokenExpired = (token) => {
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.exp * 1000 < Date.now();
-    } catch (error) {
-      return true;
-    }
-  };
-
   const fetchUser = async (userUid) => {
-    if (!userUid || typeof userUid !== "string" && typeof userUid !== "number") {
+    if (!userUid || (typeof userUid !== "string" && typeof userUid !== "number")) {
       console.error("❌ Invalid user UID:", userUid);
       return;
     }
@@ -53,27 +49,36 @@ const AuthProvider = ({ children }) => {
         Cookies.set("user", JSON.stringify(result.data), { expires: 7 });
       } else {
         console.error("❌ Failed to load user:", result?.message);
-        logout();
       }
     } catch (error) {
       console.error("❌ Error fetching user:", error);
     }
   };
 
+  // Fetch user, webSettings, and cart on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken") || Cookies.get("authToken");
         const storedWebSettings = localStorage.getItem("webSettings");
+        const storedCart = localStorage.getItem("cart");
 
-        if (token && !isTokenExpired(token)) {
+        if (token) {
           setAuthToken(token);
+
+          // Fetch and update web settings
           if (storedWebSettings) {
             setWebSettings(JSON.parse(storedWebSettings));
           } else {
             await fetchWebSettings();
           }
 
+          // Fetch and update cart if needed
+          if (storedCart) {
+            setCart(JSON.parse(storedCart));
+          }
+
+          // Fetch and update user data
           const storedUser = localStorage.getItem("user");
           if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
@@ -81,11 +86,6 @@ const AuthProvider = ({ children }) => {
               fetchUser(parsedUser.uid);
             }
           }
-
-          const storedCart = localStorage.getItem("cart");
-          setCart(storedCart ? JSON.parse(storedCart) : []);
-        } else {
-          logout();
         }
       } catch (error) {
         console.error("❌ Error retrieving auth data:", error);
@@ -93,7 +93,7 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchData();
-  }, []);
+  }, []); // This effect runs only once on mount
 
   // ✅ Sign In with Role-Based Redirect
   const signIn = ({ token, user }) => {
@@ -116,11 +116,11 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Logout
+  // ✅ Logout (Explicitly called by the user)
   const logout = () => {
     setAuthToken(null);
     setUser(null);
-    setCart([]);
+    setCart([]);  // Clear the cart state
     setWebSettings(null);
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
@@ -132,6 +132,29 @@ const AuthProvider = ({ children }) => {
     navigate("/auth/login");
   };
 
+  // Function to update cart state and persist it
+  const updateCartState = (updatedCart) => {
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    Cookies.set("cart", JSON.stringify(updatedCart), { expires: 7 });
+  };
+
+  const addToCart = (product) => {
+    setCart((prev) => {
+      const updated = [...prev, product];
+      updateCartState(updated);  // Persist changes to cart
+      return updated;
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCart((prev) => {
+      const updated = prev.filter((item) => item.id !== productId);
+      updateCartState(updated);  // Persist changes to cart
+      return updated;
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -139,22 +162,8 @@ const AuthProvider = ({ children }) => {
         user,
         cart,
         isMerchant,
-        addToCart: (product) => {
-          setCart((prev) => {
-            const updated = [...prev, product];
-            localStorage.setItem("cart", JSON.stringify(updated));
-            Cookies.set("cart", JSON.stringify(updated), { expires: 7 });
-            return updated;
-          });
-        },
-        removeFromCart: (productId) => {
-          setCart((prev) => {
-            const updated = prev.filter((item) => item.id !== productId);
-            localStorage.setItem("cart", JSON.stringify(updated));
-            Cookies.set("cart", JSON.stringify(updated), { expires: 7 });
-            return updated;
-          });
-        },
+        addToCart,
+        removeFromCart,
         signIn,
         logout,
         webSettings,

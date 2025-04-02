@@ -18,7 +18,8 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.13.0"
+    "mysql2": "^3.13.0",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

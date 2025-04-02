@@ -1,18 +1,24 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "flowbite-react";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../../../components/control/authContext";
 
 const Cart = ({ isCartOpen, toggleCartDropdown }) => {
-  const { cart = [], removeFromCart } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { cart = [], removeFromCart, webSettings } = useContext(AuthContext);
 
   // Function to calculate total amount and VAT
   const calculateTotalWithVAT = () => {
     if (!Array.isArray(cart)) return { total: 0, vat: 0, grandTotal: 0 };
 
     const total = cart.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
-    const vat = total * 0.05; // 5% VAT
+    
+    // Ensure webSettings.vat is a valid number before using it in VAT calculation
+    const vatRate = parseFloat(webSettings?.vat);
+    const vat = total * (vatRate / 100);
+    
     return { total, vat, grandTotal: total + vat };
   };
 
@@ -34,7 +40,7 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
       )}
 
       {isCartOpen && (
-        <div className="absolute right-0 mt-2 w-96 max-h-[500px] overflow-y-auto bg-slate-700 text-white rounded-lg shadow-lg py-6 px-2">
+        <div className="absolute z-30 right-0 mt-2 w-96 max-h-[500px] overflow-y-auto bg-slate-700 text-white rounded-lg shadow-lg py-6 px-2">
           {cart.length > 0 ? (
             <div className="flex flex-col gap-4">
               {cart.map((item) => (
@@ -47,22 +53,20 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
                   <div className="flex w-full flex-col justify-start items-start">
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
-
-                        <span className="text-sm text-gray-200">
-                          <img
-                            src={item.avatar}
-                            alt="Seller"
-                            className="size-5 rounded-full border border-white "
-                          /></span>
-                          <span>{item.seller}</span>
+                        <img
+                          src={item.avatar}
+                          alt="Seller"
+                          className="size-5 rounded-full border border-white"
+                        />
+                        <span>{item.seller}</span>
                       </div>
                       <span className="font-semibold text-base">{item.name}</span>
                     </div>
                     <div className="flex justify-between w-full items-center">
-                      <span className="text-gray-400">${(Number(item.price) || 0).toFixed(2)}</span>
+                      <span className="text-gray-400">{webSettings.currency}{(Number(item.price) || 0).toFixed(2)}</span>
                       <button
                         className="text-gray-300 hover:text-red-600"
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.id)} // Ensure removeFromCart updates the cart state
                       >
                         <MdDeleteForever />
                       </button>
@@ -70,22 +74,32 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
                   </div>
                 </div>
               ))}
+              
               {/* Display total, VAT, and grand total */}
               <div className="border-t border-gray-500 pt-4">
                 <p className="flex justify-between text-sm">
                   <span>Sum:</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>{webSettings.currency}{total.toFixed(2)}</span>
                 </p>
                 <p className="flex justify-between text-sm">
-                  <span className="text-sm">VAT (5%):</span>
-                  <span>${vat.toFixed(2)}</span>
+                  <span className="text-sm">Vat ({webSettings.vat}%):</span>
+                  <span>{webSettings.currency}{vat.toFixed(2)}</span>
                 </p>
                 <p className="flex justify-between font-bold text-base">
                   <span>Total:</span>
-                  <span>${grandTotal.toFixed(2)}</span>
+                  <span>{webSettings.currency}{grandTotal.toFixed(2)}</span>
                 </p>
 
-                <Button className="bg-primary-600 text-base w-full border-0 mt-4 rounded-md">
+                {/* Checkout Button: Pass Full Cart Data */}
+                <Button
+                  className="bg-primary-600 text-base w-full border-0 mt-4 rounded-md"
+                  onClick={() => {
+                    navigate("/user/check-out", {
+                      state: { cart, total, vat, grandTotal },
+                    });
+                    toggleCartDropdown();  // Close the cart dropdown after navigation
+                  }}
+                >
                   Checkout
                 </Button>
               </div>

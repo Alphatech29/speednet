@@ -13,22 +13,22 @@ const Wallet = () => {
   const [isDepositOpen, setDepositOpen] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!userId) return;
 
     const fetchTransactions = async () => {
       try {
-        const response = await getUserTransactions(userId);
+        setLoading(true);
+        const data = await getUserTransactions(userId);
 
-        if (!response.success || !response.data || !Array.isArray(response.data.transactions)) {
-          throw new Error("Invalid API response format");
+        if (Array.isArray(data)) {
+          setTransactions(data);
+        } else {
+          console.warn("Unexpected API response:", data);
         }
-
-        setTransactions(response.data.transactions);
       } catch (err) {
-        setError(err.message);
+        console.error("Error fetching transactions:", err);
       } finally {
         setLoading(false);
       }
@@ -37,16 +37,11 @@ const Wallet = () => {
     fetchTransactions();
   }, [userId]);
 
-  // Function to format amount (currency)
-  const formatAmount = (amount) => {
-    return `${webSettings.currency}${amount}`;
-  };
+  const formatAmount = (amount) => `${webSettings.currency}${amount}`;
 
   return (
     <div className="w-full h-screen flex flex-col">
-      {!user || !webSettings ? (
-        <p className="text-gray-200">Loading Wallet...</p>
-      ) : (
+      {user && webSettings && (
         <>
           <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
           <div className="w-full flex justify-start items-center h-[500px] rounded-lg border border-gray-400 overflow-hidden">
@@ -54,7 +49,8 @@ const Wallet = () => {
               <div className="mt-12 flex flex-col items-center justify-center">
                 <span className="text-pay text-sm">Available Balance</span>
                 <p className="text-pay text-lg font-semibold text-center">
-                  {webSettings.currency}{user?.account_balance}
+                  {webSettings.currency}
+                  {user?.account_balance}
                 </p>
               </div>
               <button
@@ -73,28 +69,8 @@ const Wallet = () => {
 
               <div className="overflow-x-auto text-gray-300">
                 {loading ? (
-                  <p>Loading Transactions...</p>
-                ) : error ? (
-                  <p className="text-red-400">{error}</p>
-                ) : transactions.length === 0 ? (
-                  <Table hoverable className="bg-transparent">
-                    <Table.Head className="bg-transparent">
-                      <Table.HeadCell>Transaction ID</Table.HeadCell>
-                      <Table.HeadCell>Description</Table.HeadCell>
-                      <Table.HeadCell>Amount (₦)</Table.HeadCell>
-                      <Table.HeadCell>Type</Table.HeadCell>
-                      <Table.HeadCell>Status</Table.HeadCell>
-                      <Table.HeadCell>Date</Table.HeadCell>
-                    </Table.Head>
-                    <Table.Body className="divide-y">
-                      <Table.Row>
-                        <Table.Cell colSpan={6} className="text-center h-[400px]">
-                          No transaction history available.
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table.Body>
-                  </Table>
-                ) : (
+                  <p className="text-gray-400 text-center">Loading transactions...</p>
+                ) : transactions.length > 0 ? (
                   <Table hoverable className="bg-transparent">
                     <Table.Head className="bg-transparent text-gray-200">
                       <Table.HeadCell>Transaction ID</Table.HeadCell>
@@ -104,21 +80,29 @@ const Wallet = () => {
                       <Table.HeadCell>Date</Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
-                      {transactions.slice(0, 10).map((transaction) => (
+                      {transactions.slice(0, 6).map((transaction) => (
                         <Table.Row key={transaction.transaction_no}>
-                          <Table.Cell>{transaction.transaction_no}</Table.Cell>
-                          <Table.Cell>{transaction.transaction_type}</Table.Cell>
-                          <Table.Cell>{formatAmount(transaction.amount)}</Table.Cell>
-                          <Table.Cell>
-                            <div className={`px-3 py-1 rounded-full ${transaction.status === 'completed' ? 'bg-green-500' : 'bg-red-500'} text-white`}>
+                          <Table.Cell className="text-gray-300">{transaction.transaction_no}</Table.Cell>
+                          <Table.Cell className="text-gray-300">{transaction.transaction_type}</Table.Cell>
+                          <Table.Cell className="text-gray-300">{formatAmount(transaction.amount)}</Table.Cell>
+                          <Table.Cell >
+                            <div
+                              className={`px-3 py-1 rounded-full ${
+                                transaction.status.toLowerCase() === "completed"
+                                  ? "bg-green-500"
+                                  : "bg-yellow-500"
+                              } text-white`}
+                            >
                               {transaction.status}
                             </div>
                           </Table.Cell>
-                          <Table.Cell>{formatDateTime(transaction.created_at)}</Table.Cell>
+                          <Table.Cell className="text-gray-300">{formatDateTime(transaction.created_at)}</Table.Cell>
                         </Table.Row>
                       ))}
                     </Table.Body>
                   </Table>
+                ) : (
+                  <p className="text-gray-400 text-center">No transactions found</p>
                 )}
               </div>
             </div>

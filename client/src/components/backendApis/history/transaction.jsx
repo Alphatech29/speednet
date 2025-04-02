@@ -2,37 +2,24 @@ import axios from "axios";
 
 // ✅ Fetch user transactions from backend
 export const getUserTransactions = async (userUid) => {
-  if (!userUid || typeof userUid !== "string" || userUid.trim() === "") {
-    console.error("❌ Invalid userUid provided:", userUid);
-    return {
-      success: false,
-      message: "Invalid user UID",
-      error: "Invalid user UID provided.",
-    };
-  }
-
   try {
+    if (!userUid || typeof userUid !== "string" || userUid.trim() === "") {
+      throw new Error("Invalid user UID provided.");
+    }
+
+    // 🔍 Send request to backend
     const response = await axios.get(`/general/transaction/${userUid.trim()}`, {
       headers: { "Content-Type": "application/json" },
     });
 
-    return {
-      success: true,
-      message: "Transactions retrieved successfully!",
-      data: response.data || [],
-    };
+    // ✅ Ensure correct response structure
+    if (response.data && response.data.success) {
+      return response.data.data; // ✅ Return transactions array
+    } else {
+      throw new Error(response.data.message || "Failed to fetch transactions.");
+    }
   } catch (error) {
-    console.error(
-      `❌ Fetching transactions failed [${error?.response?.status || "Unknown Status"}]:`,
-      error?.response?.data || error.message
-    );
-
-    return {
-      success: false,
-      message:
-        error?.response?.data?.message ||
-        `Failed to fetch transactions. Status: ${error?.response?.status || "Unknown"}`,
-      error: error?.response?.data || error.message,
-    };
+    console.error("❌ Error fetching transactions:", error.message);
+    throw error; // Re-throw to handle in UI
   }
 };

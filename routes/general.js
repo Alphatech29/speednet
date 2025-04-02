@@ -4,7 +4,9 @@ const { getAllAccounts } = require("../controller/utility/accounts");
 const { activateAccount } = require('../controller/utility/upgrade');
 const { getWebSettings } = require('../controller/utility/general')
 const { getUser } = require('../controller/utility/user')
-const { getUserTransactions } = require('../controller/user/history')
+const { getUserTransactions, getUserOrderHistory } = require('../controller/user/history');
+const { collectOrder } = require("../controller/user/purchase");
+const { fetchUserOrders } = require("../controller/user/accountOrder");
 
 
 
@@ -14,6 +16,9 @@ generalRoute.post("/activate", activateAccount);
 generalRoute.get("/websettings", getWebSettings);
 generalRoute.get("/user/:userUid", getUser);
 generalRoute.get("/transaction/:userUid", getUserTransactions);
+generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
+generalRoute.get("/orders/:userUid", fetchUserOrders);
+generalRoute.post("/purchase", collectOrder);
 
 
 

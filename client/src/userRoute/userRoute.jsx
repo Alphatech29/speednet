@@ -6,6 +6,7 @@ import Marketplace from '../views/user/shop/marketplace/marketplace';
 import Order from '../views/user/purchase/order';
 import Marchant from '../views/user/wallet/vendor';
 import Apply from '../views/user/merchant/apply';
+import Checkout from '../views/user/shop/checkOut/checkOut';
 
 
 
@@ -20,6 +21,7 @@ const UserRoute = () => {
         <Route path="wallet" element={<Wallet />} />
         <Route path='order' element={<Order/>}/>
         <Route path='become-a-marchant' element={<Apply/>}/>
+        <Route path='check-out' element={<Checkout/>}/>
         
 
         {/* GiftCard as a layout route with nested routes */}

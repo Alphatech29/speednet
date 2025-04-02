@@ -47,4 +47,76 @@ CREATE TABLE transactions (
     FOREIGN KEY (user_uid) REFERENCES users(uid) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE account_order (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    account_id BIGINT NOT NULL,
+    seller_id BIGINT NOT NULL,
+    buyer_id BIGINT NOT NULL,
+    order_no VARCHAR(100) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    platform VARCHAR(255) NOT NULL,
+    email VARCHAR(100) DEFAULT NULL,
+    recovery_email VARCHAR(100) DEFAULT NULL,
+    username VARCHAR(100) DEFAULT NULL,
+    password VARCHAR(255) NOT NULL,
+    description TEXT DEFAULT NULL,
+    two_factor_enabled BOOLEAN DEFAULT FALSE,
+    two_factor_description VARCHAR(255) DEFAULT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    payment_status VARCHAR(20) NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE,
+    FOREIGN KEY (seller_id) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (buyer_id) REFERENCES users(uid) ON DELETE CASCADE
+);
+
+CREATE TABLE order_history (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    seller_id BIGINT NOT NULL,
+    order_no VARCHAR(100) NOT NULL,
+    order_type VARCHAR(50) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (seller_id) REFERENCES account_order(seller_id) ON DELETE CASCADE
+);
+
+CREATE TABLE merchant_history (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    seller_id BIGINT NOT NULL,
+    transaction_id VARCHAR(50) NOT NULL UNIQUE,
+    transaction_type VARCHAR(100) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    status ENUM('pending', 'refunded', 'credited', 'completed') NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (seller_id) REFERENCES users(uid) ON DELETE CASCADE
+);
+
+
+
+
+
+CREATE TABLE web_settings (
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    site_name VARCHAR(255) NOT NULL,
+    tagline VARCHAR(255) NULL,
+    web_description TEXT NULL,
+    merchant_activation_fee DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    commission DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+    vat DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+    support_email VARCHAR(255) NULL,
+    contact_number VARCHAR(20) NULL,
+    currency VARCHAR(10) NOT NULL DEFAULT '$',
+    logo VARCHAR(255) NULL,
+    favicon VARCHAR(255) NULL,
+    address TEXT NULL,
+    header_code TEXT NULL, 
+    footer_code TEXT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
+
 

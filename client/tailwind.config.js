@@ -30,6 +30,16 @@ module.exports = {
         interB: ['Inter-Bold', 'sans-serif'],
         interSB: ['Inter-SemiBold', 'sans-serif'],
       },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-4px)' },
+          '75%': { transform: 'translateX(4px)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 0.3s ease-in-out',
+      },
     },
   },
   plugins: [

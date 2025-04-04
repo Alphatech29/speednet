@@ -18,14 +18,16 @@ const Marketplace = () => {
         console.log("API Response:", response);
 
         if (response && response.success && Array.isArray(response.data.data)) {
-          const formattedProducts = response.data.data.map((account) => ({
-            id: account.id,
-            name: account.title,
-            price: account.price,
-            seller: account.username,
-            image: account.logo_url,
-            avatar: account.avatar,
-          }));
+          const formattedProducts = response.data.data
+            .filter((account) => account.status === "approved")
+            .map((account) => ({
+              id: account.id,
+              name: account.title,
+              price: account.price,
+              seller: account.username,
+              image: account.logo_url,
+              avatar: account.avatar,
+            }));
 
           setProducts(formattedProducts);
         } else {
@@ -44,7 +46,7 @@ const Marketplace = () => {
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    toast.success("Product add Successful", {
+    toast.success("Product added successfully", {
       position: "top-right",
       autoClose: 2000,
     });
@@ -52,7 +54,6 @@ const Marketplace = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Toast Notification Container */}
       <ToastContainer className="text-sm" />
 
       <div className="flex justify-between items-center">
@@ -73,7 +74,7 @@ const Marketplace = () => {
       </div>
 
       {loading && (
-        <div className="w-full  flex justify-center items-center">
+        <div className="w-full flex justify-center items-center">
           <p className="text-white">Loading products...</p>
         </div>
       )}

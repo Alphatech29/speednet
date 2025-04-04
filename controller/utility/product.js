@@ -19,4 +19,22 @@ const getProductDetailsById = async (productId) => {
     }
 };
 
-module.exports = { getProductDetailsById };
+const getAccountsByUserUid = async (userUid) => {
+    try {
+        // Validate userUid (ensure it's a non-empty string)
+        if (typeof userUid !== 'string' || !userUid.trim()) {
+            console.error(`❌ Invalid userUid: ${userUid}`);
+            return [];
+        }
+
+        const query = "SELECT * FROM accounts WHERE user_id = ?";
+        const [rows] = await pool.execute(query, [userUid]);
+
+        return rows; // Return all accounts belonging to the user
+    } catch (error) {
+        console.error("Database error:", error);
+        return [];
+    }
+};
+
+module.exports = { getProductDetailsById , getAccountsByUserUid };

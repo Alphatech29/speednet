@@ -63,10 +63,10 @@ const Sidebar = () => {
             className="bg-gray-800 text-white border-none"
           >
             <Dropdown.Item>
-              <NavLink to="/user/products/add">Add Product</NavLink>
+              <NavLink className="text-gray-400" to="/user/add-product">Add Product</NavLink>
             </Dropdown.Item>
             <Dropdown.Item>
-              <NavLink to="/user/products/my-products">My Products</NavLink>
+              <NavLink className="text-gray-400" to="/user/my-products">My Products</NavLink>
             </Dropdown.Item>
           </Dropdown>
         )}

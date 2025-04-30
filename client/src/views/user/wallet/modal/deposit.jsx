@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { BsBank2 } from "react-icons/bs";
 import { RiBtcFill } from "react-icons/ri";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from '../../../../components/control/authContext';
+import { payWithCryptomus } from "../../../../components/backendApis/cryptomus/cryptomus";
 
 const Deposit = ({ onClose }) => {
+  const { user } = useContext(AuthContext);
   const [selected, setSelected] = useState(null);
-  const [amount, setAmount] = useState(""); 
+  const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     const numericAmount = parseFloat(amount);
-  
+
     if (!amount || !selected) {
       toast.error("Please enter an amount and select a payment method.", {
         position: "top-right",
@@ -18,7 +22,7 @@ const Deposit = ({ onClose }) => {
       });
       return;
     }
-  
+
     if (isNaN(numericAmount) || numericAmount <= 0) {
       toast.error("Amount must be greater than 0.", {
         position: "top-right",
@@ -26,11 +30,50 @@ const Deposit = ({ onClose }) => {
       });
       return;
     }
-  
-    console.log("Amount:", numericAmount);
-    console.log("Payment Method:", selected);
+
+    if (!user?.uid) {
+      toast.error("User authentication failed. Please login again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    const payload = {
+      order_id: String(user.uid),
+      amount: String(numericAmount),
+      paymentMethod: selected,
+      currency: "USD",
+    };
+
+    setLoading(true);
+
+    try {
+      const response = await payWithCryptomus(payload);
+      console.log("Cryptomus response:", response);
+
+      if (response.success && response.data?.payment_url) {
+        toast.success(response.message, {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        window.open(response.data.payment_url, "_blank");
+      } else {
+        toast.error(response.message || "Failed to initiate payment.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast.error("An error occurred during payment processing.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
-  
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
@@ -43,7 +86,6 @@ const Deposit = ({ onClose }) => {
           </p>
         </div>
 
-        {/* Amount Input */}
         <div className="w-full flex justify-center items-center rounded-md border border-gray-400 focus-within:border-primary-600">
           <span className='text-[20px] text-gray-300 pl-4'>$</span>
           <input 
@@ -56,7 +98,6 @@ const Deposit = ({ onClose }) => {
         </div>
 
         <div className='flex gap-3 flex-col'>
-          {/* Bank/Card Payment Selection */}
           <div 
             className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
             ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
@@ -71,7 +112,6 @@ const Deposit = ({ onClose }) => {
             </div>
           </div>
 
-          {/* Crypto Deposit Selection */}
           <div 
             className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
             ${selected === 'crypto' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
@@ -88,14 +128,19 @@ const Deposit = ({ onClose }) => {
         </div>
 
         <div className="flex w-full justify-end gap-4 mt-5">
-          <button className="bg-red-500 text-white px-4 py-2 rounded-lg" onClick={onClose}>
+          <button 
+            className="bg-red-500 text-white px-4 py-2 rounded-lg" 
+            onClick={onClose}
+            disabled={loading}
+          >
             Cancel
           </button>
           <button 
-            className="bg-primary-600 text-white px-4 py-2 rounded-lg" 
+            className="bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center justify-center" 
             onClick={handleContinue}
+            disabled={loading}
           >
-            Continue
+            {loading ? "Processing..." : "Continue"}
           </button>
         </div>
       </div>

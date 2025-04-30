@@ -1,9 +1,9 @@
-const { getUserDetailsByUid, updateUserBalance } = require("../utility/userInfo");
-const { getProductDetailsById } = require("../utility/product");
-const { storeOrder, storeOrderHistory } = require("../utility/accountOrder");
-const { generateUniqueRandomNumber } = require("../utility/random");
-const { createTransactionHistory } = require("../utility/history");
-const { creditEscrow } = require('../utility/escrow');
+const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
+const { getProductDetailsById, updateAccountStatusById } = require("../../utility/product");
+const { storeOrder, storeOrderHistory } = require("../../utility/accountOrder");
+const { generateUniqueRandomNumber } = require("../../utility/random");
+const { createTransactionHistory } = require("../../utility/history");
+const { creditEscrow } = require('../../utility/escrow');
 
 const collectOrder = async (req, res) => {
     try {
@@ -84,6 +84,7 @@ const collectOrder = async (req, res) => {
                     Object.keys(orderData).forEach((key) => {
                         if (orderData[key] === undefined) orderData[key] = null;
                     });
+
                     const orderId = await storeOrder(orderData);
                     if (!orderId) {
                         failedOrders.push(productDetails.id);
@@ -95,6 +96,10 @@ const collectOrder = async (req, res) => {
                             product_id: productDetails.id,
                             buyer_id: userUid,
                         });
+
+                        // ✅ Update product/account status to 'sold'
+                        await updateAccountStatusById(String(productDetails.id), "sold");
+
                     }
                 } catch (err) {
                     failedOrders.push(productDetails.id);
@@ -105,13 +110,13 @@ const collectOrder = async (req, res) => {
         // ✅ Store order history once
         if (successfulOrders.length > 0) {
             const orderHistoryData = {
-                seller_id: productDetailsArray[0].user_id, 
+                seller_id: productDetailsArray[0].user_id,
                 order_no: orderNo,
-                order_type: "Account Relinquished", 
+                order_type: "Account Relinquished",
                 amount: totalProductAmount,
                 status: "Completed",
             };
-            
+
             const orderHistoryId = await storeOrderHistory(orderHistoryData);
             if (!orderHistoryId) {
                 console.error("Failed to store order history for order:", orderNo);
@@ -126,7 +131,7 @@ const collectOrder = async (req, res) => {
         if (failedOrders.length > 0) {
             return res.status(500).json({
                 success: false,
-                message: `Failed to process orders for some products: ${failedOrders.join(", " )}.`,
+                message: `Failed to process orders for some products: ${failedOrders.join(", ")}.`,
                 failedOrders,
                 successfulOrders,
             });

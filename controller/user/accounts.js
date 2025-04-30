@@ -1,5 +1,5 @@
 // Import the function from the controller
-const { getAccountsByUserUid: fetchAccountsByUserUid } = require('../../controller/utility/product');
+const { getAccountsByUserUid: fetchAccountsByUserUid } = require('../../utility/product');
 
 // Example of handling userUid dynamically from a request
 async function getAccounts(req, res) {

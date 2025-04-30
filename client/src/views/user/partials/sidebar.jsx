@@ -7,6 +7,16 @@ import { NavLink } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import { AuthContext } from "../../../components/control/authContext";
 import { MdAddBusiness } from "react-icons/md";
+import { BsBank2 } from "react-icons/bs";
+import { SiNordvpn } from "react-icons/si";
+import { BiWorld } from "react-icons/bi";
+import { FaMobile } from "react-icons/fa";
+import { FaWifi } from "react-icons/fa";
+
+
+
+
+
 
 const Sidebar = () => {
   const { logout, user } = useContext(AuthContext);
@@ -71,12 +81,67 @@ const Sidebar = () => {
           </Dropdown>
         )}
 
+        {/* Show Products only if the user is a merchant */}
+        {isMerchant && (
+          <Dropdown
+            label={
+              <span className="flex items-center gap-2">
+                <SiNordvpn /> Nord Services
+              </span>
+            }
+            inline
+            className="bg-gray-800 text-white border-none"
+          >
+            <Dropdown.Item>
+              <NavLink className="text-gray-400" to="/user/nord-services/vpn">NordVPN</NavLink>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <NavLink className="text-gray-400" to="/user/my-products">NordLocker</NavLink>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <NavLink className="text-gray-400" to="/user/my-products">NordPass</NavLink>
+            </Dropdown.Item>
+          </Dropdown>
+        )}
+
+         {/* Show Products only if the user is a merchant */}
+         {isMerchant && (
+          <NavLink
+          to="/user/withdraw"
+          className="flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay"
+        >
+          <BsBank2 /> <span>Withdraw</span>
+        </NavLink>
+        )}
+         <NavLink
+          to="/user/order"
+          className="flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay"
+        >
+          <FaMobile />
+          <span>Airtime Purchase</span>
+        </NavLink>
+        <NavLink
+          to="/user/order"
+          className="flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay"
+        >
+          <FaWifi />
+          <span>Data Purchase</span>
+        </NavLink>
+
         <NavLink
           to="/user/order"
           className="flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay"
         >
           <BiSolidPurchaseTag />
           <span>My Purchase</span>
+        </NavLink>
+
+        <NavLink
+          to="/user/order"
+          className="flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay"
+        >
+          <BiWorld />
+          <span>Internation Airtime</span>
         </NavLink>
 
         <NavLink

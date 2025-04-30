@@ -13,7 +13,6 @@ const AuthProvider = ({ children }) => {
   const [webSettings, setWebSettings] = useState(null);
   const navigate = useNavigate();
 
-  // ✅ Check if User is a Merchant
   const isMerchant = user?.role === "merchant";
 
   const fetchWebSettings = async () => {
@@ -22,7 +21,6 @@ const AuthProvider = ({ children }) => {
       if (result?.success && result.data) {
         const storedWebSettings = JSON.parse(localStorage.getItem("webSettings"));
 
-        // Check if the data has changed
         if (JSON.stringify(result.data) !== JSON.stringify(storedWebSettings)) {
           setWebSettings(result.data);
           localStorage.setItem("webSettings", JSON.stringify(result.data));
@@ -55,7 +53,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Fetch user, webSettings, and cart on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,19 +63,16 @@ const AuthProvider = ({ children }) => {
         if (token) {
           setAuthToken(token);
 
-          // Fetch and update web settings
           if (storedWebSettings) {
             setWebSettings(JSON.parse(storedWebSettings));
           } else {
             await fetchWebSettings();
           }
 
-          // Fetch and update cart if needed
           if (storedCart) {
             setCart(JSON.parse(storedCart));
           }
 
-          // Fetch and update user data
           const storedUser = localStorage.getItem("user");
           if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
@@ -93,9 +87,8 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchData();
-  }, []); // This effect runs only once on mount
+  }, []);
 
-  // ✅ Sign In with Role-Based Redirect
   const signIn = ({ token, user }) => {
     try {
       if (!token || !user) throw new Error("Invalid login response");
@@ -116,11 +109,10 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Logout (Explicitly called by the user)
   const logout = () => {
     setAuthToken(null);
     setUser(null);
-    setCart([]);  // Clear the cart state
+    setCart([]);
     setWebSettings(null);
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
@@ -132,27 +124,9 @@ const AuthProvider = ({ children }) => {
     navigate("/auth/login");
   };
 
-  // Function to update cart state and persist it
-  const updateCartState = (updatedCart) => {
-    setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    Cookies.set("cart", JSON.stringify(updatedCart), { expires: 7 });
-  };
-
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const updated = [...prev, product];
-      updateCartState(updated);  // Persist changes to cart
-      return updated;
-    });
-  };
-
-  const removeFromCart = (productId) => {
-    setCart((prev) => {
-      const updated = prev.filter((item) => item.id !== productId);
-      updateCartState(updated);  // Persist changes to cart
-      return updated;
-    });
+  const updateCartState = (newCart) => {
+    setCart(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart)); // Persist cart in localStorage
   };
 
   return (
@@ -161,12 +135,11 @@ const AuthProvider = ({ children }) => {
         authToken,
         user,
         cart,
+        webSettings,
         isMerchant,
-        addToCart,
-        removeFromCart,
         signIn,
         logout,
-        webSettings,
+        updateCartState, // Make this function available for child components
       }}
     >
       {children}

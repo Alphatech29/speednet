@@ -9,6 +9,9 @@ import Apply from '../views/user/merchant/apply';
 import Checkout from '../views/user/shop/checkOut/checkOut';
 import Myproduct from "./../views/user/product/myProduct";
 import AddNewProdunct from '../views/user/product/addNewProdunct';
+import Withdrawal from '../views/user/withdrawal/withdrawal';
+import NordVpn from "./../views/user/nordService/nordVpn";
+import Pricing from '../views/user/nordService/pricing';
 
 
 
@@ -26,6 +29,9 @@ const UserRoute = () => {
         <Route path='check-out' element={<Checkout/>}/>
         <Route path='my-products' element={<Myproduct/>}/>
         <Route path='add-product' element={<AddNewProdunct/>}/>
+        <Route path='withdraw' element={<Withdrawal/>}/>
+        <Route path='nord-services/vpn' element={<NordVpn/>}/>
+        <Route path='nord-services/vpn/offer' element={<Pricing/>}/>
         
 
         {/* GiftCard as a layout route with nested routes */}

@@ -1,4 +1,4 @@
-const { getOrdersByUser } = require('../../controller/utility/accountOrder');
+const { getOrdersByUser } = require('../../utility/accountOrder');
 
 const fetchUserOrders = async (req, res) => {
     try {

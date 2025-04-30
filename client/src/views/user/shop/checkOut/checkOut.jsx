@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../components/control/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,8 +7,9 @@ import { collectOrder } from "../../../../components/backendApis/purchase/collec
 
 const Checkout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { cart = [], total = 0, vat = 0, grandTotal = 0 } = location.state || {};
-  const { webSettings, user } = useContext(AuthContext);
+  const { webSettings, user, updateCartState } = useContext(AuthContext);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handlePayment = async () => {
@@ -16,40 +17,48 @@ const Checkout = () => {
       toast.error("User not authenticated");
       return;
     }
-  
+
     if (cart.length === 0) {
       toast.error("Your cart is empty.");
       return;
     }
-  
+
     setIsProcessing(true);
-  
+
     const orderDetails = {
       userId: user.uid,
       products: cart.map((item) => item.id),
       totalAmount: grandTotal,
     };
-  
+
     try {
       console.log("Sending order to API:", orderDetails);
       const response = await collectOrder(orderDetails);
-  
+
       console.log("✅ Full API Response:", response);
-  
+
       if (response.success) {
         toast.success(response.message);
+
+        // Reset the cart in context and local storage after successful order
+        updateCartState([]);
+        localStorage.removeItem("cart");
+        sessionStorage.removeItem("cart");
+
+        setTimeout(() => {
+          navigate("/user/order");
+        }, 1000);
       } else {
         toast.error(response.message);
       }
     } catch (error) {
       console.error("⚠️ API Error:", error);
-      toast.error(error.message);
+      toast.error(error?.message || "Something went wrong. Please try again.");
     } finally {
       setIsProcessing(false);
     }
   };
-  
-  
+
   return (
     <div className="flex flex-col">
       <h2 className="text-xl font-semibold mb-4 text-gray-100">Checkout</h2>
@@ -95,9 +104,7 @@ const Checkout = () => {
           </div>
           <button 
             onClick={handlePayment} 
-            className={`w-full p-2 mt-4 rounded-md ${
-              isProcessing ? "bg-gray-600 cursor-not-allowed" : "bg-primary-600 text-white"
-            }`}
+            className={`w-full p-2 mt-4 rounded-md ${isProcessing ? "bg-gray-600 cursor-not-allowed" : "bg-primary-600 text-white"}`}
             disabled={isProcessing}
           >
             {isProcessing ? "Processing..." : "Pay"}

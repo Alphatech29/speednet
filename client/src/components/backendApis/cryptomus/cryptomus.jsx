@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const payWithCryptomus = async ({ amount, currency, order_id, paymentMethod }) => {
+export const payWithCryptomus = async ({ amount, currency, user_id, email, paymentMethod }) => {
   try {
     const response = await axios.post(
       "/general/pay", // Adjust if your backend route is different
-      { amount, currency, order_id, paymentMethod },
+      { amount, currency, user_id, email, paymentMethod },
       {
         headers: {
           "Content-Type": "application/json",

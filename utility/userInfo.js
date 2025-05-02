@@ -48,6 +48,7 @@ const updateUserBalance = async (userUid, newBalance) => {
     }
 };
 
+
 // Update multiple user fields (generic update function)
 const updateUser = async (userUid, updateFields) => {
     try {

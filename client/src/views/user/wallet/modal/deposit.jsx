@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { BsBank2 } from "react-icons/bs";
 import { RiBtcFill } from "react-icons/ri";
+import { BiSolidMobileVibration } from "react-icons/bi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from '../../../../components/control/authContext';
@@ -13,8 +14,6 @@ const Deposit = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
 
   const handleContinue = async () => {
-    const numericAmount = parseFloat(amount);
-
     if (!amount || !selected) {
       toast.error("Please enter an amount and select a payment method.", {
         position: "top-right",
@@ -23,6 +22,7 @@ const Deposit = ({ onClose }) => {
       return;
     }
 
+    const numericAmount = parseFloat(amount);
     if (isNaN(numericAmount) || numericAmount <= 0) {
       toast.error("Amount must be greater than 0.", {
         position: "top-right",
@@ -39,25 +39,33 @@ const Deposit = ({ onClose }) => {
       return;
     }
 
+    let currency = 'USDT';
+    if (selected === 'fapshi' || selected === 'bank') {
+      currency = 'USD';
+    }
+
     const payload = {
-      order_id: String(user.uid),
-      amount: String(numericAmount),
+      user_id: String(user.uid),
+      email: String(user.email),
+      amount: String(numericAmount.toFixed(2)),
       paymentMethod: selected,
-      currency: "USD",
+      currency: currency,
     };
 
     setLoading(true);
 
     try {
       const response = await payWithCryptomus(payload);
-      console.log("Cryptomus response:", response);
+      console.log("Backend Response:", response);
 
       if (response.success && response.data?.payment_url) {
         toast.success(response.message, {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
         });
-        window.open(response.data.payment_url, "_blank");
+
+        // Redirect in the same tab
+        window.location.href = response.data.payment_url;
       } else {
         toast.error(response.message || "Failed to initiate payment.", {
           position: "top-right",
@@ -76,7 +84,7 @@ const Deposit = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
       <ToastContainer />
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-4 text-center text-gray-200">
         <div className="w-full flex flex-col items-start justify-start mb-4">
@@ -89,7 +97,8 @@ const Deposit = ({ onClose }) => {
         <div className="w-full flex justify-center items-center rounded-md border border-gray-400 focus-within:border-primary-600">
           <span className='text-[20px] text-gray-300 pl-4'>$</span>
           <input 
-            type="number" 
+            type="number"
+            disabled={loading}
             value={amount} 
             onChange={(e) => setAmount(e.target.value)} 
             placeholder="0.0" 
@@ -98,6 +107,7 @@ const Deposit = ({ onClose }) => {
         </div>
 
         <div className='flex gap-3 flex-col'>
+          {/* Bank/Card Option */}
           <div 
             className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
             ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
@@ -112,16 +122,32 @@ const Deposit = ({ onClose }) => {
             </div>
           </div>
 
+          {/* MOMO Deposit */}
           <div 
             className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
-            ${selected === 'crypto' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
-            onClick={() => setSelected('crypto')}
+            ${selected === 'fapshi' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+            onClick={() => setSelected('fapshi')}
           >
-            <span className={`border p-3 rounded-full ${selected === 'crypto' ? 'border-primary-600' : 'border-primary-600/50'}`}>
+            <span className={`border p-3 rounded-full ${selected === 'fapshi' ? 'border-primary-600' : 'border-primary-600/50'}`}>
+              <BiSolidMobileVibration className="text-[25px]" />
+            </span>
+            <div className="w-full text-start">
+              <h1 className="text-[15px] font-semibold">MOMO Deposit(Cameroon)</h1>
+              <p className="text-sm text-slate-400">Top up your wallet securely and conveniently using Mobile Money</p>
+            </div>
+          </div>
+
+          {/* Crypto Deposit */}
+          <div 
+            className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
+            ${selected === 'cryptomus' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+            onClick={() => setSelected('cryptomus')}
+          >
+            <span className={`border p-3 rounded-full ${selected === 'cryptomus' ? 'border-primary-600' : 'border-primary-600/50'}`}>
               <RiBtcFill className="text-[25px]" />
             </span>
             <div className="w-full text-start">
-              <h1 className="text-[15px] font-semibold">Crypto Deposit</h1>
+              <h1 className="text-[15px] font-semibold">Crypto Deposit(International)</h1>
               <p className="text-sm text-slate-400">Fund your wallet with USDT securely and conveniently.</p>
             </div>
           </div>

@@ -14,13 +14,15 @@
     "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
+    "compression": "^1.8.0",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.13.0",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

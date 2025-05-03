@@ -2,9 +2,13 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
-const pool = require("./model/db"); 
+const pool = require("./model/db");
+const bodyParser = require('body-parser');
+const xssClean = require('xss-clean'); 
 const authRoute = require('./routes/auth');
 const generalRoute = require('./routes/general');
+const compression = require('compression');
+
 
 dotenv.config(); 
 
@@ -13,6 +17,20 @@ const app = express();
 // ✅ Middleware to parse JSON & URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
+// Prevent XSS (Cross-Site Scripting) attacks by sanitizing user input.
+app.use(xssClean());
+
+app.use(express.raw({ type: 'application/json', limit: '1mb' }));
+
+// Custom middleware to capture raw body
+app.use((req, res, next) => {
+  req.rawBody = req.body.toString(); // Convert body to string and store in req.rawBody
+  next();
+});
+
+// ✅ Middleware to handle compression for better performance
+app.use(compression());
+
 
 // ✅ Secure app with Helmet (improved CSP)
 app.use(
@@ -23,12 +41,16 @@ app.use(
         scriptSrc: ["'self'", "https://trusted-cdn.com"],
         imgSrc: ["'self'", "data:", "https:"],
         objectSrc: ["'none'"],
+        styleSrc: ["'self'", "https://trusted-cdn.com"],
+        frameAncestors: ["'none'"],  // Prevent embedding in an iframe (clickjacking prevention)
         upgradeInsecureRequests: [],
       },
     },
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    noSniff: true,  // Disable content sniffing
+    xssFilter: true, // Enable the XSS filter in supported browsers
   })
 );
-
 // Define API routes
 app.use('/auth', authRoute);
 app.use('/general', generalRoute);

@@ -4,7 +4,7 @@ const { getAllAccounts } = require("../utility/accounts");
 const { activateAccount } = require('../utility/upgrade');
 const { getWebSettings } = require('../utility/general')
 const { getUser } = require('../utility/user')
-const { fapshiWebhook } = require('../utility/webhook')
+const { fapshiWebhook , cryptomusWebhook } = require('../utility/webhook')
 const { getUserTransactions, getUserOrderHistory } = require('../controller/user/history');
 const { collectOrder } = require("../controller/user/purchase");
 const { fetchUserOrders } = require("../controller/user/accountOrder");
@@ -24,6 +24,7 @@ generalRoute.post("/purchase", collectOrder);
 generalRoute.get('/get-accounts/:userUid', getAccounts);
 generalRoute.post("/pay", Deposit);
 generalRoute.post("/fapshi/webhook", fapshiWebhook);
+generalRoute.post("/cryptomus/webhook", cryptomusWebhook);
 
 
 

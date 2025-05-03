@@ -39,15 +39,15 @@ const Deposit = ({ onClose }) => {
       return;
     }
 
-    let currency = 'USDT';
+    let currency = 'USDT';  // Default currency for crypto
     if (selected === 'fapshi' || selected === 'bank') {
-      currency = 'USD';
+      currency = 'USD';  // Change to USD for bank/card or mobile money
     }
 
     const payload = {
       user_id: String(user.uid),
       email: String(user.email),
-      amount: String(numericAmount.toFixed(2)),
+      amount: numericAmount.toFixed(2),  // Ensure two decimal precision
       paymentMethod: selected,
       currency: currency,
     };

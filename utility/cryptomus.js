@@ -24,9 +24,10 @@ async function createPayment({ amount, currency, userUid }) {
     amount: amountString,
     currency,
     order_id,
-    webhook: `${web_url}/general/cryptomus/webhook`, 
+    url_callback: `${web_url}/general/cryptomus/webhook`, 
     network: 'tron',
-    return_url: `${web_url}/user/wallet`, // 
+    url_success: `${web_url}/user/wallet`,
+    return_url: `${web_url}/user/wallet`
   };
 
   console.log('[createPayment] Payload:', payload);

@@ -3,75 +3,66 @@ const path = require("path");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const pool = require("./model/db");
-const bodyParser = require('body-parser');
-const xssClean = require('xss-clean'); 
-const authRoute = require('./routes/auth');
-const generalRoute = require('./routes/general');
-const compression = require('compression');
+const bodyParser = require("body-parser");
+const xssClean = require("xss-clean");
+const authRoute = require("./routes/auth");
+const generalRoute = require("./routes/general");
+const compression = require("compression");
 
-
-dotenv.config(); 
-
+dotenv.config();
 const app = express();
 
-// ✅ Middleware to parse JSON & URL-encoded data
+// ✅ Parse JSON & URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
-// Prevent XSS (Cross-Site Scripting) attacks by sanitizing user input.
+
+// ✅ Sanitize user input
 app.use(xssClean());
 
-app.use(express.raw({ type: 'application/json', limit: '1mb' }));
-
-// Custom middleware to capture raw body
-app.use((req, res, next) => {
-  req.rawBody = req.body.toString(); // Convert body to string and store in req.rawBody
-  next();
-});
-
-// ✅ Middleware to handle compression for better performance
-app.use(compression());
-
-
-// ✅ Secure app with Helmet (improved CSP)
+// ✅ Raw body (e.g. for signature verification)
+app.use(express.raw({ type: "application/json", limit: "1mb" }));
 app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://trusted-cdn.com"],
-        imgSrc: ["'self'", "data:", "https:"],
-        objectSrc: ["'none'"],
-        styleSrc: ["'self'", "https://trusted-cdn.com"],
-        frameAncestors: ["'none'"],  // Prevent embedding in an iframe (clickjacking prevention)
-        upgradeInsecureRequests: [],
-      },
+  bodyParser.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf.toString();
     },
-    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-    noSniff: true,  // Disable content sniffing
-    xssFilter: true, // Enable the XSS filter in supported browsers
   })
 );
-// Define API routes
-app.use('/auth', authRoute);
-app.use('/general', generalRoute);
 
-// ✅ Serve Vite build files
+// ✅ Enable gzip compression
+app.use(compression());
+
+// ✅ Secure with Helmet (CSP-safe configuration)
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["*"],
+    },
+  })
+);
+
+// ✅ API routes
+app.use("/auth", authRoute);
+app.use("/general", generalRoute);
+
+// ✅ Serve static files from Vite build
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
-// ✅ Handle React routing
+// ✅ Catch-all for React Router
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
-// ✅ Define Port
+// ✅ Server port
 const PORT = process.env.PORT || 8000;
 
-// ✅ Start Server
+// ✅ Start the server
 const server = app.listen(PORT, () =>
   console.log(`🚀 Server running on port ${PORT}`)
 );
 
-// ✅ Handle uncaught errors & promise rejections
+// ✅ Handle unexpected errors
 process.on("uncaughtException", (err) => {
   console.error("🔥 Uncaught Exception:", err);
   process.exit(1);
@@ -82,7 +73,7 @@ process.on("unhandledRejection", (err) => {
   process.exit(1);
 });
 
-// ✅ Graceful shutdown with error handling
+// ✅ Graceful shutdown
 process.on("SIGTERM", async () => {
   console.log("📢 SIGTERM received. Shutting down gracefully...");
   try {

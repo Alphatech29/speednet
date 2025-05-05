@@ -3,6 +3,10 @@ const { updateUserBalance, getUserDetailsByUid } = require('../utility/userInfo'
 const { createTransactionHistory } = require('../utility/history');
 const crypto = require('crypto');
 
+
+
+require('dotenv').config();
+
 // Fapshi Webhook Handler
 const fapshiWebhook = async (req, res) => {
   try {
@@ -28,7 +32,6 @@ const fapshiWebhook = async (req, res) => {
     // Fetch web settings
     const settings = await getWebSettings();
     const xafRate = settings?.xaf_rate;
-
 
     if (!xafRate || isNaN(xafRate)) {
       console.log('❌ Invalid or missing exchange rate:', xafRate);
@@ -83,124 +86,68 @@ async function convertXafToUsd(xafAmount, xafRate) {
   return usdAmount;
 }
 
-
-
 /*----------------------Border between Fapshi webhook and Cryptomus webhook---------------------*/
 
 // Main Cryptomus Webhook Handler
 const cryptomusWebhook = async (req, res) => {
   try {
-    console.log('📡 Incoming Webhook Request Headers:', req.headers);
-    console.log('📩 Incoming Webhook Request Body:', req.body);
+    // Restrict to allowed IP
+    const getClientIP = (req) => {
+      const forwarded = req.headers['x-forwarded-for'];
+      return forwarded ? forwarded.split(',')[0].trim() : req.ip;
+    };
+
+    const allowedIP = process.env.CRYPTOMUS_IP;
+    const clientIP = getClientIP(req);
+    console.log('Incoming IP:', clientIP);
+
+    if (!clientIP.includes(allowedIP)) {
+      console.warn('Blocked: Unauthorized IP', clientIP);
+      return res.status(403).json({ error: 'Forbidden - Unauthorized IP' });
+    }
 
     const payload = req.body;
-    const { uuid, order_id, amount, payment_amount, status, txid, sign } = payload;
+    console.log('Parsed Payload:', payload);
 
-    console.log('📝 Extracted Payload Fields:', {
-      uuid, order_id, amount, payment_amount, status, txid, sign
-    });
+    // Use the requested destructuring of payload
+    const { order_id, amount, status } = payload;
 
-    // Step 1: Load API key from settings
-    const settings = await getWebSettings();
-    console.log('⚙️ Fetched Web Settings:', settings);
-
-    const cryptomusApiKey = settings?.cryptomus_api_key;
-    console.log('🔐 Using Cryptomus API Key:', cryptomusApiKey);
-
-    if (!cryptomusApiKey) {
-      console.error('❌ Missing Cryptomus API Key in settings');
-      return res.status(500).json({ error: 'Cryptomus API Key missing in settings' });
-    }
-
-    // Step 2: Verify Signature
-    const isValid = verifyWebhookSignature(payload, sign, cryptomusApiKey);
-    console.log('🔎 Signature Verification Result:', isValid);
-
-    if (!isValid) {
-      console.error('❌ Invalid webhook signature');
-      return res.status(400).json({ error: 'Invalid webhook signature' });
-    }
-
-    // Step 3: Check if payment was successful
-    console.log('💳 Payment Status:', status);
     if (status !== 'paid') {
-      console.warn(`⚠️ Skipping transaction ${uuid} — Status: ${status}`);
+      console.log('Ignored: Payment not completed');
       return res.status(200).json({ message: 'Ignored (status not paid)' });
     }
 
-    // Step 4: Validate fields
-    if (!uuid || !order_id || !amount || !payment_amount || !txid) {
-      console.error('❌ Missing required fields:', {
-        uuid, order_id, amount, payment_amount, txid
-      });
+    // Validate required fields
+    if (!order_id || !amount || !status) {
+      console.error('Error: Missing required fields');
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Step 5: Identify user from order_id
-    const userUid = order_id.charAt(0); // Adjust logic as needed
-    console.log('👤 Identified User UID from order_id:', userUid);
-
-    // Step 6: Get and compute balance
+    const userUid = order_id.charAt(0);
     const userDetails = await getUserDetailsByUid(userUid);
-    console.log('👤 Retrieved User Details:', userDetails);
+    if (!userDetails) {
+      console.error('Error: User not found');
+      return res.status(404).json({ error: 'User not found' });
+    }
 
-    const currentBalance = parseFloat(userDetails.account_balance);
-    const newBalance = currentBalance + parseFloat(amount);
-    console.log(`💰 Balance Update: Current = ${currentBalance}, New = ${newBalance}`);
+    const currentBalance = Number(userDetails.account_balance) || 0;
+    const newBalance = currentBalance + Number(amount);
+    console.log(`Updating Balance: ${currentBalance} → ${newBalance}`);
 
-    // Step 7: Update balance
     const updateResult = await updateUserBalance(userUid, newBalance);
-    console.log('📤 Update Balance Result:', updateResult);
-
     if (!updateResult.success) {
-      console.error('❌ Failed to update user balance');
+      console.error('Error: Failed to update balance');
       return res.status(500).json({ error: 'Balance update failed' });
     }
 
-    console.log('✅ User balance updated successfully');
+    await createTransactionHistory(userUid, amount, 'Cryptomus Deposit', 'completed');
+    console.log('Transaction logged:', createTransactionHistory);
 
-    // Step 8: Log transaction
-    const transactionResult = await createTransactionHistory(
-      userUid,
-      amount,
-      'Cryptomus Deposit',
-      'completed'
-    );
-
-    console.log('📘 Transaction History Log Result:', transactionResult);
-
-    if (!transactionResult.success) {
-      console.warn('⚠️ Failed to log transaction history');
-    } else {
-      console.log('📝 Transaction history recorded successfully');
-    }
-
-    // Step 9: Respond OK to webhook
-    console.log('✅ Webhook processing complete for transaction:', uuid);
     return res.status(200).json({ success: true });
-
   } catch (error) {
-    console.error('❌ Webhook processing error:', error);
+    console.error('Webhook Error:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-// 🔐 Webhook Signature Verification
-function verifyWebhookSignature(payload, expectedSign, cryptomus_api_key) {
-  const payloadString = JSON.stringify(payload);
-  console.log('📦 Payload Stringified for Signature:', payloadString);
-
-  const computedSign = generateSignature(payloadString, cryptomus_api_key);
-  console.log('🔐 Computed Signature:', computedSign);
-  console.log('🔏 Expected Signature:', expectedSign);
-
-  return computedSign === expectedSign;
-}
-
-// 🔐 HMAC Signature Generator
-function generateSignature(payload, cryptomus_api_key) {
-  console.log('🔧 Generating HMAC with Key:', cryptomus_api_key);
-  return crypto.createHmac('sha256', cryptomus_api_key).update(payload).digest('hex');
-}
 
 module.exports = { fapshiWebhook, cryptomusWebhook };

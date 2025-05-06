@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { getWebSettings } = require('./general');
+const logger = require('../utility/logger');
 
 // Function to convert USD to XAF
 async function convertUsdToXaf(usdAmount, xafRate) {
@@ -10,23 +11,27 @@ async function convertUsdToXaf(usdAmount, xafRate) {
 // Main function to initiate payment
 async function fapshiPayment({ amount, user_id, email }) {
   if (!user_id) {
+    logger.error('Missing user ID.');
     throw new Error('Missing user ID.');
   }
 
   const { fapshi_key, fapshi_url, fapshi_user, xaf_rate, web_url } = await getWebSettings();
 
   if (!fapshi_key || !fapshi_url || !fapshi_user || !xaf_rate || !web_url) {
+    logger.error('Missing Fapshi configuration or XAF rate.');
     throw new Error('Missing Fapshi configuration or XAF rate.');
   }
 
   const usdAmount = parseFloat(amount);
   if (isNaN(usdAmount)) {
+    logger.error('Amount must be a valid number.');
     throw new Error('Amount must be a valid number.');
   }
 
   const xafAmount = await convertUsdToXaf(usdAmount, xaf_rate);
 
   if (isNaN(xafAmount) || xafAmount < 100) {
+    logger.error('Converted XAF amount must be at least 100.');
     throw new Error('Converted XAF amount must be at least 100.');
   }
 
@@ -53,7 +58,9 @@ async function fapshiPayment({ amount, user_id, email }) {
     const data = response.data;
 
     if (!data?.link || !data?.transId) {
-      throw new Error(data?.message || 'Fapshi payment initiation failed.');
+      const errorMessage = data?.message || 'Fapshi payment initiation failed.';
+      logger.error(errorMessage);
+      throw new Error(errorMessage);
     }
 
     return {
@@ -64,7 +71,7 @@ async function fapshiPayment({ amount, user_id, email }) {
     };
   } catch (error) {
     const errData = error.response?.data || error.message || 'Unknown error';
-    console.error('Fapshi API Error:', errData);
+    logger.error(`Fapshi API Error: ${errData}`);
     throw new Error(`Fapshi API error: ${JSON.stringify(errData)}`);
   }
 }

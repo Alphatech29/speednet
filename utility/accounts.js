@@ -1,4 +1,5 @@
 const pool = require('../model/db');
+const logger = require('../utility/logger');
 
 const getAllAccounts = async (req, res) => {
   try {
@@ -13,9 +14,10 @@ const getAllAccounts = async (req, res) => {
 
     const [rows] = await pool.query(query);
 
+    logger.info(`Fetched ${rows.length} accounts`);
     res.json({ success: true, data: rows });
   } catch (error) {
-    console.error('Database Error:', error);
+    logger.error(`Database Error in getAllAccounts: ${error.message}`);
     res.status(500).json({ success: false, error: `Failed to fetch accounts: ${error.message}` });
   }
 };

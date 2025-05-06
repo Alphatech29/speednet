@@ -4,6 +4,7 @@ import { MdNotificationsActive } from "react-icons/md";
 import { IoNotificationsOffSharp } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
+import { FaUsers } from "react-icons/fa6";
 import { AuthContext } from "../../../components/control/authContext";
 import Cart from "../shop/cart/cart";
 
@@ -103,6 +104,9 @@ const Header = () => {
               </div>
               <a href="/profile" className="flex items-center px-4 py-2 hover:text-primary-600">
                 <CgProfile className="mr-2" /> Profile
+              </a>
+              <a href="/user/referral" className="flex items-center px-4 py-2 hover:text-primary-600">
+                <FaUsers className="mr-2" /> Referral
               </a>
               <a href="/settings" className="flex items-center px-4 py-2 hover:text-primary-600">
                 <IoIosSettings className="mr-2" /> Settings

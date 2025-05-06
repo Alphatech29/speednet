@@ -8,6 +8,7 @@ const xssClean = require("xss-clean");
 const authRoute = require("./routes/auth");
 const generalRoute = require("./routes/general");
 const compression = require("compression");
+const logger = require("./utility/logger");
 
 dotenv.config();
 const app = express();
@@ -58,31 +59,31 @@ app.get("*", (req, res) => {
 const PORT = process.env.PORT || 8000;
 
 // ✅ Start the server
-const server = app.listen(PORT, () =>
-  console.log(`🚀 Server running on port ${PORT}`)
-);
+const server = app.listen(PORT, () => {
+  logger.info(`🚀 Server running on port ${PORT}`);
+});
 
 // ✅ Handle unexpected errors
 process.on("uncaughtException", (err) => {
-  console.error("🔥 Uncaught Exception:", err);
+  logger.error(`🔥 Uncaught Exception: ${err}`);
   process.exit(1);
 });
 
 process.on("unhandledRejection", (err) => {
-  console.error("⚠️ Unhandled Rejection:", err);
+  logger.error(`⚠️ Unhandled Rejection: ${err}`);
   process.exit(1);
 });
 
 // ✅ Graceful shutdown
 process.on("SIGTERM", async () => {
-  console.log("📢 SIGTERM received. Shutting down gracefully...");
+  logger.info("📢 SIGTERM received. Shutting down gracefully...");
   try {
     await pool.end();
-    console.log("✅ Database connection closed.");
+    logger.info("✅ Database connection closed.");
   } catch (err) {
-    console.error("⚠️ Error closing database connection:", err);
+    logger.error(`⚠️ Error closing database connection: ${err}`);
   }
   server.close(() => {
-    console.log("💡 Server closed.");
+    logger.info("💡 Server closed.");
   });
 });

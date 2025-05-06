@@ -2,8 +2,7 @@ const { getWebSettings } = require('../utility/general');
 const { updateUserBalance, getUserDetailsByUid } = require('../utility/userInfo');
 const { createTransactionHistory } = require('../utility/history');
 const crypto = require('crypto');
-
-
+const logger = require('../utility/logger');
 
 require('dotenv').config();
 
@@ -16,11 +15,13 @@ const fapshiWebhook = async (req, res) => {
 
     // Ignore unsuccessful transactions
     if (status !== 'SUCCESSFUL') {
+      logger.info('Ignored (status not SUCCESSFUL)', { transId, userId, amount, status });
       return res.status(200).json({ message: 'Ignored (status not SUCCESSFUL)' });
     }
 
     // Validate required fields
     if (!transId || !userId || !amount) {
+      logger.error('Missing required fields for successful transaction', { transId, userId, amount });
       return res.status(400).json({ error: 'Missing required fields for successful transaction' });
     }
 
@@ -29,6 +30,7 @@ const fapshiWebhook = async (req, res) => {
     const xafRate = settings?.xaf_rate;
 
     if (!xafRate || isNaN(xafRate)) {
+      logger.error('Exchange rate not available or invalid');
       return res.status(500).json({ error: 'Exchange rate not available or invalid' });
     }
 
@@ -44,6 +46,7 @@ const fapshiWebhook = async (req, res) => {
     const updateResult = await updateUserBalance(userId, newBalance);
 
     if (!updateResult.success) {
+      logger.error('Failed to update user balance', { userId, currentBalance, newBalance });
       return res.status(500).json({ error: 'Failed to update user balance' });
     }
 
@@ -56,12 +59,12 @@ const fapshiWebhook = async (req, res) => {
     );
 
     if (!transactionHistoryResult.success) {
-      console.error('❌ Failed to create transaction history for user:', userId);
+      logger.error('Failed to create transaction history for user', { userId });
     }
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error('❌ Unhandled error during webhook processing:', error);
+    logger.error('Unhandled error during webhook processing', { error: error.message });
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -86,9 +89,8 @@ const cryptomusWebhook = async (req, res) => {
     const allowedIP = process.env.CRYPTOMUS_IP;
     const clientIP = getClientIP(req);
 
-
     if (!clientIP.includes(allowedIP)) {
-      console.warn('Blocked: Unauthorized IP', clientIP);
+      logger.warn('Blocked: Unauthorized IP', { clientIP });
       return res.status(403).json({ error: 'Forbidden - Unauthorized IP' });
     }
 
@@ -98,19 +100,20 @@ const cryptomusWebhook = async (req, res) => {
     const { order_id, amount, status } = payload;
 
     if (status !== 'paid') {
+      logger.info('Ignored (status not paid)', { order_id, amount, status });
       return res.status(200).json({ message: 'Ignored (status not paid)' });
     }
 
     // Validate required fields
     if (!order_id || !amount || !status) {
-      console.error('Error: Missing required fields');
+      logger.error('Error: Missing required fields', { order_id, amount, status });
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const userUid = order_id.charAt(0);
     const userDetails = await getUserDetailsByUid(userUid);
     if (!userDetails) {
-      console.error('Error: User not found');
+      logger.error('Error: User not found', { userUid });
       return res.status(404).json({ error: 'User not found' });
     }
 
@@ -119,7 +122,7 @@ const cryptomusWebhook = async (req, res) => {
 
     const updateResult = await updateUserBalance(userUid, newBalance);
     if (!updateResult.success) {
-      console.error('Error: Failed to update balance');
+      logger.error('Error: Failed to update balance', { userUid, currentBalance, newBalance });
       return res.status(500).json({ error: 'Balance update failed' });
     }
 
@@ -127,7 +130,7 @@ const cryptomusWebhook = async (req, res) => {
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error('Webhook Error:', error);
+    logger.error('Webhook Error', { error: error.message });
     return res.status(500).json({ error: 'Internal server error' });
   }
 };

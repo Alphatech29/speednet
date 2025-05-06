@@ -1,18 +1,19 @@
 const axios = require('axios');
 const crypto = require('crypto');
 const { getWebSettings } = require('./general');
+const logger = require('../utility/logger');
 
 async function createPayment({ amount, currency, userUid }) {
 
   const { cryptomus_api_key, cryptomus_merchant_uuid, cryptomus_url, web_url } = await getWebSettings();
 
   if (!cryptomus_api_key || !cryptomus_merchant_uuid || !cryptomus_url || !web_url) {
-    console.error('[createPayment] Missing Cryptomus API credentials or URL.');
+    logger.error('[createPayment] Missing Cryptomus API credentials or URL.');
     throw new Error('Missing Cryptomus API credentials or URL.');
   }
 
   if (!amount || isNaN(amount) || !currency || !userUid) {
-    console.error('[createPayment] Invalid payment parameters:', { amount, currency, userUid });
+    logger.error('[createPayment] Invalid payment parameters:', { amount, currency, userUid });
     throw new Error('Invalid payment parameters.');
   }
 
@@ -50,10 +51,11 @@ async function createPayment({ amount, currency, userUid }) {
     const { data } = response;
 
     if (data.state !== 0 || data.result?.status !== 'check') {
-      console.error('[createPayment] Failed response:', data);
+      logger.error('[createPayment] Failed response:', data);
       throw new Error(data.message || 'Payment creation failed.');
     }
 
+    logger.info('[createPayment] Payment URL generated successfully for order:', order_id);
     return {
       payment_url: data.result.url,
       payment_uuid: data.result.uuid,
@@ -61,7 +63,7 @@ async function createPayment({ amount, currency, userUid }) {
     };
   } catch (error) {
     const errData = error.response?.data || error.message;
-    console.error('[createPayment] Cryptomus API error:', errData);
+    logger.error('[createPayment] Cryptomus API error:', errData);
     throw new Error(`Cryptomus API error: ${JSON.stringify(errData)}`);
   }
 }

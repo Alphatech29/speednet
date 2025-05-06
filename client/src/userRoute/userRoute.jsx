@@ -12,6 +12,7 @@ import AddNewProdunct from '../views/user/product/addNewProdunct';
 import Withdrawal from '../views/user/withdrawal/withdrawal';
 import NordVpn from "./../views/user/nordService/nordVpn";
 import Pricing from '../views/user/nordService/pricing';
+import Referral from '../views/user/referral/referral';
 
 
 
@@ -32,6 +33,7 @@ const UserRoute = () => {
         <Route path='withdraw' element={<Withdrawal/>}/>
         <Route path='nord-services/vpn' element={<NordVpn/>}/>
         <Route path='nord-services/vpn/offer' element={<Pricing/>}/>
+        <Route path='referral' element={<Referral/>}/>
         
 
         {/* GiftCard as a layout route with nested routes */}

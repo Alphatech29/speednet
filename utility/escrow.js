@@ -2,10 +2,12 @@ const { getWebSettings } = require("./general");
 const { getUserDetailsByUid, updateUser } = require("./userInfo");
 const { storeMerchantTransaction, updateTransactionStatus } = require("./merchantHistory");
 const { generateUniqueRandomNumber } = require("./random");
+const logger = require('../utility/logger');
 
 const creditEscrow = async (escrowData) => {
   try {
       if (!Array.isArray(escrowData) || escrowData.length === 0) {
+          logger.error("Escrow data must be a non-empty array.");
           throw new Error("Escrow data must be a non-empty array.");
       }
 
@@ -24,7 +26,7 @@ const creditEscrow = async (escrowData) => {
           try {
               const userDetails = await getUserDetailsByUid(seller_id);
               if (!userDetails) {
-                  console.error(`Seller ${seller_id} not found.`);
+                  logger.error(`Seller ${seller_id} not found.`);
                   continue;
               }
 
@@ -35,7 +37,7 @@ const creditEscrow = async (escrowData) => {
               const escrowUpdate = await updateUser(seller_id, { escrow_balance: currentEscrowBalance });
 
               if (!escrowUpdate || !escrowUpdate.success) {
-                  console.error(`Failed to update escrow balance for seller ${seller_id}.`);
+                  logger.error(`Failed to update escrow balance for seller ${seller_id}.`);
                   continue;
               }
 
@@ -95,24 +97,25 @@ const creditEscrow = async (escrowData) => {
                               });
                           }, 1000);
                       } else {
-                          console.error(`Failed to finalize transaction ${transactionId} for seller ${seller_id}.`);
+                          logger.error(`Failed to finalize transaction ${transactionId} for seller ${seller_id}.`);
                       }
                   } catch (error) {
-                      console.error(`Error processing merchant transfer for seller ${seller_id}: ${error.message}`);
+                      logger.error(`Error processing merchant transfer for seller ${seller_id}: ${error.message}`);
                   }
               }, 60000);
           } catch (error) {
-              console.error(`Error processing escrow for seller ${seller_id}: ${error.message}`);
+              logger.error(`Error processing escrow for seller ${seller_id}: ${error.message}`);
           }
       }
 
       if (processedTransactions.length === 0) {
+          logger.error("No valid escrow transactions.");
           throw new Error("No valid escrow transactions.");
       }
 
       return processedTransactions;
   } catch (error) {
-      console.error("Failed to process escrow data:", error.message);
+      logger.error("Failed to process escrow data:", error.message);
       throw error;
   }
 };

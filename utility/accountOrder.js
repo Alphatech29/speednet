@@ -1,4 +1,5 @@
 const pool = require('../model/db');
+const logger = require('../utility/logger');
 
 // Function to store an order
 const storeOrder = async (orderData) => {
@@ -27,13 +28,11 @@ const storeOrder = async (orderData) => {
             orderData.payment_status || "Pending"
         ];
 
-       
-
         const [result] = await pool.execute(query, values);
-
+        logger.info(`Order stored successfully with ID: ${result.insertId}`);
         return result.insertId; 
     } catch (error) {
-        console.error("Error storing order:", error);
+        logger.error(`Error storing order: ${error.message}`);
         return null;
     }
 };
@@ -55,26 +54,26 @@ const storeOrderHistory = async (orderHistoryData) => {
         ];
 
         const [result] = await pool.execute(query, values);
-
+        logger.info(`Order history stored successfully with ID: ${result.insertId}`);
         return result.insertId; 
     } catch (error) {
-        console.error("Error storing order history:", error);
+        logger.error(`Error storing order history: ${error.message}`);
         return null;
     }
 };
 
+// Function to get orders by user
 const getOrdersByUser = async (userUid) => {
     try {
-        // Ensure userUid is a valid string
-        if (userUid === null || userUid === undefined || typeof userUid !== "string") {
+        if (!userUid || typeof userUid !== "string") {
             throw new Error("Invalid user ID provided. Expected a string.");
         }
 
         const query = `SELECT * FROM account_order WHERE buyer_id = ? OR seller_id = ?`;
-        
         const [rows] = await pool.execute(query, [userUid, userUid]);
 
         if (rows.length === 0) {
+            logger.warn(`No orders found for user: ${userUid}`);
             return {
                 success: false,
                 message: 'No orders found for the user',
@@ -82,6 +81,7 @@ const getOrdersByUser = async (userUid) => {
             };
         }
 
+        logger.info(`Fetched ${rows.length} orders for user: ${userUid}`);
         return {
             success: true,
             message: 'Orders fetched successfully',
@@ -89,7 +89,7 @@ const getOrdersByUser = async (userUid) => {
         };
 
     } catch (error) {
-        console.error("Error fetching orders for user:", error);
+        logger.error(`Error fetching orders for user (${userUid}): ${error.message}`);
         return {
             success: false,
             message: 'An error occurred while fetching orders',
@@ -97,7 +97,5 @@ const getOrdersByUser = async (userUid) => {
         };
     }
 };
-
-
 
 module.exports = { storeOrder, storeOrderHistory, getOrdersByUser };

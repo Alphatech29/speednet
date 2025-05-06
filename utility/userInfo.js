@@ -36,7 +36,6 @@ const updateUserBalance = async (userUid, newBalance) => {
         const [result] = await pool.execute(query, [newBalance, userUid]);
 
         if (result.affectedRows > 0) {
-            console.log(`✅ Balance updated successfully: userUid=${userUid}, newBalance=${newBalance}`);
             return { success: true, affectedRows: result.affectedRows };
         } else {
             console.warn(`⚠️ No rows affected, user not found: userUid=${userUid}`);
@@ -81,7 +80,6 @@ const updateUser = async (userUid, updateFields) => {
         const [result] = await pool.execute(query, values);
 
         if (result.affectedRows > 0) {
-            console.log(`✅ User updated successfully: userUid=${userUid}`);
             return { success: true, affectedRows: result.affectedRows };
         } else {
             console.warn(`⚠️ No rows affected, user not found or no change in fields: userUid=${userUid}`);

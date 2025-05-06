@@ -4,7 +4,6 @@ const { getWebSettings } = require('./general');
 // Function to convert USD to XAF
 async function convertUsdToXaf(usdAmount, xafRate) {
   const xafAmount = usdAmount * xafRate;
-  console.log(`Converting USD ${usdAmount} to XAF: ${xafAmount}`);
   return xafAmount;
 }
 
@@ -14,9 +13,9 @@ async function fapshiPayment({ amount, user_id, email }) {
     throw new Error('Missing user ID.');
   }
 
-  const { fapshi_key, fapshi_url, fapshi_user, xaf_rate } = await getWebSettings();
+  const { fapshi_key, fapshi_url, fapshi_user, xaf_rate, web_url } = await getWebSettings();
 
-  if (!fapshi_key || !fapshi_url || !fapshi_user || !xaf_rate) {
+  if (!fapshi_key || !fapshi_url || !fapshi_user || !xaf_rate || !web_url) {
     throw new Error('Missing Fapshi configuration or XAF rate.');
   }
 
@@ -31,7 +30,7 @@ async function fapshiPayment({ amount, user_id, email }) {
     throw new Error('Converted XAF amount must be at least 100.');
   }
 
-  const redirectUrl = 'https://aee2-105-119-6-169.ngrok-free.app/user/wallet';
+  const redirectUrl = `${web_url}/user/wallet`;
 
   const payload = {
     amount: xafAmount,
@@ -39,10 +38,8 @@ async function fapshiPayment({ amount, user_id, email }) {
     email,
     userId: user_id,
     redirectUrl,
-    webhook: 'https://aee2-105-119-6-169.ngrok-free.app/general/fapshi/webhook'
+    webhook: `${web_url}/general/fapshi/webhook`
   };
-
-  console.log('Payload to Fapshi API:', payload);
 
   try {
     const response = await axios.post(`${fapshi_url}/initiate-pay`, payload, {
@@ -54,7 +51,6 @@ async function fapshiPayment({ amount, user_id, email }) {
     });
 
     const data = response.data;
-    console.log('Fapshi API Response:', data);
 
     if (!data?.link || !data?.transId) {
       throw new Error(data?.message || 'Fapshi payment initiation failed.');

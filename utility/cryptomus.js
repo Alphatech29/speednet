@@ -3,7 +3,6 @@ const crypto = require('crypto');
 const { getWebSettings } = require('./general');
 
 async function createPayment({ amount, currency, userUid }) {
-  console.log('[createPayment] Starting payment creation...');
 
   const { cryptomus_api_key, cryptomus_merchant_uuid, cryptomus_url, web_url } = await getWebSettings();
 
@@ -30,8 +29,6 @@ async function createPayment({ amount, currency, userUid }) {
     return_url: `${web_url}/user/wallet`
   };
 
-  console.log('[createPayment] Payload:', payload);
-
   const jsonPayload = JSON.stringify(payload);
   const base64Payload = Buffer.from(jsonPayload).toString('base64');
 
@@ -51,7 +48,6 @@ async function createPayment({ amount, currency, userUid }) {
     });
 
     const { data } = response;
-    console.log('[createPayment] API Response:', data);
 
     if (data.state !== 0 || data.result?.status !== 'check') {
       console.error('[createPayment] Failed response:', data);

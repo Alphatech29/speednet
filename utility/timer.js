@@ -7,7 +7,6 @@ export function setTimer(duration, countUp = false) {
     let time = countUp ? 0 : duration;
     
     timerInterval = setInterval(() => {
-        console.log(time);
         
         if (countUp) {
             time++;

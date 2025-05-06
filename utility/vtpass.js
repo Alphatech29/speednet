@@ -1,11 +1,9 @@
 const { getWebSettings } = require("../utility/general");
 const generateHash = require("../utility/generateHash");
-const { generateUniqueRandomNumber } = require("../utility/generateUniqueRandomNumber");
+const { generateUniqueRandomNumber } = require("../utility/random");
 const axios = require('axios');
 
-/**
- * ✅ Generate authentication headers (with hash)
- */
+// ✅ Generate authentication headers (with hash)
 const getAuthHeaders = (payload, settings) => {
     const { vtpass_api_key, vtpass_pk, vtpass_sk } = settings;
 
@@ -19,9 +17,7 @@ const getAuthHeaders = (payload, settings) => {
     };
 };
 
-/**
- * ✅ Check VTpass Wallet Balance
- */
+// ✅ Check VTpass Wallet Balance
 exports.checkVtuBalance = async () => {
     try {
         const settingsArray = await getWebSettings();
@@ -52,9 +48,7 @@ exports.checkVtuBalance = async () => {
     }
 };
 
-/**
- * ✅ Direct Airtime Recharge
- */
+// ✅ Direct Airtime Recharge
 exports.rechargeAirtime = async (amount, type, phone) => {
     try {
         const balanceCheck = await exports.checkVtuBalance();
@@ -73,7 +67,7 @@ exports.rechargeAirtime = async (amount, type, phone) => {
 
         const payload = {
             serviceID: type,
-            request_id: generateUniqueRandomNumber(),  // Using generateUniqueRandomNumber for unique request ID
+            request_id: generateUniqueRandomNumber(),
             amount,
             phone,
         };
@@ -86,6 +80,48 @@ exports.rechargeAirtime = async (amount, type, phone) => {
         }
 
         return { success: false, error: result.data.response_description || "Recharge failed" };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+};
+
+// ✅ International Airtime Recharge Function
+exports.rechargeInternationalAirtime = async (amount, countryCode, phone) => {
+    try {
+        // Check VTU balance
+        const balanceCheck = await exports.checkVtuBalance();
+        if (!balanceCheck.success || balanceCheck.balance < amount) {
+            throw new Error("Insufficient VTU balance.");
+        }
+
+        // Load API settings
+        const settingsArray = await getWebSettings();
+        if (!settingsArray || settingsArray.length === 0) {
+            throw new Error("VTU settings are missing.");
+        }
+
+        const settings = settingsArray[0];
+        const url = `${settings.vtpass_url}/api/pay`;
+
+        // Use VTpass serviceID for international airtime
+        const serviceID = "intl_airtime";
+
+        const payload = {
+            serviceID,
+            request_id: generateUniqueRandomNumber(),
+            amount,
+            phone,
+            country: countryCode,
+        };
+
+        const headers = getAuthHeaders(payload, settings);
+        const result = await axios.post(url, payload, { headers });
+
+        if (result.data.code === "000") {
+            return { success: true, message: "International airtime sent", data: result.data };
+        }
+
+        return { success: false, error: result.data.response_description || "International recharge failed" };
     } catch (error) {
         return { success: false, error: error.message };
     }

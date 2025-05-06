@@ -14,18 +14,13 @@ const fapshiWebhook = async (req, res) => {
     const payload = req.body;
     const { transId, userId, amount, status } = payload;
 
-    console.log('📥 Received Fapshi Webhook Payload:', payload);
-    console.log('🌐 Incoming Headers:', req.headers);
-
     // Ignore unsuccessful transactions
     if (status !== 'SUCCESSFUL') {
-      console.log(`⚠️ Transaction ${transId || 'N/A'} ignored — status: ${status}`);
       return res.status(200).json({ message: 'Ignored (status not SUCCESSFUL)' });
     }
 
     // Validate required fields
     if (!transId || !userId || !amount) {
-      console.log('❌ Missing required fields:', { transId, userId, amount });
       return res.status(400).json({ error: 'Missing required fields for successful transaction' });
     }
 
@@ -34,27 +29,21 @@ const fapshiWebhook = async (req, res) => {
     const xafRate = settings?.xaf_rate;
 
     if (!xafRate || isNaN(xafRate)) {
-      console.log('❌ Invalid or missing exchange rate:', xafRate);
       return res.status(500).json({ error: 'Exchange rate not available or invalid' });
     }
 
     // Convert XAF to USD
     const usdAmount = await convertXafToUsd(amount, xafRate);
-    console.log(`💵 Converted XAF ${amount} @ ${xafRate} = USD ${usdAmount}`);
 
     // Fetch user details
     const userDetails = await getUserDetailsByUid(userId);
     const currentBalance = parseFloat(userDetails.account_balance || 0);
     const newBalance = currentBalance + parseFloat(usdAmount);
 
-    console.log(`🔁 Updating balance from ${currentBalance} to ${newBalance}`);
-
     // Update user balance
     const updateResult = await updateUserBalance(userId, newBalance);
-    console.log('📝 Update balance result:', updateResult);
 
     if (!updateResult.success) {
-      console.log('❌ Failed to update user balance for user:', userId);
       return res.status(500).json({ error: 'Failed to update user balance' });
     }
 
@@ -65,13 +54,11 @@ const fapshiWebhook = async (req, res) => {
       'Momo/Orange Deposit',
       'completed'
     );
-    console.log('📚 Transaction history creation result:', transactionHistoryResult);
 
     if (!transactionHistoryResult.success) {
       console.error('❌ Failed to create transaction history for user:', userId);
     }
 
-    console.log('✅ Webhook processing complete for transaction:', transId);
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('❌ Unhandled error during webhook processing:', error);
@@ -82,7 +69,6 @@ const fapshiWebhook = async (req, res) => {
 // Convert XAF to USD helper
 async function convertXafToUsd(xafAmount, xafRate) {
   const usdAmount = xafAmount / xafRate;
-  console.log(`🔄 Converting XAF ${xafAmount} to USD using rate ${xafRate}: ${usdAmount}`);
   return usdAmount;
 }
 
@@ -99,7 +85,7 @@ const cryptomusWebhook = async (req, res) => {
 
     const allowedIP = process.env.CRYPTOMUS_IP;
     const clientIP = getClientIP(req);
-    console.log('Incoming IP:', clientIP);
+
 
     if (!clientIP.includes(allowedIP)) {
       console.warn('Blocked: Unauthorized IP', clientIP);
@@ -107,13 +93,11 @@ const cryptomusWebhook = async (req, res) => {
     }
 
     const payload = req.body;
-    console.log('Parsed Payload:', payload);
 
     // Use the requested destructuring of payload
     const { order_id, amount, status } = payload;
 
     if (status !== 'paid') {
-      console.log('Ignored: Payment not completed');
       return res.status(200).json({ message: 'Ignored (status not paid)' });
     }
 
@@ -132,7 +116,6 @@ const cryptomusWebhook = async (req, res) => {
 
     const currentBalance = Number(userDetails.account_balance) || 0;
     const newBalance = currentBalance + Number(amount);
-    console.log(`Updating Balance: ${currentBalance} → ${newBalance}`);
 
     const updateResult = await updateUserBalance(userUid, newBalance);
     if (!updateResult.success) {
@@ -141,7 +124,6 @@ const cryptomusWebhook = async (req, res) => {
     }
 
     await createTransactionHistory(userUid, amount, 'Cryptomus Deposit', 'completed');
-    console.log('Transaction logged:', createTransactionHistory);
 
     return res.status(200).json({ success: true });
   } catch (error) {

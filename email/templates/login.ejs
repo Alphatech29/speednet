@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Notification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .header {
+      background-color: #0049b7;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .logo {
+      max-height: 50px;
+      margin-bottom: 10px;
+    }
+    .content {
+      padding: 30px;
+    }
+    .footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #0049b7;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .info-block {
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <% if (logo) { %>
+        <img src="<%= logo %>" alt="<%= site_name %> Logo" class="logo" />
+      <% } %>
+      <h2><%= site_name %> Login Notification</h2>
+    </div>
+    <div class="content">
+      <p>Hi <strong><%= user.name %></strong>,</p>
+      <p>This is to notify you that a login to your account was just made.</p>
+
+      <div class="info-block">
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <p><strong>Time:</strong> <%= new Date().toLocaleString('en-US', { timeZone: 'UTC' }) %> UTC</p>
+        <p><strong>IP Address:</strong> <%= ip_address || 'Not provided' %></p>
+        <p><strong>Device:</strong> <%= device_info || 'Unknown' %></p>
+      </div>
+
+      <p>If this was you, you can safely ignore this message.</p>
+      <p>If you didn’t log in, we strongly recommend resetting your password immediately.</p>
+
+      <a href="<%= web_url %>/auth/reset-password" class="btn">Reset Password</a>
+    </div>
+    <div class="footer">
+      &copy; <%= new Date().getFullYear() %> <%= site_name %>. All rights reserved. <br />
+      Need help? Contact us at <%= contact_email %>.
+    </div>
+  </div>
+</body>
+</html>

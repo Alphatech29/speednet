@@ -1,17 +1,20 @@
 CREATE TABLE users (
     uid BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(250) NOT NULL,
+    username VARCHAR(100) UNIQUE, -- Added
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    phone VARCHAR(20) UNIQUE,
+    phone_number VARCHAR(20) UNIQUE, -- Renamed from `phone`
     avatar VARCHAR(255) NOT NULL DEFAULT 'https://example.com/default-avatar.png',
     role ENUM('admin', 'user', 'moderator') NOT NULL DEFAULT 'user',
     account_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     merchant_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     referral_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    escrow_balance DECIMAL(10,2) NOT NULL DEFAULT 0.00, -- Added
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE accounts (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -21,8 +24,12 @@ CREATE TABLE accounts (
     logo_url VARCHAR(255) DEFAULT NULL,
     email VARCHAR(100) DEFAULT NULL,
     recovery_email VARCHAR(100) DEFAULT NULL,
+    recoveryEmailpassword VARCHAR(255) DEFAULT NULL,
+    additionalEmail VARCHAR(100) DEFAULT NULL,
+    additionalPassword VARCHAR(255) DEFAULT NULL,
     username VARCHAR(100) DEFAULT NULL,
     password VARCHAR(255) NOT NULL,
+    previewLink VARCHAR(255) DEFAULT NULL, -- Added this line
     description TEXT DEFAULT NULL,
     price DECIMAL(10,2) DEFAULT 0.00,
     category VARCHAR(100) NOT NULL DEFAULT 'Other',
@@ -30,7 +37,8 @@ CREATE TABLE accounts (
     expiry_date DATE DEFAULT NULL, 
     two_factor_enabled BOOLEAN DEFAULT FALSE,
     two_factor_description VARCHAR(255) DEFAULT NULL,
-    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'active',
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(uid) ON DELETE CASCADE
 );
@@ -107,13 +115,31 @@ CREATE TABLE web_settings (
     support_email VARCHAR(255) NULL,
     contact_number VARCHAR(20) NULL,
     currency VARCHAR(10) NOT NULL DEFAULT '$',
+    web_url VARCHAR(255) NULL,
+    fapshi_user VARCHAR(255) NULL,
+    fapshi_key VARCHAR(255) NULL,
+    fapshi_url VARCHAR(255) NULL,
+    xaf_rate DECIMAL(10,2) NULL,
+    cryptomus_merchant_uuid VARCHAR(255) NULL,
+    cryptomus_api_key VARCHAR(255) NULL,
+    cryptomus_url VARCHAR(255) NULL,
+    vtpass_api_key VARCHAR(255) NULL,
+    vtpass_pk VARCHAR(255) NULL,
+    vtpass_sk VARCHAR(255) NULL,
+    vtpass_url VARCHAR(255) NULL,
     logo VARCHAR(255) NULL,
     favicon VARCHAR(255) NULL,
     address TEXT NULL,
-    header_code TEXT NULL, 
+    header_code TEXT NULL,
     footer_code TEXT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE platforms (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  image_path VARCHAR(255) NOT NULL
 );
 
 

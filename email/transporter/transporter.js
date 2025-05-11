@@ -3,11 +3,14 @@ const logger = require("../../utility/logger");
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
-  secure: true,
+  port: 465,
   auth: {
-    user: 'alphatechmultimedia@gmail.com',
-    pass: 'Newsline2470$'
-  }
+    user: 'afrovilla01@gmail.com',
+    pass: 'lzzx fuqi oznb wigx'
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
 });
 
 // Verify the transporter

@@ -8,7 +8,7 @@ import Marchant from '../views/user/wallet/vendor';
 import Apply from '../views/user/merchant/apply';
 import Checkout from '../views/user/shop/checkOut/checkOut';
 import Myproduct from "./../views/user/product/myProduct";
-import AddNewProdunct from '../views/user/product/addNewProdunct';
+import AddNewProdunct from '../views/user/product/addNewProduct';
 import Withdrawal from '../views/user/withdrawal/withdrawal';
 import NordVpn from "./../views/user/nordService/nordVpn";
 import Pricing from '../views/user/nordService/pricing';

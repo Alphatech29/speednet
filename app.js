@@ -13,6 +13,10 @@ const logger = require("./utility/logger");
 dotenv.config();
 const app = express();
 
+// Apply helmet to secure headers, including CSP
+app.use(helmet());
+
+
 // ✅ Parse JSON & URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
@@ -38,10 +42,19 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      imgSrc: ["*"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["*", "data:", "blob:"],  // ← wildcard + base64 + blob
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"],
     },
   })
 );
+
+// Serve static files (assuming your React app is built)
+app.use(express.static('build'));
 
 // ✅ API routes
 app.use("/auth", authRoute);

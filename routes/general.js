@@ -1,6 +1,6 @@
 const express = require("express");
 const generalRoute = express.Router();
-const { getAllAccounts } = require("../utility/accounts");
+const { getAllAccounts,getAllPlatforms } = require("../utility/accounts");
 const { activateAccount } = require('../utility/upgrade');
 const { getWebSettings } = require('../utility/general')
 const { getUser } = require('../utility/user')
@@ -9,11 +9,14 @@ const { getUserTransactions, getUserOrderHistory } = require('../controller/user
 const { collectOrder } = require("../controller/user/purchase");
 const { fetchUserOrders } = require("../controller/user/accountOrder");
 const { getAccounts } = require('../controller/user/accounts')
+const { accountCreation } = require('../controller/user/createAccount')
 const { Deposit } = require('../controller/user/deposit')
 
 
 // ------- General ---------//
 generalRoute.get("/accounts", getAllAccounts);
+generalRoute.get("/platforms", getAllPlatforms)
+generalRoute.post("/create-account", accountCreation);
 generalRoute.post("/activate", activateAccount);
 generalRoute.get("/websettings", getWebSettings);
 generalRoute.get("/user/:userUid", getUser);

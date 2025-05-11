@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const pool = require("../../model/db");
+const { sendWelcomeEmail } = require("../../email/mails/onboarding");
 
 const register = async (req, res) => {
   try {
@@ -38,7 +39,7 @@ const register = async (req, res) => {
       return res.status(409).json({
         success: false,
         message: "Registration failed",
-        errors, // Sends detailed error list
+        errors,
       });
     }
 
@@ -52,32 +53,37 @@ const register = async (req, res) => {
       [full_name, email, phone_number, hashedPassword]
     );
 
-    console.log("✅ User registered successfully:", {
-      userId: insertResult.insertId,
-      full_name,
-      email,
-      phone_number,
-    });
+    const newUser = {
+      id: insertResult.insertId,
+      name: full_name,
+      email: email,
+    };
 
-    // ✅ Send response to frontend
+    console.log("✅ User registered successfully:", newUser);
+
+    // ✅ Send Welcome Email
+    try {
+      await sendWelcomeEmail(newUser);
+      console.log("📧 Welcome email triggered for:", email);
+    } catch (emailErr) {
+      console.error("⚠️ Failed to send welcome email:", emailErr);
+      // optional: do not fail the request just because email failed
+    }
+
+    // ✅ Final Response
     return res.status(201).json({
       success: true,
       message: "User created successfully",
-      data: {
-        userId: insertResult.insertId,
-        full_name,
-        email,
-        phone_number,
-      },
+      data: newUser,
     });
+
   } catch (error) {
     console.error("❌ Error during sign-up:", error);
 
-    // ✅ Send error response to frontend
     return res.status(500).json({
       success: false,
       message: "Internal server error",
-      error: process.env.NODE_ENV === "development" ? error.stack : null, 
+      error: process.env.NODE_ENV === "development" ? error.stack : null,
     });
   }
 };

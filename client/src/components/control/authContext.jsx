@@ -11,22 +11,18 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
   const [webSettings, setWebSettings] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  const isMerchant = user?.role === "merchant";
 
   const fetchWebSettings = async () => {
     try {
       const result = await getWebSettings();
       if (result?.success && result.data) {
         const storedWebSettings = JSON.parse(localStorage.getItem("webSettings"));
-
         if (JSON.stringify(result.data) !== JSON.stringify(storedWebSettings)) {
           setWebSettings(result.data);
           localStorage.setItem("webSettings", JSON.stringify(result.data));
         }
-      } else {
-        console.error("❌ Failed to load web settings:", result?.message);
       }
     } catch (error) {
       console.error("❌ Error fetching web settings:", error);
@@ -34,19 +30,12 @@ const AuthProvider = ({ children }) => {
   };
 
   const fetchUser = async (userUid) => {
-    if (!userUid || (typeof userUid !== "string" && typeof userUid !== "number")) {
-      console.error("❌ Invalid user UID:", userUid);
-      return;
-    }
-
     try {
       const result = await getUser(userUid.toString());
       if (result?.success && result.data) {
         setUser(result.data);
         localStorage.setItem("user", JSON.stringify(result.data));
         Cookies.set("user", JSON.stringify(result.data), { expires: 7 });
-      } else {
-        console.error("❌ Failed to load user:", result?.message);
       }
     } catch (error) {
       console.error("❌ Error fetching user:", error);
@@ -77,12 +66,14 @@ const AuthProvider = ({ children }) => {
           if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             if (parsedUser?.uid) {
-              fetchUser(parsedUser.uid);
+              await fetchUser(parsedUser.uid);
             }
           }
         }
       } catch (error) {
         console.error("❌ Error retrieving auth data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -114,10 +105,7 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     setCart([]);
     setWebSettings(null);
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
-    localStorage.removeItem("cart");
-    localStorage.removeItem("webSettings");
+    localStorage.clear();
     Cookies.remove("authToken");
     Cookies.remove("user");
     Cookies.remove("cart");
@@ -126,8 +114,12 @@ const AuthProvider = ({ children }) => {
 
   const updateCartState = (newCart) => {
     setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart)); // Persist cart in localStorage
+    localStorage.setItem("cart", JSON.stringify(newCart));
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider
@@ -136,10 +128,9 @@ const AuthProvider = ({ children }) => {
         user,
         cart,
         webSettings,
-        isMerchant,
         signIn,
         logout,
-        updateCartState, // Make this function available for child components
+        updateCartState,
       }}
     >
       {children}

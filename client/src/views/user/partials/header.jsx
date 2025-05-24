@@ -7,8 +7,9 @@ import { CgProfile } from "react-icons/cg";
 import { FaUsers } from "react-icons/fa6";
 import { AuthContext } from "../../../components/control/authContext";
 import Cart from "../shop/cart/cart";
+import { BiMenu } from "react-icons/bi";
 
-const Header = () => {
+const Header = ({ toggleSidebar, className }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isNoticeOpen, setIsNoticeOpen] = useState(false);
@@ -59,8 +60,18 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-full bg-slate-800 shadow-lg px-4 py-2 text-white">
-      <div className="flex w-full justify-end items-end space-x-3 relative">
+    <div className={`w-full bg-slate-800 shadow-lg px-4 py-2 text-white mobile:sticky mobile:top-0 mobile:z-10 ${className}`}>
+      <div className="flex w-full justify-end items-center space-x-3 relative">
+        {/* Menu Icon */}
+        <div className="mobile:flex pc:hidden justify-start items-start w-full">
+          <span
+            className="border rounded-md cursor-pointer"
+            onClick={toggleSidebar}
+          >
+            <BiMenu className="text-[25px]" />
+          </span>
+        </div>
+
         {/* Notification Icon */}
         <span ref={noticeRef} className="relative">
           <MdNotificationsActive

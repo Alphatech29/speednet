@@ -142,6 +142,25 @@ CREATE TABLE platforms (
   image_path VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE withdrawals (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    method ENUM('Bank', 'Crypto', 'MOMO') NOT NULL,
+    bank_code VARCHAR(20) DEFAULT NULL,
+    account_number VARCHAR(20) DEFAULT NULL,
+    account_name VARCHAR(100) DEFAULT NULL,
+    wallet_address VARCHAR(255) DEFAULT NULL,
+    wallet_network VARCHAR(10) DEFAULT NULL,
+    momo_number VARCHAR(20) DEFAULT NULL,
+    transaction_no VARCHAR(100) DEFAULT NULL,
+    status ENUM('Processing', 'Approved', 'Rejected', 'Completed') DEFAULT 'Processing',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(uid) ON DELETE CASCADE
+);
+
 
 
 

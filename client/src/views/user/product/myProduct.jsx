@@ -67,7 +67,7 @@ const Myproduct = () => {
       </div>
 
       {/* Product List Section */}
-      <div className="bg-slate-700 flex flex-col w-full border border-gray-400 rounded-lg px-3 py-4">
+      <div className="bg-slate-700 flex flex-col w-full border border-gray-400 rounded-lg px-3 py-4 overflow-auto">
         {/* Table for listing products */}
         <Table hoverable={true} className="bg-transparent">
           <Table.Head className="text-gray-200 font-semibold">

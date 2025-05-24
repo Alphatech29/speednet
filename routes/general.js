@@ -11,6 +11,7 @@ const { fetchUserOrders } = require("../controller/user/accountOrder");
 const { getAccounts } = require('../controller/user/accounts')
 const { accountCreation } = require('../controller/user/createAccount')
 const { Deposit } = require('../controller/user/deposit')
+const {  getBanks, verifyAccount } = require('../utility/bankVerify')
 
 
 // ------- General ---------//
@@ -28,6 +29,8 @@ generalRoute.get('/get-accounts/:userUid', getAccounts);
 generalRoute.post("/pay", Deposit);
 generalRoute.post("/fapshi/webhook", fapshiWebhook);
 generalRoute.post("/cryptomus/webhook", cryptomusWebhook);
+generalRoute.get("/bank", getBanks);
+generalRoute.post("/verify-bank-account", verifyAccount);
 
 
 

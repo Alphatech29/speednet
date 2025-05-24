@@ -115,6 +115,15 @@ const AuthProvider = ({ children }) => {
   const updateCartState = (newCart) => {
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
+    Cookies.set("cart", JSON.stringify(newCart), { expires: 7 });
+  };
+
+  // ✅ New: removeFromCart by item ID
+  const removeFromCart = (itemId) => {
+    const updatedCart = cart.filter((item) => item.id !== itemId);
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    Cookies.set("cart", JSON.stringify(updatedCart), { expires: 7 });
   };
 
   if (loading) {
@@ -131,6 +140,7 @@ const AuthProvider = ({ children }) => {
         signIn,
         logout,
         updateCartState,
+        removeFromCart, // ✅ Expose in context
       }}
     >
       {children}

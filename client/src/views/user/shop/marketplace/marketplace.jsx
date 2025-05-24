@@ -78,7 +78,7 @@ const Marketplace = () => {
     <div className="flex flex-col gap-4">
       <ToastContainer className="text-sm" />
 
-      <div className="flex justify-between items-center">
+      <div className="pc:flex mobile:gap-2 justify-between items-center">
         <div>
           <h1 className="text-2xl text-white font-medium">Marketplace</h1>
           <p className="text-sm text-gray-300">
@@ -92,7 +92,7 @@ const Marketplace = () => {
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder="Search by name or category"
-            className="p-2 w-56 border shadow-md border-slate-50 rounded-md bg-transparent text-white placeholder-gray-400"
+            className="p-2 pc:w-56 mobile:w-full border shadow-md border-slate-50 rounded-md bg-transparent text-white placeholder-gray-400"
           />
         </div>
       </div>
@@ -108,14 +108,14 @@ const Marketplace = () => {
         </div>
       )}
 
-      <div className="w-full grid grid-cols-5 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-3">
+      <div className="w-full grid pc:grid-cols-5 mobile:grid-cols-2 pc:gap-4 mobile:gap-3  mt-3">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => {
             const isAdded = cart.some((item) => item.id === product.id);
             return (
               <div
                 key={product.id}
-                className="flex justify-between gap-4 flex-col shadow-lg shadow-slate-950 p-2 rounded-lg w-48 bg-gray-700"
+                className="flex justify-between gap-4 flex-col shadow-lg shadow-slate-950 p-2 rounded-lg mobile:w-[175px] pc:w-48 bg-gray-700"
               >
                 <div className="w-full h-[120px]">
                   <img

@@ -44,8 +44,8 @@ const Wallet = () => {
       {user && webSettings && (
         <>
           <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
-          <div className="w-full flex justify-start items-center h-[500px] rounded-lg border border-gray-400 overflow-hidden">
-            <div className="bg-primary-600 w-96 py-4 px-4 h-full flex flex-col gap-2 justify-between items-center">
+          <div className="w-full pc:flex justify-start items-center pc:h-[500px] mobile:min-h-[700px] mobile:max-h-[1200px] rounded-lg border border-gray-400 overflow-hidden">
+            <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-full flex flex-col gap-2 pc:justify-between items-center">
               <div className="mt-12 flex flex-col items-center justify-center">
                 <span className="text-pay text-sm">Available Balance</span>
                 <p className="text-pay text-lg font-semibold text-center">
@@ -54,20 +54,20 @@ const Wallet = () => {
                 </p>
               </div>
               <button
-                className="w-full shadow-white shadow-md py-2 rounded-md flex justify-center items-center gap-3 text-gray-200 text-[17px]"
+                className="w-full shadow-white shadow-md py-2 rounded-md flex justify-center items-center gap-3 text-gray-200 pc:text-[17px] mobile:text-[13px] mobile:mt-8"
                 onClick={() => setDepositOpen(true)}
               >
-                <IoMdAddCircle className="text-[20px]" /> Add Fund
+                <IoMdAddCircle className="pc:text-[20px] mobile:text-[16px]" /> Add Fund
               </button>
             </div>
 
-            <div className="bg-slate-700 gap-5 h-full flex flex-col w-full px-3 py-4">
-              <div className="w-full flex justify-between items-center text-white text-base">
+            <div className="bg-slate-700 gap-5  h-full flex flex-col w-full px-3 py-4 ">
+              <div className="w-full flex justify-between items-center text-white pc:text-base mobile:text-[13px]">
                 <span>Recent Transactions</span>
                 <span className="cursor-pointer">View More</span>
               </div>
 
-              <div className="overflow-x-auto text-gray-300">
+              <div className="overflow-x-auto text-gray-300 ">
                 {loading ? (
                   <p className="text-gray-400 text-center">Loading transactions...</p>
                 ) : transactions.length > 0 ? (
@@ -82,12 +82,12 @@ const Wallet = () => {
                     <Table.Body className="divide-y">
                       {transactions.slice(0, 6).map((transaction) => (
                         <Table.Row key={transaction.transaction_no}>
-                          <Table.Cell className="text-gray-300">{transaction.transaction_no}</Table.Cell>
-                          <Table.Cell className="text-gray-300">{transaction.transaction_type}</Table.Cell>
-                          <Table.Cell className="text-gray-300">{formatAmount(transaction.amount)}</Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{transaction.transaction_no}</Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{transaction.transaction_type}</Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{formatAmount(transaction.amount)}</Table.Cell>
                           <Table.Cell >
                             <div
-                              className={`px-3 py-1 rounded-full ${
+                              className={`px-3 py-1 mobile:text-[12px] pc:text-sm rounded-full ${
                                 transaction.status.toLowerCase() === "completed"
                                   ? "bg-green-500"
                                   : "bg-yellow-500"
@@ -96,7 +96,7 @@ const Wallet = () => {
                               {transaction.status}
                             </div>
                           </Table.Cell>
-                          <Table.Cell className="text-gray-300">{formatDateTime(transaction.created_at)}</Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{formatDateTime(transaction.created_at)}</Table.Cell>
                         </Table.Row>
                       ))}
                     </Table.Body>

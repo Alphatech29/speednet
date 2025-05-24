@@ -1,12 +1,791 @@
-[2025-05-12T05:18:19.323Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:22:50.527Z] [INFO]: 🚀 Server running on port 8000
-[2025-05-12T05:22:52.040Z] [INFO]: Gmail transporter is ready to send emails
-[2025-05-12T05:23:05.235Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:23:09.812Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:23:14.604Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:23:29.587Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:23:33.696Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:24:15.081Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:26:01.048Z] [WARN]: No orders found for user: 4
-[2025-05-12T05:26:02.254Z] [INFO]: Fetched 4 accounts
-[2025-05-12T05:26:06.392Z] [WARN]: No orders found for user: 4
+[2025-05-20T15:20:41.796Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-20T15:20:42.924Z] [INFO]: Fetched 4 accounts
+[2025-05-20T15:36:54.162Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:36:55.569Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T15:37:25.057Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:37:26.199Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T15:39:36.616Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:39:37.916Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T15:48:20.974Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:48:22.103Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T15:48:44.161Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:48:45.320Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T15:50:09.652Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:50:10.689Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T15:59:12.198Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T15:59:13.276Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T16:00:58.404Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T16:01:01.169Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T16:01:23.326Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T16:01:24.908Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T16:01:29.770Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T16:01:31.473Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T16:04:34.761Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T16:04:35.826Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T16:10:10.516Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-20T16:10:15.257Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-20T17:23:12.242Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:23:13.668Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:25:54.193Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:25:55.335Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:26:52.386Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:26:53.484Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:28:06.681Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:28:07.815Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:29:25.722Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:29:26.857Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:36:45.470Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:36:46.631Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:39:29.193Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:39:30.307Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T17:40:38.337Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T17:40:39.468Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:21:01.846Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:21:03.107Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:21:28.121Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:21:29.356Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:47:05.165Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:47:06.257Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:47:39.104Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:47:40.231Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:48:57.922Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:49:00.095Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:54:00.040Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:54:02.062Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T18:55:31.912Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T18:55:33.099Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:03:12.715Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:03:23.428Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:06:01.172Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:06:02.302Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:07:39.665Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:07:40.759Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:08:17.965Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:08:19.404Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:21:21.462Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:21:22.881Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:21:53.287Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:21:54.667Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:42:46.603Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:42:47.764Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:44:22.155Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:44:23.349Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:44:33.807Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:44:34.950Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:44:48.813Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:44:49.965Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:48:59.393Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:49:00.499Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T19:52:22.491Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T19:52:23.588Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:20:17.424Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:20:18.581Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:24:54.082Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:24:55.415Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:27:50.876Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:27:52.326Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:34:25.508Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:34:26.730Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:49:19.028Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:49:20.219Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:50:26.348Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:50:27.561Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:50:46.896Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:50:48.113Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:51:01.380Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:51:02.366Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:51:43.482Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:51:44.818Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:52:47.330Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:52:48.470Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:52:56.926Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:52:57.918Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:54:26.422Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:54:27.438Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:54:35.457Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:54:36.490Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:56:20.620Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:56:21.872Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:56:35.607Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:56:36.859Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T20:56:53.523Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T20:56:54.634Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T21:01:33.185Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T21:01:37.571Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T21:02:59.118Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T21:03:00.256Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T21:06:41.807Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T21:06:43.150Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T21:07:05.242Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T21:07:06.535Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-20T21:09:12.872Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-20T21:09:14.122Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T00:59:48.339Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T00:59:50.579Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T01:01:51.989Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T01:01:53.151Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T01:04:53.850Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T01:04:53.887Z] [INFO]: Login notification email sent:
+[2025-05-21T02:15:22.820Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:15:24.337Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:23:43.575Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:23:44.909Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:27:28.641Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:27:29.638Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:37:06.100Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:37:07.137Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:37:33.364Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:37:34.433Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:38:37.290Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:38:38.336Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:41:11.431Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:41:12.575Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:41:30.334Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:41:31.319Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:42:01.394Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:42:02.456Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:47:10.872Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T02:47:11.975Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T02:50:33.471Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T03:00:34.009Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:00:35.146Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:00:40.159Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:00:41.137Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:03:44.227Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:03:45.259Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:08:07.940Z] [INFO]: Login notification email sent:
+[2025-05-21T03:08:07.969Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T03:10:02.860Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:10:03.844Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:11:43.133Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:11:44.118Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:17:53.478Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:17:54.846Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:18:21.931Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:18:22.944Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:18:48.286Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:18:49.279Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:19:53.588Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:19:54.580Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:21:16.854Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:21:18.800Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:22:08.625Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:22:09.599Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:23:28.500Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:23:29.470Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:26:50.016Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T03:26:56.701Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:26:57.748Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:27:57.406Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:27:58.446Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:28:52.902Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:28:54.264Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:29:06.435Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:29:07.506Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:29:48.474Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:29:49.511Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:29:56.255Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:29:57.214Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:31:20.229Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:31:21.449Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:31:32.421Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:31:33.445Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:35:30.967Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:35:31.960Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:36:11.482Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:36:12.442Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T03:36:43.090Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T03:36:44.104Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T10:06:54.509Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T10:06:58.511Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T10:37:26.396Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T10:37:27.728Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T10:37:44.565Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T10:37:45.582Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T10:38:11.711Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T10:38:12.925Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T10:41:06.175Z] [INFO]: Login notification email sent:
+[2025-05-21T10:41:06.228Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T11:36:26.467Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:36:27.668Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:37:43.223Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:37:44.343Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:41:19.839Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:41:21.022Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:41:58.475Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:41:59.534Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:47:13.919Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:47:15.502Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:50:49.254Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:50:50.408Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:53:55.942Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:53:56.992Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:55:28.216Z] [INFO]: Login notification email sent:
+[2025-05-21T11:55:28.303Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T11:57:12.915Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:57:14.001Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:58:18.077Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:58:19.123Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T11:59:28.850Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T11:59:30.054Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:01:41.081Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:01:44.120Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:03:46.550Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:03:47.695Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:06:26.029Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:06:27.377Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:07:36.408Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:07:37.879Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:08:07.192Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:08:08.739Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:10:52.803Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:10:53.933Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:12:21.002Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:12:22.394Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:14:06.223Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:14:11.341Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:16:28.344Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:16:29.617Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:17:54.463Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:17:56.163Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:18:26.570Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:18:28.012Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:18:32.665Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:18:33.870Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:20:47.801Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:20:49.084Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:22:58.457Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:22:59.614Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:24:50.774Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:24:51.968Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:30:56.386Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:30:57.495Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:33:09.223Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:33:10.601Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:34:13.749Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T12:34:14.835Z] [INFO]: Login notification email sent:
+[2025-05-21T12:34:46.097Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-21T12:34:46.108Z] [INFO]: Login notification email sent:
+[2025-05-21T12:37:24.189Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:37:25.303Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:37:55.052Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-21T12:37:56.167Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-21T12:38:02.036Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:24:21.388Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T20:24:34.302Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T20:27:36.522Z] [INFO]: Login notification email sent:
+[2025-05-23T20:27:36.681Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:34:03.341Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T20:34:04.433Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T20:34:35.447Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:34:54.507Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:35:18.697Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:35:41.278Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:36:28.233Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:42:14.218Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:43:27.877Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T20:43:29.964Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T20:43:34.158Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T20:43:36.007Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T20:44:39.697Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T20:48:55.313Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:10:51.330Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:10:52.419Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:10:57.457Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:10:58.941Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:14:05.347Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:19:10.812Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:19:12.187Z] [INFO]: Login notification email sent:
+[2025-05-23T21:20:17.371Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:20:18.861Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:21:18.031Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:21:19.411Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:21:21.519Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:21:27.541Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:22:14.904Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:22:15.997Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:22:40.889Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:22:45.803Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:23:02.360Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:23:03.586Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:23:32.840Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:23:34.143Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:24:09.775Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:24:51.520Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:24:52.629Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:25:01.811Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:26:19.059Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:26:28.589Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:26:30.269Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:26:34.778Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:27:36.490Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:27:38.022Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:27:38.225Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:27:46.939Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:29:13.493Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:29:27.289Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:32:58.258Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:33:00.561Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:34:47.451Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:34:48.663Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:34:51.918Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:34:53.088Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:34:54.771Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:34:58.331Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:36:29.390Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:36:30.586Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:36:41.739Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:37:23.794Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:37:32.511Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:37:35.257Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:40:16.926Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:43:03.999Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:43:05.055Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:44:01.571Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:44:02.822Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:44:16.412Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:44:17.944Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:44:19.177Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:44:25.635Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:44:26.683Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:44:33.924Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:44:42.872Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:44:47.707Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:46:19.121Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:46:20.820Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:46:31.377Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:46:32.702Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:47:09.689Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:47:21.454Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:48:34.748Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:48:38.279Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:48:44.665Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:48:45.720Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:48:51.261Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:49:42.651Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:49:43.916Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:51:07.058Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:51:58.235Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:51:59.481Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:52:45.160Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:53:36.992Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:53:38.191Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:53:42.381Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:54:14.171Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:56:00.300Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:56:01.574Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:56:07.010Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:57:34.199Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:57:35.745Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:58:02.299Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:58:03.459Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:58:09.350Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T21:59:05.085Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:59:06.386Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T21:59:28.028Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T21:59:29.411Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:00:27.234Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:00:28.299Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:00:29.304Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:01:20.707Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:01:21.944Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:02:00.424Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:02:01.890Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:02:28.706Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:02:29.964Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:02:39.076Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:02:40.437Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:02:44.671Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:04:06.189Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:04:07.276Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:05:08.848Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:05:13.168Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:06:13.921Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:06:15.111Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:06:15.570Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:08:54.063Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:08:55.368Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:09:04.014Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:10:24.788Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:10:25.910Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:10:34.419Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:10:35.510Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:10:50.911Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:12:07.103Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:12:08.749Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:12:32.740Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:12:33.889Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:12:56.455Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:12:57.516Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:13:09.781Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:14:27.182Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:14:29.241Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:15:03.334Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:15:04.572Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:15:11.832Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:15:12.973Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:15:14.171Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:15:17.103Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:17:03.376Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:17:04.733Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:17:37.182Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:17:39.524Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:18:08.671Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:18:09.805Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:18:31.119Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:18:32.316Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:18:33.232Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:20:23.137Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:20:24.245Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:20:37.566Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:21:00.060Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:24:09.521Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:35:20.996Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:35:22.319Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:35:53.655Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:35:54.796Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:36:26.879Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:37:31.494Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:37:32.646Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:38:12.280Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:38:13.546Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:38:17.319Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:38:18.378Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:38:21.989Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:39:39.898Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:39:41.276Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:39:52.147Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:39:53.312Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:39:56.963Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:40:54.898Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:40:55.940Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:41:34.425Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:42:30.208Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:42:31.390Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:42:52.485Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:42:53.528Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:43:12.329Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:43:51.515Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:43:52.558Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:44:13.700Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:44:49.655Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:44:50.842Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:45:45.167Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:45:46.290Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:45:57.027Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:47:29.487Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:47:30.512Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:48:15.361Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:49:21.250Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:49:22.342Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:49:28.639Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:49:29.694Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:49:33.902Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:49:37.304Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:49:43.724Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:51:37.496Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:51:38.854Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:51:46.439Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:51:47.664Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:51:49.319Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:51:50.700Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:52:23.982Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:54:32.427Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:54:33.516Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:54:55.575Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:54:56.675Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:54:59.877Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:55:08.819Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:56:46.764Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:56:48.049Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:56:57.946Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:56:58.936Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:57:01.781Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T22:58:07.301Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T22:58:08.344Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T22:58:28.232Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:02:17.494Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:02:18.551Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:02:22.924Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:03:58.821Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:03:59.975Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:07:39.088Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:07:40.225Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:12:38.294Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:12:39.473Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:13:06.920Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:13:30.826Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:21:22.257Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:21:23.273Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:28:06.692Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:28:08.079Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:28:37.567Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:28:38.918Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:28:42.158Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:28:43.227Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:29:55.733Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:29:56.975Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:30:14.198Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:30:15.534Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:30:31.993Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:30:33.073Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:30:49.180Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:30:50.276Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:31:19.567Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:31:20.625Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:32:23.648Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:32:30.631Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:32:31.775Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:32:35.137Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:33:23.545Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:33:44.459Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:33:45.498Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:34:05.622Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:38:31.316Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:38:32.494Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:38:35.149Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:38:40.921Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:38:41.993Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:38:45.865Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:40:06.776Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:40:12.970Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:40:14.419Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:41:20.714Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:42:16.138Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:42:22.200Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:42:31.770Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:43:15.526Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:43:16.688Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:43:18.938Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:43:58.304Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:43:59.462Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:44:01.938Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:44:13.149Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:44:48.161Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-23T23:45:29.814Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:45:58.879Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:47:51.660Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:47:52.785Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:48:40.638Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:49:21.345Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:49:24.136Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:49:26.726Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:49:31.906Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:49:33.044Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:49:36.766Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:50:35.109Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:50:38.053Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:51:54.131Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:51:55.224Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:52:00.186Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:52:47.987Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:52:49.053Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:52:50.277Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:53:16.169Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:53:30.595Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:53:31.669Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:53:32.355Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:54:17.003Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:54:18.259Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:54:18.566Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:54:23.416Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:55:18.908Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:55:19.981Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:56:05.509Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:56:06.558Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:56:19.159Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:56:26.350Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:57:16.709Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:57:37.264Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:57:38.532Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:57:45.521Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:57:46.683Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:57:51.027Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:59:11.284Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:59:12.468Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:59:21.347Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:59:22.512Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:59:24.674Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-23T23:59:25.717Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-23T23:59:38.269Z] [INFO]: Fetched 4 accounts
+[2025-05-23T23:59:44.770Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:00:22.811Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:00:24.034Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:00:43.067Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:01:23.048Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:01:24.114Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:01:57.223Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:02:05.351Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:02:06.437Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:02:08.615Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:04:16.626Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:05:03.992Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:05:05.360Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:05:24.576Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:05:25.891Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:05:55.786Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:06:10.208Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:07:07.587Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:07:08.826Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:07:10.427Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:07:12.744Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:08:09.681Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:08:11.402Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:08:15.299Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:08:22.675Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:08:58.547Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:08:59.700Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:09:04.200Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:09:43.686Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:09:44.947Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:09:52.066Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:11:26.043Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:11:27.219Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:11:30.492Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:13:00.278Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:13:01.360Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:13:06.063Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:13:52.345Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:15:04.906Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:15:05.965Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:15:13.618Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:16:28.744Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:16:29.942Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:16:32.800Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:16:38.092Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:17:18.456Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:17:19.535Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:17:27.548Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:18:47.503Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:18:49.389Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:19:11.360Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:20:19.188Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:21:42.819Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:21:43.949Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:21:49.684Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:21:54.621Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:21:55.645Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:22:04.305Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:22:11.606Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:22:54.934Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:23:16.707Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:23:17.810Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:23:19.735Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:23:20.774Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:23:22.723Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:23:32.428Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:23:43.653Z] [INFO]: Fetched 2 platforms
+[2025-05-24T00:24:12.668Z] [INFO]: Fetched 2 platforms
+[2025-05-24T00:26:03.980Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:26:05.253Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:26:05.984Z] [INFO]: Fetched 2 platforms
+[2025-05-24T00:27:34.927Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:27:36.042Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:27:38.104Z] [INFO]: Fetched 2 platforms
+[2025-05-24T00:27:57.161Z] [INFO]: Fetched 2 platforms
+[2025-05-24T00:28:02.633Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-24T00:28:04.420Z] [INFO]: Fetched 4 accounts
+[2025-05-24T00:30:06.538Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:30:07.672Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:32:55.954Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:32:57.151Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:33:51.608Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:33:52.691Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:34:54.135Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:34:55.227Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:36:23.371Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:36:24.540Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:37:51.924Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:37:53.097Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:38:13.238Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:38:14.316Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:38:58.741Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:38:59.848Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:40:00.134Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:40:01.280Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:40:21.488Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:40:22.671Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:41:47.576Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:41:48.620Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:42:24.210Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:42:26.297Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:43:11.877Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:43:14.273Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:43:48.076Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:43:49.115Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:43:50.837Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:43:51.905Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:44:40.301Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T00:44:41.396Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T00:45:48.941Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-24T09:42:29.135Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:42:30.507Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:43:00.503Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:43:02.869Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:44:19.456Z] [INFO]: Fetched 1 orders for user: 4
+[2025-05-24T09:44:19.799Z] [INFO]: Login notification email sent:
+[2025-05-24T09:49:43.605Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:49:45.109Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:50:05.666Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:50:06.900Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:50:15.454Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:50:16.693Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:55:38.465Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:55:39.912Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:56:11.969Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:56:13.269Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:58:12.252Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:58:13.722Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:58:44.710Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:58:45.984Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T09:59:46.207Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T09:59:47.842Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:06:03.303Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:06:05.409Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:08:16.903Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:08:18.508Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:11:48.628Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:11:50.257Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:12:19.250Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:12:20.558Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:13:57.429Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:14:01.106Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:15:06.024Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:15:07.556Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:17:05.670Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:17:07.771Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:18:09.579Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:18:13.977Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:18:44.780Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:18:46.185Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:19:40.075Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:19:42.142Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:22:32.127Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:22:33.573Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:23:03.424Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:23:05.043Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:26:34.070Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:26:35.579Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:40:18.045Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:40:19.942Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:45:05.285Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:45:07.051Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:45:18.677Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:45:21.409Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:47:05.241Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:47:07.295Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:48:17.082Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:48:18.912Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:49:24.966Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:49:26.570Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:49:36.806Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:49:38.186Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:50:23.382Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:50:24.776Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:53:22.407Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:53:23.842Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:53:27.719Z] [INFO]: [createPayment] Payment URL generated successfully for order:
+[2025-05-24T10:55:20.699Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:55:22.221Z] [INFO]: Gmail transporter is ready to send emails
+[2025-05-24T10:57:10.647Z] [INFO]: 🚀 Server running on port 8000
+[2025-05-24T10:57:11.977Z] [INFO]: Gmail transporter is ready to send emails

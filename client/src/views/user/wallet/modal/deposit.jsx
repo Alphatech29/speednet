@@ -84,12 +84,12 @@ const Deposit = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex justify-center mobile:px-4 items-center bg-black bg-opacity-50 z-50">
       <ToastContainer />
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-[500px] flex flex-col gap-4 text-center text-gray-200">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg pc:w-[500px] flex flex-col gap-4 text-center text-gray-200">
         <div className="w-full flex flex-col items-start justify-start mb-4">
-          <h2 className="text-xl font-semibold">Automated Deposit</h2>
-          <p className="text-sm text-start">
+          <h2 className="text-xl mobile:text-[16px] font-semibold">Automated Deposit</h2>
+          <p className="pc:text-sm mobile:text-[13px] text-start">
             You can fund your wallet through two channels. Crypto deposits are supported.
           </p>
         </div>
@@ -114,11 +114,11 @@ const Deposit = ({ onClose }) => {
             onClick={() => setSelected('bank')}
           >
             <span className={`border p-3 rounded-full ${selected === 'bank' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <BsBank2 className="text-[25px]" />
+              <BsBank2 className="pc:text-[25px] mobile:text-[20px]" />
             </span>
             <div className="w-full text-start">
-              <h1 className="text-[15px] font-semibold">Bank / Card Payment</h1>
-              <p className="text-sm text-slate-400">Deposit funds directly using bank transfer or card payment.</p>
+              <h1 className="pc:text-[15px] mobile:text-[14px] font-semibold">Bank / Card Payment</h1>
+              <p className="pc:text-sm text-slate-400 mobile:text-[12px]">Deposit funds directly using bank transfer or card payment.</p>
             </div>
           </div>
 
@@ -129,11 +129,11 @@ const Deposit = ({ onClose }) => {
             onClick={() => setSelected('fapshi')}
           >
             <span className={`border p-3 rounded-full ${selected === 'fapshi' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <BiSolidMobileVibration className="text-[25px]" />
+              <BiSolidMobileVibration className="pc:text-[25px] mobile:text-[20px]" />
             </span>
             <div className="w-full text-start">
-              <h1 className="text-[15px] font-semibold">MOMO Deposit(Cameroon)</h1>
-              <p className="text-sm text-slate-400">Top up your wallet securely and conveniently using Mobile Money</p>
+              <h1 className="pc:text-[15px] font-semibold mobile:text-[14px]">MOMO Deposit(Cameroon)</h1>
+              <p className="pc:text-sm text-slate-400 mobile:text-[12px]">Top up your wallet securely and conveniently using Mobile Money</p>
             </div>
           </div>
 
@@ -144,11 +144,11 @@ const Deposit = ({ onClose }) => {
             onClick={() => setSelected('cryptomus')}
           >
             <span className={`border p-3 rounded-full ${selected === 'cryptomus' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <RiBtcFill className="text-[25px]" />
+              <RiBtcFill className="pc:text-[25px] mobile:text-[20px]" />
             </span>
             <div className="w-full text-start">
-              <h1 className="text-[15px] font-semibold">Crypto Deposit(International)</h1>
-              <p className="text-sm text-slate-400">Fund your wallet with USDT securely and conveniently.</p>
+              <h1 className="pc:text-[15px] font-semibold mobile:text-[14px]">Crypto Deposit(International)</h1>
+              <p className="pc:text-sm text-slate-400 mobile:text-[12px]">Fund your wallet with USDT securely and conveniently.</p>
             </div>
           </div>
         </div>

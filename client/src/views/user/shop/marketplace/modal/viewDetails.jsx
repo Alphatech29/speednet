@@ -4,8 +4,8 @@ const ViewDetails = ({ product, onClose }) => {
   if (!product) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className=" bg-gray-800 p-6 rounded-lg shadow-lg min-w-[500px] flex flex-col gap-4 text-gray-200 overflow-hidden">
+    <div className="fixed inset-0 flex justify-center items-center  bg-black bg-opacity-50 z-50">
+      <div className=" bg-gray-800 p-6 rounded-lg shadow-lg pc:w-[500px] mobile:w-[360px] flex flex-col gap-4 text-gray-200 overflow-hidden">
         
         {/* Close Button */}
         <button

@@ -43,14 +43,14 @@ const Purchase = ({ plan, onClose }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p className="text-gray-300 text-base mt-4">
+        <p className="text-gray-300 pc:text-base mobile:text-[13px] mt-4">
           <strong>Note:</strong> The email you provide will be used to set up your Nord account and grant access to your VPN services.
         </p>
       </div>
 
       {/* Order Summary Section */}
-      <div className="text-gray-300 text-sm mt-4">
-        <h1 className="font-semibold text-xl">Order summary</h1>
+      <div className="text-gray-300 pc:text-sm mobile:text-xs mt-4">
+        <h1 className="font-semibold pc:text-xl mobile:text-[15px]">Order summary</h1>
         <p>{plan?.name} Plan</p>
         <p>Amount: {currency}{planPrice.toFixed(2)}</p>
         <p>VAT ({vatPercentage}%): {currency}{vatAmount.toFixed(2)}</p>

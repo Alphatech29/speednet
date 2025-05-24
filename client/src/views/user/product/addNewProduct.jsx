@@ -258,7 +258,7 @@ const AddNewProduct = () => {
       />
       
       <h1 className='text-lg font-semibold'>Add New Product</h1>
-      <p className='mb-4'>
+      <p className='mb-4 pc:text-sm mobile:text-xs'>
         Easily add new products to your store! Fill in the details, set the price,
         upload images, and manage availability.
       </p>
@@ -292,7 +292,7 @@ const AddNewProduct = () => {
           <div className="text-red-500 text-center mb-4">{platformError}</div>
         )}
 
-        <div className='w-[50%] mx-auto p-3 border border-gray-400/70 rounded-md space-y-4'>
+        <div className='pc:w-[50%] mx-auto p-3 border border-gray-400/70 rounded-md space-y-4'>
           {currentStep === 1 && (
             <>
               <div>

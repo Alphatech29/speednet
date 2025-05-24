@@ -15,14 +15,14 @@ const NordVpn = () => {
         </div>
         <div className='mt-4'>
           <h1 className='text-lg text-gray-300 font-medium text-center'>Enhance your cybersecurity with Threat Protection Pro™ for advanced defense.</h1>
-          <div className='flex justify-center items-center gap-4 mt-3'>
+          <div className='pc:flex justify-center items-center pc:gap-4 mobile:space-y-2 mt-3'>
             {/* Feature Cards */}
             {[
               { title: 'Malware protection', desc: 'Avoid malicious websites and protect your devices from malware.', img: '/image/threat-protection.svg' },
               { title: 'Tracker blocker', desc: 'Block tracking cookies and browse the internet without leaving a trace.', img: '/image/cookie-tracking.svg' },
               { title: 'Ad blocker', desc: 'No more pop-ups and intrusive ads — only smooth browsing.', img: '/image/ad-blocker.svg' },
             ].map((item, idx) => (
-              <div key={idx} className='border-2 border-gray-600 rounded-lg p-4 w-[18rem]'>
+              <div key={idx} className='border-2 border-gray-600 rounded-lg p-4 pc:w-[18rem]'>
                 <img src={item.img} alt="" className="w-full h-full object-cover" />
                 <div className='text-gray-300 mt-3'>
                   <h1 className='font-semibold text-lg'>{item.title}</h1>

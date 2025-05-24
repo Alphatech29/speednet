@@ -21,9 +21,9 @@ const Pricing = () => {
     <div className='flex flex-col'>
       <div className='bg-gray-700 px-4 py-3 rounded-lg'>
         <h1 className='text-2xl text-gray-300 text-center font-semibold'>Get your online security package</h1>
-        <div className='flex gap-5 mt-4'>
+        <div className='pc:flex gap-5 mobile:space-y-2 mt-4'>
           {/* BASIC PLAN */}
-          <div className='px-3 py-3 border-2 border-gray-600 rounded-lg w-[50%]'>
+          <div className='px-3 py-3 border-2 border-gray-600 rounded-lg pc:w-[50%]'>
             <span className='text-gray-300 text-lg'>Basic</span>
             <h1 className='text-xl font-semibold text-gray-400'>$10.99<span>/mo</span></h1>
             <ul className='text-gray-300 text-base mt-3'>
@@ -39,7 +39,7 @@ const Pricing = () => {
           </div>
 
           {/* PRO PLAN */}
-          <div className='px-3 py-3 border-2 border-gray-600 rounded-lg w-[50%]'>
+          <div className='px-3 py-3 border-2 border-gray-600 rounded-lg pc:w-[50%]'>
             <span className='text-gray-300 text-lg'>Professional</span>
             <h1 className='text-xl font-semibold text-gray-400'>$12.99<span>/mo</span></h1>
             <ul className='text-gray-300 text-base mt-3'>
@@ -61,7 +61,7 @@ const Pricing = () => {
       {/* PURCHASE MODAL */}
       {isOpen && (
         <div className='fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center'>
-          <div className='bg-gray-800 rounded-lg p-6 w-[40%] md:w-[200px] shadow-lg'>
+          <div className='bg-gray-800 rounded-lg p-6 pc:w-[40%] mobile:w-[360px] shadow-lg'>
             <Purchase plan={selectedPlan} onClose={closeModal} />
           </div>
         </div>

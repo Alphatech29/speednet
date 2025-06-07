@@ -1,0 +1,25 @@
+.main-wrapper{
+  min-height: calc(100vh - 1px);
+  background-color: rgb(228 228 231 / var(--tw-bg-opacity, 1)) /* #e4e4e7 */;
+  width: 100%;
+}
+.side-wrapper{
+  overflow: auto;
+  background-color: rgb(0 102 102 / var(--tw-bg-opacity, 1)) /* #006666 */;
+  background: #006666;
+  width: 265px;
+  text-align: left;
+  height: 100%;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+}
+.Main-Content-Wrapper{
+  margin-left: 265px;
+  width: calc(100% - 265px);
+  height: auto;
+}
+.bibb{
+  width: 250px;
+}
+

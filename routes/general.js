@@ -12,6 +12,7 @@ const { getAccounts } = require('../controller/user/accounts')
 const { accountCreation } = require('../controller/user/createAccount')
 const { Deposit } = require('../controller/user/deposit')
 const {  getBanks, verifyAccount } = require('../utility/bankVerify')
+const { getAllUsers } = require('../controller/admin/dashboard/users');
 
 
 // ------- General ---------//
@@ -31,6 +32,9 @@ generalRoute.post("/fapshi/webhook", fapshiWebhook);
 generalRoute.post("/cryptomus/webhook", cryptomusWebhook);
 generalRoute.get("/bank", getBanks);
 generalRoute.post("/verify-bank-account", verifyAccount);
+
+// ------- Admin ---------//
+generalRoute.get("/users", getAllUsers);
 
 
 

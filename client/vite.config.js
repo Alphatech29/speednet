@@ -1,26 +1,17 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
+// ✅ defineConfig is now correctly defined
 export default defineConfig({
-  plugins: [
-    react(), 
-  ],
+  plugins: [react()],
   build: {
-    outDir: "dist",
+    outDir: 'dist', // ✅ just 'dist'
     emptyOutDir: true,
-    assetsDir: "assets",
-    chunkSizeWarningLimit: 500, 
+    assetsDir: 'assets',
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("react")) return "react-vendor";
-            if (id.includes("lodash")) return "lodash"; 
-            return "vendor";
-          }
-        }
-      }
+      output: {},
     },
-    brotliSize: false, 
+    brotliSize: false,
   },
 });

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../../../views/user/partials/sidebar';
-import Header from '../../../views/user/partials/header';  // fixed import name
+import Header from '../../../views/user/partials/header';
+import Footer from '../../../views/user/partials/footer';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -11,22 +12,22 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex pc:h-screen">
+    <div className="flex min-h-screen ">
       {/* Sidebar (Fixed) */}
       <Sidebar isOpen={isSidebarOpen} />
 
       {/* Main Content */}
-      <div className="flex w-full flex-col flex-grow bg-slate-600 mobile:h-full">
+      <div className="flex h-full w-full flex-col flex-grow mobile:h-full ">
         {/* Sticky Header */}
-        <Header 
-          className="sticky top-0 z-10 bg-slate-600 shadow-md"
-          toggleSidebar={toggleSidebar}  // pass toggle function as prop
-        />
+        <Header />
 
         {/* Scrollable Outlet */}
-        <div className="flex-grow overflow-auto pc:py-6 mobile:py-4 px:px-6 mobile:px-4">
+        <div className="flex-grow overflow-auto pc:py-6 mobile:py-4 mobile:mb-14 px:px-6 mobile:px-4">
           <Outlet />
         </div>
+
+        {/* Sticky footer */}
+        <Footer toggleSidebar={toggleSidebar} />
       </div>
     </div>
   );

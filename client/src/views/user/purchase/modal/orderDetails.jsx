@@ -4,13 +4,13 @@ const OrderDetails = ({ order, onClose }) => {
   if (!order) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50">
-      <div className="bg-gray-800 px-6 pb-4 rounded-lg text-white w-[50%] overflow-auto">
+    <div className="fixed inset-0 flex justify-center items-center mobile:px-3 bg-gray-900 bg-opacity-50 z-50">
+      <div className="bg-gray-800 px-6 pb-4 rounded-lg text-white pc:w-[50%] overflow-auto">
         <h2 className="text-lg font-semibold border-b py-3 mb-4">
           {order?.title || "N/A"} Details
         </h2>
         
-        <div className="text-[16px] flex justify-between items-center">
+        <div className="pc:text-[16px] mobile:text-[14px] flex justify-between items-center">
           <p>Order No: {order?.order_no || "N/A"} / Account ID: {order?.id || "N/A"}</p>
           <p>Date/Time: {order?.create_at ? formatDateTime(order.create_at) : "N/A"}</p>
         </div>

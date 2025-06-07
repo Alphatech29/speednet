@@ -11,6 +11,7 @@
     "watch": "chokidar \"src/**/*\" -c \"npm run build\""
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
     "@vitejs/plugin-react": "^4.3.4",
     "axios": "^1.8.2",
     "flowbite": "^3.1.2",

@@ -94,14 +94,14 @@ const Order = () => {
       <div
         className="bg-yellow-100 w-full text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm"
       >
-        <span className="font-medium">Important!</span> Customers are not
+        <span className="font-medium mobile:text-[13px] pc:text-base">Important!</span> Customers are not
         eligible for a refund on any social media product unless it is reported
         as defective and returned within 24 hours of purchase. To receive
         prompt assistance, please report any defects immediately after purchase.
       </div>
 
       {/* Transactions Section */}
-      <div className="bg-slate-700 flex flex-col w-full border border-gray-400 rounded-lg px-3 py-4">
+      <div className="bg-slate-700 flex flex-col pc:w-full  border border-gray-400 rounded-lg px-3 py-4">
         {Object.keys(orders).length > 0 ? (
           <div className="text-gray-300">
             {/* Render grouped orders */}
@@ -112,15 +112,16 @@ const Order = () => {
                   {/* Order Header */}
                   <div className="flex flex-col mb-3 border-b pb-2">
                     <div className="flex flex-col">
-                      <h1 className="text-lg font-medium text-white">Order No: {orderNo}</h1>
-                      <h1 className="text-white p-1 rounded-md text-[14px]">
+                      <h1 className="pc:text-lg mobile:text-[14px] font-medium text-white">Order No: {orderNo}</h1>
+                      <h1 className="text-white p-1 rounded-md pc:text-[14px] mobile:text-[12px]">
                         Status: {orders[groupKey][0]?.payment_status || "Pending"}
                       </h1>
-                      <span className="text-[14px]">{formatDateTime(orders[groupKey][0]?.create_at)}</span>
+                      <span className="pc:text-[14px] mobile:text-[12px]">{formatDateTime(orders[groupKey][0]?.create_at)}</span>
                     </div>
                   </div>
 
-                  {/* Table for Orders under this Order No */}
+                 <div className="overflow-auto">
+                   {/* Table for Orders under this Order No */}
                   <Table hoverable={true} className="bg-transparent">
                     <Table.Head>
                       <Table.HeadCell>S/N</Table.HeadCell>
@@ -148,6 +149,7 @@ const Order = () => {
                       ))}
                     </Table.Body>
                   </Table>
+                 </div>
                 </div>
               );
             })}

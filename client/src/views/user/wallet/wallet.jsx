@@ -40,11 +40,11 @@ const Wallet = () => {
   const formatAmount = (amount) => `${webSettings.currency}${amount}`;
 
   return (
-    <div className="w-full h-screen flex flex-col">
+    <div className="w-full h-[100%] flex flex-col">
       {user && webSettings && (
         <>
           <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
-          <div className="w-full pc:flex justify-start items-center pc:h-[500px] mobile:min-h-[700px] mobile:max-h-[1200px] rounded-lg border border-gray-400 overflow-hidden">
+          <div className="w-full pc:flex justify-start items-center pc:min-h-[500px] pc:max-h-[500px] mobile:min-h-[700px] mobile:max-h-[1200px] rounded-lg border border-gray-400 overflow-hidden">
             <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-full flex flex-col gap-2 pc:justify-between items-center">
               <div className="mt-12 flex flex-col items-center justify-center">
                 <span className="text-pay text-sm">Available Balance</span>

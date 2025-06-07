@@ -140,7 +140,7 @@ const AuthProvider = ({ children }) => {
         signIn,
         logout,
         updateCartState,
-        removeFromCart, // ✅ Expose in context
+        removeFromCart, 
       }}
     >
       {children}

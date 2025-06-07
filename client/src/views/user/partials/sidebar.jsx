@@ -17,7 +17,7 @@ const Sidebar = ({ isOpen }) => {
   const isMerchant = user?.role === "merchant";
 
   return (
-    <div className="side-bar h-screen bg-gray-800 text-slate-200 px-4 pb-4 pt-3">
+    <div className="side-bar  sticky  bg-gray-800 text-slate-200 px-4 pb-4 pt-3">
       <div className="mb-4 w-full border-b border-gray-700">
         <a href="/">
           <img src="/image/user-logo.png" alt="Logo" className="h-10" />
@@ -55,6 +55,9 @@ const Sidebar = ({ isOpen }) => {
             </Dropdown.Item>
           </Dropdown>
         )}
+          <NavLink to="/user/wallet" className={linkClasses}>
+          <FaWallet /> <span>My Wallet</span>
+        </NavLink>
 
         {isMerchant && (
           <Dropdown
@@ -80,25 +83,23 @@ const Sidebar = ({ isOpen }) => {
           </NavLink>
         )}
 
-        <NavLink to="/user/order/airtime" className={linkClasses}>
+        <NavLink to="/user/airtime" className={linkClasses}>
           <FaMobile /> <span>Airtime Purchase</span>
         </NavLink>
 
-        <NavLink to="/user/order/data" className={linkClasses}>
+        <NavLink to="/user/data" className={linkClasses}>
           <FaWifi /> <span>Data Purchase</span>
         </NavLink>
 
-        <NavLink to="/user/order/purchases" className={linkClasses}>
+        <NavLink to="/user/order" className={linkClasses}>
           <BiSolidPurchaseTag /> <span>My Purchase</span>
         </NavLink>
 
-        <NavLink to="/user/order/international-airtime" className={linkClasses}>
+        <NavLink to="/user/international-airtime" className={linkClasses}>
           <BiWorld /> <span>International Airtime</span>
         </NavLink>
 
-        <NavLink to="/user/wallet" className={linkClasses}>
-          <FaWallet /> <span>My Wallet</span>
-        </NavLink>
+      
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { MdDashboard } from "react-icons/md";
 import PasswordTab from './tabs/passwordTab';
 import PaymentTab from './tabs/paymentTab';
 import Profile from './tabs/profile';
+import WebSettingsTab from './tabs/webSettingsTab';
 
 const Settings = () => {
   return (
@@ -28,7 +29,7 @@ const Settings = () => {
         control the content visibility and styling.
       </TabItem>
       <TabItem  title="Web Settings" icon={IoSettings}>
-        Disabled content
+        <WebSettingsTab/>
       </TabItem>
     </Tabs>
     </div>

@@ -2214,3 +2214,465 @@
 [2025-06-07T09:14:01.326Z] [INFO]: Gmail transporter is ready to send emails
 [2025-06-07T09:15:32.063Z] [INFO]: 🚀 Server running on http://localhost:8000
 [2025-06-07T09:15:33.262Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:22:12.334Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:22:13.489Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:23:42.232Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:23:43.499Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:24:33.864Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:24:35.113Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:27:51.283Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:27:52.488Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:29:10.963Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:29:12.134Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:30:59.648Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:31:00.826Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:32:28.683Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:32:29.820Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:33:00.076Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:33:01.165Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:36:44.981Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:36:46.273Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:36:54.213Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:36:55.470Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:37:37.382Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:37:38.661Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:37:58.583Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:37:59.943Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:38:05.764Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:38:06.868Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:39:36.252Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:39:37.482Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:40:13.539Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:40:14.596Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:41:39.464Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:41:40.506Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:43:16.658Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:43:17.816Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:44:28.855Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:44:30.111Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T09:52:17.368Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T09:52:18.460Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:03:00.382Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:03:01.539Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:04:24.476Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:04:25.612Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:05:53.814Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:05:55.061Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:06:35.168Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:06:36.500Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:07:02.597Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:07:03.819Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:09:19.497Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:09:21.783Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:10:07.928Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:10:09.393Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:10:53.157Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:10:54.525Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:11:26.307Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:11:27.555Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:11:34.179Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:11:36.715Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:11:41.029Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:11:42.122Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:13:16.443Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:13:17.599Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:15:48.389Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:15:49.564Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:19:42.887Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:19:44.021Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:19:50.815Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:19:51.885Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:25:12.656Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:25:13.925Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:25:37.902Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:25:38.983Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:28:45.651Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:28:46.728Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:31:44.503Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:31:45.863Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:32:05.583Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:32:07.031Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:32:45.027Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:32:46.188Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:33:56.781Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:33:57.908Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:35:28.769Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:35:29.823Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:37:41.552Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:37:42.668Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:38:40.564Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:38:41.869Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:39:56.769Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:39:58.193Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:40:22.350Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:40:23.789Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:40:32.227Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:40:33.303Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:42:05.537Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:42:06.905Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:43:13.551Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:43:16.832Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:43:46.989Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:43:48.173Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:45:42.157Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:45:43.353Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:46:54.644Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:46:56.192Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:48:30.752Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:48:32.082Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:48:43.838Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:48:44.970Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T10:49:42.612Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T10:49:43.827Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:04:25.995Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:04:28.093Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:05:17.668Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:05:18.882Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:16:29.065Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:16:30.333Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:20:43.045Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:20:45.236Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:21:04.242Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:21:05.509Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:22:35.651Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:22:36.836Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:36:03.869Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:36:05.205Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:36:44.101Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:36:45.324Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:42:33.796Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:42:35.119Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:43:04.237Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:43:05.447Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:43:59.288Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:44:01.275Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T11:45:59.837Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T11:46:01.119Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:24:11.119Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:24:12.323Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:27:30.171Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:27:31.782Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:29:49.573Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:29:50.675Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:30:47.455Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:30:48.747Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:31:36.936Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:31:38.349Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:32:09.639Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:32:12.027Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:32:55.244Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:32:57.139Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:33:25.491Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:33:27.630Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:34:04.013Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:34:05.364Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:34:26.082Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:34:27.323Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:34:36.300Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:34:37.609Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:35:00.982Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:35:02.205Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:35:05.245Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:35:06.286Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:39:31.313Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:39:32.346Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:40:31.093Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:40:32.163Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:42:44.247Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:42:45.300Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:44:50.739Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:44:51.838Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:46:15.738Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:46:16.908Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:46:49.307Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:46:50.526Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:47:55.793Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:47:57.043Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:48:31.712Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:48:33.247Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:48:54.716Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:48:55.966Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:49:28.446Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:49:29.550Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:50:40.928Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:50:42.004Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:55:36.637Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:55:38.158Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T20:57:18.367Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T20:57:22.471Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:00:00.852Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:00:01.987Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:04:36.728Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:04:37.847Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:04:51.676Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:04:52.996Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:05:21.064Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:05:22.543Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:06:27.026Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:06:28.158Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:07:16.296Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:07:17.342Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:08:04.665Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:08:05.869Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:08:24.226Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:08:25.449Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:09:10.212Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:09:11.283Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:10:04.483Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:10:05.530Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:12:03.193Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:12:04.231Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:16:24.328Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:16:26.182Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:17:42.194Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:17:43.336Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:18:00.534Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:18:01.820Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:27:59.243Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:28:00.384Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:31:35.478Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:31:36.743Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:33:54.299Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:33:55.448Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:35:45.132Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:35:46.415Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:37:18.830Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:37:20.104Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:37:41.063Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:37:42.381Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:37:49.690Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:37:50.730Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:38:43.483Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:38:44.491Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:43:33.830Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:43:34.890Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:45:54.274Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:45:55.407Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:45:59.424Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:46:00.807Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:47:13.185Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:47:14.260Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:49:06.594Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:49:07.733Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:51:51.776Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:51:56.841Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:52:33.706Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:52:43.284Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:54:19.219Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:54:23.538Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:56:23.100Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:56:24.917Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:58:28.293Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:58:31.507Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T21:59:20.728Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T21:59:22.345Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:00:47.111Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:00:52.303Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:02:30.725Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:02:31.788Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:03:26.748Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:03:30.984Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:03:37.591Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:03:40.141Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:05:21.607Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:05:34.935Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:09:01.863Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:09:06.223Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:17:22.933Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:17:26.709Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:17:37.440Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:17:40.010Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:18:05.231Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:18:08.025Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:18:49.671Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:18:56.465Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:19:02.753Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:19:05.610Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:22:44.773Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:22:47.281Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:24:20.345Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:24:33.680Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:24:52.200Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:25:00.581Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:25:53.819Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:25:54.898Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:27:39.622Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:27:41.118Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:29:20.332Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:29:22.374Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:30:11.802Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:30:21.047Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:32:26.330Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:32:29.608Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:33:52.826Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:34:03.361Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:34:54.842Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:34:59.652Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:36:16.660Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:36:21.570Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:41:13.376Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:41:17.171Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:42:52.671Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:42:54.136Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-07T22:45:44.758Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-07T22:45:48.937Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T08:33:54.111Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T08:33:54.195Z] [ERROR]: Error configuring Gmail transporter: getaddrinfo ENOTFOUND smtp.gmail.com
+[2025-06-08T08:36:09.122Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T08:36:09.183Z] [ERROR]: Error configuring Gmail transporter: getaddrinfo ENOTFOUND smtp.gmail.com
+[2025-06-08T08:56:34.520Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T08:56:35.924Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T08:58:09.203Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T08:58:10.684Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T08:58:24.022Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T08:58:26.343Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T08:59:15.355Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T08:59:16.693Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:05:40.792Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:05:42.065Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:08:42.760Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:08:52.894Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:09:00.062Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:09:05.278Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:13:14.926Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:13:16.152Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:13:28.065Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:13:31.090Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:15:16.024Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:15:17.539Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:16:44.350Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:16:46.106Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:19:46.033Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:19:47.553Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:22:48.450Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:22:50.636Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:22:56.192Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:22:58.345Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:26:54.302Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:26:55.783Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:29:02.697Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:29:05.520Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:34:21.490Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:34:22.851Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:44:50.592Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:44:52.074Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:47:45.479Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:47:47.071Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:51:40.152Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:51:43.110Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:51:52.245Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:51:54.259Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:54:58.182Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:54:59.600Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:56:42.253Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:56:43.841Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:56:53.425Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:56:56.649Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T09:57:21.104Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T09:57:25.971Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:01:59.064Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:02:00.876Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:03:19.511Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:03:23.337Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:04:56.466Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:04:58.522Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:08:01.452Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:08:03.055Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:09:04.277Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:09:05.814Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:11:00.240Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:11:01.838Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:11:23.549Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:11:25.291Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:11:32.164Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:11:33.756Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:11:43.603Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:11:45.464Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:24:17.765Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:24:19.931Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:25:20.436Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:25:21.840Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:30:08.159Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:30:09.404Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:30:36.190Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:30:37.940Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:32:37.679Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:32:39.522Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:33:56.205Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:33:58.281Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:34:55.850Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:34:58.679Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:35:08.657Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:35:13.119Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:37:20.677Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:37:23.183Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:37:41.474Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:37:42.719Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:38:35.441Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:38:37.714Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:38:46.540Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:38:48.775Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:41:59.675Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:42:01.537Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:42:09.094Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:42:10.989Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:42:35.442Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:42:37.217Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:45:32.000Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:45:36.011Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:47:09.287Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:47:11.009Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:47:55.380Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:47:58.548Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:48:21.791Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:48:23.733Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:53:15.676Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:53:18.243Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:53:28.176Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:53:29.598Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:54:15.877Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:54:17.519Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T10:58:43.775Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T10:58:45.595Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:04:42.280Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:04:43.714Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:04:50.440Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:04:52.184Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:10:03.504Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:10:06.441Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:10:54.816Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:10:56.415Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:11:10.654Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:11:12.594Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:18:15.832Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:18:17.074Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:18:36.727Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:18:37.876Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:20:22.622Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:20:24.318Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:21:38.025Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:21:39.101Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:22:21.489Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:22:22.566Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:23:53.162Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:23:54.237Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:24:54.211Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:24:55.223Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:25:39.273Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:25:40.327Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:29:39.942Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:29:41.002Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:31:03.185Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:31:04.894Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:32:06.900Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:32:07.988Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:37:04.431Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:37:05.726Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:37:24.449Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:37:25.443Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:38:01.400Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:38:02.448Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:39:50.219Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:39:52.108Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-08T11:41:01.569Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-08T11:41:03.030Z] [INFO]: Gmail transporter is ready to send emails

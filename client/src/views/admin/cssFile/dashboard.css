@@ -19,7 +19,8 @@
   width: calc(100% - 265px);
   height: auto;
 }
-.bibb{
-  width: 250px;
-}
-
+.bibb {
+        padding: 20px;
+        width: 100%;
+    }
+ 

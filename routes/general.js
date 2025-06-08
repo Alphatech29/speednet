@@ -13,6 +13,7 @@ const { accountCreation } = require('../controller/user/createAccount')
 const { Deposit } = require('../controller/user/deposit')
 const {  getBanks, verifyAccount } = require('../utility/bankVerify')
 const { getAllUsers } = require('../controller/admin/dashboard/users');
+const { getAllAccount, getAllOrders } = require('../controller/admin/dashboard/accounts');
 
 
 // ------- General ---------//
@@ -35,6 +36,8 @@ generalRoute.post("/verify-bank-account", verifyAccount);
 
 // ------- Admin ---------//
 generalRoute.get("/users", getAllUsers);
+generalRoute.get("/product", getAllAccount);
+generalRoute.get("/order",  getAllOrders);
 
 
 

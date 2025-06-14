@@ -28,6 +28,14 @@ const OrderDetails = ({ order, onClose }) => {
           <p className="text-[16px] pb-2 font-medium">Recovery Details:</p>
           <div className="text-[13px] text-gray-500">
             <p>Email: {order?.recovery_email || "N/A"}</p>
+             <p>Password: {order?.recovery_email_password || "N/A"}</p>
+          </div>
+        </div>
+         <div className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+          <p className="text-[16px] pb-2 font-medium">Additional Details:</p>
+          <div className="text-[13px] text-gray-500">
+            <p>Email: {order?.additional_email || "N/A"}</p>
+             <p>Password: {order?.additional_password || "N/A"}</p>
           </div>
         </div>
 

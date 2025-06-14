@@ -1,11 +1,14 @@
 import React from 'react';
 import '../cssFile/dashboard.css'
 import { NavLink } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
+import { FaCartShopping } from "react-icons/fa6";
 import { HiViewGrid } from "react-icons/hi";
 import { SiNordvpn } from "react-icons/si";
 import { IoMdSettings } from "react-icons/io";
 import { FaUsers } from "react-icons/fa";
+import { PiCubeTransparentFill } from "react-icons/pi";
+
+
 
 
 
@@ -27,6 +30,12 @@ const Sidebar = () => {
           </NavLink>
            <NavLink to="/admin/users" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
             <FaUsers  /> <span>Users Management</span>
+          </NavLink>
+           <NavLink to="/admin/products" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
+            <FaCartShopping  /> <span>Products</span>
+          </NavLink>
+           <NavLink to="/admin/withdrawal" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
+            <PiCubeTransparentFill  /> <span>Withdrawal</span>
           </NavLink>
            <NavLink to="/admin/settings" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
             <IoMdSettings  /> <span>Settings</span>

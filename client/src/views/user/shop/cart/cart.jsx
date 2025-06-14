@@ -66,7 +66,7 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
                       <span className="text-gray-400">{webSettings.currency}{(Number(item.price) || 0).toFixed(2)}</span>
                       <button
                         className="text-gray-300 hover:text-red-600"
-                        onClick={() => removeFromCart(item.id)} // Ensure removeFromCart updates the cart state
+                        onClick={() => removeFromCart(item.id)} 
                       >
                         <MdDeleteForever />
                       </button>
@@ -97,7 +97,7 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
                     navigate("/user/check-out", {
                       state: { cart, total, vat, grandTotal },
                     });
-                    toggleCartDropdown();  // Close the cart dropdown after navigation
+                    toggleCartDropdown();
                   }}
                 >
                   Checkout

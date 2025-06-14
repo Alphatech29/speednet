@@ -5,10 +5,15 @@ import { IoSettings } from "react-icons/io5";
 import { HiMiniServer } from "react-icons/hi2";
 import {  HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
+import { IoWifiSharp } from "react-icons/io5";
+import { FaCode } from "react-icons/fa";
 import PasswordTab from './tabs/passwordTab';
 import PaymentTab from './tabs/paymentTab';
 import Profile from './tabs/profile';
 import WebSettingsTab from './tabs/webSettingsTab';
+import VtuTab from './tabs/vtuTab';
+import ApisTab from './tabs/apisTab';
+import ExternalCode from './tabs/externalCode';
 
 const Settings = () => {
   return (
@@ -24,12 +29,16 @@ const Settings = () => {
        <PasswordTab/>
       </TabItem>
       <TabItem title="Paid API" icon={HiMiniServer}>
-        This is <span className="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</span>.
-        Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
-        control the content visibility and styling.
+       <ApisTab/>
       </TabItem>
       <TabItem  title="Web Settings" icon={IoSettings}>
         <WebSettingsTab/>
+      </TabItem>
+       <TabItem  title="Vtu Service" icon={IoWifiSharp}>
+        <VtuTab/>
+      </TabItem>
+       <TabItem  title="External Code" icon={FaCode}>
+        <ExternalCode/>
       </TabItem>
     </Tabs>
     </div>

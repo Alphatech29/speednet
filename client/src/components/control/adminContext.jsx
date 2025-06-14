@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext, useRef } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -10,11 +10,12 @@ export const AdminAuthContext = createContext();
 
 export const AdminAuthProvider = ({ children }) => {
   const [adminToken, setAdminToken] = useState(null);
-  const [adminDetails, setAdminDetails] = useState(null); // this will store 'user'
+  const [adminDetails, setAdminDetails] = useState(null);
   const [webSettings, setWebSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+  const logoutTimeoutRef = useRef(null); 
 
   const fetchWebSettings = async () => {
     try {
@@ -28,6 +29,30 @@ export const AdminAuthProvider = ({ children }) => {
     }
   };
 
+  const scheduleAutoLogout = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      const exp = decoded.exp * 1000;
+      const now = Date.now();
+      const timeUntilExpiry = exp - now;
+
+      if (timeUntilExpiry <= 0) {
+        logoutAdmin();
+        return;
+      }
+
+      if (logoutTimeoutRef.current) clearTimeout(logoutTimeoutRef.current);
+
+      logoutTimeoutRef.current = setTimeout(() => {
+        logoutAdmin();
+      }, timeUntilExpiry);
+
+    } catch (error) {
+      console.error("Failed to decode or schedule logout:", error);
+      logoutAdmin();
+    }
+  };
+
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -37,6 +62,7 @@ export const AdminAuthProvider = ({ children }) => {
 
         if (token && token.split(".").length === 3) {
           setAdminToken(token);
+          scheduleAutoLogout(token);
 
           if (storedAdminDetails) {
             setAdminDetails(JSON.parse(storedAdminDetails));
@@ -48,9 +74,8 @@ export const AdminAuthProvider = ({ children }) => {
             await fetchWebSettings();
           }
 
-          // Optional: validate token
           try {
-            jwtDecode(token); // Just to ensure token is valid
+            jwtDecode(token); // Just a validity check
           } catch (err) {
             console.error("Invalid token:", err);
             logoutAdmin();
@@ -67,9 +92,12 @@ export const AdminAuthProvider = ({ children }) => {
     };
 
     initialize();
+
+    return () => {
+      if (logoutTimeoutRef.current) clearTimeout(logoutTimeoutRef.current);
+    };
   }, []);
 
-  // ✅ Login handler: Store token + user as adminDetails
   const signInAdmin = ({ token, user }) => {
     if (!token || token.split(".").length !== 3) {
       console.error("Invalid token passed to signInAdmin");
@@ -77,7 +105,7 @@ export const AdminAuthProvider = ({ children }) => {
     }
 
     setAdminToken(token);
-    setAdminDetails(user); // 👈 Store user as adminDetails
+    setAdminDetails(user);
     setLoading(false);
 
     Cookies.set("adminToken", token, {
@@ -91,6 +119,7 @@ export const AdminAuthProvider = ({ children }) => {
     localStorage.setItem("adminToken", token);
     localStorage.setItem("adminDetails", JSON.stringify(user));
 
+    scheduleAutoLogout(token); // 🔐 Schedule logout
     fetchWebSettings();
     navigate("/admin/dashboard");
   };
@@ -107,6 +136,8 @@ export const AdminAuthProvider = ({ children }) => {
     localStorage.removeItem("adminDetails");
     localStorage.removeItem("webSettings");
 
+    if (logoutTimeoutRef.current) clearTimeout(logoutTimeoutRef.current);
+
     navigate("/admin/login");
   };
 
@@ -116,7 +147,7 @@ export const AdminAuthProvider = ({ children }) => {
     <AdminAuthContext.Provider
       value={{
         adminToken,
-        adminDetails, // ⬅️ This will now contain the user
+        adminDetails,
         webSettings,
         signInAdmin,
         logoutAdmin,

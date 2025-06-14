@@ -48,17 +48,18 @@ const adminLogin = async (req, res) => {
 
     delete user.password;
 
+    const expiresIn = "12h";
     const token = jwt.sign(
-      { userId: user.uid }, // ✅ No role included
+      { userId: user.uid },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn }
     );
 
     return res.status(200).json({
       success: true,
       message: "Login successful",
       user,
-      tokenMetadata: { expiresIn: 15 * 60 * 1000 },
+      tokenMetadata: { expiresIn: 12 * 60 * 60 * 1000 }, // 12h in ms
       token,
     });
 

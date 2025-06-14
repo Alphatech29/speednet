@@ -12,17 +12,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen ">
+    <div className="flex main-wrapper-user ">
       {/* Sidebar (Fixed) */}
       <Sidebar isOpen={isSidebarOpen} />
 
       {/* Main Content */}
-      <div className="flex h-full w-full flex-col flex-grow mobile:h-full ">
+      <div className="wrapper-user flex h-full w-full flex-col flex-grow mobile:h-full ">
         {/* Sticky Header */}
         <Header />
 
         {/* Scrollable Outlet */}
-        <div className="flex-grow overflow-auto pc:py-6 mobile:py-4 mobile:mb-14 px:px-6 mobile:px-4">
+        <div className="flex-grow overflow-auto pc:py-4 mobile:py-4 mobile:mb-14 px:px-6 mobile:px-4">
           <Outlet />
         </div>
 

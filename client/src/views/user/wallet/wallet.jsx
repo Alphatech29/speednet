@@ -45,7 +45,7 @@ const Wallet = () => {
         <>
           <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
           <div className="w-full pc:flex justify-start items-center pc:min-h-[500px] pc:max-h-[500px] mobile:min-h-[700px] mobile:max-h-[1200px] rounded-lg border border-gray-400 overflow-hidden">
-            <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-full flex flex-col gap-2 pc:justify-between items-center">
+            <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-[500px]  flex flex-col gap-2 pc:justify-between items-center">
               <div className="mt-12 flex flex-col items-center justify-center">
                 <span className="text-pay text-sm">Available Balance</span>
                 <p className="text-pay text-lg font-semibold text-center">
@@ -61,7 +61,7 @@ const Wallet = () => {
               </button>
             </div>
 
-            <div className="bg-slate-700 gap-5  h-full flex flex-col w-full px-3 py-4 ">
+            <div className="bg-slate-700 gap-5 pc:h-[500px]   flex flex-col w-full px-3 py-4 ">
               <div className="w-full flex justify-between items-center text-white pc:text-base mobile:text-[13px]">
                 <span>Recent Transactions</span>
                 <span className="cursor-pointer">View More</span>

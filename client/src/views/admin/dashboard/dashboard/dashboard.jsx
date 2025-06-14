@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../../../../views/admin/partials/sidebar';
 import Header from '../../../../views/admin/partials/Header';
-import '../../cssFile/dashboard.css'; // Assuming you have a CSS file for dashboard styles
+import '../../cssFile/dashboard.css'; 
 
 const Dashboard = () => {
  

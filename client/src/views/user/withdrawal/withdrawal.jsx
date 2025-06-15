@@ -11,7 +11,6 @@ import { withdrawalRequest } from '../../../components/backendApis/withdrawal/wi
 const Withdrawal = () => {
   const { user, webSettings } = useContext(AuthContext);
 
-  //  States
   const [activeOption, setActiveOption] = useState('Bank');
   const [banks, setBanks] = useState([]);
   const [selectedBankCode, setSelectedBankCode] = useState('');
@@ -20,7 +19,7 @@ const Withdrawal = () => {
   const [accountError, setAccountError] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
   const [walletNetwork, setWalletNetwork] = useState('');
-  const [coinName, setCoinName] = useState('USDT'); 
+  const [coinName] = useState('USDT');
   const [momoNumber, setMomoNumber] = useState('');
   const [amount, setAmount] = useState('');
   const [loadingBanks, setLoadingBanks] = useState(true);
@@ -29,7 +28,6 @@ const Withdrawal = () => {
 
   const options = ['Bank', 'Crypto', 'MOMO'];
 
-  // Fetch banks
   useEffect(() => {
     const fetchBanks = async () => {
       try {
@@ -38,7 +36,6 @@ const Withdrawal = () => {
         if (!Array.isArray(banksArray)) throw new Error('Invalid bank list format');
         setBanks(banksArray);
       } catch (error) {
-        console.error('Error fetching banks:', error.message);
         toast.error('Failed to load banks.');
       } finally {
         setLoadingBanks(false);
@@ -47,7 +44,6 @@ const Withdrawal = () => {
     fetchBanks();
   }, []);
 
-  //  Verify account
   useEffect(() => {
     const verifyAccount = async () => {
       if (selectedBankCode && accountNumber.length === 10) {
@@ -77,7 +73,6 @@ const Withdrawal = () => {
     verifyAccount();
   }, [accountNumber, selectedBankCode]);
 
- 
   const handleWithdrawal = async () => {
     if (isSubmitting) return;
 
@@ -122,26 +117,26 @@ const Withdrawal = () => {
           throw new Error('Invalid withdrawal method.');
       }
 
-      console.log("📤 Sending payload to API:", payload);
-
       const res = await withdrawalRequest(payload);
 
       if (res.success) {
         toast.success(res.message || 'Withdrawal request submitted!');
-        console.log('Withdrawal successful:', res.data);
 
-        // Reset form
+        // Reset form fields
         setAmount('');
         setAccountNumber('');
         setAccountName('');
         setWalletAddress('');
         setWalletNetwork('');
         setMomoNumber('');
+
+        setTimeout(() => {
+          window.location.href = '/user/dashboard';
+        }, 2000);
       } else {
         throw new Error(res.message || 'Withdrawal failed');
       }
     } catch (error) {
-      console.error(' Withdrawal error:', error.message);
       toast.error(error.message || 'Withdrawal failed. Please try again.');
     } finally {
       setIsSubmitting(false);

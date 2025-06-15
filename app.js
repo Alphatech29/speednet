@@ -16,7 +16,9 @@ dotenv.config();
 
 const app = express();
 
-// Security headers
+// ────────────────────────────────
+// 🛡️ Security Middleware
+// ────────────────────────────────
 app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
@@ -33,14 +35,16 @@ app.use(
   })
 );
 
-// Body parsing
+// ────────────────────────────────
+// Request Body Parsers
+// ────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// XSS protection
+// XSS Protection
 app.use(xssClean());
 
-// Raw body for special routes like webhooks
+// For webhooks (if needed)
 app.use(
   bodyParser.json({
     verify: (req, res, buf) => {
@@ -52,44 +56,58 @@ app.use(
 // Gzip compression
 app.use(compression());
 
-// API routes
+// ────────────────────────────────
+// API Routes
+// ────────────────────────────────
 app.use("/auth", authRoute);
 app.use("/general", generalRoute);
 
-// Serve static files from Vite build
+// ────────────────────────────────
+// Static Frontend Files
+// ────────────────────────────────
 const staticPath = path.join(__dirname, "client", "dist");
 app.use(express.static(staticPath));
 
-// Log requests (optional debug)
-app.use((req, res, next) => {
-  next();
-});
-
-// Catch-all to serve frontend
+// ────────────────────────────────
+// Fallback to index.html (SPA)
+// ────────────────────────────────
 app.get("*", (req, res) => {
   const indexPath = path.join(staticPath, "index.html");
   res.sendFile(indexPath, (err) => {
     if (err) {
-      console.error("Failed to send index.html:", err);
+      logger.error("Failed to serve index.html", {
+        message: err.message,
+        stack: err.stack,
+      });
       res.status(500).send("Internal server error.");
     }
   });
 });
 
-// Start server
+// ────────────────────────────────
+//  Start Server
+// ────────────────────────────────
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
-  logger.info(`🚀 Server running on http://localhost:${PORT}`);
+  logger.info(` Server running on http://localhost:${PORT}`);
 });
 
-// Graceful shutdown & error handling
+// ────────────────────────────────
+//  Graceful Shutdown & Error Logs
+// ────────────────────────────────
 process.on("uncaughtException", (err) => {
-  logger.error(`🔥 Uncaught Exception: ${err}`);
+  logger.error("🔥 Uncaught Exception", {
+    message: err.message,
+    stack: err.stack,
+  });
   process.exit(1);
 });
 
-process.on("unhandledRejection", (err) => {
-  logger.error(`⚠️ Unhandled Rejection: ${err}`);
+process.on("unhandledRejection", (reason, promise) => {
+  logger.error("⚠️ Unhandled Rejection", {
+    reason,
+    promise,
+  });
   process.exit(1);
 });
 

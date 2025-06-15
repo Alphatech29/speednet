@@ -1,0 +1,102 @@
+[2025-06-15T10:54:05.069Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-15T10:54:06.366Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T10:54:32.438Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T10:55:20.385Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-15T10:55:21.378Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T10:55:42.105Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T10:55:56.331Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T10:56:05.696Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T10:56:19.588Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-15T10:56:20.635Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T10:56:41.376Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T10:58:54.538Z] [INFO]: 🚀 Server running on http://localhost:8000
+[2025-06-15T10:58:55.552Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T10:59:16.102Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T13:03:55.232Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T13:07:13.068Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T13:07:14.159Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T13:14:51.197Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T13:15:04.026Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T13:15:05.253Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T13:15:10.203Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T13:15:11.521Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T13:15:59.587Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T13:20:29.751Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T13:20:30.879Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T13:20:39.832Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T13:35:29.947Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T13:35:31.004Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T13:36:00.489Z] [ERROR]: WithdrawalRequest error
+[2025-06-15T13:57:21.210Z] [INFO]: Incoming request: GET /user/withdraw
+[2025-06-15T13:57:21.773Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T14:06:40.045Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T14:06:41.108Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T14:07:01.759Z] [INFO]: Incoming request: GET /user/withdraw
+[2025-06-15T14:07:02.111Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T14:07:11.376Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T14:07:15.001Z] [INFO]: Incoming request: GET /user/wallet
+[2025-06-15T14:07:15.237Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T14:07:20.639Z] [INFO]: Fetched 4 accounts
+[2025-06-15T14:07:20.659Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T14:07:23.586Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T14:07:23.596Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T15:41:58.803Z] [INFO]: Incoming request: GET /user/dashboard
+[2025-06-15T15:41:59.093Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:41:59.175Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T15:42:07.838Z] [INFO]: Incoming request: GET /user/dashboard
+[2025-06-15T15:42:08.069Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:42:08.128Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T15:42:14.973Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:42:54.510Z] [INFO]: Incoming request: GET /user/withdraw
+[2025-06-15T15:42:54.761Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:43:41.972Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:43:43.676Z] [INFO]: Incoming request: GET /user/wallet
+[2025-06-15T15:43:43.877Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:44:07.487Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:44:34.421Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:44:34.463Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T15:44:36.372Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:44:43.365Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T15:44:43.374Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:44:45.562Z] [INFO]: Fetched 4 accounts
+[2025-06-15T15:44:45.576Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:44:47.107Z] [INFO]: Incoming request: GET /path-to-your-favicon.svg
+[2025-06-15T15:45:43.122Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T15:45:44.198Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:15:22.645Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:15:23.693Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:22:50.917Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:22:52.013Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:24:44.677Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:24:47.474Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:24:50.497Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:44:31.991Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:44:33.361Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:45:28.118Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:45:29.520Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:46:01.314Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:47:00.098Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:47:01.459Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:47:24.617Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:47:26.014Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:47:30.910Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:49:39.765Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:52:01.046Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:57:03.997Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T16:57:05.346Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-15T16:58:28.696Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T16:58:57.020Z] [INFO]: Fetched 4 accounts
+[2025-06-15T16:59:01.384Z] [INFO]: Fetched 2 platforms
+[2025-06-15T20:42:33.542Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T20:42:34.132Z] [INFO]: Login notification email sent:
+[2025-06-15T20:42:46.189Z] [INFO]: Fetched 4 accounts
+[2025-06-15T20:42:48.076Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T20:42:49.005Z] [INFO]: Fetched 4 accounts
+[2025-06-15T20:42:57.999Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T20:43:01.246Z] [INFO]: Fetched 4 accounts
+[2025-06-15T20:43:02.353Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T20:54:26.610Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-15T20:54:28.286Z] [INFO]: Fetched 4 accounts
+[2025-06-15T20:54:36.713Z] [INFO]: Fetched 2 platforms
+[2025-06-15T21:00:13.282Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-15T21:00:14.508Z] [INFO]: Gmail transporter is ready to send emails

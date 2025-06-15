@@ -1,7 +1,11 @@
-const { storeWithdrawal } = require('../../utility/withdrawal');
-const { generateUniqueRandomNumber } = require('../../utility/random');
-const { getUserDetailsByUid, updateUserBalance } = require('../../utility/userInfo');
-const logger = require('../../utility/logger');
+const { storeWithdrawal } = require("../../utility/withdrawal");
+const { generateUniqueRandomNumber } = require("../../utility/random");
+const {
+  getUserDetailsByUid,
+  updateUser,
+} = require("../../utility/userInfo");
+const logger = require("../../utility/logger");
+const { storeMerchantTransaction } = require("../../utility/merchantHistory");
 
 const WithdrawalRequest = async (req, res) => {
   try {
@@ -15,94 +19,138 @@ const WithdrawalRequest = async (req, res) => {
       walletAddress,
       walletNetwork,
       coinName,
-      momoNumber
+      momoNumber,
     } = req.body;
 
-    // Basic validations
+    console.log("Incoming withdrawal request:", req.body);
+
+    // Validate essential fields
     if (!userId || !amount || !method) {
-      return res.status(400).json({ message: 'userId, amount, and method are required.' });
+      return res.status(400).json({
+        message: "userId, amount, and method are required.",
+      });
     }
 
     // Get user details
     const user = await getUserDetailsByUid(userId);
     if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: "User not found." });
     }
 
-    // Balance check
     const accountBalance = parseFloat(user.merchant_balance || 0);
     const withdrawalAmount = parseFloat(amount);
 
+    // Ensure sufficient balance
     if (withdrawalAmount > accountBalance) {
-      return res.status(400).json({ message: 'Insufficient balance for this withdrawal.' });
+      return res
+        .status(400)
+        .json({ message: "Insufficient balance for this withdrawal." });
     }
 
-    // Deduct balance
+    // Deduct new balance and update
     const newBalance = accountBalance - withdrawalAmount;
-    const balanceUpdateResult = await updateUserBalance(userId, newBalance);
-    if (!balanceUpdateResult.success) {
-      return res.status(500).json({ message: 'Failed to update user balance.' });
+    const balanceUpdateResult = await updateUser(userId, {
+      merchant_balance: newBalance,
+    });
+
+    if (!balanceUpdateResult || !balanceUpdateResult.success) {
+      return res
+        .status(500)
+        .json({ message: "Failed to update user balance." });
     }
 
-    // Build withdrawal data
-    const reference = generateUniqueRandomNumber();
-    let withdrawalData = {
+    // Generate unique transaction reference
+    const reference = generateUniqueRandomNumber(13);
+
+    // Prepare withdrawal record
+    const withdrawalData = {
       user_id: userId,
       amount: withdrawalAmount,
       method,
       reference,
-      status: 'pending'
+      status: "pending",
     };
 
+    // Handle method-specific fields
     switch (method) {
-      case 'Bank':
+      case "Bank":
         if (!bankAccount || !bankName) {
-          return res.status(400).json({ message: 'Bank details are required for bank withdrawal.' });
+          return res.status(400).json({
+            message: "Bank details are required for bank withdrawal.",
+          });
         }
         withdrawalData.bankAccount = bankAccount;
         withdrawalData.bankName = bankName;
         if (accountName) withdrawalData.accountName = accountName;
         break;
 
-      case 'Crypto':
+      case "Crypto":
         if (!walletAddress || !walletNetwork || !coinName) {
-          return res.status(400).json({ message: 'Wallet details are required for crypto withdrawal.' });
+          return res.status(400).json({
+            message: "Wallet details are required for crypto withdrawal.",
+          });
         }
         withdrawalData.walletAddress = walletAddress;
         withdrawalData.walletNetwork = walletNetwork;
         withdrawalData.coinName = coinName;
         break;
 
-      case 'MOMO':
+      case "MOMO":
         if (!momoNumber) {
-          return res.status(400).json({ message: 'Momo number is required for MOMO withdrawal.' });
+          return res.status(400).json({
+            message: "Momo number is required for MOMO withdrawal.",
+          });
         }
         withdrawalData.momoNumber = momoNumber;
         break;
 
       default:
-        return res.status(400).json({ message: 'Invalid withdrawal method.' });
+        return res.status(400).json({ message: "Invalid withdrawal method." });
     }
 
-    // Store withdrawal request
+    // Store the withdrawal
     const result = await storeWithdrawal(withdrawalData);
+    if (!result || !result.insertId) {
+      throw new Error("Failed to store withdrawal request.");
+    }
 
-    return res.status(201).json({
-      message: 'Withdrawal request received successfully.',
-      data: result
+  
+    const transactionLogged = await storeMerchantTransaction({
+      seller_id: userId,
+      transaction_id: reference,
+      transaction_type: "Withdrawal Request",
+      amount: withdrawalAmount,
+      status: "pending",
     });
 
+    if (!transactionLogged) {
+      logger.warn("Transaction history logging failed", {
+        userId,
+        reference,
+      });
+    }
+
+
+    // Success response
+    return res.status(201).json({
+      message: "Withdrawal request received successfully.",
+      data: {
+        reference,
+        amount: withdrawalAmount,
+        method,
+        status: "pending",
+      },
+    });
   } catch (error) {
-    logger.error('WithdrawalRequest error', {
+    logger.error("WithdrawalRequest error", {
       message: error.message,
       stack: error.stack,
-      requestBody: req.body
+      requestBody: req.body,
     });
-
-    return res.status(500).json({ message: 'Internal server error.' });
+    return res.status(500).json({ message: "Internal server error." });
   }
 };
 
 module.exports = {
-  WithdrawalRequest
+  WithdrawalRequest,
 };

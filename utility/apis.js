@@ -3,7 +3,7 @@ const dayDifference = (expiryDateStr) => {
   const today = new Date();
   const expiryDate = new Date(expiryDateStr);
   const diffTime = expiryDate - today;
-  return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 0); // Non-negative days
+  return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 0);
 };
 
 // API subscriptions list with explicit start and expiry dates
@@ -11,7 +11,7 @@ const apis = [
   {
     name: "540 Cron Jobs Apis",
     start_on: "2024-06-14",
-    expires_on: "2025-07-14",
+    expires_on: "2025-07-10",
     premium_plan: {
       plan: "Pro",
       price_usd: 100,
@@ -61,7 +61,7 @@ const apis = [
   {
     name: "Redis Cloud",
     start_on: "2024-06-14",
-    expires_on: "2025-07-14",
+    expires_on: "2025-07-8",
     premium_plan: {
       plan: "Cloud",
       price_usd: 100,
@@ -76,6 +76,16 @@ const apis = [
       plan: "Pro",
       price_usd: 180,
       billing_cycle: "yearly",
+    },
+  },
+   {
+    name: "VTPass Api",
+    start_on: "2025-01-01",
+    expires_on: "2025-07-014",
+    premium_plan: {
+      plan: "Pro",
+      price_usd: 45,
+      billing_cycle: "monthly",
     },
   },
 ].map((api) => {

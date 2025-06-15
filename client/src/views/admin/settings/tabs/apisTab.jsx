@@ -40,7 +40,7 @@ const ApisTab = () => {
             <Table.Row>
               <Table.Cell colSpan={8} className="text-center py-4">
                 Loading APIs...
-              </Table.Cell>
+               </Table.Cell>
             </Table.Row>
           ) : apis.length > 0 ? (
             apis.map((api, index) => (

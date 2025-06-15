@@ -172,6 +172,25 @@ CREATE TABLE withdrawals (
     FOREIGN KEY (user_id) REFERENCES users(uid) ON DELETE CASCADE
 );
 
+CREATE TABLE withdrawal (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    method VARCHAR(50) NOT NULL,
+    reference VARCHAR(100) UNIQUE,
+    bank_name VARCHAR(100),
+    account_name VARCHAR(100),
+    account_number VARCHAR(50),
+    wallet_address VARCHAR(255),
+    wallet_network VARCHAR(50),
+    coin_name VARCHAR(50),
+    mom_number VARCHAR(50),
+    amount DECIMAL(10, 2) NOT NULL,
+    status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(uid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 
 

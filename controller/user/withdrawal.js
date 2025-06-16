@@ -22,7 +22,6 @@ const WithdrawalRequest = async (req, res) => {
       momoNumber,
     } = req.body;
 
-    console.log("Incoming withdrawal request:", req.body);
 
     // Validate essential fields
     if (!userId || !amount || !method) {

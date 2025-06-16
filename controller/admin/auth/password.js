@@ -6,7 +6,6 @@ const adminUpdatePassword = async (req, res) => {
     const userId = req.user?.userId;
     const { oldPassword, newPassword } = req.body;
 
-    console.log("Password update attempt:", { userId });
 
     if (!userId || !oldPassword || !newPassword) {
       return res.status(400).json({

@@ -10,7 +10,6 @@ const validateJWTConfig = () => {
 
 const adminLogin = async (req, res) => {
   try {
-    console.log("Login attempt:", req.body);
 
     const { username, password } = req.body;
 

@@ -54,9 +54,7 @@ const updateWebSettings = async (req, res) => {
 
     const [result] = await db.execute(sql, values);
 
-    // ✅ Log the update
-    console.log("✅ Web settings updated at", new Date().toISOString());
-    console.log("Updated fields:", updates);
+  
 
     return res.status(200).json({
       success: true,

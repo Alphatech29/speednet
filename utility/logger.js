@@ -18,7 +18,6 @@ const formatMessage = (level, message) => {
 const logger = {
   info: (msg) => {
     const formatted = formatMessage('info', msg);
-    console.log(formatted);
     fs.appendFileSync(logFile, formatted + '\n');
   },
   error: (msg) => {

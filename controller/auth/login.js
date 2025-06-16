@@ -11,7 +11,6 @@ const validateJWTConfig = () => {
 
 const login = async (req, res) => {
   try {
-    console.log("SignIn attempt:", req.body);
 
     const { email, password } = req.body;
 
@@ -48,7 +47,6 @@ const login = async (req, res) => {
     // ✅ Send login notification email
     try {
       await sendLoginNotificationEmail(user, req.ip, req.headers['user-agent']);
-      console.log("📧 Login notification email sent");
     } catch (emailErr) {
       console.error("⚠️ Failed to send login notification email:", emailErr.message);
     }

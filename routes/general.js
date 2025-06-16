@@ -17,6 +17,7 @@ const { getAllAccount, getAllOrders } = require('../controller/admin/dashboard/a
 const { getAllWebSettings, updateWebSettings } = require("../controller/admin/dashboard/general");
 const { apis } = require("../utility/apis");
 const { WithdrawalRequest } = require("../controller/user/withdrawal");
+const { getCountrys } = require("../utility/country");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -40,6 +41,7 @@ generalRoute.post("/pay", Deposit);
 generalRoute.post("/fapshi/webhook", fapshiWebhook);
 generalRoute.post("/cryptomus/webhook", cryptomusWebhook);
 generalRoute.get("/bank", getBanks);
+generalRoute.get("/country", getCountrys);
 generalRoute.post("/verify-bank-account", verifyAccount);
 generalRoute.post("/withdrawal", WithdrawalRequest);
 

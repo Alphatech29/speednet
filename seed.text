@@ -192,6 +192,17 @@ CREATE TABLE withdrawal (
 );
 
 
+CREATE TABLE referrals (
+  r_id SERIAL,
+  referral1_id BIGINT NOT NULL,
+  referral2_id BIGINT NOT NULL,
+  referral_amount DECIMAL(25,19) NULL DEFAULT 0,
+  referral_status TINYINT NULL DEFAULT 0,
+  INDEX(referral1_id),
+  INDEX(referral2_id),
+  FOREIGN KEY (referral1_id) REFERENCES users(uid) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (referral2_id) REFERENCES users(uid) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 

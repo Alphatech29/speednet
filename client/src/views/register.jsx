@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "flowbite-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -6,7 +6,7 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { register } from "./../components/backendApis/auth/auth";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Register = () => {
   const [fullname, setFullname] = useState("");
@@ -17,28 +17,61 @@ const Register = () => {
   const [agree, setAgree] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [country, setCountry] = useState("");
+  const [countries, setCountries] = useState([]);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const referralCode = searchParams.get("ref");
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await fetch("/general/country");
+        const data = await res.json();
+        // Access the countries array directly and sort it
+        const countryNames = data.countries.sort();
+        setCountries(countryNames);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    fetchCountries();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
     try {
-      const formData = { full_name: fullname, email, phone_number, password };
+      const formData = {
+        full_name: fullname,
+        email,
+        phone_number,
+        password,
+        country,
+        referral_code: referralCode || "",
+      };
+
       const response = await register(formData);
       console.log("API Response:", response);
 
       if (response?.success) {
         toast.success("Registration successful!");
-        // Reset fields
         setFullname("");
         setEmail("");
         setPhone("");
         setPassword("");
         setConfirmPassword("");
         setAgree(false);
+        setCountry("");
       } else {
-        console.log("Error response:", response);
         if (response?.error?.errors?.length) {
-          response.error.errors.forEach(err => toast.error(err));
+          response.error.errors.forEach((err) => toast.error(err));
         } else if (response?.message) {
           toast.error(response.message);
         } else {
@@ -49,9 +82,8 @@ const Register = () => {
       console.error("Registration error:", error);
       if (error.response?.data) {
         const errorData = error.response.data;
-        console.log("Axios Error Response:", errorData);
         if (errorData?.error?.errors?.length) {
-          errorData.error.errors.forEach(err => toast.error(err));
+          errorData.error.errors.forEach((err) => toast.error(err));
         } else if (errorData?.message) {
           toast.error(errorData.message);
         } else {
@@ -64,12 +96,12 @@ const Register = () => {
   };
 
   return (
-    <div className="h-screen w-full flex flex-wrap sm:flex-nowrap justify-between items-center bg-slate-700 px-4 sm:px-20 py-5">
+    <div className="reg-main justify-between items-center bg-slate-700 px-4 py-5">
       <ToastContainer position="top-right" className="text-sm" />
 
-      {/* Left panel: hidden on mobile (<640px), visible on sm+ */}
-      <div className="mobile:hidden pc:flex w-1/2 bg-slate-500/50 h-full px-10 flex-col justify-between py-8 rounded-xl">
-        <div className="text-pay">
+      {/* Left panel */}
+      <div className="mobile:hidden pc:flex w-1/2 bg-slate-500/50 h-[100%] px-10 flex-col justify-between py-8 rounded-xl relative">
+        <div className="text-pay absolute bottom-1">
           <h1 className="text-4xl font-bold w-1/2">
             Connect. Trade. Elevate Your Influence.
           </h1>
@@ -81,141 +113,157 @@ const Register = () => {
         </div>
       </div>
 
-      {/* Right panel: full width on mobile, half on sm+ */}
+      {/* Right panel */}
       <div className="mobile:w-full pc:w-1/2 px-10 flex justify-center items-center">
         <div className="w-full flex flex-col gap-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-pay">
-              Welcome to Speednet 👋🏾
-            </h1>
+            <h1 className="text-3xl font-bold text-pay">Welcome to Speednet</h1>
             <p className="text-slate-300 text-base">
               Sign up and start your journey
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex w-full flex-col gap-6 text-pay"
-          >
-            {/* Full Name */}
-            <div className="relative">
-              <input
-                type="text"
-                value={fullname}
-                onChange={(e) => setFullname(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Full Name
-              </label>
-            </div>
+          <div >
+            <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6 text-pay">
+              {/* Full Name */}
+              <div className="relative">
+                <input
+                  type="text"
+                  value={fullname}
+                  onChange={(e) => setFullname(e.target.value)}
+                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer"
+                  placeholder=" "
+                />
+                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                  Full Name
+                </label>
+              </div>
 
-            {/* Email */}
-            <div className="relative">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Email Address
-              </label>
-            </div>
+              {/* Email */}
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer"
+                  placeholder=" "
+                />
+                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                  Email Address
+                </label>
+              </div>
+              <div className="flex justify-between items-center gap-4 w-full">
 
-            {/* Phone Number */}
-            <PhoneInput
-              country={"us"}
-              value={phone_number}
-              onChange={(value) => setPhone(value)}
-              enableSearch={true}
-              containerClass="w-full"
-              inputClass="!w-[93%] !ml-9 !py-5 !border !border-gray-500 !bg-gray-800 !text-white !rounded-md !p-3"
-              buttonClass="!bg-gray-800 !border-gray-500 !rounded-l-md"
-              dropdownClass="!bg-gray-800 !text-white"
-            />
+                {/* Phone Number */}
+                <PhoneInput
+                  country={"us"}
+                  value={phone_number}
+                  onChange={(value) => setPhone(value)}
+                  enableSearch={true}
+                  containerClass="w-full"
+                  inputClass="!w-full !py-5 !border !border-gray-500 !bg-gray-800 !text-white !rounded-md"
+                  buttonClass="!bg-gray-800 !border-gray-500 !rounded-l-md"
+                  dropdownClass="!bg-gray-800 !text-white"
+                />
 
-            {/* Password */}
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer pr-10"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Password
-              </label>
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                {/* Country */}
+                <select
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3"
+                >
+                  <option value="" disabled>
+                    Select your country
+                  </option>
+                  {countries.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Password */}
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer pr-10"
+                  placeholder=" "
+                />
+                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                  Password
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                >
+                  {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+                </button>
+              </div>
+
+              {/* Confirm Password */}
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer pr-10"
+                  placeholder=" "
+                />
+                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                  Confirm Password
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                >
+                  {showConfirmPassword ? (
+                    <HiEyeOff size={20} />
+                  ) : (
+                    <HiEye size={20} />
+                  )}
+                </button>
+              </div>
+
+              {/* Agreement */}
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="agree"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                  className="w-4 h-4 text-primary-600 border-gray-500 rounded focus:ring-0 cursor-pointer"
+                />
+                <label htmlFor="agree" className="ml-2 text-gray-300 text-sm cursor-pointer">
+                  I agree to Speednet's{" "}
+                  <span className="text-primary-600">Privacy Policy</span> and{" "}
+                  <span className="text-primary-600">Terms of Use</span>
+                </label>
+              </div>
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                className="bg-primary-600 border-none shadow-md py-1 text-pay"
+                disabled={!agree}
               >
-                {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
-              </button>
+                Sign Up
+              </Button>
+            </form>
+
+            {/* Link to Login */}
+            <div className="flex justify-center text-gray-300">
+              <span>
+                Already have an account?{" "}
+                <NavLink to="/auth/login" className="text-primary-600">
+                  Login
+                </NavLink>
+              </span>
             </div>
-
-            {/* Confirm Password */}
-            <div className="relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer pr-10"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Confirm Password
-              </label>
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
-              >
-                {showConfirmPassword ? (
-                  <HiEyeOff size={20} />
-                ) : (
-                  <HiEye size={20} />
-                )}
-              </button>
-            </div>
-
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="agree"
-                checked={agree}
-                onChange={(e) => setAgree(e.target.checked)}
-                className="w-4 h-4 text-primary-600 border-gray-500 rounded focus:ring-0 cursor-pointer"
-              />
-              <label
-                htmlFor="agree"
-                className="ml-2 text-gray-300 text-sm cursor-pointer"
-              >
-                I agree to Speednet's{" "}
-                <span className="text-primary-600">Privacy Policy</span> and{" "}
-                <span className="text-primary-600">Terms of Use</span>
-              </label>
-            </div>
-
-            <Button
-              type="submit"
-              className="bg-primary-600 border-none shadow-md py-1 text-pay"
-            >
-              Sign Up
-            </Button>
-          </form>
-
-          <div className="flex justify-center text-gray-300">
-            <span>
-              Already have an account?{" "}
-              <NavLink to="/auth/login" className="text-primary-600">
-                Login
-              </NavLink>
-            </span>
           </div>
         </div>
       </div>

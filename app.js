@@ -27,13 +27,14 @@ app.use(
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["*", "data:", "blob:"],
-      connectSrc: ["'self'"],
+      connectSrc: ["'self'", "https://restcountries.com"], // Fixed this line
       fontSrc: ["'self'"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
     },
   })
 );
+
 
 // ────────────────────────────────
 // Request Body Parsers

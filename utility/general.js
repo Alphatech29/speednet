@@ -1,5 +1,5 @@
 const db = require("../model/db");
-const logger = require('../utility/logger');
+const logger = require("../utility/logger");
 
 const getWebSettings = async (req, res) => {
   try {
@@ -29,4 +29,31 @@ const getWebSettings = async (req, res) => {
   }
 };
 
-module.exports = { getWebSettings };
+// ✅ New function to get referral_commission
+const getReferralCommission = async () => {
+  try {
+    const [rows] = await db.execute("SELECT referral_commission FROM web_settings LIMIT 1");
+
+    if (!rows || rows.length === 0) {
+      logger.error("Referral commission not found in web_settings.");
+      return null;
+    }
+
+    const { referral_commission } = rows[0];
+
+    if (referral_commission === undefined || referral_commission === null) {
+      logger.error("Missing 'referral_commission' in web_settings.");
+      return null;
+    }
+
+    return referral_commission;
+  } catch (error) {
+    logger.error(`Failed to fetch referral_commission: ${error.message || error}`);
+    return null;
+  }
+};
+
+module.exports = {
+  getWebSettings,
+  getReferralCommission,
+};

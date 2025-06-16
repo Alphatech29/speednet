@@ -1,15 +1,18 @@
 const bcrypt = require("bcryptjs");
 const pool = require("../../model/db");
 const { sendWelcomeEmail } = require("../../email/mails/onboarding");
+const { createReferral } = require("../../utility/referral");
+const { getUserDetailsByUid } = require("../../utility/userInfo");
+const { getReferralCommission } = require("../../utility/general");
 
 const register = async (req, res) => {
   try {
     console.log("📥 Incoming request data:", req.body);
 
-    const { full_name, email, phone_number, password } = req.body;
+    const { full_name, email, phone_number, password, country, referral_code } = req.body;
 
-    // ✅ Validate inputs
-    if (!full_name || !email || !phone_number || !password) {
+    // Validate inputs
+    if (!full_name || !email || !phone_number || !password || !country) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -23,7 +26,7 @@ const register = async (req, res) => {
       });
     }
 
-    // ✅ Check if email or phone number already exists
+    //  Check if email or phone number already exists
     const [results] = await pool.query(
       `SELECT email, phone_number FROM users WHERE email = ? OR phone_number = ?`,
       [email, phone_number]
@@ -43,23 +46,48 @@ const register = async (req, res) => {
       });
     }
 
-    // ✅ Hash the password
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ✅ Insert user into database
+    // Insert user into database
     const [insertResult] = await pool.query(
-      `INSERT INTO users (full_name, email, phone_number, password) 
-       VALUES (?, ?, ?, ?)`,
-      [full_name, email, phone_number, hashedPassword]
+      `INSERT INTO users (full_name, country, email, phone_number, password) 
+       VALUES (?, ?, ?, ?, ?)`,
+      [full_name, country, email, phone_number, hashedPassword]
     );
 
+    const newUserId = insertResult.insertId;
     const newUser = {
-      id: insertResult.insertId,
+      id: newUserId,
       name: full_name,
       email: email,
     };
 
-    console.log("✅ User registered successfully:", newUser);
+    //  Handle referral logic using UID as referral_code
+    if (referral_code) {
+      try {
+        const referrer = await getUserDetailsByUid(referral_code);
+        console.log("🔍 Referrer details:", referrer);
+
+        //  Update here: check for referrer.uid instead of referrer.id
+        if (referrer && referrer.uid) {
+          const referralCommission = await getReferralCommission() || 0;
+
+          const referralResponse = await createReferral(
+            referrer.uid,
+            newUserId,
+            referralCommission,
+            0 
+          );
+
+          console.log("🔗 Referral recorded:", referralResponse);
+        } else {
+          console.warn(" No user found with referral UID:", referral_code);
+        }
+      } catch (referralErr) {
+        console.error("Error processing referral:", referralErr);
+      }
+    }
 
     // ✅ Send Welcome Email
     try {
@@ -67,7 +95,6 @@ const register = async (req, res) => {
       console.log("📧 Welcome email triggered for:", email);
     } catch (emailErr) {
       console.error("⚠️ Failed to send welcome email:", emailErr);
-      // optional: do not fail the request just because email failed
     }
 
     // ✅ Final Response
@@ -78,7 +105,7 @@ const register = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Error during sign-up:", error);
+    console.error(" Error during sign-up:", error);
 
     return res.status(500).json({
       success: false,

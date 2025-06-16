@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { HiGiftTop } from "react-icons/hi2";
 import { IoMdWallet } from "react-icons/io";
 import { FaUsers } from "react-icons/fa";
@@ -10,23 +10,28 @@ import Completed from './tabs/completed';
 import { AuthContext } from '../../../components/control/authContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchReferralsByUser } from "../../../components/backendApis/referral/referral";
 
 const Referral = () => {
   const { user, webSettings } = useContext(AuthContext);
+  const [referralCount, setReferralCount] = useState(0);
+  const [totalEarned, setTotalEarned] = useState(0);
+  const [loadingReferrals, setLoadingReferrals] = useState(false);
+
+  const currencySymbol = webSettings?.currency ;
 
   const userCode = user?.uid || '';
-  const referralLink = webSettings?.web_url && userCode 
+  const referralLink = webSettings?.web_url && userCode
     ? `${webSettings.web_url}/auth/register?ref=${userCode}`
     : '';
 
   const copyToClipboard = () => {
     if (!referralLink) return;
-    
+
     navigator.clipboard.writeText(referralLink)
       .then(() => {
         toast.success('Referral link copied to clipboard!', {
           position: "top-right",
-      
         });
       })
       .catch((err) => {
@@ -36,6 +41,39 @@ const Referral = () => {
         console.error('Failed to copy text: ', err);
       });
   };
+
+  useEffect(() => {
+    const loadReferralStats = async () => {
+      if (!user?.uid) return;
+      setLoadingReferrals(true);
+      try {
+        const response = await fetchReferralsByUser(user.uid);
+        if (response.success && Array.isArray(response.data)) {
+          const referrals = response.data;
+
+          setReferralCount(referrals.length);
+
+          const approvedReferrals = referrals.filter(r => r.referral_status === 1);
+          const total = approvedReferrals.reduce(
+            (sum, r) => sum + Number(r.referral_amount || 0),
+            0
+          );
+          setTotalEarned(total);
+        } else {
+          setReferralCount(0);
+          setTotalEarned(0);
+        }
+      } catch (error) {
+        console.error('Failed to fetch referrals:', error);
+        setReferralCount(0);
+        setTotalEarned(0);
+      } finally {
+        setLoadingReferrals(false);
+      }
+    };
+
+    loadReferralStats();
+  }, [user?.uid]);
 
   return (
     <div>
@@ -90,11 +128,11 @@ const Referral = () => {
           <div className='flex gap-7 text-gray-300 bg-gray-800 rounded-lg p-3'>
             <div className='flex flex-col justify-start items-start gap-3'>
               <div className='flex justify-start items-center gap-2'><IoMdWallet />Total Earned</div>
-              <span>0</span>
+              <span>{loadingReferrals ? '...' : `${currencySymbol}${totalEarned.toLocaleString()}`}</span>
             </div>
             <div className='flex flex-col justify-start items-start gap-3'>
               <div className='flex justify-start items-center gap-2'><FaUsers />Invitees</div>
-              <span>0</span>
+              <span>{loadingReferrals ? '...' : referralCount}</span>
             </div>
           </div>
 

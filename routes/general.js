@@ -18,6 +18,7 @@ const { getAllWebSettings, updateWebSettings } = require("../controller/admin/da
 const { apis } = require("../utility/apis");
 const { WithdrawalRequest } = require("../controller/user/withdrawal");
 const { getCountrys } = require("../utility/country");
+const { fetchReferralsByReferrer } = require("../controller/user/referral");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -29,6 +30,7 @@ generalRoute.get("/user/:userUid", getUser);
 generalRoute.get("/transaction/:userUid", getUserTransactions);
 generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);
+
 
 // ✅ Fixed `/apis` route
 generalRoute.get("/apis", (req, res) => {
@@ -44,6 +46,7 @@ generalRoute.get("/bank", getBanks);
 generalRoute.get("/country", getCountrys);
 generalRoute.post("/verify-bank-account", verifyAccount);
 generalRoute.post("/withdrawal", WithdrawalRequest);
+generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);

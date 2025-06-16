@@ -4,7 +4,6 @@ let subscribers = []; // Stores functions that should be called when cart update
 // Function to add item to cart
 export const addToCart = (product) => {
   cart.push(product);
-  console.log("Cart Updated:", cart); // Log the updated cart
 
   // Notify all subscribers about the cart update
   subscribers.forEach((callback) => callback(cart));

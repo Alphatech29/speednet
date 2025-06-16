@@ -16,8 +16,6 @@ const Activate = ({ onClose }) => {
       toast.error("User authentication failed.");
       return;
     }
-
-    console.log("Sending userUid to API:", userUid);
     setLoading(true);
 
     try {

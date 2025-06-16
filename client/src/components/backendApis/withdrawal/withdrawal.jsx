@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const withdrawalRequest = async (payload) => {
   try {
-    console.log("📦 Withdrawal Payload:", payload);
 
     const response = await axios.post(`/general/withdrawal`, payload, {
       headers: {

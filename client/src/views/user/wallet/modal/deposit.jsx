@@ -39,15 +39,15 @@ const Deposit = ({ onClose }) => {
       return;
     }
 
-    let currency = 'USDT';  // Default currency for crypto
+    let currency = 'USDT'; 
     if (selected === 'fapshi' || selected === 'bank') {
-      currency = 'USD';  // Change to USD for bank/card or mobile money
+      currency = 'USD';  
     }
 
     const payload = {
       user_id: String(user.uid),
       email: String(user.email),
-      amount: numericAmount.toFixed(2),  // Ensure two decimal precision
+      amount: numericAmount.toFixed(2), 
       paymentMethod: selected,
       currency: currency,
     };
@@ -56,7 +56,6 @@ const Deposit = ({ onClose }) => {
 
     try {
       const response = await payWithCryptomus(payload);
-      console.log("Backend Response:", response);
 
       if (response.success && response.data?.payment_url) {
         toast.success(response.message, {

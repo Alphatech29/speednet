@@ -32,10 +32,9 @@ const Checkout = () => {
     };
 
     try {
-      console.log("Sending order to API:", orderDetails);
+
       const response = await collectOrder(orderDetails);
 
-      console.log("✅ Full API Response:", response);
 
       if (response.success) {
         toast.success(response.message);

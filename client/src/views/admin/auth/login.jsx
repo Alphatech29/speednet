@@ -30,7 +30,6 @@ const AdminLogin = () => {
 
     try {
       const response = await adminLoginApi({ username, password });
-      console.log('📥 Response in AdminLogin component:', response);
 
       if (response?.success && response?.token && response?.user) {
         const admin = response.user;

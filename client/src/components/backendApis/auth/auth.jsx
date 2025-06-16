@@ -10,7 +10,6 @@ export const register = async (userData) => {
       },
     });
 
-    console.log("Registration Success:", response.data);
 
     return {
       success: true,
@@ -38,7 +37,6 @@ export const login = async (userData) => {
       },
     });
 
-    console.log("✅ Login Success:", response.data);
 
     return {
       success: true,

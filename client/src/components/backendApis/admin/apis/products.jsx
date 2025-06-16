@@ -20,8 +20,6 @@ export const getAllProducts = async () => {
       data: products,
     };
 
-    console.log("getAllProducts success response:", result);
-
     return result;
   } catch (error) {
     const err = {
@@ -59,7 +57,6 @@ export const getAllOrders = async () => {
       data: orders,
     };
 
-    console.log("getAllOrders success response:", result);
 
     return result;
   } catch (error) {

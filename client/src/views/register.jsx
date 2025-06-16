@@ -58,7 +58,6 @@ const Register = () => {
       };
 
       const response = await register(formData);
-      console.log("API Response:", response);
 
       if (response?.success) {
         toast.success("Registration successful!");

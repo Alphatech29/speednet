@@ -16,8 +16,6 @@ export const getAllUsers = async () => {
       data: users,
     };
 
-    console.log("getAllUsers success response:", result);
-
     return result;
   } catch (error) {
     const err = {

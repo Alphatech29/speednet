@@ -21,11 +21,9 @@ const Order = () => {
 
     if (user?.uid) {
       const userUid = String(user.uid);
-      console.log("Fetching orders for user ID:", userUid);
 
       getUserOrders(userUid)
         .then((response) => {
-          console.log("Orders fetched:", response);
 
           // Group orders by order_no and create_at
           const groupedOrders = response.reduce((acc, order) => {

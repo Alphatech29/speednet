@@ -19,7 +19,7 @@ const { apis } = require("../utility/apis");
 const { WithdrawalRequest } = require("../controller/user/withdrawal");
 const { getCountrys } = require("../utility/country");
 const { fetchReferralsByReferrer } = require("../controller/user/referral");
-const verifyToken = require("../controller/middleWare/verifyToken");
+const verifyToken = require("./../middleWare/verifyToken");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);

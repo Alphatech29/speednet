@@ -52,10 +52,6 @@ const login = async (req, res) => {
       maxAge: ACCESS_EXPIRY,
     });
 
-    console.log(`[Login] JWT token generated: ${token}`);
-    console.log(`[Login] Auth cookie "authToken" set with maxAge: ${ACCESS_EXPIRY}ms`);
-    console.log(`[Login] Login successful response about to be sent for user ID: ${user.uid}`);
-
     try {
       await sendLoginNotificationEmail(user, req.ip, req.headers["user-agent"]);
     } catch (emailErr) {

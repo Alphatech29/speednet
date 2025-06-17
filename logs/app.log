@@ -710,3 +710,44 @@
 [2025-06-17T06:00:52.397Z] [INFO]: Gmail transporter is ready to send emails
 [2025-06-17T06:01:03.126Z] [INFO]: Fetched 5 orders for user: 4
 [2025-06-17T06:01:04.840Z] [INFO]: Fetched 4 accounts
+[2025-06-17T06:04:52.312Z] [INFO]: Fetched 4 accounts
+[2025-06-17T06:05:47.668Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:05:51.411Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:05:59.088Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:02.281Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:17.473Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:18.551Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:19.372Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:20.154Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:20.857Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:21.755Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:22.730Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:25.805Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:26.896Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:27.851Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:28.267Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:29.116Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:06:29.947Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:08:10.096Z] [INFO]: Fetched 2 platforms
+[2025-06-17T06:09:32.974Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T06:09:34.095Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T06:12:55.171Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T06:12:56.247Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T06:14:24.744Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T06:14:25.828Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T06:14:27.199Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T06:14:28.309Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T19:11:06.569Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T19:11:17.360Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:20.507Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:22.296Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:23.276Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:24.054Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:24.765Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:25.379Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:26.015Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:11:35.956Z] [ERROR]: Error sending login notification email:
+[2025-06-17T19:11:37.910Z] [ERROR]: Error configuring Gmail transporter: Client network socket disconnected before secure TLS connection was established
+[2025-06-17T19:12:31.464Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:12:32.911Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T19:12:52.248Z] [INFO]:  Server running on http://localhost:8000

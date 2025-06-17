@@ -93,7 +93,7 @@ const Checkout = () => {
               <span>{webSettings.currency}{Number(total).toFixed(2)}</span>
             </p>
             <p className="flex justify-between text-gray-400">
-              <span>VAT (5%):</span>
+              <span>VAT ({webSettings.vat}%):</span>
               <span>{webSettings.currency}{Number(vat).toFixed(2)}</span>
             </p>
             <p className="flex justify-between font-bold text-gray-100">

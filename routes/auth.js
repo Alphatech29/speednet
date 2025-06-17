@@ -1,7 +1,7 @@
 const express = require("express");
 const authRoute = express.Router();
 const register = require("../controller/auth/register");
-const login  = require("../controller/auth/login");
+const {login, logout}  = require("../controller/auth/login");
 const adminLogin  = require("../controller/admin/auth/login");
 const adminUpdatePassword = require("../controller/admin/auth/password");
 const authenticateToken = require("../controller/middleWare/authMiddleware");
@@ -11,6 +11,7 @@ const authenticateToken = require("../controller/middleWare/authMiddleware");
 // ------- User Authentication ---------//
 authRoute.post("/register", register);
 authRoute.post("/login", login);
+authRoute.post("/logout", logout);
 //--------Admin Authentication------//
 authRoute.post("/adminLogin", adminLogin);
 authRoute.put("/password-change", authenticateToken, adminUpdatePassword);

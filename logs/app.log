@@ -461,3 +461,252 @@
 [2025-06-16T23:29:22.739Z] [INFO]: Gmail transporter is ready to send emails
 [2025-06-16T23:29:29.959Z] [INFO]:  Server running on http://localhost:8000
 [2025-06-16T23:29:31.031Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-16T23:35:14.949Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-16T23:42:05.465Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-16T23:42:06.615Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-16T23:54:27.195Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-16T23:54:28.692Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-16T23:54:54.831Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-16T23:54:56.068Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-16T23:54:57.840Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-16T23:54:59.014Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-16T23:55:40.125Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-16T23:55:42.256Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-16T23:55:56.505Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-16T23:55:58.070Z] [INFO]: Login notification email sent:
+[2025-06-17T00:04:03.013Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:04:04.108Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:08:27.629Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:08:30.016Z] [INFO]: Login notification email sent:
+[2025-06-17T00:08:33.342Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:12:04.104Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:16:56.562Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:16:57.674Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:17:12.435Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:17:13.825Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:17:57.974Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:17:59.605Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:26:25.286Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:26:26.548Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:27:08.721Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:27:09.815Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:28:06.960Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:28:07.997Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:28:24.202Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:28:25.241Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:28:33.913Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:31:38.457Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:31:40.454Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:33:41.818Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:33:43.357Z] [INFO]: Login notification email sent:
+[2025-06-17T00:35:53.287Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:35:54.332Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:38:08.234Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:38:09.323Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:46:49.245Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T00:46:50.295Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T00:47:06.980Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:47:08.455Z] [INFO]: Login notification email sent:
+[2025-06-17T00:48:34.228Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T00:48:36.100Z] [INFO]: Login notification email sent:
+[2025-06-17T01:08:50.498Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:08:51.594Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:10:40.915Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:10:41.970Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:11:00.477Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:11:02.096Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:11:17.687Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:11:19.552Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:12:40.231Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:12:41.407Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:12:44.824Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:12:45.872Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:14:06.827Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:14:07.958Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:14:09.913Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:14:10.938Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:16:27.714Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:16:28.703Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:18:44.082Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:18:46.910Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:18:47.872Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:22:58.866Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:23:03.812Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:28:40.040Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:28:41.061Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:28:56.205Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:28:57.215Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:30:18.501Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:30:19.532Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:32:36.985Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:32:37.998Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:33:30.919Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:33:31.935Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:33:40.352Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:33:41.308Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:36:52.785Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:36:54.118Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:38:59.808Z] [INFO]: Login notification email sent:
+[2025-06-17T01:41:51.338Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:41:53.646Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:42:36.684Z] [INFO]: Login notification email sent:
+[2025-06-17T01:43:55.682Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:43:56.727Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:45:37.129Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:45:39.433Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:46:18.536Z] [ERROR]: Failed to serve index.html
+[2025-06-17T01:46:18.956Z] [ERROR]: Failed to serve index.html
+[2025-06-17T01:46:26.066Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:46:27.096Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:46:34.652Z] [INFO]: Login notification email sent:
+[2025-06-17T01:49:30.697Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:49:31.712Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T01:49:43.166Z] [INFO]: Login notification email sent:
+[2025-06-17T01:49:44.037Z] [INFO]: Login notification email sent:
+[2025-06-17T01:50:17.916Z] [INFO]: Login notification email sent:
+[2025-06-17T01:50:30.856Z] [INFO]: Login notification email sent:
+[2025-06-17T01:53:47.224Z] [INFO]: Login notification email sent:
+[2025-06-17T01:55:40.629Z] [INFO]: Login notification email sent:
+[2025-06-17T01:59:52.669Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T01:59:53.640Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T02:00:15.088Z] [INFO]: Login notification email sent:
+[2025-06-17T02:00:38.183Z] [INFO]: Login notification email sent:
+[2025-06-17T02:00:52.825Z] [INFO]: Login notification email sent:
+[2025-06-17T02:03:33.749Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T02:03:34.789Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T02:13:11.109Z] [INFO]: Login notification email sent:
+[2025-06-17T02:14:13.238Z] [INFO]: Login notification email sent:
+[2025-06-17T02:18:55.809Z] [INFO]: Login notification email sent:
+[2025-06-17T02:23:11.936Z] [INFO]: Login notification email sent:
+[2025-06-17T02:30:11.149Z] [INFO]: Login notification email sent:
+[2025-06-17T02:43:55.705Z] [INFO]: Login notification email sent:
+[2025-06-17T02:44:06.135Z] [INFO]: Login notification email sent:
+[2025-06-17T02:59:03.444Z] [INFO]: Login notification email sent:
+[2025-06-17T03:05:07.099Z] [INFO]: Login notification email sent:
+[2025-06-17T03:30:09.642Z] [INFO]: Login notification email sent:
+[2025-06-17T03:37:32.103Z] [INFO]: Login notification email sent:
+[2025-06-17T03:38:44.204Z] [INFO]: Login notification email sent:
+[2025-06-17T03:55:42.867Z] [INFO]: Login notification email sent:
+[2025-06-17T03:56:03.696Z] [INFO]: Login notification email sent:
+[2025-06-17T04:20:51.608Z] [ERROR]: 🔥 Uncaught Exception
+[2025-06-17T04:21:07.055Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:21:08.927Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:23:40.649Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:23:41.680Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:25:20.560Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:25:21.534Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:26:40.519Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:26:41.573Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:27:32.255Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:27:33.312Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:28:02.761Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:28:03.985Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:28:25.762Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:28:26.836Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:28:44.672Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:28:46.497Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:29:19.295Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:29:20.387Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:31:59.703Z] [INFO]: Server running on http://localhost:8000
+[2025-06-17T04:32:00.780Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:33:00.504Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:33:01.618Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:33:05.020Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:33:06.160Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:33:15.882Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:33:16.885Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:34:12.223Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:34:13.395Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:34:21.547Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:34:23.211Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:34:38.369Z] [INFO]: Login notification email sent:
+[2025-06-17T04:34:55.678Z] [INFO]: Login notification email sent:
+[2025-06-17T04:39:47.402Z] [INFO]: Login notification email sent:
+[2025-06-17T04:42:59.178Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:43:00.346Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:43:23.956Z] [INFO]: Login notification email sent:
+[2025-06-17T04:44:13.999Z] [INFO]: Login notification email sent:
+[2025-06-17T04:46:02.715Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:46:03.870Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:46:09.344Z] [INFO]: Login notification email sent:
+[2025-06-17T04:48:57.383Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:48:58.444Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:49:15.631Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:49:16.736Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:49:38.876Z] [INFO]: Login notification email sent:
+[2025-06-17T04:51:07.661Z] [INFO]: Login notification email sent:
+[2025-06-17T04:54:11.710Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T04:54:12.816Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T04:54:37.550Z] [INFO]: Login notification email sent:
+[2025-06-17T05:04:04.071Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:04:05.361Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:06:42.075Z] [INFO]: Login notification email sent:
+[2025-06-17T05:16:32.810Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:16:34.023Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:16:44.927Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:16:45.981Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:18:00.565Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:18:01.951Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:18:09.031Z] [INFO]: Login notification email sent:
+[2025-06-17T05:26:07.990Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:26:09.188Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:30:58.272Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:30:59.391Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:35:30.221Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:35:31.329Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:36:38.433Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:36:39.774Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:37:10.290Z] [INFO]: Login notification email sent:
+[2025-06-17T05:40:34.131Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:40:35.175Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:44:15.127Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:44:16.233Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:44:51.141Z] [INFO]: Login notification email sent:
+[2025-06-17T05:46:10.731Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:46:11.885Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:46:16.120Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:46:17.289Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:47:04.341Z] [INFO]: Login notification email sent:
+[2025-06-17T05:47:25.305Z] [INFO]: Login notification email sent:
+[2025-06-17T05:49:20.227Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:49:21.327Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:50:47.296Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:50:48.448Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:50:58.089Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:50:59.796Z] [INFO]: Login notification email sent:
+[2025-06-17T05:51:03.053Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:51:05.429Z] [INFO]: Fetched 4 accounts
+[2025-06-17T05:51:08.136Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:51:24.825Z] [INFO]: Fetched 4 accounts
+[2025-06-17T05:51:26.996Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:51:51.095Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:51:53.620Z] [INFO]: Login notification email sent:
+[2025-06-17T05:51:57.564Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:52:37.546Z] [INFO]: Fetched 3 orders for user: 4
+[2025-06-17T05:52:39.535Z] [INFO]: Fetched 4 accounts
+[2025-06-17T05:53:12.381Z] [INFO]: Fetched 4 accounts
+[2025-06-17T05:53:17.578Z] [INFO]: Fetched 4 accounts
+[2025-06-17T05:53:37.105Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:53:38.324Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:56:48.280Z] [INFO]: Order stored successfully with ID: 211
+[2025-06-17T05:56:48.343Z] [INFO]: Order stored successfully with ID: 212
+[2025-06-17T05:56:48.638Z] [INFO]: Order history stored successfully with ID: 84
+[2025-06-17T05:56:49.727Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T05:56:58.863Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T05:57:08.216Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:57:09.553Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:57:10.196Z] [ERROR]: Failed to serve index.html
+[2025-06-17T05:57:10.430Z] [ERROR]: Failed to serve index.html
+[2025-06-17T05:57:16.826Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:57:18.141Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:57:21.005Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T05:58:21.543Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:58:22.601Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T05:59:54.650Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T05:59:55.717Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T06:00:00.456Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:00:06.635Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:00:51.159Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T06:00:52.397Z] [INFO]: Gmail transporter is ready to send emails
+[2025-06-17T06:01:03.126Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-17T06:01:04.840Z] [INFO]: Fetched 4 accounts

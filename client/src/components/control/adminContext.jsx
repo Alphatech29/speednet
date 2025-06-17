@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 import { getWebSettings } from "../../components/backendApis/general/general";
-import { getAdmin } from "../../components/backendApis/admin/admin";
 
 export const AdminAuthContext = createContext();
 
@@ -15,7 +14,7 @@ export const AdminAuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const logoutTimeoutRef = useRef(null); 
+  const logoutTimeoutRef = useRef(null);
 
   const fetchWebSettings = async () => {
     try {
@@ -46,7 +45,6 @@ export const AdminAuthProvider = ({ children }) => {
       logoutTimeoutRef.current = setTimeout(() => {
         logoutAdmin();
       }, timeUntilExpiry);
-
     } catch (error) {
       console.error("Failed to decode or schedule logout:", error);
       logoutAdmin();
@@ -56,6 +54,12 @@ export const AdminAuthProvider = ({ children }) => {
   useEffect(() => {
     const initialize = async () => {
       try {
+        // Only run admin token check if current path starts with /admin
+        if (!window.location.pathname.startsWith("/admin")) {
+          setLoading(false);
+          return;
+        }
+
         const token = Cookies.get("adminToken") || localStorage.getItem("adminToken");
         const storedAdminDetails = Cookies.get("adminDetails");
         const storedWebSettings = localStorage.getItem("webSettings");
@@ -75,7 +79,7 @@ export const AdminAuthProvider = ({ children }) => {
           }
 
           try {
-            jwtDecode(token); // Just a validity check
+            jwtDecode(token); // Validity check
           } catch (err) {
             console.error("Invalid token:", err);
             logoutAdmin();

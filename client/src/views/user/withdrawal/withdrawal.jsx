@@ -26,7 +26,19 @@ const Withdrawal = () => {
   const [verifyingAccount, setVerifyingAccount] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const options = ['Bank', 'Crypto', 'MOMO'];
+  const country = user?.country?.toLowerCase();
+
+  const options = [
+    ...(country === 'nigeria' ? ['Bank'] : []),
+    'Crypto',
+    ...(country !== 'nigeria' ? ['MOMO'] : []),
+  ];
+
+  useEffect(() => {
+    if (!options.includes(activeOption)) {
+      setActiveOption(options[0]);
+    }
+  }, [country]);
 
   useEffect(() => {
     const fetchBanks = async () => {

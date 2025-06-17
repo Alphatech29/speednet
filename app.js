@@ -6,6 +6,8 @@ const compression = require("compression");
 const xssClean = require("xss-clean");
 const bodyParser = require("body-parser");
 const logger = require("./utility/logger");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // Routes
 const authRoute = require("./routes/auth");
@@ -35,12 +37,21 @@ app.use(
   })
 );
 
+app.use(cors({
+  origin: true, // Allow all origins
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Allow cookies to be sent
+}));
 
 // ────────────────────────────────
 // Request Body Parsers
 // ────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Cookie Parser
+app.use(cookieParser());
 
 // XSS Protection
 app.use(xssClean());
@@ -51,6 +62,16 @@ app.use(
     verify: (req, res, buf) => {
       req.rawBody = buf.toString();
     },
+  })
+);
+
+
+
+// Allow all origins with credentials support
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
   })
 );
 
@@ -90,6 +111,7 @@ app.get("*", (req, res) => {
 // ────────────────────────────────
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
   logger.info(` Server running on http://localhost:${PORT}`);
 });
 

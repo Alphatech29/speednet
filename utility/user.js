@@ -1,29 +1,28 @@
 const db = require("../model/db");
 
-const getUser = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
-    const { userUid } = req.params;
+    const { userId } = req.user; 
 
-    // ✅ Validate userUid
-    if (!userUid || typeof userUid !== "string") {
-      console.error("❌ Invalid userUid provided:", userUid);
-      return res.status(400).json({ error: "Invalid user UID" });
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
     }
 
-    // ✅ Fetch user from the database
-    const [rows] = await db.execute("SELECT * FROM users WHERE uid = ? LIMIT 1", [userUid]);
+    const [rows] = await db.execute("SELECT * FROM users WHERE uid = ? LIMIT 1", [userId]);
 
     if (!rows || rows.length === 0) {
-      console.error("❌ User not found:", userUid);
       return res.status(404).json({ error: "User not found" });
     }
 
-    return res.status(200).json(rows[0]);
+    const user = rows[0];
+    delete user.password;
+
+    return res.status(200).json(user);
 
   } catch (error) {
-    console.error("❌ Database error:", error.message || error);
+    console.error("❌ Error fetching current user:", error.message || error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
 
-module.exports = { getUser };
+module.exports = { getCurrentUser };

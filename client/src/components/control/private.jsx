@@ -3,17 +3,17 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../control/authContext";
 
 const PrivateRoute = () => {
-  const { authToken } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(false);
-  }, [authToken]);
+  }, [user]);
 
-  if (loading) return null; 
+  if (loading) return null;
 
-  return authToken ? (
+  return user ? (
     <Outlet />
   ) : (
     <Navigate to="/auth/login" replace state={{ from: location }} />

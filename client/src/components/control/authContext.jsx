@@ -1,13 +1,12 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { getWebSettings } from "../backendApis/general/general";
-import { getUser } from "../backendApis/user/user";
+import { getCurrentUser } from "../backendApis/user/user";
+import { logoutUser } from "../backendApis/auth/auth";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(null);
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
   const [webSettings, setWebSettings] = useState(null);
@@ -18,134 +17,104 @@ const AuthProvider = ({ children }) => {
     try {
       const result = await getWebSettings();
       if (result?.success && result.data) {
-        const storedWebSettings = JSON.parse(localStorage.getItem("webSettings"));
-        if (JSON.stringify(result.data) !== JSON.stringify(storedWebSettings)) {
-          setWebSettings(result.data);
-          localStorage.setItem("webSettings", JSON.stringify(result.data));
-        }
+        setWebSettings(result.data);
+        return result.data;
       }
     } catch (error) {
       console.error("❌ Error fetching web settings:", error);
     }
+    return null;
   };
 
-  const fetchUser = async (userUid) => {
+  const fetchUser = async () => {
     try {
-      const result = await getUser(userUid.toString());
+      const result = await getCurrentUser();
+
       if (result?.success && result.data) {
+        console.log("👤 Current user fetched:", result.data);
         setUser(result.data);
-        localStorage.setItem("user", JSON.stringify(result.data));
-        Cookies.set("user", JSON.stringify(result.data), { expires: 7 });
+        return result.data;
+      } else {
+        setUser(null);
+        console.log("⚠️ No user data in response.");
+        return null;
       }
     } catch (error) {
-      console.error("❌ Error fetching user:", error);
+      console.error("❌ Error fetching current user:", error);
+      setUser(null);
+      return null;
+    }
+  };
+
+  const signIn = async () => {
+    console.log("signIn started");
+    try {
+      const currentUser = await fetchUser();
+      if (currentUser) {
+        await fetchWebSettings();
+        if (currentUser?.role === "merchant") {
+          navigate("/user/dashboard");
+        } else {
+          navigate("/user/marketplace");
+        }
+      } else {
+        console.error("❌ Failed to retrieve user after login.");
+      }
+    } catch (error) {
+      console.error("❌ signIn error:", error);
+      setUser(null);
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("authToken") || Cookies.get("authToken");
-        const storedWebSettings = localStorage.getItem("webSettings");
-        const storedCart = localStorage.getItem("cart");
-
-        if (token) {
-          setAuthToken(token);
-
-          if (storedWebSettings) {
-            setWebSettings(JSON.parse(storedWebSettings));
-          } else {
-            await fetchWebSettings();
-          }
-
-          if (storedCart) {
-            setCart(JSON.parse(storedCart));
-          }
-
-          const storedUser = localStorage.getItem("user");
-          if (storedUser) {
-            const parsedUser = JSON.parse(storedUser);
-            if (parsedUser?.uid) {
-              await fetchUser(parsedUser.uid);
-            }
-          }
-        }
-      } catch (error) {
-        console.error("❌ Error retrieving auth data:", error);
-      } finally {
-        setLoading(false);
-      }
+    const initialize = async () => {
+      setLoading(true);
+      await Promise.all([fetchWebSettings(), fetchUser()]);
+      setLoading(false);
     };
-
-    fetchData();
+    initialize();
   }, []);
 
-  const signIn = ({ token, user }) => {
+  const logout = async () => {
     try {
-      if (!token || !user) throw new Error("Invalid login response");
-      setAuthToken(token);
-      setUser(user);
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      Cookies.set("authToken", token, { expires: 7 });
-      Cookies.set("user", JSON.stringify(user), { expires: 7 });
-
-      fetchWebSettings();
-
-      setTimeout(() => {
-        navigate(user.role === "merchant" ? "/user/dashboard" : "/user/marketplace");
-      }, 2000);
+      await logoutUser();
     } catch (error) {
-      console.error("❌ Login Error:", error);
+      console.warn("⚠️ Logout API failed:", error);
     }
-  };
-
-  const logout = () => {
-    setAuthToken(null);
     setUser(null);
     setCart([]);
     setWebSettings(null);
-    localStorage.clear();
-    Cookies.remove("authToken");
-    Cookies.remove("user");
-    Cookies.remove("cart");
     navigate("/auth/login");
   };
 
-  const updateCartState = (newCart) => {
-    setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    Cookies.set("cart", JSON.stringify(newCart), { expires: 7 });
+  const updateCartState = (newCart) => setCart(newCart);
+
+  const removeFromCart = (itemId) => {
+    setCart((prev) => prev.filter((item) => item.id !== itemId));
   };
 
-  // ✅ New: removeFromCart by item ID
-  const removeFromCart = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    Cookies.set("cart", JSON.stringify(updatedCart), { expires: 7 });
-  };
+  const contextValue = useMemo(
+    () => ({
+      user,
+      cart,
+      webSettings,
+      signIn,
+      logout,
+      updateCartState,
+      removeFromCart,
+    }),
+    [user, cart, webSettings]
+  );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="text-gray-500">Loading...</span>
+      </div>
+    );
   }
 
-  return (
-    <AuthContext.Provider
-      value={{
-        authToken,
-        user,
-        cart,
-        webSettings,
-        signIn,
-        logout,
-        updateCartState,
-        removeFromCart, 
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };

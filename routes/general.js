@@ -3,7 +3,7 @@ const generalRoute = express.Router();
 const { getAllAccounts, getAllPlatforms } = require("../utility/accounts");
 const { activateAccount } = require('../utility/upgrade');
 const { getWebSettings } = require('../utility/general');
-const { getUser } = require('../utility/user');
+const { getCurrentUser } = require('../utility/user');
 const { fapshiWebhook, cryptomusWebhook } = require('../utility/webhook');
 const { getUserTransactions, getUserOrderHistory } = require('../controller/user/history');
 const { collectOrder } = require("../controller/user/purchase");
@@ -19,6 +19,7 @@ const { apis } = require("../utility/apis");
 const { WithdrawalRequest } = require("../controller/user/withdrawal");
 const { getCountrys } = require("../utility/country");
 const { fetchReferralsByReferrer } = require("../controller/user/referral");
+const verifyToken = require("../controller/middleWare/verifyToken");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -26,7 +27,7 @@ generalRoute.get("/platforms", getAllPlatforms);
 generalRoute.post("/create-account", accountCreation);
 generalRoute.post("/activate", activateAccount);
 generalRoute.get("/websettings", getWebSettings);
-generalRoute.get("/user/:userUid", getUser);
+generalRoute.get("/user", verifyToken, getCurrentUser);
 generalRoute.get("/transaction/:userUid", getUserTransactions);
 generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);

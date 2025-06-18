@@ -8,7 +8,6 @@ export const getAllPlatforms = async () => {
       },
     });
 
-    console.log("getAllPlatforms response:", response.data);
     const platforms = response.data?.platforms || [];
 
     return {
@@ -31,62 +30,37 @@ export const getAllPlatforms = async () => {
 };
 
 
-export const addPlatform = async (platformData) => {
+export const addPlatform = async (formData) => {
   try {
-    const response = await axios.post("/platform", platformData, {
+    // Debugging
+    console.log("addPlatform data:", formData);
+
+    const response = await axios.post("/general/platform", formData, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     });
 
-    const result = {
+    return {
       success: true,
-      message: response.data.message || "Platform added successfully!",
-      platformId: response.data.platformId,
+      message: response.data?.message || "Platform added successfully!",
+      platformId: response.data?.platformId,
     };
 
-    return result;
   } catch (error) {
-    const err = {
+    const fallbackMessage = "An error occurred while adding the platform.";
+
+    console.error("addPlatform error:", error);
+
+    return {
       success: false,
-      message:
-        error.response?.data?.message || "An error occurred while adding the platform.",
+      message: error.response?.data?.message || fallbackMessage,
       error: error.response?.data || error.message,
     };
-
-    console.error("addPlatform error response:", err);
-
-    return err;
   }
 };
-export const updatePlatform = async (platformId, platformData) => {
-  try {
-    const response = await axios.put(`/platform/${platformId}`, platformData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    const result = {
-      success: true,
-      message: response.data.message || "Platform updated successfully!",
-    };
-
-    return result;
-  } catch (error) {
-    const err = {
-      success: false,
-      message:
-        error.response?.data?.message || "An error occurred while updating the platform.",
-      error: error.response?.data || error.message,
-    };
-
-    console.error("updatePlatform error response:", err);
-
-    return err;
-  }
-};
-export const deletePlatform = async (platformId) => {
+export const deletePlatformById = async (platformId) => {
   try {
     const response = await axios.delete(`/platform/${platformId}`, {
       headers: {

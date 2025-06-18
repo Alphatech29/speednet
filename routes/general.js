@@ -21,6 +21,7 @@ const { getCountrys } = require("../utility/country");
 const { fetchReferralsByReferrer } = require("../controller/user/referral");
 const verifyToken = require("./../middleWare/verifyToken");
 const { addPlatform, fetchPlatforms } = require("../controller/admin/dashboard/platform");
+const upload = require("../utility/multerConfig");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -58,7 +59,7 @@ generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 generalRoute.get("/users", getAllUsers);
 generalRoute.get("/product", getAllAccount);
 generalRoute.get("/order", getAllOrders);
-generalRoute.post("/platform", addPlatform);
+generalRoute.post("/platform", upload.single('image'), addPlatform);
 generalRoute.get("/platform", fetchPlatforms);
 
 module.exports = generalRoute;

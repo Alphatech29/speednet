@@ -2,29 +2,27 @@ const { insertPlatform, getAllPlatforms } = require('../../../utility/platform')
 
 const addPlatform = async (req, res) => {
   try {
-    const { name, image_path } = req.body;
+    const { name } = req.body;
+    const file = req.file;
 
-    // Basic validation
-    if (!name || !image_path) {
-      return res.status(400).json({ message: 'Both name and image_path are required.' });
+    if (!name || !file) {
+      return res.status(400).json({ message: 'Both name and image file are required.' });
     }
 
-    // Insert into database
+    const image_path = `/uploads/${file.filename}`;
+
     const newId = await insertPlatform({ name, image_path });
 
     return res.status(201).json({
       message: 'Platform successfully added',
       platformId: newId,
     });
-
   } catch (error) {
     console.error('Error in addPlatform:', error.message);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-
-// Fetch all platforms from the database
 const fetchPlatforms = async (req, res) => {
   try {
     const platforms = await getAllPlatforms();
@@ -34,7 +32,5 @@ const fetchPlatforms = async (req, res) => {
     res.status(500).json({ message: 'Unable to retrieve platforms' });
   }
 };
-
-
 
 module.exports = { addPlatform, fetchPlatforms };

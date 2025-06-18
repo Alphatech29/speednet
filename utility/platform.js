@@ -1,8 +1,5 @@
-const pool = require('../model/db');
+const pool = require('../model/db'); // This is correct
 
-/**
- * Inserts a new platform into the platforms table
- */
 async function insertPlatform(platformData) {
   const fields = [];
   const placeholders = [];
@@ -22,13 +19,14 @@ async function insertPlatform(platformData) {
   `;
 
   try {
-    const [result] = await pool.promise().query(sql, values);
+    const [result] = await pool.query(sql, values);
     return result.insertId;
   } catch (error) {
     console.error('Error inserting platform:', error.message);
     throw new Error('Failed to insert platform');
   }
 }
+
 
 /**
  * Fetches all platforms from the platforms table

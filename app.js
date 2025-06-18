@@ -4,14 +4,9 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const compression = require("compression");
 const xssClean = require("xss-clean");
-const bodyParser = require("body-parser");
-const logger = require("./utility/logger");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
-// Routes
-const authRoute = require("./routes/auth");
-const generalRoute = require("./routes/general");
+const logger = require("./utility/logger");
 
 // Load environment variables
 dotenv.config();
@@ -37,7 +32,9 @@ app.use(
   })
 );
 
-// Allow all origins with credentials support
+// ────────────────────────────────
+// 🌍 CORS
+// ────────────────────────────────
 app.use(cors({
   origin: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -46,44 +43,44 @@ app.use(cors({
 }));
 
 // ────────────────────────────────
-// Request Body Parsers
+// 🧩 Parsers
 // ────────────────────────────────
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
-// Cookie Parser
+// ────────────────────────────────
+// 🍪 Cookie & XSS
+// ────────────────────────────────
 app.use(cookieParser());
-
-// XSS Protection
 app.use(xssClean());
 
-// For webhooks (if needed)
-app.use(
-  bodyParser.json({
-    verify: (req, res, buf) => {
-      req.rawBody = buf.toString();
-    },
-  })
-);
-
-
-// Gzip compression
+// ────────────────────────────────
+// 📦 Compression
+// ────────────────────────────────
 app.use(compression());
 
 // ────────────────────────────────
-// API Routes
+// 📂 Serve Uploaded Files (e.g., Multer)
 // ────────────────────────────────
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
+// ────────────────────────────────
+// 🔁 Routes
+// ────────────────────────────────
+const authRoute = require("./routes/auth");
+const generalRoute = require("./routes/general");
+
 app.use("/auth", authRoute);
 app.use("/general", generalRoute);
 
 // ────────────────────────────────
-// Static Frontend Files
+// 🧱 Serve Static Files (Frontend)
 // ────────────────────────────────
 const staticPath = path.join(__dirname, "client", "dist");
 app.use(express.static(staticPath));
 
 // ────────────────────────────────
-// Fallback to index.html (SPA)
+// 🧭 Fallback to index.html (SPA)
 // ────────────────────────────────
 app.get("*", (req, res) => {
   const indexPath = path.join(staticPath, "index.html");
@@ -99,16 +96,16 @@ app.get("*", (req, res) => {
 });
 
 // ────────────────────────────────
-//  Start Server
+// 🚀 Start Server
 // ────────────────────────────────
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  logger.info(` Server running on http://localhost:${PORT}`);
+  logger.info(`Server running on http://localhost:${PORT}`);
 });
 
 // ────────────────────────────────
-//  Graceful Shutdown & Error Logs
+// 🔐 Graceful Shutdown & Errors
 // ────────────────────────────────
 process.on("uncaughtException", (err) => {
   logger.error("🔥 Uncaught Exception", {

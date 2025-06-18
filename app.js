@@ -29,7 +29,7 @@ app.use(
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["*", "data:", "blob:"],
-      connectSrc: ["'self'", "https://restcountries.com"], // Fixed this line
+      connectSrc: ["'self'", "https://restcountries.com"],
       fontSrc: ["'self'"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
@@ -37,11 +37,12 @@ app.use(
   })
 );
 
+// Allow all origins with credentials support
 app.use(cors({
-  origin: true, // Allow all origins
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // Allow cookies to be sent
+  credentials: true, 
 }));
 
 // ────────────────────────────────
@@ -65,15 +66,6 @@ app.use(
   })
 );
 
-
-
-// Allow all origins with credentials support
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
 
 // Gzip compression
 app.use(compression());

@@ -7,6 +7,8 @@ import { SiNordvpn } from "react-icons/si";
 import { IoMdSettings } from "react-icons/io";
 import { FaUsers } from "react-icons/fa";
 import { PiCubeTransparentFill } from "react-icons/pi";
+import { MdOutlineAccountTree } from "react-icons/md";
+
 
 
 
@@ -36,6 +38,9 @@ const Sidebar = () => {
           </NavLink>
            <NavLink to="/admin/withdrawal" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
             <PiCubeTransparentFill  /> <span>Withdrawal</span>
+          </NavLink>
+           <NavLink to="/admin/platform" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
+            <MdOutlineAccountTree  /> <span>Platform</span>
           </NavLink>
            <NavLink to="/admin/settings" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
             <IoMdSettings  /> <span>Settings</span>

@@ -20,17 +20,22 @@ const { WithdrawalRequest } = require("../controller/user/withdrawal");
 const { getCountrys } = require("../utility/country");
 const { fetchReferralsByReferrer } = require("../controller/user/referral");
 const verifyToken = require("./../middleWare/verifyToken");
+const { addPlatform, fetchPlatforms } = require("../controller/admin/dashboard/platform");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
 generalRoute.get("/platforms", getAllPlatforms);
-generalRoute.post("/create-account", accountCreation);
-generalRoute.post("/activate", activateAccount);
 generalRoute.get("/websettings", getWebSettings);
+generalRoute.get("/settings", getAllWebSettings);
+generalRoute.put("/settings", updateWebSettings);
+
+// --------- User route --------- //
 generalRoute.get("/user", verifyToken, getCurrentUser);
 generalRoute.get("/transaction/:userUid", getUserTransactions);
 generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);
+generalRoute.post("/create-account", accountCreation);
+generalRoute.post("/activate", activateAccount);
 
 
 // ✅ Fixed `/apis` route
@@ -53,7 +58,7 @@ generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 generalRoute.get("/users", getAllUsers);
 generalRoute.get("/product", getAllAccount);
 generalRoute.get("/order", getAllOrders);
-generalRoute.get("/settings", getAllWebSettings);
-generalRoute.put("/settings", updateWebSettings);
+generalRoute.post("/platform", addPlatform);
+generalRoute.get("/platform", fetchPlatforms);
 
 module.exports = generalRoute;

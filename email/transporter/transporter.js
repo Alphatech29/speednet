@@ -16,9 +16,9 @@ const transporter = nodemailer.createTransport({
 // Verify the transporter
 transporter.verify((error, success) => {
   if (error) {
-    logger.error(`Error configuring Gmail transporter: ${error.message}`);
+    //logger.error(`Error configuring Gmail transporter: ${error.message}`);
   } else {
-    logger.info('Gmail transporter is ready to send emails');
+    //logger.info('Gmail transporter is ready to send emails');
   }
 });
 

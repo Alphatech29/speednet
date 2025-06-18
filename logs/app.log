@@ -771,3 +771,83 @@
 [2025-06-18T02:13:58.079Z] [INFO]: Fetched 2 platforms
 [2025-06-18T02:18:20.502Z] [INFO]:  Server running on http://localhost:8000
 [2025-06-18T02:18:42.086Z] [ERROR]: Error configuring Gmail transporter: connect ETIMEDOUT 66.102.1.109:465
+[2025-06-18T02:21:47.964Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:24:06.828Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:24:19.906Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:25:17.871Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:25:20.385Z] [INFO]: Fetched 4 accounts
+[2025-06-18T02:26:23.617Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:26:37.769Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:27:32.458Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:27:57.348Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:28:17.183Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:29:03.393Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:29:14.379Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:32:02.444Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:34:32.777Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:34:33.466Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:34:54.407Z] [ERROR]: Error sending login notification email:
+[2025-06-18T02:35:21.861Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:35:43.572Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:46:45.028Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:49:20.869Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:50:43.379Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:51:19.796Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:53:05.181Z] [INFO]: Fetched 2 platforms
+[2025-06-18T03:40:29.539Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:40:42.565Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:52:00.325Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:52:43.460Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:52:57.019Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:53:07.339Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:53:36.426Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:54:35.375Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:54:50.530Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T03:55:17.307Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:01:19.090Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:20:20.823Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:23:30.735Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:24:28.611Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:24:46.953Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:25:21.052Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:26:05.018Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:32:48.636Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:34:26.527Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:34:31.113Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:35:11.650Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:37:29.595Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:37:41.866Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T04:59:35.615Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:00:17.886Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:01:44.803Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:03:03.401Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:03:55.128Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:03:55.193Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:04:08.225Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:04:12.094Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:04:12.100Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:04:18.224Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:07:08.179Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:09:23.290Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:10:29.317Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:10:58.560Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:12:03.239Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:13:41.620Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:15:48.277Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:17:02.772Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:18:40.232Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:18:40.470Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:18:40.850Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:18:43.843Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:22:56.990Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:23:16.489Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:24:25.750Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:25:51.521Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:27:38.584Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:27:38.895Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:27:39.072Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:27:39.386Z] [ERROR]: Failed to serve index.html
+[2025-06-18T05:27:45.292Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:29:00.660Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:29:08.618Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T05:31:32.646Z] [INFO]:  Server running on http://localhost:8000

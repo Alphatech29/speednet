@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const pool = require("../../model/db");
 const { sendLoginNotificationEmail } = require("../../email/mails/login");
 
-const ACCESS_EXPIRY = 15 * 60 * 1000; // 15 minutes in milliseconds
+const ACCESS_EXPIRY = 12 * 60 * 60 * 1000;
 
 const login = async (req, res) => {
   try {
@@ -36,7 +36,7 @@ const login = async (req, res) => {
         .json({ code: "INVALID_CREDENTIALS", message: "Incorrect password" });
     }
 
-    delete user.password; // Remove password before logging or sending
+    delete user.password;
 
     const token = jwt.sign(
       { userId: user.uid },

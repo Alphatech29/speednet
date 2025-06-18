@@ -7,6 +7,7 @@ import Settings from '../settings/settings';
 import User from '../dashboard/users/user';
 import Products from '../product/products';
 import Withdrawal from '../withdrawal/withdrawal';
+import Platform from '../platform/platform';
 
 
 
@@ -22,6 +23,7 @@ const AdminRoute = () => {
          <Route path="products" element={<Products />} />
          <Route path="users" element={<User />} />
          <Route path="withdrawal" element={<Withdrawal />} />
+         <Route path="platform" element={<Platform />} />
 
       </Route>
     </Routes>

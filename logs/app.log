@@ -751,3 +751,23 @@
 [2025-06-17T19:12:31.464Z] [INFO]: Fetched 5 orders for user: 4
 [2025-06-17T19:12:32.911Z] [INFO]: Fetched 5 orders for user: 4
 [2025-06-17T19:12:52.248Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-17T19:14:03.837Z] [ERROR]: Error configuring Gmail transporter: queryA ETIMEOUT smtp.gmail.com
+[2025-06-18T02:10:03.777Z] [ERROR]: Failed to serve index.html
+[2025-06-18T02:10:07.022Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:10:26.224Z] [INFO]: Fetched 5 orders for user: 4
+[2025-06-18T02:10:28.161Z] [ERROR]: Error configuring Gmail transporter: connect ETIMEDOUT 142.250.110.108:465
+[2025-06-18T02:10:47.119Z] [ERROR]: Error sending login notification email:
+[2025-06-18T02:11:30.110Z] [INFO]: Fetched 4 accounts
+[2025-06-18T02:11:44.657Z] [INFO]: Order stored successfully with ID: 213
+[2025-06-18T02:11:44.734Z] [INFO]: Order history stored successfully with ID: 85
+[2025-06-18T02:11:45.776Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:12:50.136Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:35.725Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:39.770Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:41.044Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:49.776Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:52.764Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:55.524Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T02:13:58.079Z] [INFO]: Fetched 2 platforms
+[2025-06-18T02:18:20.502Z] [INFO]:  Server running on http://localhost:8000
+[2025-06-18T02:18:42.086Z] [ERROR]: Error configuring Gmail transporter: connect ETIMEDOUT 66.102.1.109:465

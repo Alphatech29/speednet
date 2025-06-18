@@ -951,3 +951,9 @@
 [2025-06-18T19:02:44.733Z] [INFO]: Server running on http://localhost:8000
 [2025-06-18T19:04:59.245Z] [INFO]: Server running on http://localhost:8000
 [2025-06-18T19:05:11.435Z] [INFO]: Server running on http://localhost:8000
+[2025-06-18T19:12:42.573Z] [INFO]: Fetched 5 accounts
+[2025-06-18T19:12:58.135Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T19:13:00.649Z] [INFO]: Login notification email sent:
+[2025-06-18T19:13:04.384Z] [INFO]: Fetched 4 platforms
+[2025-06-18T19:17:21.444Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-18T19:17:22.635Z] [INFO]: Fetched 5 accounts

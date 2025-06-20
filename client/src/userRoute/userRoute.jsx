@@ -13,6 +13,7 @@ import Withdrawal from '../views/user/withdrawal/withdrawal';
 import NordVpn from "./../views/user/nordService/nordVpn";
 import Pricing from '../views/user/nordService/pricing';
 import Referral from '../views/user/referral/referral';
+import Vtu from '../views/user/vtu/vtu';
 
 
 
@@ -31,6 +32,7 @@ const UserRoute = () => {
         <Route path='my-products' element={<Myproduct/>}/>
         <Route path='add-product' element={<AddNewProdunct/>}/>
         <Route path='withdraw' element={<Withdrawal/>}/>
+        <Route path='vtu' element={<Vtu/>}/>
         <Route path='nord-services/vpn' element={<NordVpn/>}/>
         <Route path='nord-services/vpn/offer' element={<Pricing/>}/>
         <Route path='referral' element={<Referral/>}/>

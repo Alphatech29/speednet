@@ -77,7 +77,7 @@ const useAddAccountLogic = (userUid, setCurrentStep) => {
             additionalPassword: ''
           });
           if (setCurrentStep) {
-            setCurrentStep(1); // Reset to first step
+            setCurrentStep(1);
           }
         } else {
           const errorMessage = result?.message || 

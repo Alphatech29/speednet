@@ -22,6 +22,7 @@ const { fetchReferralsByReferrer } = require("../controller/user/referral");
 const verifyToken = require("./../middleWare/verifyToken");
 const { addPlatform, fetchPlatforms } = require("../controller/admin/dashboard/platform");
 const upload = require("../utility/multerConfig");
+const { airtimePurchase } = require("../controller/user/vtpass");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -37,6 +38,7 @@ generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);
 generalRoute.post("/create-account", accountCreation);
 generalRoute.post("/activate", activateAccount);
+generalRoute.post("/airtime/Purchase", verifyToken, airtimePurchase);
 
 
 // ✅ Fixed `/apis` route

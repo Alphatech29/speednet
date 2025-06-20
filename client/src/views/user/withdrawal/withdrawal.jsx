@@ -26,13 +26,12 @@ const Withdrawal = () => {
   const [verifyingAccount, setVerifyingAccount] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const country = user?.country?.toLowerCase();
+  const country = user?.country.toLowerCase();
 
-  const options = [
-    ...(country === 'nigeria' ? ['Bank'] : []),
-    'Crypto',
-    ...(country !== 'nigeria' ? ['MOMO'] : []),
-  ];
+  // Determine available options based on country
+  const options = country === 'nigeria'
+    ? ['Bank', 'Crypto']
+    : ['Crypto', 'MOMO'];
 
   useEffect(() => {
     if (!options.includes(activeOption)) {
@@ -133,8 +132,6 @@ const Withdrawal = () => {
 
       if (res.success) {
         toast.success(res.message || 'Withdrawal request submitted!');
-
-        // Reset form fields
         setAmount('');
         setAccountNumber('');
         setAccountName('');

@@ -8,6 +8,7 @@ const Platform = () => {
   const [platforms, setPlatforms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchPlatforms = async () => {
     const response = await getAllPlatforms();
@@ -37,8 +38,13 @@ const Platform = () => {
     }
   };
 
+  // Filter platforms based on search term
+  const filteredPlatforms = platforms.filter(platform =>
+    platform.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md ">
+    <div className="bg-white p-4 rounded-lg shadow-md">
       <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="text-xl font-semibold mb-4">List of Platforms</h2>
 
@@ -51,7 +57,9 @@ const Platform = () => {
         </button>
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search platform"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="text-gray-700 px-3 py-1 rounded-md border border-gray-300"
         />
       </div>
@@ -71,8 +79,8 @@ const Platform = () => {
                 Loading platforms...
               </Table.Cell>
             </Table.Row>
-          ) : platforms.length > 0 ? (
-            platforms.map((platform, index) => (
+          ) : filteredPlatforms.length > 0 ? (
+            filteredPlatforms.map((platform, index) => (
               <Table.Row key={platform.id} className="text-sm">
                 <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>
@@ -86,7 +94,7 @@ const Platform = () => {
                 <Table.Cell>
                   <Button
                     onClick={() => handleDelete(platform.id, platform.name)}
-                    className=" bg-red-600 text-white rounded-lg text-xs hover:bg-red-700 cursor-pointer"
+                    className="bg-red-600 text-white rounded-lg text-xs hover:bg-red-700 cursor-pointer"
                   >
                     Delete
                   </Button>
@@ -107,13 +115,12 @@ const Platform = () => {
       <Modal show={modalOpen} onClose={() => setModalOpen(false)}>
         <Modal.Header>Add Platform</Modal.Header>
         <Modal.Body>
-         <Add
-  onClose={() => {
-    setModalOpen(false);
-    fetchPlatforms(); // Refresh the list after modal is closed
-  }}
-/>
-
+          <Add
+            onClose={() => {
+              setModalOpen(false);
+              fetchPlatforms();
+            }}
+          />
         </Modal.Body>
       </Modal>
     </div>

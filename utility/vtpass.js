@@ -4,18 +4,27 @@ const { generateUniqueRandomNumber } = require("../utility/random");
 const axios = require('axios');
 
 // ✅ Generate authentication headers (with hash)
-const getAuthHeaders = (payload, settings) => {
-    const { vtpass_api_key, vtpass_pk, vtpass_sk } = settings;
+const getAuthHeaders = (payload, settings, isPost = true) => {
+  const { vtpass_api_key, vtpass_pk, vtpass_sk } = settings;
 
+  const headers = {
+    'api-key': vtpass_api_key,
+    'Content-Type': 'application/json',
+  };
+
+  if (isPost) {
+    // POST: include secret-key and your generated hash
     const hash = generateHash(payload, vtpass_sk);
+    headers['secret-key'] = vtpass_sk;
+    headers['hash'] = hash;
+  } else {
+    // GET: include only public-key
+    headers['public-key'] = vtpass_pk;
+  }
 
-    return {
-        "api-key": vtpass_api_key,
-        "public-key": vtpass_pk,
-        "hash": hash,
-        "Content-Type": "application/json",
-    };
+  return headers;
 };
+
 
 // ✅ Check VTpass Wallet Balance
 exports.checkVtuBalance = async () => {

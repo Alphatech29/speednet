@@ -83,12 +83,8 @@ const Sidebar = ({ isOpen }) => {
           </NavLink>
         )}
 
-        <NavLink to="/user/airtime" className={linkClasses}>
-          <FaMobile /> <span>Airtime Purchase</span>
-        </NavLink>
-
-        <NavLink to="/user/data" className={linkClasses}>
-          <FaWifi /> <span>Data Purchase</span>
+        <NavLink to="/user/vtu" className={linkClasses}>
+          <FaMobile /> <span>VTU Service</span>
         </NavLink>
 
         <NavLink to="/user/order" className={linkClasses}>

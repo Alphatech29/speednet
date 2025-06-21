@@ -33,7 +33,7 @@ const Register = () => {
         const countryNames = data.countries.sort();
         setCountries(countryNames);
       } catch (error) {
-        console.error("Failed to fetch countries:", error);
+  
       }
     };
     fetchCountries();
@@ -78,7 +78,7 @@ const Register = () => {
         }
       }
     } catch (error) {
-      console.error("Registration error:", error);
+  
       if (error.response?.data) {
         const errorData = error.response.data;
         if (errorData?.error?.errors?.length) {

@@ -21,7 +21,6 @@ const AuthProvider = ({ children }) => {
         return result.data;
       }
     } catch (error) {
-      console.error("❌ Error fetching web settings:", error);
     }
     return null;
   };
@@ -31,23 +30,22 @@ const AuthProvider = ({ children }) => {
       const result = await getCurrentUser();
 
       if (result?.success && result.data) {
-        console.log("👤 Current user fetched:", result.data);
+     
         setUser(result.data);
         return result.data;
       } else {
         setUser(null);
-        console.log("⚠️ No user data in response.");
+       
         return null;
       }
     } catch (error) {
-      console.error("❌ Error fetching current user:", error);
       setUser(null);
       return null;
     }
   };
 
   const signIn = async () => {
-    console.log("signIn started");
+   
     try {
       const currentUser = await fetchUser();
       if (currentUser) {
@@ -58,10 +56,8 @@ const AuthProvider = ({ children }) => {
           navigate("/user/marketplace");
         }
       } else {
-        console.error("❌ Failed to retrieve user after login.");
       }
     } catch (error) {
-      console.error("❌ signIn error:", error);
       setUser(null);
     }
   };
@@ -79,7 +75,6 @@ const AuthProvider = ({ children }) => {
     try {
       await logoutUser();
     } catch (error) {
-      console.warn("⚠️ Logout API failed:", error);
     }
     setUser(null);
     setCart([]);

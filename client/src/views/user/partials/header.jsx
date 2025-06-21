@@ -117,7 +117,7 @@ const Header = () => {
               <a href="/user/referral" className="flex items-center px-4 py-2 hover:text-primary-600">
                 <FaUsers className="mr-2" /> Referral
               </a>
-              <a href="/settings" className="flex items-center px-4 py-2 hover:text-primary-600">
+              <a href="/user/settings" className="flex items-center px-4 py-2 hover:text-primary-600">
                 <IoIosSettings className="mr-2" /> Settings
               </a>
               <button

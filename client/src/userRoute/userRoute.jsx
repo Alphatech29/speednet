@@ -14,6 +14,7 @@ import NordVpn from "./../views/user/nordService/nordVpn";
 import Pricing from '../views/user/nordService/pricing';
 import Referral from '../views/user/referral/referral';
 import Vtu from '../views/user/vtu/vtu';
+import Settings from '../views/user/settings/settings';
 
 
 
@@ -36,6 +37,7 @@ const UserRoute = () => {
         <Route path='nord-services/vpn' element={<NordVpn/>}/>
         <Route path='nord-services/vpn/offer' element={<Pricing/>}/>
         <Route path='referral' element={<Referral/>}/>
+        <Route path='settings' element={<Settings/>}/>
         
 
         {/* GiftCard as a layout route with nested routes */}

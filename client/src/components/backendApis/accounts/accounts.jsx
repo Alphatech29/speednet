@@ -106,8 +106,6 @@ export const getAccountsByUserUid = async (userUid) => {
     };
 
   } catch (error) {
-    // Log and handle the error
-    console.error("Fetching accounts failed:", error.response?.data || error.message);
 
     // Return the error message if failure occurs
     return {

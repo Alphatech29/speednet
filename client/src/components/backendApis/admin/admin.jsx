@@ -3,7 +3,6 @@ import axios from "axios";
 // ✅ Fetch user from backend
 export const getAdmin = async (userUid) => {
   if (!userUid || typeof userUid !== "string" || userUid.trim() === "") {
-    console.error("❌ Invalid userUid provided:", userUid);
     return {
       success: false,
       message: "Invalid user UID",
@@ -22,10 +21,6 @@ export const getAdmin = async (userUid) => {
       data: response.data || {},
     };
   } catch (error) {
-    console.error(
-      `❌ Fetching admin failed [${error?.response?.status || "Unknown Status"}]:`,
-      error?.response?.data || error.message
-    );
 
     return {
       success: false,

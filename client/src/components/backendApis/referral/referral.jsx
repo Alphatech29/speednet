@@ -13,7 +13,6 @@ export const fetchReferralsByUser = async (userId) => {
       status: response.status,
     };
   } catch (error) {
-    console.error("Fetching referrals failed:", error.response?.data || error.message);
 
     return {
       success: false,

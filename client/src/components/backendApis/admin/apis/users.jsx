@@ -24,8 +24,6 @@ export const getAllUsers = async () => {
       error: error.response?.data || error.message,
     };
 
-    console.error("getAllUsers error response:", err);
-
     return err;
   }
 };

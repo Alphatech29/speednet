@@ -23,6 +23,7 @@ const verifyToken = require("./../middleWare/verifyToken");
 const { addPlatform, fetchPlatforms } = require("../controller/admin/dashboard/platform");
 const upload = require("../utility/multerConfig");
 const { airtimePurchase } = require("../controller/user/vtpass");
+const { setTransactionPin } = require("../controller/user/TransactionPin");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -39,6 +40,7 @@ generalRoute.get("/orders/:userUid", fetchUserOrders);
 generalRoute.post("/create-account", accountCreation);
 generalRoute.post("/activate", activateAccount);
 generalRoute.post("/airtime/Purchase", verifyToken, airtimePurchase);
+generalRoute.post("/set-pin", verifyToken, setTransactionPin);
 
 
 // ✅ Fixed `/apis` route

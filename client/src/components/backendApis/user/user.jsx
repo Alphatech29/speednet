@@ -1,5 +1,3 @@
-// backendApis/user/user.js
-
 import axios from "axios";
 
 // ✅ Securely fetch current user based on auth cookie
@@ -16,7 +14,6 @@ export const getCurrentUser = async () => {
       data: response.data,  
     };
   } catch (error) {
-    console.error("❌ Fetching current user failed:", error?.response?.data || error.message);
 
     return {
       success: false,

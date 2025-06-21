@@ -59,7 +59,7 @@ const Login = () => {
         });
       }
     } catch (error) {
-      console.error("Login error:", error);
+
       toast.error("Unexpected error occurred", { position: "top-right" });
     } finally {
       setLoading(false);

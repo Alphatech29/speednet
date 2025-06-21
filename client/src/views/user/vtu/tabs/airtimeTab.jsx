@@ -29,7 +29,7 @@ const detectNetwork = (number) => {
   return null;
 };
 
-const AirtimeTab = () => {
+const PinTab = () => {
   const { user, webSettings } = useContext(AuthContext);
   const [network, setNetwork] = useState(NETWORK_OPTIONS[0]);
   const [phone, setPhone] = useState("");
@@ -39,6 +39,9 @@ const AirtimeTab = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
   const dropdownRef = useRef(null);
+  const firstPinRef = useRef(null);
+
+  const successAudio = new Audio("/success.mp3");
 
   const dollarBalance = parseFloat(user?.account_balance || 0);
   const nairaRate = parseFloat(webSettings?.naira_rate || 0);
@@ -64,12 +67,28 @@ const AirtimeTab = () => {
   }, [phone]);
 
   useEffect(() => {
-    if (showPinModal) setPin("");
+    if (showPinModal) {
+      setPin("");
+      setTimeout(() => {
+        firstPinRef.current?.focus();
+      }, 100);
+    }
   }, [showPinModal]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowPinModal(true); // Do not validate here; API will handle it
+
+    if (!/^\d{11}$/.test(phone)) {
+      toast.error("Phone number must be exactly 11 digits.");
+      return;
+    }
+
+    if (Number(amount) < 100) {
+      toast.error("Minimum amount is ₦100");
+      return;
+    }
+
+    setShowPinModal(true);
   };
 
   const handleConfirmPurchase = async () => {
@@ -87,6 +106,7 @@ const AirtimeTab = () => {
     setPin("");
 
     if (res.success) {
+      successAudio.play();
       toast.success(res.message || "Airtime purchase successful!");
       setPhone("");
       setAmount("");
@@ -143,7 +163,7 @@ const AirtimeTab = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="0912******"
-            className="w-full bg-transparent border-t border-b border-r border-gray-600 text-sm px-3 py-2 rounded-r-md"
+            className="w-full bg-transparent border-t border-b border-r border-gray-600 text-sm px-3 py-2 rounded-r-md placeholder:text-gray-600"
           />
         </div>
       </div>
@@ -158,29 +178,37 @@ const AirtimeTab = () => {
           placeholder="₦100"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md"
+          className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md placeholder:text-gray-600"
         />
       </div>
 
-      {/* Quick Top-up */}
-      <div>
-        <Label value="Quick Top-Up" />
-        <div className="flex flex-wrap gap-2 mt-2">
-          {[100, 200, 500, 1000, 2000, 5000].map((amt) => (
-            <button
-              key={amt}
-              type="button"
-              onClick={() => setAmount(amt)}
-              className="rounded-md px-4 py-2 border border-gray-300 bg-gray-400 text-sm"
-            >
-              ₦{amt.toLocaleString()}
-            </button>
-          ))}
-        </div>
-      </div>
+     {/* Quick Top-up */}
+<div>
+  <Label value="Quick Top-Up" />
+  <div className="flex flex-wrap gap-2 mt-2">
+    {[100, 200, 500, 1000, 2000].map((amt) => (
+      <button
+        key={amt}
+        type="button"
+        onClick={() => setAmount(amt)}
+        className="rounded-md px-4 py-2 border border-gray-300 bg-gray-400 text-sm"
+      >
+        ₦{amt.toLocaleString()}
+      </button>
+    ))}
+    <button
+      type="button"
+      onClick={() => setAmount(5000)}
+      className="rounded-md px-4 py-2 border border-gray-300 bg-gray-400 text-sm pc:hidden"
+    >
+      ₦5,000
+    </button>
+  </div>
+</div>
+
 
       {/* Submit Button */}
-      <Button type="submit" disabled={loading} className="w-full bg-primary-600 text-white">
+      <Button type="submit" disabled={loading} className="w-full bg-primary-600 text-white border-0">
         {loading ? "Processing..." : "Buy Airtime"}
       </Button>
 
@@ -197,6 +225,7 @@ const AirtimeTab = () => {
                   type="password"
                   maxLength={1}
                   value={pin[i] || ""}
+                  ref={i === 0 ? firstPinRef : null}
                   onChange={(e) => {
                     const val = e.target.value;
                     if (/^\d?$/.test(val)) {
@@ -218,8 +247,18 @@ const AirtimeTab = () => {
               ))}
             </div>
             <div className="flex justify-between">
-              <Button onClick={() => setShowPinModal(false)} className="bg-gray-600 text-white">Cancel</Button>
-              <Button onClick={handleConfirmPurchase} className="bg-primary-600 text-white">Confirm</Button>
+              <Button onClick={() => setShowPinModal(false)} className="bg-gray-600 text-white border-0">
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirmPurchase}
+                className={`bg-primary-600 text-white border-0 ${
+                  pin.length !== 4 || !/^\d{4}$/.test(pin) ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={pin.length !== 4 || !/^\d{4}$/.test(pin)}
+              >
+                Confirm
+              </Button>
             </div>
           </div>
         </div>
@@ -228,4 +267,4 @@ const AirtimeTab = () => {
   );
 };
 
-export default AirtimeTab;
+export default PinTab;

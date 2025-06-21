@@ -6,23 +6,27 @@ export const purchaseAirtime = async (airtimeData) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true, // 👈 REQUIRED for cookie-based auth
+      withCredentials: true,
     });
 
-    const { success, message, data } = response.data;
+    const backend = response.data;
+
+    if (!backend?.status) {
+      throw new Error(backend?.message || "Airtime purchase failed");
+    }
 
     return {
-      success,
-      message: message || "Airtime purchase successful!",
-      data,
+      success: true,
+      message: backend.message || "Airtime purchase successful!",
+      data: backend.data,
     };
   } catch (error) {
-    console.error("🔴 purchaseAirtime() error:", error.response?.data || error.message);
+   
 
     return {
       success: false,
-      message: error.response?.data?.message || "An error occurred during airtime purchase.",
-      error: error.response?.data || error.message,
+      message: error?.response?.data?.message || error.message || "Something went wrong",
+      error: error?.response?.data || error.message,
     };
   }
 };

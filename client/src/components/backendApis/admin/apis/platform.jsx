@@ -24,7 +24,7 @@ export const getAllPlatforms = async () => {
       error: error.response?.data || error.message,
     };
 
-    console.error("getAllPlatforms error response:", err);
+  
     return err;
   }
 };
@@ -32,8 +32,7 @@ export const getAllPlatforms = async () => {
 
 export const addPlatform = async (formData) => {
   try {
-    // Debugging
-    console.log("addPlatform data:", formData);
+ 
 
     const response = await axios.post("/general/platform", formData, {
       headers: {
@@ -50,7 +49,6 @@ export const addPlatform = async (formData) => {
   } catch (error) {
     const fallbackMessage = "An error occurred while adding the platform.";
 
-    console.error("addPlatform error:", error);
 
     return {
       success: false,
@@ -81,8 +79,6 @@ export const deletePlatformById = async (platformId) => {
         error.response?.data?.message || "An error occurred while deleting the platform.",
       error: error.response?.data || error.message,
     };
-
-    console.error("deletePlatform error response:", err);
 
     return err;
   }

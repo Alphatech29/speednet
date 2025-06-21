@@ -14,7 +14,7 @@ export const getWebSettings = async () => {
       data: response.data || {}, 
     };
   } catch (error) {
-    console.error("❌ Fetching web settings failed:", error?.response?.data || error.message);
+
 
     return {
       success: false,

@@ -29,8 +29,7 @@ export const getAllProducts = async () => {
       error: error.response?.data || error.message,
     };
 
-    console.error("getAllProducts error response:", err);
-
+ 
     return err;
   }
 };
@@ -67,7 +66,7 @@ export const getAllOrders = async () => {
       error: error.response?.data || error.message,
     };
 
-    console.error("getAllOrders error response:", err);
+ 
 
     return err;
   }

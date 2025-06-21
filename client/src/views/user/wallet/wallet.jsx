@@ -39,13 +39,24 @@ const Wallet = () => {
 
   const formatAmount = (amount) => `${webSettings.currency}${amount}`;
 
+  const getStatusColor = (status) => {
+    const normalized = status?.toLowerCase();
+    if (normalized === "completed" || normalized === "successful") {
+      return "bg-green-500";
+    } else if (normalized === "failed") {
+      return "bg-red-500";
+    } else {
+      return "bg-yellow-500";
+    }
+  };
+
   return (
     <div className="w-full h-[100%] flex flex-col">
       {user && webSettings && (
         <>
           <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
           <div className="w-full pc:flex justify-start items-center pc:min-h-[500px] pc:max-h-[500px] mobile:min-h-[700px] mobile:max-h-[1200px] rounded-lg border border-gray-400 overflow-hidden">
-            <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-[500px]  flex flex-col gap-2 pc:justify-between items-center">
+            <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-[500px] flex flex-col gap-2 pc:justify-between items-center">
               <div className="mt-12 flex flex-col items-center justify-center">
                 <span className="text-pay text-sm">Available Balance</span>
                 <p className="text-pay text-lg font-semibold text-center">
@@ -61,13 +72,13 @@ const Wallet = () => {
               </button>
             </div>
 
-            <div className="bg-slate-700 gap-5 pc:h-[500px]   flex flex-col w-full px-3 py-4 ">
+            <div className="bg-slate-700 gap-5 pc:h-[500px] flex flex-col w-full px-3 py-4">
               <div className="w-full flex justify-between items-center text-white pc:text-base mobile:text-[13px]">
                 <span>Recent Transactions</span>
                 <span className="cursor-pointer">View More</span>
               </div>
 
-              <div className="overflow-x-auto text-gray-300 ">
+              <div className="overflow-x-auto text-gray-300">
                 {loading ? (
                   <p className="text-gray-400 text-center">Loading transactions...</p>
                 ) : transactions.length > 0 ? (
@@ -82,21 +93,27 @@ const Wallet = () => {
                     <Table.Body className="divide-y">
                       {transactions.slice(0, 6).map((transaction) => (
                         <Table.Row key={transaction.transaction_no}>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{transaction.transaction_no}</Table.Cell>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{transaction.transaction_type}</Table.Cell>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{formatAmount(transaction.amount)}</Table.Cell>
-                          <Table.Cell >
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
+                            {transaction.transaction_no}
+                          </Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
+                            {transaction.transaction_type}
+                          </Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
+                            {formatAmount(transaction.amount)}
+                          </Table.Cell>
+                          <Table.Cell>
                             <div
-                              className={`px-3 py-1 mobile:text-[12px] pc:text-sm rounded-full ${
-                                transaction.status.toLowerCase() === "completed"
-                                  ? "bg-green-500"
-                                  : "bg-yellow-500"
-                              } text-white`}
+                              className={`px-3 py-1 mobile:text-[12px] pc:text-sm rounded-full ${getStatusColor(
+                                transaction.status
+                              )} text-white`}
                             >
                               {transaction.status}
                             </div>
                           </Table.Cell>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{formatDateTime(transaction.created_at)}</Table.Cell>
+                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
+                            {formatDateTime(transaction.created_at)}
+                          </Table.Cell>
                         </Table.Row>
                       ))}
                     </Table.Body>
@@ -107,6 +124,7 @@ const Wallet = () => {
               </div>
             </div>
           </div>
+
           {isDepositOpen && <Deposit onClose={() => setDepositOpen(false)} />}
         </>
       )}

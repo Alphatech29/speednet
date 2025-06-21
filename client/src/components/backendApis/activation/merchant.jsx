@@ -19,7 +19,6 @@ export const activateAccount = async (userUid) => {
       data: response.data,
     };
   } catch (error) {
-    console.error("Account activation failed:", error.response?.data || error.message);
 
     return {
       success: false,

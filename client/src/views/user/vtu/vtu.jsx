@@ -2,7 +2,7 @@ import React from 'react';
 import { TabItem, Tabs} from "flowbite-react";
 import { FaWifi } from "react-icons/fa6";
 import { FaSquarePhone } from "react-icons/fa6";
-import AirtimeTab from './tabs/AirtimeTab';
+import AirtimeTab from './tabs/airtimeTab';
 import DataTab from './tabs/DataTab';
 
 

@@ -1,15 +1,12 @@
 const asyncHandler = require("../../middleware/asyncHandler");
-const bcrypt = require("bcryptjs");
 const { rechargeAirtime } = require("../../utility/vtpass");
-const { getUserDetailsByUid, updateUserBalance } = require("../../utility/user");
-const { getUserPinByUid } = require("../../utility/pinValidation");
+const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
+const { validateTransactionPin } = require("../../controller/user/TransactionPin");
+const { convertNairaToDollar } = require("../../utility/convertNaira");
+const { createTransactionHistory } = require("../../utility/history");
 
-// Allowed network types
 const ALLOWED_NETWORK_TYPES = ["mtn", "glo", "airtel", "9mobile"];
 
-/**
- * ✅ Check if user has sufficient balance
- */
 const checkUserBalance = async (userId, amount) => {
   try {
     const user = await getUserDetailsByUid(userId);
@@ -32,7 +29,7 @@ const checkUserBalance = async (userId, amount) => {
       balance: userBalance,
     };
   } catch (error) {
-    console.error("❌ Error in checkUserBalance:", error.message);
+    console.error("Error in checkUserBalance:", error.message);
     return {
       status: false,
       message: "Error checking user balance.",
@@ -40,75 +37,86 @@ const checkUserBalance = async (userId, amount) => {
   }
 };
 
-/**
- * 🔁 Airtime Purchase Handler
- */
 const airtimePurchase = asyncHandler(async (req, res) => {
-  console.log("🔵 Incoming airtime purchase request:", req.body);
 
   const { amount, phone, type, pin } = req.body;
   const userId = req.user?.userId;
- 
-  console.log("🔵 User ID:", userId);
-  // ✅ Validate required fields
+
   if (!amount || !phone || !type || !pin) {
     return res.status(400).json({ status: false, message: "Missing required fields." });
   }
 
-  // ✅ Step 0: Validate PIN
-  const storedPinHash = await getUserPinByUid(userId);
-  if (!storedPinHash) {
-    return res.status(404).json({ status: false, message: "PIN not set for user." });
+  const pinValidationResult = await validateTransactionPin(userId, pin);
+  if (!pinValidationResult.success) {
+    return res.status(pinValidationResult.code || 401).json({
+      status: false,
+      message: pinValidationResult.message || "PIN validation failed.",
+    });
   }
 
-  const isPinValid = await bcrypt.compare(pin, storedPinHash);
-  if (!isPinValid) {
-    return res.status(401).json({ status: false, message: "Invalid PIN provided." });
-  }
-
-  // ✅ Validate amount
   const parsedAmount = parseFloat(amount);
   if (isNaN(parsedAmount) || parsedAmount <= 0) {
     return res.status(400).json({ status: false, message: "Invalid amount provided." });
   }
 
-  // ✅ Validate network type
   const network = type.toLowerCase();
   if (!ALLOWED_NETWORK_TYPES.includes(network)) {
     return res.status(400).json({ status: false, message: "Invalid network type provided." });
   }
 
-  // ✅ Step 1: Check user balance
-  const balanceCheck = await checkUserBalance(userId, parsedAmount);
+  // Step 1: Convert Naira to Dollar
+  let amountInDollar;
+  try {
+    amountInDollar = await convertNairaToDollar(parsedAmount);
+  } catch (error) {
+    console.error("Currency conversion error:", error.message);
+    return res.status(500).json({
+      status: false,
+      message: "Failed to convert Naira to Dollar: " + error.message,
+    });
+  }
+
+  // Step 2: Check user balance
+  const balanceCheck = await checkUserBalance(userId, amountInDollar);
   if (!balanceCheck.status) {
     return res.status(400).json(balanceCheck);
   }
 
-  // ✅ Step 2: Attempt Airtime Recharge
-  const result = await rechargeAirtime(parsedAmount, network, phone);
-  if (!result.success) {
-    return res.status(400).json({
+  // Step 3: Deduct balance BEFORE recharge
+  const newBalance = balanceCheck.balance - amountInDollar;
+  try {
+    await updateUserBalance(userId, newBalance);
+  } catch (err) {
+    console.error("Failed to deduct user balance:", err.message);
+    return res.status(500).json({
       status: false,
-      message: result.error || "Airtime recharge failed.",
+      message: "Failed to deduct user balance before recharge.",
     });
   }
+
+  // Step 4: Attempt Airtime Recharge
+  const result = await rechargeAirtime(parsedAmount, network, phone);
 
   const vtpassTransaction = result?.data?.content?.transactions || {};
   const transactionStatus = vtpassTransaction?.status?.toLowerCase() === "delivered" ? "successful" : "failed";
 
-  // ✅ Step 3: Update balance if recharge was successful
-  if (transactionStatus === "successful") {
-    const newBalance = balanceCheck.balance - parsedAmount;
-    try {
-      await updateUserBalance(userId, newBalance);
-    } catch (err) {
-      console.error("❌ Failed to update user balance:", err);
-      return res.status(500).json({
-        status: false,
-        message: "Recharge completed but balance update failed.",
-      });
-    }
 
+  // Step 5: Create transaction history
+  try {
+    const vtpassType = vtpassTransaction?.type || type.toUpperCase();
+
+    await createTransactionHistory(
+      userId,
+      amountInDollar,
+      vtpassType,
+      transactionStatus
+    );
+  } catch (err) {
+    console.error("Failed to log transaction history:", err.message);
+  }
+
+  // Step 6: Final response
+  if (transactionStatus === "successful") {
     return res.status(200).json({
       status: true,
       message: "Airtime purchase successful.",
@@ -116,10 +124,11 @@ const airtimePurchase = asyncHandler(async (req, res) => {
     });
   }
 
-  // ❌ Fallback: Recharge failed
+  console.warn(`Recharge failed for user ${userId}. Refund of $${amountInDollar} should be processed.`);
+
   return res.status(400).json({
     status: false,
-    message: "Airtime recharge failed. Please try again.",
+    message: "Airtime recharge failed. Refund will be processed shortly.",
   });
 });
 

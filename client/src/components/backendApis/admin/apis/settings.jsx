@@ -37,7 +37,7 @@ export const getWebSettings = async () => {
       error: error?.response?.data || error,
     };
 
-    console.error("❌ Error in getWebSettings:", err);
+
     return err;
   }
 };
@@ -72,7 +72,6 @@ export const updateWebSettings = async (updatedFields) => {
       error: error.response?.data || error,
     };
 
-    console.error("updateWebSettings error response:", err);
     return err;
   }
 };

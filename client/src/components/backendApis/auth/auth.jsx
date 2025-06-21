@@ -17,7 +17,7 @@ export const register = async (userData) => {
       data: response.data,
     };
   } catch (error) {
-    console.error(" Registration Failed:", error.response?.data || error.message);
+
 
     return {
       success: false,
@@ -36,7 +36,7 @@ export const login = async (userData) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true, // ensures auth cookie is sent/stored
+      withCredentials: true, 
     });
 
     const { success, message, user, tokenMetadata } = response.data;
@@ -45,10 +45,10 @@ export const login = async (userData) => {
       success,
       message: message || "Login successful!",
       user,
-      tokenMetadata, // Optional: can be removed if not needed
+      tokenMetadata, 
     };
   } catch (error) {
-    console.error("🔴 login() error response:", error.response?.data || error.message);
+  
 
     return {
       success: false,
@@ -66,12 +66,12 @@ export const logoutUser = async () => {
       "/auth/logout",
       {},
       {
-        withCredentials: true, // Ensures httpOnly cookie is sent
+        withCredentials: true, 
       }
     );
     return response.data;
   } catch (error) {
-    console.error("❌ Logout API error:", error);
+
     throw error;
   }
 };

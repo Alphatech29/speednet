@@ -30,7 +30,7 @@ const accountCreation = async (req, res) => {
 
     // Validate platform
     if (platform === 'N/A') {
-      console.error('❌ Platform ID missing.');
+
       return res.status(400).json({ status: 'error', message: 'Platform ID is missing or invalid.' });
     }
 
@@ -38,7 +38,7 @@ const accountCreation = async (req, res) => {
 
     const platformDetails = platformData?.data?.[0];
     if (!platformDetails || !platformDetails.name || !platformDetails.image_path) {
-      console.error('❌ Invalid platform data:', platformDetails);
+    
       return res.status(502).json({ status: 'error', message: 'Invalid platform data received.' });
     }
 
@@ -68,12 +68,11 @@ const accountCreation = async (req, res) => {
        status: 'under reviewing'
     };
 
-    // ✅ Call the createAccount function
+    // Call the createAccount function
     const creationResult = await createAccount(accountData);
 
     return res.status(200).json({ status: 'success', data: creationResult });
   } catch (error) {
-    console.error('🔥 Internal Error:', error);
     return res.status(500).json({ status: 'error', message: 'Internal server error. Please try again.' });
   }
 };

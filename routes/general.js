@@ -22,7 +22,7 @@ const { fetchReferralsByReferrer } = require("../controller/user/referral");
 const verifyToken = require("./../middleWare/verifyToken");
 const { addPlatform, fetchPlatforms } = require("../controller/admin/dashboard/platform");
 const upload = require("../utility/multerConfig");
-const { airtimePurchase } = require("../controller/user/vtpass");
+const { airtimePurchase, getDataVariations, dataPurchase} = require("../controller/user/vtpass");
 const { setTransactionPin } = require("../controller/user/TransactionPin");
 
 // ------- General --------- //
@@ -39,7 +39,9 @@ generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);
 generalRoute.post("/create-account", accountCreation);
 generalRoute.post("/activate", activateAccount);
-generalRoute.post("/airtime/Purchase", verifyToken, airtimePurchase);
+generalRoute.post("/airtime/Purchase", verifyToken, airtimePurchase );
+generalRoute.post("/data/Purchase", verifyToken, dataPurchase);
+generalRoute.get("/data-variations/:serviceID", getDataVariations);
 generalRoute.post("/set-pin", verifyToken, setTransactionPin);
 
 

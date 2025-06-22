@@ -4,12 +4,10 @@ const fetchUserOrders = async (req, res) => {
     try {
         const { userUid } = req.params;
 
-        // Ensure userUid is provided
         if (!userUid) {
             return res.status(400).json({ error: "User UID is required" });
         }
 
-        // Fetch orders
         const orders = await getOrdersByUser(userUid);
 
         if (!orders) {

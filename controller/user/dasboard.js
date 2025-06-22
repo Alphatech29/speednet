@@ -7,15 +7,12 @@ const getUserDetails = async (req, res) => {
       return;
     }
 
-    // Extract UID safely from params, query, or body
     const uid = req.params?.uid || req.body?.uid || req.query?.uid;
 
-    // Validate UID (Ensure it's a number)
     if (!uid || isNaN(uid)) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    // Secure SQL Query using placeholders
     const [rows] = await db.query("SELECT * FROM users WHERE uid = ?", [uid]);
 
     if (!rows || rows.length === 0) {

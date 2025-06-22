@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 // ────────────────────────────────
-// 🛡️ Security Middleware
+// Security Middleware
 // ────────────────────────────────
 app.use(helmet());
 app.use(
@@ -33,7 +33,7 @@ app.use(
 );
 
 // ────────────────────────────────
-// 🌍 CORS
+// CORS
 // ────────────────────────────────
 app.use(cors({
   origin: true,
@@ -43,29 +43,29 @@ app.use(cors({
 }));
 
 // ────────────────────────────────
-// 🧩 Parsers
+//Parsers
 // ────────────────────────────────
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
 // ────────────────────────────────
-// 🍪 Cookie & XSS
+//Cookie & XSS
 // ────────────────────────────────
 app.use(cookieParser());
 app.use(xssClean());
 
 // ────────────────────────────────
-// 📦 Compression
+// Compression
 // ────────────────────────────────
 app.use(compression());
 
 // ────────────────────────────────
-// 📂 Serve Uploaded Files (e.g., Multer)
+// Serve Uploaded Files (e.g., Multer)
 // ────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
 // ────────────────────────────────
-// 🔁 Routes
+//Routes
 // ────────────────────────────────
 const authRoute = require("./routes/auth");
 const generalRoute = require("./routes/general");
@@ -74,13 +74,13 @@ app.use("/auth", authRoute);
 app.use("/general", generalRoute);
 
 // ────────────────────────────────
-// 🧱 Serve Static Files (Frontend)
+// Serve Static Files (Frontend)
 // ────────────────────────────────
 const staticPath = path.join(__dirname, "client", "dist");
 app.use(express.static(staticPath));
 
 // ────────────────────────────────
-// 🧭 Fallback to index.html (SPA)
+// Fallback to index.html (SPA)
 // ────────────────────────────────
 app.get("*", (req, res) => {
   const indexPath = path.join(staticPath, "index.html");
@@ -96,7 +96,7 @@ app.get("*", (req, res) => {
 });
 
 // ────────────────────────────────
-// 🚀 Start Server
+//Start Server
 // ────────────────────────────────
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
@@ -105,10 +105,10 @@ const server = app.listen(PORT, () => {
 });
 
 // ────────────────────────────────
-// 🔐 Graceful Shutdown & Errors
+// Graceful Shutdown & Errors
 // ────────────────────────────────
 process.on("uncaughtException", (err) => {
-  logger.error("🔥 Uncaught Exception", {
+  logger.error("Uncaught Exception", {
     message: err.message,
     stack: err.stack,
   });
@@ -116,7 +116,7 @@ process.on("uncaughtException", (err) => {
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-  logger.error("⚠️ Unhandled Rejection", {
+  logger.error("Unhandled Rejection", {
     reason,
     promise,
   });
@@ -124,9 +124,9 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 process.on("SIGTERM", () => {
-  logger.info("📢 SIGTERM received. Shutting down gracefully...");
+  logger.info("SIGTERM received. Shutting down gracefully...");
   server.close(() => {
-    logger.info("💡 Server closed.");
+    logger.info("Server closed.");
     process.exit(0);
   });
 });

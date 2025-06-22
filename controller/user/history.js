@@ -90,7 +90,7 @@ const getUserOrderHistory = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error("❌ Database error:", error);
+        console.error(" Database error:", error);
         return res.status(500).json({ success: false, message: "Error fetching user history", error: error.message });
     }
 };

@@ -317,9 +317,9 @@ const internationalPurchase = asyncHandler(async (req, res) => {
   }
 
   // Check user wallet balance
-  console.log("💳 Checking user balance...");
+  console.log("Checking user balance...");
   const balanceCheck = await checkUserBalance(userId, amountInDollar);
-  console.log("💳 Balance check result:", balanceCheck);
+  console.log(" Balance check result:", balanceCheck);
 
   if (!balanceCheck.status) {
     return res.status(400).json(balanceCheck);
@@ -328,7 +328,7 @@ const internationalPurchase = asyncHandler(async (req, res) => {
   // Make recharge call
   let result;
   try {
-    console.log("🌐 Processing international airtime recharge...");
+    console.log(" Processing international airtime recharge...");
     result = await rechargeInternationalAirtime({
       variationCode: String(variationCode),
       operatorId: String(operatorId),
@@ -336,7 +336,7 @@ const internationalPurchase = asyncHandler(async (req, res) => {
       phone: parsedPhone,
       email: String(email),
       productTypeId: String(productTypeId),
-      amount: parsedAmount, // optional, but may be required for wallet tracking
+      amount: parsedAmount,
     });
 
     console.log("🌍 Recharge result:", result);

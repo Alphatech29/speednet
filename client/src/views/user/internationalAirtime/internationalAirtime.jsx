@@ -44,9 +44,7 @@ const InternationalAirtime = () => {
   const dropdownRef = useRef(null);
   const successAudio = new Audio("/success.mp3");
 
-  const dollarBalance = parseFloat(user?.account_balance || 0);
-  const nairaRate = parseFloat(webSettings?.naira_rate || 0);
-  const nairaBalance = (dollarBalance * nairaRate).toFixed(2);
+  
 
   useEffect(() => {
     const loadCountries = async () => {
@@ -250,7 +248,7 @@ const InternationalAirtime = () => {
           <div>
             <h2 className="text-lg font-semibold">{user?.full_name}</h2>
             <p className="text-sm text-gray-200 font-medium">
-              ₦{Number(nairaBalance).toLocaleString()}
+           {webSettings?.currency}{user?.account_balance}
             </p>
           </div>
         </div>

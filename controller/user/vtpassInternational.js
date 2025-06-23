@@ -13,10 +13,28 @@ const getInternationalCountries = async (req, res) => {
       });
     }
 
+    // List of African country codes
+    const africanCountryCodes = [
+      'DZ', 'AO', 'BJ', 'BW', 'BF', 'BI', 'CM', 'CV', 'CF', 'TD', 'KM', 'CG', 'CD', 
+      'CI', 'DJ', 'EG', 'GQ', 'ER', 'SZ', 'ET', 'GA', 'GM', 'GH', 'GN', 'GW', 'KE', 
+      'LS', 'LR', 'LY', 'MG', 'MW', 'ML', 'MR', 'MU', 'YT', 'MA', 'MZ', 'NA', 'NE', 
+      'NG', 'RE', 'RW', 'SH', 'ST', 'SN', 'SC', 'SL', 'SO', 'ZA', 'SS', 'SD', 'TZ', 
+      'TG', 'TN', 'UG', 'EH', 'ZM', 'ZW'
+    ];
+
+    // List of specific non-African countries we want to include
+    const specificCountryCodes = ['CA', 'US', 'GB', 'DE', 'FR'];
+    
+    // Filter the countries
+    const filteredCountries = result.countries.filter(country => {
+      return africanCountryCodes.includes(country.code) || 
+             specificCountryCodes.includes(country.code);
+    });
+
     return res.status(200).json({
       success: true,
       message: "Countries fetched successfully.",
-      data: result.countries,
+      data: filteredCountries,
     });
   } catch (error) {
     return res.status(500).json({
@@ -109,7 +127,6 @@ const fetchInternationalOperators = async (req, res) => {
     });
   }
 };
-
 
 
 // Controller: Fetch international variations for a given operator and product type

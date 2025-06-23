@@ -61,8 +61,6 @@ export const purchaseData = async (dataPurchase) => {
 }
 
 
-
-
 export const fetchDataVariations = async (serviceID) => {
   try {
     const response = await axios.get(`/general/data-variations/${serviceID}`, {
@@ -92,7 +90,6 @@ export const fetchDataVariations = async (serviceID) => {
     };
   }
 };
-
 
 // Fetches the list of countries for international airtime purchase
 export const fetchInternationalAirtimeCountries = async () => {
@@ -199,9 +196,6 @@ export const fetchInternationalOperators = async (countryCode, productTypeId) =>
   }
 };
 
-
-
-
 // Fetches the variations for a specific international operator and product type
 export const fetchInternationalVariations = async (operatorId, productTypeId) => {
   try {
@@ -226,7 +220,6 @@ export const fetchInternationalVariations = async (operatorId, productTypeId) =>
     const backend = response.data;
 
     if (!backend?.success) {
-      console.warn("⚠ Backend responded with error state:", backend);
       throw new Error(backend?.message || "Failed to fetch variations");
     }
 
@@ -237,9 +230,37 @@ export const fetchInternationalVariations = async (operatorId, productTypeId) =>
     };
 
   } catch (error) {
-    console.error("Error in fetchInternationalVariations:");
-    console.error("Error Message:", error.message);
-    console.error("Error Response (if any):", error?.response?.data);
+
+    return {
+      success: false,
+      message: error?.response?.data?.message || error.message || "Something went wrong",
+      error: error?.response?.data || error.message,
+    };
+  }
+};
+
+export const internationalPurchase = async (internationPlayloader) => {
+  try {
+    const response = await axios.post(`/general/internationalPurchase`, internationPlayloader, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+
+    const backend = response.data;
+
+    if (!backend?.status) {
+      throw new Error(backend?.message || "Airtime purchase failed");
+    }
+
+    return {
+      success: true,
+      message: backend.message || "Airtime purchase successful!",
+      data: backend.data,
+    };
+  } catch (error) {
+   
 
     return {
       success: false,

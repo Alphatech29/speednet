@@ -1,5 +1,5 @@
 const asyncHandler = require("../../middleware/asyncHandler");
-const { rechargeAirtime, dataVariations, rechargeData } = require("../../utility/vtpass");
+const { rechargeAirtime, dataVariations, rechargeData, rechargeInternationalAirtime  } = require("../../utility/vtpass");
 const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
 const { validateTransactionPin } = require("../../controller/user/TransactionPin");
 const { convertNairaToDollar } = require("../../utility/convertNaira");
@@ -29,7 +29,6 @@ const checkUserBalance = async (userId, amount) => {
       balance: userBalance,
     };
   } catch (error) {
-    console.error("Error in checkUserBalance:", error);
     return {
       status: false,
       message: "Error checking user balance.",
@@ -251,8 +250,151 @@ const getDataVariations = asyncHandler(async (req, res) => {
   }
 });
 
+
+// International Airtime/Data/PIN Purchase Handler
+const internationalPurchase = asyncHandler(async (req, res) => {
+  const {
+    phone,
+    email,
+    pin,
+    operatorId,
+    variationCode,
+    countryCode,
+    productTypeId,
+    amount,
+  } = req.body;
+
+  const userId = req.user?.userId;
+
+  console.log("📥 Incoming request body:", req.body);
+  console.log("👤 Authenticated user ID:", userId);
+
+  // Check required fields
+  if (
+    !phone ||
+    !email ||
+    !pin ||
+    !operatorId ||
+    !variationCode ||
+    !countryCode ||
+    !productTypeId
+  ) {
+    console.warn("⚠️ Missing required fields.");
+    return res.status(400).json({ status: false, message: "Missing required fields." });
+  }
+
+  const parsedPhone = Number(phone);
+  const parsedAmount = parseFloat(amount);
+
+  if (isNaN(parsedPhone)) {
+    return res.status(400).json({ status: false, message: "Invalid phone number format." });
+  }
+
+  // Validate PIN
+  console.log("🔐 Validating transaction PIN...");
+  const pinValidation = await validateTransactionPin(userId, pin);
+  console.log("🔐 PIN validation result:", pinValidation);
+
+  if (!pinValidation.success) {
+    return res.status(pinValidation.code || 401).json({
+      status: false,
+      message: pinValidation.message || "PIN validation failed.",
+    });
+  }
+
+  // Convert Naira to Dollar for wallet deduction (even if VTpass ignores it)
+  let amountInDollar;
+  try {
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      throw new Error("Invalid amount.");
+    }
+    console.log("💱 Converting amount to USD...");
+    amountInDollar = await convertNairaToDollar(parsedAmount);
+    console.log(`💵 Converted ₦${parsedAmount} => $${amountInDollar}`);
+  } catch (error) {
+    console.error("❌ Currency conversion error:", error.message);
+    return res.status(400).json({ status: false, message: error.message });
+  }
+
+  // Check user wallet balance
+  console.log("💳 Checking user balance...");
+  const balanceCheck = await checkUserBalance(userId, amountInDollar);
+  console.log("💳 Balance check result:", balanceCheck);
+
+  if (!balanceCheck.status) {
+    return res.status(400).json(balanceCheck);
+  }
+
+  // Make recharge call
+  let result;
+  try {
+    console.log("🌐 Processing international airtime recharge...");
+    result = await rechargeInternationalAirtime({
+      variationCode: String(variationCode),
+      operatorId: String(operatorId),
+      countryCode: String(countryCode),
+      phone: parsedPhone,
+      email: String(email),
+      productTypeId: String(productTypeId),
+      amount: parsedAmount, // optional, but may be required for wallet tracking
+    });
+
+    console.log("🌍 Recharge result:", result);
+  } catch (error) {
+    console.error("❌ International recharge error:", error.message);
+    return res.status(500).json({
+      status: false,
+      message: "Recharge failed due to an internal error.",
+    });
+  }
+
+  const vtpassTransaction = result?.data?.content?.transactions || {};
+  const transactionStatus = vtpassTransaction?.status?.toLowerCase() === "delivered"
+    ? "successful"
+    : "failed";
+
+  if (transactionStatus === "successful") {
+    try {
+      const newBalance = balanceCheck.balance - amountInDollar;
+      console.log(`💸 Updating user balance: Old: ${balanceCheck.balance} | New: ${newBalance}`);
+      await updateUserBalance(userId, newBalance);
+    } catch (err) {
+      console.error("❌ Failed to deduct user balance:", err.message);
+      return res.status(500).json({
+        status: false,
+        message: "Failed to update user balance after successful recharge.",
+      });
+    }
+
+    try {
+      const vtpassType = vtpassTransaction?.product_name || "INTERNATIONAL";
+      const transactionNoFromApi = result.data.requestId || null;
+      console.log("🗃️ Logging transaction history...");
+      await createTransactionHistory(userId, amountInDollar, vtpassType, transactionStatus, transactionNoFromApi);
+    } catch (err) {
+      console.error("❌ Failed to log transaction history:", err.message);
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "International purchase successful.",
+      data: vtpassTransaction,
+    });
+  }
+
+  console.warn("❌ Recharge failed or not delivered. No deduction made.");
+  return res.status(400).json({
+    status: false,
+    message: result?.error || "Recharge failed. No balance was deducted.",
+  });
+});
+
+
+
+
 module.exports = {
   airtimePurchase,
   getDataVariations,
   dataPurchase,
+  internationalPurchase
 };

@@ -6,6 +6,7 @@ import {
   fetchInternationalProductTypes,
   fetchInternationalOperators,
   fetchInternationalVariations,
+  internationalPurchase,
 } from "../../../components/backendApis/vtu/vtuService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -59,7 +60,7 @@ const InternationalAirtime = () => {
           toast.error(result.message || "Failed to fetch countries");
         }
       } catch (error) {
-        toast.error("An error occurred while fetching countries");
+        console.error("Error loading countries:", error);
       }
     };
     loadCountries();
@@ -75,7 +76,6 @@ const InternationalAirtime = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // This effect loads product types based on selected country
   useEffect(() => {
     const loadProductTypes = async () => {
       if (!selectedCountry?.code) return;
@@ -86,12 +86,10 @@ const InternationalAirtime = () => {
           setProductTypes(result.productTypes);
           setSelectedProductType(result.productTypes[0]?.product_type_id || "");
         } else {
-          toast.error(result.message || "Failed to fetch product types");
           setProductTypes([]);
           setSelectedProductType("");
         }
       } catch (error) {
-        toast.error("An error occurred while fetching product types");
         setProductTypes([]);
         setSelectedProductType("");
       } finally {
@@ -105,16 +103,16 @@ const InternationalAirtime = () => {
     loadProductTypes();
   }, [selectedCountry]);
 
- useEffect(() => {
-  const loadOperators = async () => {
-    if (!selectedProductType || !selectedCountry?.code) return;
-    setLoadingOperators(true);
-    try {
-      const result = await fetchInternationalOperators(
-        selectedCountry.code,
-        selectedProductType
-      );
-      
+  useEffect(() => {
+    const loadOperators = async () => {
+      if (!selectedProductType || !selectedCountry?.code) return;
+      setLoadingOperators(true);
+      try {
+        const result = await fetchInternationalOperators(
+          selectedCountry.code,
+          selectedProductType
+        );
+        
       if (result?.success) {
         const operatorsData = result.operators || [];
         setOperators(operatorsData);
@@ -126,7 +124,6 @@ const InternationalAirtime = () => {
       }
     } catch (error) {
       console.error("Error fetching operators:", error);
-      toast.error("An error occurred while fetching operators");
       setOperators([]);
       setSelectedOperatorId("");
     } finally {
@@ -139,7 +136,6 @@ const InternationalAirtime = () => {
   loadOperators();
 }, [selectedProductType, selectedCountry?.code]);
 
-// This effect loads variations based on selected operator and product type
   useEffect(() => {
     const loadVariations = async () => {
       if (!selectedOperatorId || !selectedProductType) return;
@@ -151,14 +147,12 @@ const InternationalAirtime = () => {
         );
         if (result.success) {
           setVariations(result.variations);
-          setSelectedVariation(result.variations[0]?.variation_id || "");
+          setSelectedVariation(result.variations[0]?.variation_code || "");
         } else {
-          toast.error(result.message || "Failed to fetch variations");
           setVariations([]);
           setSelectedVariation("");
         }
       } catch (error) {
-        toast.error("An error occurred while fetching variations");
         setVariations([]);
         setSelectedVariation("");
       } finally {
@@ -169,9 +163,11 @@ const InternationalAirtime = () => {
   }, [selectedOperatorId, selectedProductType]);
 
   useEffect(() => {
-    const selected = variations.find((v) => v.variation_id === selectedVariation);
-    if (selected?.fixedPrice === "Yes" && selected?.charged_amount) {
-      setAmount(Number(selected.charged_amount));
+    const selected = variations.find((v) => v.variation_code === selectedVariation);
+    if (selected?.fixedPrice === "Yes" && selected?.variation_amount) {
+      setAmount(selected.variation_amount.toString());
+    } else {
+      setAmount("");
     }
   }, [selectedVariation, variations]);
 
@@ -190,6 +186,9 @@ const InternationalAirtime = () => {
     if (!selectedOperatorId) return toast.error("Select an operator");
     if (!selectedVariation) return toast.error("Select a variation");
     if (!phone) return toast.error("Enter a phone number");
+    if (!/^\d+$/.test(phone)) return toast.error("Phone number must contain only digits");
+    if (!amount) return toast.error("Enter an amount");
+    if (!/^\d*\.?\d+$/.test(amount)) return toast.error("Amount must be a valid number");
     if (Number(amount) < 1) return toast.error("Minimum amount is ₦1");
     setShowPinModal(true);
   };
@@ -198,16 +197,19 @@ const InternationalAirtime = () => {
     setShowPinModal(false);
     setLoading(true);
     try {
-      const res = await fakePurchaseFunction({
-        phone,
-        amount,
-        country: selectedCountry.code,
+      const payload = {
+        phone: Number(phone),
+        amount: Number(amount),
+        countryCode: selectedCountry.code,
         productTypeId: selectedProductType,
-        variationId: selectedVariation,
+        variationCode: selectedVariation,
         operatorId: selectedOperatorId,
         pin,
         email,
-      });
+      };
+
+      const res = await internationalPurchase(payload);
+
       if (res.success) {
         successAudio.play();
         toast.success(res.message || "Airtime sent successfully!");
@@ -218,7 +220,7 @@ const InternationalAirtime = () => {
         toast.error(res.message || "Airtime purchase failed.");
       }
     } catch (error) {
-      toast.error("An error occurred during purchase");
+      toast.error(error.message || "An error occurred during purchase");
     } finally {
       setLoading(false);
       setPin("");
@@ -325,7 +327,7 @@ const InternationalAirtime = () => {
           </select>
         </div>
 
-        {/* Operator Dropdown - Fixed Version */}
+        {/* Operator Dropdown */}
         <div>
           <Label htmlFor="operator" value="Operator" />
           {loadingOperators ? (
@@ -370,8 +372,8 @@ const InternationalAirtime = () => {
             {variations.map((variation) => (
               <option
                 className="bg-gray-800 hover:bg-gray-700"
-                key={variation.variation_id}
-                value={variation.variation_id}
+                key={variation.variation_code}
+                value={variation.variation_code}
               >
                 {variation.name} – ₦
                 {Number(
@@ -387,7 +389,7 @@ const InternationalAirtime = () => {
           <Label htmlFor="email" value="Email Address" />
           <input
             id="email"
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter recipient's email"
@@ -400,9 +402,12 @@ const InternationalAirtime = () => {
           <Label htmlFor="phone" value="Phone Number" />
           <input
             id="phone"
-            type="text"
+            type="tel"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, '');
+              setPhone(value);
+            }}
             placeholder="Enter recipient's number"
             className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white placeholder:text-gray-500"
           />
@@ -413,16 +418,22 @@ const InternationalAirtime = () => {
           <Label htmlFor="amount" value="Amount (₦)" />
           <input
             id="amount"
-            type="number"
+            type="text"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9.]/g, '');
+              setAmount(value);
+            }}
             className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white placeholder:text-gray-500"
             placeholder="₦100"
+            disabled={
+              variations.find((v) => v.variation_code === selectedVariation)?.fixedPrice === "Yes"
+            }
           />
         </div>
 
         <Button type="submit" className="w-full bg-primary-600 text-white border-0">
-          {loading ? "Processing..." : "Send Airtime"}
+          {loading ? "Processing..." : "Purchase"}
         </Button>
 
         {/* PIN Modal */}
@@ -485,16 +496,6 @@ const InternationalAirtime = () => {
         )}
       </form>
     </div>
-  );
-};
-
-// Dummy function for demonstration
-const fakePurchaseFunction = async () => {
-  return new Promise((resolve) =>
-    setTimeout(
-      () => resolve({ success: true, message: "International Airtime sent!" }),
-      1500
-    )
   );
 };
 

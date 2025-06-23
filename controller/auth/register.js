@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const pool = require("../../model/db");
-const { sendWelcomeEmail } = require("../../email/mails/onboarding");
+const { sendWelcomeEmail } = require("../../email/mails/welcome-email");
 const { createReferral } = require("../../utility/referral");
 const { getUserDetailsByUid } = require("../../utility/userInfo");
 const { getReferralCommission } = require("../../utility/general");
@@ -88,10 +88,10 @@ const register = async (req, res) => {
           const commission = await getReferralCommission() || 0;
           await createReferral(referrer.uid, newUserId, commission, 0);
         } else {
-          console.warn("No user found with referral UID:", referral_code);
+  
         }
       } catch (err) {
-        console.error("Error processing referral:", err);
+
       }
     }
 
@@ -99,7 +99,7 @@ const register = async (req, res) => {
     try {
       await sendWelcomeEmail(newUser);
     } catch (emailErr) {
-      console.error("Failed to send welcome email:", emailErr);
+
     }
 
     return res.status(201).json({
@@ -109,7 +109,6 @@ const register = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Error during sign-up:", error);
 
     return res.status(500).json({
       success: false,

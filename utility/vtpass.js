@@ -204,15 +204,17 @@ exports.rechargeInternationalAirtime = async ({
   phone,
   email,
   productTypeId,
+  amount,
 }) => {
   try {
+    // Step 1: Check balance
     const balanceCheck = await exports.checkVtuBalance();
-    const settings = await getWebSettings();
-
     if (!balanceCheck.success || balanceCheck.balance <= 0) {
       throw new Error("Insufficient VTU balance.");
     }
 
+    // Step 2: Fetch VTpass credentials
+    const settings = await getWebSettings();
     if (!settings || typeof settings !== "object") {
       throw new Error("VTU settings are missing.");
     }
@@ -220,33 +222,56 @@ exports.rechargeInternationalAirtime = async ({
     const { vtpass_api_key, vtpass_pk, vtpass_sk, vtpass_url } = settings;
     const url = `${vtpass_url}/api/pay`;
 
+    // Step 3: Prepare payload
+    const requestId = generateUniqueRandomNumber();
     const payload = {
       serviceID: "foreign-airtime",
-      request_id: generateUniqueRandomNumber(),
-      billersCode: phone,
-      variation_code: variationCode,
-      phone,
-      operator_id: operatorId,
-      country_code: countryCode,
-      product_type_id: productTypeId,
-      email,
+      request_id: requestId,
+      billersCode: String(phone),
+      variation_code: String(variationCode),
+      phone: String(phone),
+      operator_id: String(operatorId),
+      country_code: String(countryCode),
+      product_type_id: String(productTypeId),
+      email: String(email),
     };
 
+    // Conditionally add amount if valid
+    const parsedAmount = parseFloat(amount);
+    if (!isNaN(parsedAmount) && parsedAmount > 0) {
+      payload.amount = parsedAmount;
+    }
+
+    // Step 4: Generate authentication headers
     const headers = getAuthHeaders(payload, vtpass_api_key, vtpass_pk, vtpass_sk);
+
+    // Step 5: Make API request
     const result = await axios.post(url, payload, { headers });
 
-    if (result.data.code === "000") {
-      return { success: true, message: "International airtime sent", data: result.data };
+    // Step 6: Handle response
+    const data = result.data;
+
+    if (data.code === "000" || data.response_description === "000") {
+      return {
+        success: true,
+        message: "International airtime sent successfully.",
+        data,
+      };
     }
 
     return {
       success: false,
-      error: result.data.response_description || "International recharge failed",
+      error: data.response_description || "International recharge failed.",
+      data,
     };
   } catch (error) {
-    return { success: false, error: error.message };
+    return {
+      success: false,
+      error: error.message || "An unknown error occurred.",
+    };
   }
 };
+
 
 //  Get International Airtime Countries
 exports.getInternationalAirtimeCountries = async () => {
@@ -287,7 +312,7 @@ exports.getInternationalProductTypes = async (countryCode) => {
   try {
     const settings = await getWebSettings();
     const url = `${settings.vtpass_url}/api/get-international-airtime-product-types?code=${countryCode}`;
-
+ 
     const response = await axios.get(url);
     const { response_description, content } = response.data;
 
@@ -321,31 +346,19 @@ exports.getInternationalOperators = async (countryCode, productTypeId) => {
   }
 };
 
-
-
 //  Get International Airtime Variations
 exports.getInternationalVariations = async (operatorId, productTypeId) => {
   try {
-    console.log("=== Fetching International Variations ===");
-    console.log("Received operatorId:", operatorId);
-    console.log("Received productTypeId:", productTypeId);
-
     const settings = await getWebSettings();
-    console.log("VTpass base URL from settings:", settings?.vtpass_url);
 
     const url = `${settings.vtpass_url}/api/service-variations?serviceID=foreign-airtime&operator_id=${operatorId}&product_type_id=${productTypeId}`;
-    console.log("Final API Request URL:", url);
 
     const response = await axios.get(url);
-    console.log("Raw VTpass Response:", response.data);
 
     const { response_description, content } = response.data;
-    console.log("Response Description:", response_description);
-    console.log("Content:", content);
 
     if (response_description === "000") {
       if (Array.isArray(content.variations) && content.variations.length > 0) {
-        console.log("✔ Variations fetched:", content.variations);
         return { success: true, variations: content.variations };
       } else {
         console.warn("⚠ No variations found for selected product.");
@@ -357,7 +370,7 @@ exports.getInternationalVariations = async (operatorId, productTypeId) => {
     return { success: false, error: "Failed to fetch variations from VTpass." };
 
   } catch (error) {
-    console.error("❌ Error fetching international variations:", error.message);
+    console.error(" Error fetching international variations:", error.message);
     console.error("Full Error Object:", error);
     return { success: false, error: error.message };
   }

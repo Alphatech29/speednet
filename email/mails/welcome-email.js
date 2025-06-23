@@ -13,7 +13,7 @@ exports.sendWelcomeEmail = async (user) => {
       logo
     } = await getWebSettings();
 
-    const templatePath = path.join(process.cwd(), "email", "templates", "welcome--email.ejs");
+    const templatePath = path.join(process.cwd(), "email", "templates", "welcome-email.ejs");
 
     const html = await ejs.renderFile(templatePath, {
       user,

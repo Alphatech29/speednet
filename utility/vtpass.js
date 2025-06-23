@@ -161,7 +161,7 @@ exports.rechargeData = async (amount, serviceID, phone, variation_code) => {
 };
 
 
-// ✅ Get Data Variations — same structure as rechargeInternationalAirtime
+// ✅ Get Data Variations 
 exports.dataVariations = async (serviceID) => {
   try {
     const settings = await getWebSettings();
@@ -197,14 +197,21 @@ exports.dataVariations = async (serviceID) => {
 
 
 //  International Airtime Recharge Function
-exports.rechargeInternationalAirtime = async (amount, countryCode, phone) => {
+exports.rechargeInternationalAirtime = async ({
+  variationCode,
+  operatorId,
+  countryCode,
+  phone,
+  email,
+  productTypeId,
+}) => {
   try {
     const balanceCheck = await exports.checkVtuBalance();
-    if (!balanceCheck.success || balanceCheck.balance < amount) {
+    const settings = await getWebSettings();
+
+    if (!balanceCheck.success || balanceCheck.balance <= 0) {
       throw new Error("Insufficient VTU balance.");
     }
-
-    const settings = await getWebSettings();
 
     if (!settings || typeof settings !== "object") {
       throw new Error("VTU settings are missing.");
@@ -214,11 +221,15 @@ exports.rechargeInternationalAirtime = async (amount, countryCode, phone) => {
     const url = `${vtpass_url}/api/pay`;
 
     const payload = {
-      serviceID: "intl_airtime",
+      serviceID: "foreign-airtime",
       request_id: generateUniqueRandomNumber(),
-      amount,
+      billersCode: phone,
+      variation_code: variationCode,
       phone,
-      country: countryCode,
+      operator_id: operatorId,
+      country_code: countryCode,
+      product_type_id: productTypeId,
+      email,
     };
 
     const headers = getAuthHeaders(payload, vtpass_api_key, vtpass_pk, vtpass_sk);
@@ -236,4 +247,122 @@ exports.rechargeInternationalAirtime = async (amount, countryCode, phone) => {
     return { success: false, error: error.message };
   }
 };
+
+//  Get International Airtime Countries
+exports.getInternationalAirtimeCountries = async () => {
+  try {
+    const settings = await getWebSettings();
+
+    if (!settings || !settings.vtpass_url) {
+      return { success: false, error: "VTpass settings not configured properly." };
+    }
+
+    const url = `${settings.vtpass_url}/api/get-international-airtime-countries`;
+
+    const response = await axios.get(url);
+
+    const { response_description, content } = response.data || {};
+
+    if (response_description === "000" && content?.countries) {
+      return {
+        success: true,
+        countries: content.countries,
+      };
+    }
+
+    return {
+      success: false,
+      error: response_description || "Unexpected VTpass response format.",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error?.response?.data?.message || error.message || "Unknown error occurred.",
+    };
+  }
+};
+
+//  Get International Airtime Product Types
+exports.getInternationalProductTypes = async (countryCode) => {
+  try {
+    const settings = await getWebSettings();
+    const url = `${settings.vtpass_url}/api/get-international-airtime-product-types?code=${countryCode}`;
+
+    const response = await axios.get(url);
+    const { response_description, content } = response.data;
+
+    if (response_description === "000") {
+      return { success: true, productTypes: content };
+    }
+
+    return { success: false, error: "Failed to fetch product types." };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+//  Get International Airtime Operators
+exports.getInternationalOperators = async (countryCode, productTypeId) => {
+  try {
+    const settings = await getWebSettings();
+    const url = `${settings.vtpass_url}/api/get-international-airtime-operators?code=${countryCode}&product_type_id=${productTypeId}`;
+
+    const response = await axios.get(url);
+
+    // Return the exact structure received from the VTpass API
+    return response.data;
+
+  } catch (error) {
+    return {
+      response_description: "999",
+      content: [],
+      error: error.message
+    };
+  }
+};
+
+
+
+//  Get International Airtime Variations
+exports.getInternationalVariations = async (operatorId, productTypeId) => {
+  try {
+    console.log("=== Fetching International Variations ===");
+    console.log("Received operatorId:", operatorId);
+    console.log("Received productTypeId:", productTypeId);
+
+    const settings = await getWebSettings();
+    console.log("VTpass base URL from settings:", settings?.vtpass_url);
+
+    const url = `${settings.vtpass_url}/api/service-variations?serviceID=foreign-airtime&operator_id=${operatorId}&product_type_id=${productTypeId}`;
+    console.log("Final API Request URL:", url);
+
+    const response = await axios.get(url);
+    console.log("Raw VTpass Response:", response.data);
+
+    const { response_description, content } = response.data;
+    console.log("Response Description:", response_description);
+    console.log("Content:", content);
+
+    if (response_description === "000") {
+      if (Array.isArray(content.variations) && content.variations.length > 0) {
+        console.log("✔ Variations fetched:", content.variations);
+        return { success: true, variations: content.variations };
+      } else {
+        console.warn("⚠ No variations found for selected product.");
+        return { success: false, error: "No variations found for selected product." };
+      }
+    }
+
+    console.warn("⚠ Unsuccessful response from VTpass:", response_description);
+    return { success: false, error: "Failed to fetch variations from VTpass." };
+
+  } catch (error) {
+    console.error("❌ Error fetching international variations:", error.message);
+    console.error("Full Error Object:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+
+
 

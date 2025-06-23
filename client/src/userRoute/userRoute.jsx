@@ -15,6 +15,7 @@ import Pricing from '../views/user/nordService/pricing';
 import Referral from '../views/user/referral/referral';
 import Vtu from '../views/user/vtu/vtu';
 import Settings from '../views/user/settings/settings';
+import InternationalAirtime from '../views/user/internationalAirtime/internationalAirtime';
 
 
 
@@ -38,7 +39,7 @@ const UserRoute = () => {
         <Route path='nord-services/vpn/offer' element={<Pricing/>}/>
         <Route path='referral' element={<Referral/>}/>
         <Route path='settings' element={<Settings/>}/>
-        
+        <Route path='international-airtime' element={<InternationalAirtime/>}/>
 
         {/* GiftCard as a layout route with nested routes */}
         {/*<Route path="giftcard/*" element={<GiftCardOutlet />}>

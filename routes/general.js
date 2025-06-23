@@ -23,6 +23,7 @@ const verifyToken = require("./../middleWare/verifyToken");
 const { addPlatform, fetchPlatforms } = require("../controller/admin/dashboard/platform");
 const upload = require("../utility/multerConfig");
 const { airtimePurchase, getDataVariations, dataPurchase} = require("../controller/user/vtpass");
+const { getInternationalCountries, fetchInternationalProductTypes, fetchInternationalOperators, fetchInternationalVariations } = require("../controller/user/vtpassInternational");
 const { setTransactionPin } = require("../controller/user/TransactionPin");
 
 // ------- General --------- //
@@ -42,6 +43,10 @@ generalRoute.post("/activate", activateAccount);
 generalRoute.post("/airtime/Purchase", verifyToken, airtimePurchase );
 generalRoute.post("/data/Purchase", verifyToken, dataPurchase);
 generalRoute.get("/data-variations/:serviceID", getDataVariations);
+generalRoute.get("/InternationalAirtime/countries", getInternationalCountries);
+generalRoute.get("/InternationalAirtime/product-types/:countryCode", fetchInternationalProductTypes);
+generalRoute.get("/InternationalAirtime/operators/:countryCode/:productTypeId", fetchInternationalOperators);
+generalRoute.get("/InternationalAirtime/variations/:operatorId/:productTypeId", fetchInternationalVariations);
 generalRoute.post("/set-pin", verifyToken, setTransactionPin);
 
 

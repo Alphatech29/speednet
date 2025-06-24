@@ -233,13 +233,11 @@ const InternationalAirtime = () => {
         </div>
       )}
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-md mx-auto mt-6 space-y-4 border p-6 rounded-lg shadow-lg relative"
-      >
+     <div className="max-w-md mx-auto border p-6 rounded-lg shadow-lg relative">
+       <div className="flex justify-center gap-3 items-center flex-col">
         <ToastContainer />
-
-        <div className="bg-primary-600 text-white p-4 rounded-lg flex space-x-3 items-start">
+        <div className="text-center justify-center items-center flex mt-[-20px]">International Airtime/Data/Pin</div>
+        <div className="bg-primary-600 text-white p-4 rounded-lg flex space-x-3 items-start w-full mb-4">
           <img
             src={user?.avatar}
             alt="User Avatar"
@@ -252,9 +250,11 @@ const InternationalAirtime = () => {
             </p>
           </div>
         </div>
+      </div>
 
+      <form onSubmit={handleSubmit}  className="gap-5 flex flex-col justify-center items-center w-full">
         {/* Country Dropdown */}
-        <div ref={dropdownRef}>
+        <div ref={dropdownRef} className="w-full">
           <Label value="Select Country" />
           <div className="relative mt-1">
             <div
@@ -301,7 +301,7 @@ const InternationalAirtime = () => {
         </div>
 
         {/* Product Type */}
-        <div>
+        <div className="w-full">
           <Label htmlFor="productType" value="Product Type" />
           <select
             id="productType"
@@ -326,7 +326,7 @@ const InternationalAirtime = () => {
         </div>
 
         {/* Operator Dropdown */}
-        <div>
+        <div className="w-full">
           <Label htmlFor="operator" value="Operator" />
           {loadingOperators ? (
             <div className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-400">
@@ -357,7 +357,7 @@ const InternationalAirtime = () => {
         </div>
 
         {/* Variation Dropdown */}
-        <div>
+        <div className="w-full">
           <Label htmlFor="variation" value="Variation" />
           <select
             id="variation"
@@ -383,7 +383,7 @@ const InternationalAirtime = () => {
         </div>
 
         {/* Email */}
-        <div>
+        <div className="w-full">
           <Label htmlFor="email" value="Email Address" />
           <input
             id="email"
@@ -396,7 +396,7 @@ const InternationalAirtime = () => {
         </div>
 
         {/* Phone */}
-        <div>
+        <div className="w-full">
           <Label htmlFor="phone" value="Phone Number" />
           <input
             id="phone"
@@ -412,7 +412,7 @@ const InternationalAirtime = () => {
         </div>
 
         {/* Amount */}
-        <div>
+        <div className="w-full">
           <Label htmlFor="amount" value="Amount (₦)" />
           <input
             id="amount"
@@ -493,6 +493,7 @@ const InternationalAirtime = () => {
           </div>
         )}
       </form>
+     </div>
     </div>
   );
 };

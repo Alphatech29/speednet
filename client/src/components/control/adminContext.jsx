@@ -11,7 +11,6 @@ export const AdminAuthProvider = ({ children }) => {
   const [adminToken, setAdminToken] = useState(null);
   const [adminDetails, setAdminDetails] = useState(null);
   const [webSettings, setWebSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const logoutTimeoutRef = useRef(null);
@@ -54,11 +53,7 @@ export const AdminAuthProvider = ({ children }) => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        // Only run admin token check if current path starts with /admin
-        if (!window.location.pathname.startsWith("/admin")) {
-          setLoading(false);
-          return;
-        }
+        if (!window.location.pathname.startsWith("/admin")) return;
 
         const token = Cookies.get("adminToken") || localStorage.getItem("adminToken");
         const storedAdminDetails = Cookies.get("adminDetails");
@@ -79,7 +74,7 @@ export const AdminAuthProvider = ({ children }) => {
           }
 
           try {
-            jwtDecode(token); // Validity check
+            jwtDecode(token);
           } catch (err) {
             console.error("Invalid token:", err);
             logoutAdmin();
@@ -90,8 +85,6 @@ export const AdminAuthProvider = ({ children }) => {
       } catch (err) {
         console.error("Session init error:", err);
         logoutAdmin();
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -110,7 +103,6 @@ export const AdminAuthProvider = ({ children }) => {
 
     setAdminToken(token);
     setAdminDetails(user);
-    setLoading(false);
 
     Cookies.set("adminToken", token, {
       expires: 7,
@@ -123,7 +115,7 @@ export const AdminAuthProvider = ({ children }) => {
     localStorage.setItem("adminToken", token);
     localStorage.setItem("adminDetails", JSON.stringify(user));
 
-    scheduleAutoLogout(token); // 🔐 Schedule logout
+    scheduleAutoLogout(token);
     fetchWebSettings();
     navigate("/admin/dashboard");
   };
@@ -144,8 +136,6 @@ export const AdminAuthProvider = ({ children }) => {
 
     navigate("/admin/login");
   };
-
-  if (loading) return <div>Loading admin session...</div>;
 
   return (
     <AdminAuthContext.Provider

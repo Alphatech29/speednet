@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "../partials/header";
-import Footer from "../partials/footer";
+import Header from "../../views/general/partials/header";
+import Footer from "../../views/general/partials/footer";
 
 function Layout({ children, hideHeaderFooter }) {
   return (

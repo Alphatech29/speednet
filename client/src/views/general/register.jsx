@@ -5,7 +5,7 @@ import "react-phone-input-2/lib/style.css";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { register } from "./../components/backendApis/auth/auth";
+import { register } from "../../components/backendApis/auth/auth";
 import { NavLink, useLocation } from "react-router-dom";
 
 const Register = () => {
@@ -33,7 +33,6 @@ const Register = () => {
         const countryNames = data.countries.sort();
         setCountries(countryNames);
       } catch (error) {
-  
       }
     };
     fetchCountries();

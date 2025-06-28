@@ -25,6 +25,7 @@ const upload = require("../utility/multerConfig");
 const { airtimePurchase, getDataVariations, dataPurchase, internationalPurchase} = require("../controller/user/vtpass");
 const { getInternationalCountries, fetchInternationalProductTypes, fetchInternationalOperators, fetchInternationalVariations } = require("../controller/user/vtpassInternational");
 const { setTransactionPin } = require("../controller/user/TransactionPin");
+const {updateUserProfile} = require("../controller/user/user")
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -35,6 +36,7 @@ generalRoute.put("/settings", updateWebSettings);
 
 // --------- User route --------- //
 generalRoute.get("/user", verifyToken, getCurrentUser);
+generalRoute.put("/user/update", verifyToken, upload.single('image'), updateUserProfile);
 generalRoute.get("/transaction/:userUid", getUserTransactions);
 generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);

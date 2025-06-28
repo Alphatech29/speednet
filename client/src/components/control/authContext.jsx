@@ -20,22 +20,18 @@ const AuthProvider = ({ children }) => {
         setWebSettings(result.data);
         return result.data;
       }
-    } catch (error) {
-    }
+    } catch (error) {}
     return null;
   };
 
   const fetchUser = async () => {
     try {
       const result = await getCurrentUser();
-
       if (result?.success && result.data) {
-     
         setUser(result.data);
         return result.data;
       } else {
         setUser(null);
-       
         return null;
       }
     } catch (error) {
@@ -45,7 +41,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const signIn = async () => {
-   
     try {
       const currentUser = await fetchUser();
       if (currentUser) {
@@ -55,7 +50,6 @@ const AuthProvider = ({ children }) => {
         } else {
           navigate("/user/marketplace");
         }
-      } else {
       }
     } catch (error) {
       setUser(null);
@@ -74,8 +68,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await logoutUser();
-    } catch (error) {
-    }
+    } catch (error) {}
     setUser(null);
     setCart([]);
     setWebSettings(null);
@@ -103,8 +96,8 @@ const AuthProvider = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <span className="text-gray-500">Loading...</span>
+      <div className="flex items-center justify-center h-screen bg-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-primary-600 border-solid"></div>
       </div>
     );
   }

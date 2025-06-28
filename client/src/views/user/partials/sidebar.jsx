@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
-import { HiViewGrid } from "react-icons/hi"; // ✅ from 'hi'
-import { FaShop, FaShopify, FaWallet, FaMobile, FaWifi } from "react-icons/fa6"; // ✅ all from 'fa6'
-import { BiSolidPurchaseTag, BiWorld } from "react-icons/bi"; // ✅ from 'bi'
+import { HiViewGrid } from "react-icons/hi";
+import { FaShop, FaShopify, FaWallet, FaMobile, FaWifi } from "react-icons/fa6";
+import { BiSolidPurchaseTag, BiWorld } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import { Dropdown } from "flowbite-react";
 import { AuthContext } from "../../../components/control/authContext";
 import { MdAddBusiness } from "react-icons/md";
 import { BsBank2 } from "react-icons/bs";
 import { SiNordvpn } from "react-icons/si";
+import { TiFlashOutline } from "react-icons/ti";
+
 
 
 const linkClasses = "flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay";
@@ -55,7 +57,7 @@ const Sidebar = ({ isOpen }) => {
             </Dropdown.Item>
           </Dropdown>
         )}
-          <NavLink to="/user/wallet" className={linkClasses}>
+        <NavLink to="/user/wallet" className={linkClasses}>
           <FaWallet /> <span>My Wallet</span>
         </NavLink>
 
@@ -71,9 +73,6 @@ const Sidebar = ({ isOpen }) => {
             <Dropdown.Item as="div">
               <NavLink className="text-gray-400" to="/user/nord-services/locker">NordLocker</NavLink>
             </Dropdown.Item>
-            <Dropdown.Item as="div">
-              <NavLink className="text-gray-400" to="/user/nord-services/pass">NordPass</NavLink>
-            </Dropdown.Item>
           </Dropdown>
         )}
 
@@ -87,6 +86,16 @@ const Sidebar = ({ isOpen }) => {
           <FaMobile /> <span>VTU Service</span>
         </NavLink>
 
+        <a
+          href="https://mrbeanpanel.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClasses}
+        >
+          <TiFlashOutline /> <span>Boost Accounts</span>
+        </a>
+
+
         <NavLink to="/user/order" className={linkClasses}>
           <BiSolidPurchaseTag /> <span>My Purchase</span>
         </NavLink>
@@ -95,7 +104,7 @@ const Sidebar = ({ isOpen }) => {
           <BiWorld /> <span>International Airtime</span>
         </NavLink>
 
-      
+
       </div>
     </div>
   );

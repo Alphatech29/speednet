@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Home from "./views/home";
-import Login from "./views/login";
+import Home from "./views/general/index";
+import Login from "./views/general/login";
 import AdminLogin from "./views/admin/auth/login";
 import Layout from "./components/control/layout";
-import Register from "./views/register";
+import Register from "./views/general/register";
 import Wallet from "./views/user/wallet/wallet";
 
 import { AuthProvider } from "./components/control/authContext";
@@ -12,7 +12,7 @@ import PrivateRoute from "./components/control/private";
 
 import { AdminAuthProvider } from "./components/control/adminContext";
 import AdminPrivateRoute from "./components/control/adminPrivate"; 
-import AdminRoute from "./views/admin/adminRoute/adminRoute";                  // Your admin routes component
+import AdminRoute from "./views/admin/adminRoute/adminRoute"; 
 
 import UserRoute from "./userRoute/userRoute";
 

@@ -5,8 +5,8 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { login } from "../components/backendApis/auth/auth";
-import { AuthContext } from "../components/control/authContext";
+import { login } from "../../components/backendApis/auth/auth";
+import { AuthContext } from "../../components/control/authContext";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -182,7 +182,7 @@ const Login = () => {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="bg-primary-600 border-none shadow-md py-2 text-pay flex items-center justify-center"
+              className="bg-primary-600 border-none shadow-md text-pay flex items-center justify-center"
               disabled={loading}
             >
               {loading ? (

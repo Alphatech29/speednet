@@ -111,7 +111,7 @@ const Header = () => {
                 <p className="text-sm font-bold">{user.full_name}</p>
                 <p className="text-xs text-gray-400">{user.email}</p>
               </div>
-              <a href="/profile" className="flex items-center px-4 py-2 hover:text-primary-600">
+              <a href="/user/profile" className="flex items-center px-4 py-2 hover:text-primary-600">
                 <CgProfile className="mr-2" /> Profile
               </a>
               <a href="/user/referral" className="flex items-center px-4 py-2 hover:text-primary-600">

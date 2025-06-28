@@ -17,6 +17,7 @@
     "crypto-js": "^4.2.0",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.10.2",
+    "framer-motion": "^12.19.1",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",

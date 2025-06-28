@@ -40,7 +40,7 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
       )}
 
       {isCartOpen && (
-        <div className="absolute z-30 right-0 mt-2 w-96 max-h-[500px] overflow-y-auto bg-slate-700 text-white rounded-lg shadow-lg py-6 px-2">
+        <div className="absolute z-30 right-0 mt-2 w-96 max-h-[500px] mobile:right-[-50px] overflow-y-auto bg-slate-700 text-white rounded-lg shadow-lg py-6 px-2">
           {cart.length > 0 ? (
             <div className="flex flex-col gap-4">
               {cart.map((item) => (
@@ -52,14 +52,14 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
                   />
                   <div className="flex w-full flex-col justify-start items-start">
                     <div className="flex flex-col">
-                      <div className="flex items-center gap-2">
+                      {/*<div className="flex items-center gap-2">
                         <img
                           src={item.avatar}
                           alt="Seller"
                           className="size-5 rounded-full border border-white"
                         />
                         <span>{item.seller}</span>
-                      </div>
+                      </div> */}
                       <span className="font-semibold text-base">{item.name}</span>
                     </div>
                     <div className="flex justify-between w-full items-center">

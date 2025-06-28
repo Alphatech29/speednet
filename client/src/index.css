@@ -10,20 +10,6 @@ html, body, #root {
   margin: 0;
 }
 
-.side-bar{
- width: 265px;
-  overflow: auto;
-  text-align: left;
-  height: 100%;
-  position: fixed;
-  bottom: 0;
-  top: 0;
-}
-.main-wrapper-user{
-  min-height: calc(100vh - 1px);
-  width: 100%;
-   background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1)) /* #475569 */;
-}
 
 .reg-main{
   width: 100%;
@@ -31,16 +17,7 @@ html, body, #root {
   display: flex;
 }
 
-.wrapper-user{
-  margin-left: 265px;
-  width: calc(100% - 265px);
-  height: auto;
-}
-@media screen and (max-width: 700px) {
-  .side-bar{
-    display: none !important;
-  }
-}
+
 
 /* styles/globals.css */
 ::-webkit-scrollbar {

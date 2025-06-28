@@ -96,10 +96,10 @@ const Login = () => {
           </a>
         </div>
 
-        <div className="w-full flex flex-col gap-6">
+        <div className="w-full flex flex-col gap-4">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-pay">Welcome Back!</h1>
-            <p className="text-slate-300 text-base">
+            <h1 className="text-2xl font-bold text-pay">Welcome Back!</h1>
+            <p className="text-slate-300 text-sm">
               Sign in to your account and continue
             </p>
           </div>
@@ -116,14 +116,14 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="peer w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 focus:border-primary-600 focus:ring-primary-600"
+                className="peer w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 mobile:py-2 focus:border-primary-600 focus:ring-primary-600"
               />
               <Label
                 htmlFor="email"
-                className={`absolute left-3 transition-all peer-focus:top-1 peer-focus:text-sm peer-focus:text-primary-600 ${
+                className={`absolute left-3 transition-all peer-focus:top-1 mobile:peer-focus:top-0 peer-focus:text-sm peer-focus:text-primary-600 ${
                   email
                     ? "top-1 text-sm text-primary-600"
-                    : "top-3 text-base text-gray-400"
+                    : "top-3 text-sm text-gray-400"
                 }`}
               >
                 Email Address
@@ -138,14 +138,14 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="peer w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 focus:border-primary-600 focus:ring-primary-600"
+                className="peer w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 mobile:py-2  focus:border-primary-600 focus:ring-primary-600"
               />
               <Label
                 htmlFor="password"
-                className={`absolute left-3 transition-all peer-focus:top-1 peer-focus:text-sm peer-focus:text-primary-600 ${
+                className={`absolute left-3 transition-all peer-focus:top-1 mobile:peer-focus:top-0  peer-focus:text-sm peer-focus:text-primary-600 ${
                   password
                     ? "top-1 text-sm text-primary-600"
-                    : "top-3 text-base text-gray-400"
+                    : "top-3 text-sm text-gray-400"
                 }`}
               >
                 Password

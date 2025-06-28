@@ -77,7 +77,7 @@ const Header = () => {
             onClick={toggleNoticeDropdown}
           />
           {isNoticeOpen && (
-            <div className="absolute right-0 mt-2 w-80 bg-slate-700 text-white rounded-lg shadow-lg py-6 px-4">
+            <div className="absolute right-0  mt-2 w-80 mobile:w-96  mobile:right-[-102px] bg-slate-700 text-white rounded-lg shadow-lg py-6 px-4">
               <div className="flex flex-col items-center gap-2">
                 <span className="text-[25px] text-gray-400">
                   <IoNotificationsOffSharp />

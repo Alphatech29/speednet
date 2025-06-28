@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen }) => {
   const isMerchant = user?.role === "merchant";
 
   return (
-    <div className="side-bar  sticky  bg-gray-800 text-slate-200 px-4 pb-4 pt-3">
+    <div className="w-[265px] overflow-auto text-left h-full fixed top-0 bottom-0  bg-gray-800 text-slate-200 px-4 pb-4 pt-3">
       <div className="mb-4 w-full border-b border-gray-700">
         <a href="/">
           <img src="/image/user-logo.png" alt="Logo" className="h-10" />

@@ -3,49 +3,48 @@ import { BiMenu } from "react-icons/bi";
 import { RiHome3Fill } from "react-icons/ri";
 import { FaShop } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
+import { GiWallet } from "react-icons/gi";
 
 
 const Footer = ({ toggleSidebar }) => {
   return (
-    <div className="w-full bg-slate-800 pc:hidden shadow-lg px-4 py-2 text-white mobile:fixed mobile:bottom-0 mobile:z-10">
-      <div className="flex w-full justify-between items-center">
-        {/* Menu Icon */}
-         <div className="mobile:flex  justify-start items-start ">
-          <div className=" cursor-pointer flex flex-col justify-center items-center">
-           <NavLink to="/user/dashboard" className="flex flex-col justify-center items-center">
-            <RiHome3Fill className="text-[30px]" />
-            <span className="text-[10px]">Dashboard</span>
-           </NavLink>
-          </div>
-        </div>
+    <div className="w-full fixed bottom-0 z-50 pc:hidden bg-slate-800 px-4 py-2 shadow-inner">
+      <div className="flex justify-between items-center">
+        {/* Dashboard */}
+        <NavLink
+          to="/user/dashboard"
+          className="flex flex-col items-center text-white"
+        >
+          <RiHome3Fill className="text-[24px]" />
+          <span className="text-[10px]">Dashboard</span>
+        </NavLink>
 
-         <div className="mobile:flex justify-start items-start ">
-          <div className=" cursor-pointer flex flex-col justify-center items-center">
-           <NavLink to="/user/marketplace" className="flex flex-col justify-center items-center">
-            <FaShop className="text-[30px]" />
-            <span className="text-[10px]">Marketplace</span>
-           </NavLink>
-          </div>
-        </div>
+        {/* Marketplace */}
+        <NavLink
+          to="/user/marketplace"
+          className="flex flex-col items-center text-white"
+        >
+          <FaShop className="text-[24px]" />
+          <span className="text-[10px]">Marketplace</span>
+        </NavLink>
 
-         <div className="mobile:flex  justify-start items-start ">
-          <div className=" cursor-pointer flex flex-col justify-center items-center">
-           <NavLink to="/user/dashboard" className="flex flex-col justify-center items-center">
-            <RiHome3Fill className="text-[30px]" />
-            <span className="text-[10px]">Dashboard</span>
-           </NavLink>
-          </div>
-        </div>
+        {/* Repeated Dashboard (you can change this route if needed) */}
+        <NavLink
+          to="/user/wallet"
+          className="flex flex-col items-center text-white"
+        >
+          <GiWallet  className="text-[24px]" />
+          <span className="text-[10px]">Wallet</span>
+        </NavLink>
 
-
-        <div className="mobile:flex pc:hidden justify-start items-start ">
-          <div className="cursor-pointer flex flex-col justify-center items-center" >
-            <NavLink to="#" onClick={toggleSidebar} className="flex flex-col justify-center items-center">
-              <BiMenu className="text-[30px]" />
-            <span className="text-[10px]">Menu</span>
-            </NavLink>
-          </div>
-        </div>
+        {/* Menu */}
+        <button
+          onClick={toggleSidebar}
+          className="flex flex-col items-center text-white"
+        >
+          <BiMenu className="text-[24px]" />
+          <span className="text-[10px]">Menu</span>
+        </button>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const ViewDetails = ({ product, onClose }) => {
   return (
     <Modal show={show} onClose={onClose} popup>
       <Modal.Header className="bg-gray-800">
-        <h2 className="text-lg font-semibold text-white">
+        <h2 className="text-lg mobile:text-[16px] font-semibold text-white">
           {product?.name || "Product"} Details
         </h2>
       </Modal.Header>

@@ -13,12 +13,15 @@ import AdminRoute from "./views/admin/adminRoute/adminRoute";
 import UserRoute from "./userRoute/userRoute";
 import ForgetPassword from "./views/general/ForgetPassword";
 import ResetPassword from "./views/general/resetPaword";
+import SeoManager from "./components/utils/seoManager";
 
 function App() {
   return (
+    
     <Router>
       <AuthProvider>
         <AdminAuthProvider>
+           <SeoManager />
           <Routes>
             {/* Public Routes */}
             <Route

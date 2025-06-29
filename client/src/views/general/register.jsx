@@ -31,7 +31,9 @@ const Register = () => {
         const data = await res.json();
         const countryNames = data.countries.sort();
         setCountries(countryNames);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching countries", error);
+      }
     };
     fetchCountries();
   }, []);
@@ -91,29 +93,27 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col pc:flex-row min-h-screen bg-slate-700 px-4 pc:px-20 py-5">
+    <div className="min-h-screen flex flex-col pc:flex-row bg-slate-700 px-4 tab:px-10 pc:px-20 py-8 gap-10">
       <ToastContainer position="top-right" className="text-sm" />
 
       {/* Left panel */}
-      <div className="hidden pc:flex w-1/2 bg-slate-500/50 h-full px-10 flex-col justify-between py-8 rounded-xl">
+      <div className="hidden tab:flex w-full pc:w-1/2 bg-slate-500/50 px-6 py-8 rounded-xl flex-col justify-between">
         <div className="text-pay self-end">
-          <h1 className="text-4xl font-bold w-3/4 mb-2">
+          <h1 className="text-2xl tab:text-3xl pc:text-4xl font-bold mb-3 leading-snug">
             Connect. Trade. Elevate Your Influence.
           </h1>
-          <p>
-            Empower your social journey by exploring and trading social media
-            accounts on a platform built on integrity and ethical engagement.
-            Your next digital adventure begins here.
+          <p className="text-sm tab:text-base text-white">
+            Empower your social journey by exploring and trading social media accounts on a platform built on integrity and ethical engagement.
           </p>
         </div>
       </div>
 
       {/* Right panel */}
-      <div className="w-full pc:w-1/2 px-4 pc:px-10 flex items-center justify-center">
+      <div className="w-full pc:w-1/2 px-2 tab:px-4 pc:px-10 flex items-center justify-center">
         <div className="w-full max-w-md flex flex-col gap-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-pay">Welcome to Speednet</h1>
-            <p className="text-slate-300 text-base">Sign up and start your journey</p>
+            <h1 className="text-2xl tab:text-3xl pc:text-4xl font-bold text-pay">Welcome to Speednet</h1>
+            <p className="text-slate-300 text-sm tab:text-base">Sign up and start your journey</p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6 text-pay">

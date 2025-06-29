@@ -162,19 +162,20 @@ const Home = () => {
         </motion.div>
 
         <motion.div
-          className="mobile:w-full pc:w-1/2 tab:w-1/2"
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <img
-            src="/image/nord.png"
-            alt="eSIM and Virtual Number Service"
-            className="w-full h-auto object-cover"
-          />
-        </motion.div>
+  className="w-full tab:w-1/2 pc:w-1/2 px-4 mobile:px-2"
+  variants={fadeInUp}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+>
+  <img
+    src="/image/virtualnumber.png"
+    alt="eSIM and Virtual Number Service"
+    className="w-full h-auto object-cover"
+  />
+</motion.div>
+
       </div>
 
       {/* Final Feature Set: Logs / VTU / Payment */}

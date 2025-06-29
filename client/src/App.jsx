@@ -5,16 +5,14 @@ import Login from "./views/general/login";
 import AdminLogin from "./views/admin/auth/login";
 import Layout from "./components/control/layout";
 import Register from "./views/general/register";
-import Wallet from "./views/user/wallet/wallet";
-
 import { AuthProvider } from "./components/control/authContext";
 import PrivateRoute from "./components/control/private";
-
 import { AdminAuthProvider } from "./components/control/adminContext";
-import AdminPrivateRoute from "./components/control/adminPrivate"; 
-import AdminRoute from "./views/admin/adminRoute/adminRoute"; 
-
+import AdminPrivateRoute from "./components/control/adminPrivate";
+import AdminRoute from "./views/admin/adminRoute/adminRoute";
 import UserRoute from "./userRoute/userRoute";
+import ForgetPassword from "./views/general/ForgetPassword";
+import ResetPassword from "./views/general/resetPaword";
 
 function App() {
   return (
@@ -39,7 +37,24 @@ function App() {
                 </Layout>
               }
             />
-            <Route path="/wallet" element={<Wallet />} />
+            <Route
+              path="/auth/forgot-password"
+              element={
+                <Layout hideHeaderFooter>
+                  <ForgetPassword />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/auth/reset-password/:token"
+              element={
+                <Layout hideHeaderFooter>
+                  <ResetPassword />
+                </Layout>
+              }
+            />
+
             <Route
               path="/auth/register"
               element={
@@ -58,7 +73,7 @@ function App() {
             <Route element={<AdminPrivateRoute />}>
               <Route path="/admin/*" element={<AdminRoute />} />
             </Route>
-              <Route
+            <Route
               path="/admin/login"
               element={
                 <Layout hideHeaderFooter>

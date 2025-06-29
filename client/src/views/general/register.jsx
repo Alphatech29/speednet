@@ -29,11 +29,9 @@ const Register = () => {
       try {
         const res = await fetch("/general/country");
         const data = await res.json();
-        // Access the countries array directly and sort it
         const countryNames = data.countries.sort();
         setCountries(countryNames);
-      } catch (error) {
-      }
+      } catch (error) {}
     };
     fetchCountries();
   }, []);
@@ -77,7 +75,6 @@ const Register = () => {
         }
       }
     } catch (error) {
-  
       if (error.response?.data) {
         const errorData = error.response.data;
         if (errorData?.error?.errors?.length) {
@@ -94,13 +91,13 @@ const Register = () => {
   };
 
   return (
-    <div className="reg-main justify-between items-center bg-slate-700 px-4 py-5">
+    <div className="flex flex-col pc:flex-row min-h-screen bg-slate-700 px-4 pc:px-20 py-5">
       <ToastContainer position="top-right" className="text-sm" />
 
       {/* Left panel */}
-      <div className="mobile:hidden pc:flex w-1/2 bg-slate-500/50 h-[100%] px-10 flex-col justify-between py-8 rounded-xl relative">
-        <div className="text-pay absolute bottom-1">
-          <h1 className="text-4xl font-bold w-1/2">
+      <div className="hidden pc:flex w-1/2 bg-slate-500/50 h-full px-10 flex-col justify-between py-8 rounded-xl">
+        <div className="text-pay self-end">
+          <h1 className="text-4xl font-bold w-3/4 mb-2">
             Connect. Trade. Elevate Your Influence.
           </h1>
           <p>
@@ -112,156 +109,145 @@ const Register = () => {
       </div>
 
       {/* Right panel */}
-      <div className="mobile:w-full pc:w-1/2 px-10 flex justify-center items-center">
-        <div className="w-full flex flex-col gap-6">
+      <div className="w-full pc:w-1/2 px-4 pc:px-10 flex items-center justify-center">
+        <div className="w-full max-w-md flex flex-col gap-6">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-pay">Welcome to Speednet</h1>
-            <p className="text-slate-300 text-base">
-              Sign up and start your journey
-            </p>
+            <p className="text-slate-300 text-base">Sign up and start your journey</p>
           </div>
 
-          <div >
-            <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6 text-pay">
-              {/* Full Name */}
-              <div className="relative">
-                <input
-                  type="text"
-                  value={fullname}
-                  onChange={(e) => setFullname(e.target.value)}
-                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer"
-                  placeholder=" "
-                />
-                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                  Full Name
-                </label>
-              </div>
-
-              {/* Email */}
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer"
-                  placeholder=" "
-                />
-                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                  Email Address
-                </label>
-              </div>
-              <div className="flex justify-between items-center gap-4 w-full">
-
-                {/* Phone Number */}
-                <PhoneInput
-                  country={"us"}
-                  value={phone_number}
-                  onChange={(value) => setPhone(value)}
-                  enableSearch={true}
-                  containerClass="w-full"
-                  inputClass="!w-full !py-5 !border !border-gray-500 !bg-gray-800 !text-white !rounded-md"
-                  buttonClass="!bg-gray-800 !border-gray-500 !rounded-l-md"
-                  dropdownClass="!bg-gray-800 !text-white"
-                />
-
-                {/* Country */}
-                <select
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3"
-                >
-                  <option value="" disabled>
-                    Select your country
-                  </option>
-                  {countries.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Password */}
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer pr-10"
-                  placeholder=" "
-                />
-                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                  Password
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
-                >
-                  {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
-                </button>
-              </div>
-
-              {/* Confirm Password */}
-              <div className="relative">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 peer pr-10"
-                  placeholder=" "
-                />
-                <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                  Confirm Password
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
-                >
-                  {showConfirmPassword ? (
-                    <HiEyeOff size={20} />
-                  ) : (
-                    <HiEye size={20} />
-                  )}
-                </button>
-              </div>
-
-              {/* Agreement */}
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="agree"
-                  checked={agree}
-                  onChange={(e) => setAgree(e.target.checked)}
-                  className="w-4 h-4 text-primary-600 border-gray-500 rounded focus:ring-0 cursor-pointer"
-                />
-                <label htmlFor="agree" className="ml-2 text-gray-300 text-sm cursor-pointer">
-                  I agree to Speednet's{" "}
-                  <span className="text-primary-600">Privacy Policy</span> and{" "}
-                  <span className="text-primary-600">Terms of Use</span>
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                className="bg-primary-600 border-none shadow-md py-1 text-pay"
-                disabled={!agree}
-              >
-                Sign Up
-              </Button>
-            </form>
-
-            {/* Link to Login */}
-            <div className="flex justify-center text-gray-300">
-              <span>
-                Already have an account?{" "}
-                <NavLink to="/auth/login" className="text-primary-600">
-                  Login
-                </NavLink>
-              </span>
+          <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6 text-pay">
+            {/* Full Name */}
+            <div className="relative">
+              <input
+                type="text"
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
+                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer"
+                placeholder=" "
+              />
+              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                Full Name
+              </label>
             </div>
+
+            {/* Email */}
+            <div className="relative">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer"
+                placeholder=" "
+              />
+              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                Email Address
+              </label>
+            </div>
+
+            {/* Phone and Country */}
+            <div className="flex flex-col tab:flex-row gap-4">
+              <PhoneInput
+                country={"us"}
+                value={phone_number}
+                onChange={(value) => setPhone(value)}
+                enableSearch={true}
+                containerClass="w-full"
+                inputClass="!text-base !w-full !py-5 !border !border-gray-500 !bg-gray-800 !text-white !rounded-md"
+                buttonClass="!bg-gray-800 !border-gray-500 !rounded-l-md"
+                dropdownClass="!bg-gray-800 !text-white"
+              />
+              <select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3"
+              >
+                <option value="" disabled>
+                  Select your country
+                </option>
+                {countries.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Password */}
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer pr-10"
+                placeholder=" "
+              />
+              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                Password
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+              >
+                {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+              </button>
+            </div>
+
+            {/* Confirm Password */}
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer pr-10"
+                placeholder=" "
+              />
+              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                Confirm Password
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+              >
+                {showConfirmPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+              </button>
+            </div>
+
+            {/* Agreement */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="agree"
+                checked={agree}
+                onChange={(e) => setAgree(e.target.checked)}
+                className="w-4 h-4 text-primary-600 border-gray-500 rounded focus:ring-0 cursor-pointer"
+              />
+              <label htmlFor="agree" className="ml-2 text-gray-300 text-sm cursor-pointer">
+                I agree to Speednet's{" "}
+                <span className="text-primary-600">Privacy Policy</span> and{" "}
+                <span className="text-primary-600">Terms of Use</span>
+              </label>
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              className="bg-primary-600 border-none shadow-md py-1 text-pay"
+              disabled={!agree}
+            >
+              Sign Up
+            </Button>
+          </form>
+
+          <div className="flex justify-center text-gray-300 mt-4">
+            <span>
+              Already have an account?{" "}
+              <NavLink to="/auth/login" className="text-primary-600">
+                Login
+              </NavLink>
+            </span>
           </div>
         </div>
       </div>

@@ -2867,3 +2867,118 @@
 [2025-06-29T04:23:20.975Z] [INFO]: Fetched 5 accounts
 [2025-06-29T04:27:03.310Z] [INFO]: Fetched 5 accounts
 [2025-06-29T04:27:07.121Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T05:29:03.200Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T05:36:47.865Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T05:37:49.825Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T09:58:35.395Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T09:59:02.769Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:01:04.893Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:01:23.584Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:01:23.746Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:01:25.040Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:01:25.170Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:01:29.323Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:02:35.532Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:03:26.356Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:07:40.291Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:08:48.721Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:08:55.895Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:09:50.743Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:13:30.931Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:14:35.572Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:14:37.666Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:14:40.838Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:15:40.215Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:17:11.647Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:17:44.208Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:18:58.330Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:19:42.382Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:20:01.700Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:21:38.373Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:29:08.884Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:29:19.278Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:30:32.193Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:30:46.724Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:36:42.306Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:39:17.874Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:39:58.887Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:41:06.205Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:42:11.880Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:42:46.308Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:43:16.186Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:45:25.810Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:46:45.415Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:47:27.700Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:47:27.891Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:47:29.067Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:47:29.205Z] [ERROR]: Failed to serve index.html
+[2025-06-29T10:47:31.549Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:48:50.562Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:50:19.100Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T10:52:33.114Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T11:05:46.575Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T11:21:59.366Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T11:23:42.410Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T11:25:02.868Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T11:28:31.364Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T11:30:50.341Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:00:48.694Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:01:17.465Z] [ERROR]: sendResetPasswordEmail error:
+[2025-06-29T12:05:13.128Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:05:20.794Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:06:51.345Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:07:11.932Z] [INFO]: Reset password email sent:
+[2025-06-29T12:08:06.417Z] [INFO]: Reset password email sent:
+[2025-06-29T12:15:54.540Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:16:41.280Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:17:16.912Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:18:18.645Z] [ERROR]: sendResetPasswordEmail error:
+[2025-06-29T12:19:26.222Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:22:44.468Z] [ERROR]: sendResetPasswordEmail error:
+[2025-06-29T12:23:25.155Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:23:54.946Z] [ERROR]: Error sending reset password email:
+[2025-06-29T12:25:43.710Z] [ERROR]: Error sending reset password email:
+[2025-06-29T12:28:04.022Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:28:25.213Z] [ERROR]: ❌ sendResetPasswordEmail error:
+[2025-06-29T12:31:43.185Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:32:04.838Z] [ERROR]: ❌ sendResetPasswordEmail error:
+[2025-06-29T12:32:28.394Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:32:45.411Z] [INFO]: ✅ Reset password email sent:
+[2025-06-29T12:36:03.866Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:37:02.223Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:37:49.778Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T12:41:02.497Z] [INFO]: ✅ Reset password email sent:
+[2025-06-29T13:11:30.712Z] [ERROR]: ❌ sendResetPasswordEmail error:
+[2025-06-29T13:13:34.435Z] [INFO]: ✅ Reset password email sent:
+[2025-06-29T13:16:40.941Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:17:53.808Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:18:26.720Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:21:40.089Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:23:31.488Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:24:00.211Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:24:05.649Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:32:43.836Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:33:29.139Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:33:38.475Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:35:48.465Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:39:58.829Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:40:31.752Z] [INFO]: ✅ Reset password email sent:
+[2025-06-29T13:46:51.564Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:48:09.918Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:48:32.770Z] [ERROR]: sendLoginNotificationEmail error:
+[2025-06-29T13:48:33.896Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:49:55.143Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:50:10.048Z] [ERROR]: sendLoginNotificationEmail error:
+[2025-06-29T13:50:11.231Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:53:26.976Z] [INFO]: Server running on http://localhost:8000
+[2025-06-29T13:53:43.693Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:53:44.877Z] [INFO]: Login notification email sent:
+[2025-06-29T13:55:20.591Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:55:21.452Z] [INFO]: Login notification email sent:
+[2025-06-29T13:56:38.695Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:57:47.913Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:57:49.030Z] [INFO]: Fetched 5 accounts
+[2025-06-29T13:57:50.369Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-29T13:58:45.063Z] [INFO]: Fetched 5 accounts
+[2025-06-29T13:58:46.545Z] [INFO]: Fetched 5 platforms
+[2025-06-29T13:58:48.239Z] [INFO]: Fetched 6 orders for user: 4

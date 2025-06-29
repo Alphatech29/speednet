@@ -27,14 +27,12 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     if (!email.trim() || !password.trim()) {
       toast.error("Please fill in all fields", { position: "top-right" });
       return;
     }
 
     setLoading(true);
-
     try {
       const response = await login({ email, password });
 
@@ -43,23 +41,17 @@ const Login = () => {
           position: "top-right",
         });
 
-        // Store or remove remembered email
-        if (rememberMe) {
-          localStorage.setItem("rememberedEmail", email);
-        } else {
-          localStorage.removeItem("rememberedEmail");
-        }
+        rememberMe
+          ? localStorage.setItem("rememberedEmail", email)
+          : localStorage.removeItem("rememberedEmail");
 
-        // Call signIn from AuthContext to update user and navigate accordingly
         await signIn();
-
       } else {
         toast.error(response.message || "Login failed", {
           position: "top-right",
         });
       }
     } catch (error) {
-
       toast.error("Unexpected error occurred", { position: "top-right" });
     } finally {
       setLoading(false);
@@ -67,15 +59,14 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-full flex flex-wrap sm:flex-nowrap justify-between items-center bg-slate-700 px-4 sm:px-20 py-5">
+    <div className="h-full w-full flex mobile:flex-col tab:flex-row pc:justify-between tab:justify-between items-center bg-slate-700 px-4 pc:px-20 pc:py-5 tab:py-5">
       <ToastContainer />
-      {/* Left Panel */}
-      <div className="pc:flex mobile:hidden w-1/2 bg-slate-500/50 h-full px-10 flex-col justify-between py-8 rounded-xl">
-        <div>
-          <img src="/image/user-logo.png" alt="Logo" className="h-14" />
-        </div>
+
+      {/* Left Panel (PC only) */}
+      <div className="hidden pc:flex w-1/2 bg-slate-500/50 h-[600px] px-10 flex-col justify-between py-8 rounded-xl">
+        <div><img src="/image/user-logo.png" alt="Logo" className="h-14 " /></div>
         <div className="text-pay">
-          <h1 className="text-4xl font-bold w-1/2">
+          <h1 className="text-4xl font-bold leading-tight mb-2 w-3/4">
             Connect. Trade. Elevate Your Influence.
           </h1>
           <p>
@@ -84,19 +75,21 @@ const Login = () => {
           </p>
         </div>
       </div>
+
       {/* Login Form */}
-      <div className="pc:w-1/2 mobile:w-full px-10 flex flex-col justify-center items-center">
-        <div className="mb-16">
+      <div className="w-full pc:w-1/2 px-4 pc:px-10 flex flex-col justify-center items-center pc:border-none tab:border-0 mobile:border-[1px] mobile:border-gray-500 mobile:p-3 rounded-md mobile:mt-[120px]">
+        {/* Mobile Logo */}
+        <div className="mb-10 pc:hidden">
           <a href="/">
             <img
               src="/image/user-logo.png"
               alt="Logo"
-              className="h-14 pc:hidden mobile:flex"
+              className="h-14 mobile:flex"
             />
           </a>
         </div>
 
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full max-w-md flex flex-col gap-4">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-pay">Welcome Back!</h1>
             <p className="text-slate-300 text-sm">
@@ -108,7 +101,7 @@ const Login = () => {
             className="flex w-full flex-col gap-6 text-pay"
             onSubmit={handleLogin}
           >
-            {/* Email Input */}
+            {/* Email */}
             <div className="relative w-full">
               <input
                 id="email"
@@ -116,11 +109,11 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="peer w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 mobile:py-2 focus:border-primary-600 focus:ring-primary-600"
+                className="peer text-base w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 focus:border-primary-600 focus:ring-primary-600"
               />
               <Label
                 htmlFor="email"
-                className={`absolute left-3 transition-all peer-focus:top-1 mobile:peer-focus:top-0 peer-focus:text-sm peer-focus:text-primary-600 ${
+                className={`absolute left-3 transition-all peer-focus:top-1 peer-focus:text-sm peer-focus:text-primary-600 ${
                   email
                     ? "top-1 text-sm text-primary-600"
                     : "top-3 text-sm text-gray-400"
@@ -130,7 +123,7 @@ const Login = () => {
               </Label>
             </div>
 
-            {/* Password Input */}
+            {/* Password */}
             <div className="relative w-full">
               <input
                 id="password"
@@ -138,11 +131,11 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="peer w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 mobile:py-2  focus:border-primary-600 focus:ring-primary-600"
+                className="peer text-base w-full border border-gray-500 bg-gray-800 text-white rounded-md p-3 focus:border-primary-600 focus:ring-primary-600"
               />
               <Label
                 htmlFor="password"
-                className={`absolute left-3 transition-all peer-focus:top-1 mobile:peer-focus:top-0  peer-focus:text-sm peer-focus:text-primary-600 ${
+                className={`absolute left-3 transition-all peer-focus:top-1 peer-focus:text-sm peer-focus:text-primary-600 ${
                   password
                     ? "top-1 text-sm text-primary-600"
                     : "top-3 text-sm text-gray-400"
@@ -159,21 +152,20 @@ const Login = () => {
               </button>
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
+            {/* Remember Me + Forgot Password */}
+            <div className="flex justify-between items-center text-sm">
+              <label className="flex items-center gap-2 text-white">
                 <input
                   type="checkbox"
-                  id="remember"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 text-primary-600 border-gray-500 rounded focus:ring-0 cursor-pointer"
+                  className="accent-primary-600"
                 />
-                <Label htmlFor="remember">Remember me</Label>
-              </div>
+                Remember me
+              </label>
               <NavLink
                 to="/auth/forgot-password"
-                className="text-primary-600 hover:underline text-sm"
+                className="text-primary-600 hover:underline"
               >
                 Forgot Password?
               </NavLink>

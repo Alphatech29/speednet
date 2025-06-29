@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "flowbite-react";
-import { IoIosTrendingUp } from "react-icons/io";
+import { IoIosPersonAdd } from "react-icons/io";
 import { LuLock } from "react-icons/lu";
 
 
@@ -29,7 +29,7 @@ const Header = () => {
 
            <NavLink to="/auth/register">
            <Button className="bg-primary-600 text-white border-0">
-            <IoIosTrendingUp className="mr-2 mt-1" />
+            <IoIosPersonAdd className="mr-2 mt-1" />
             Sign Up
           </Button>
           </NavLink>

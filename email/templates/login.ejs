@@ -34,6 +34,13 @@
     .content {
       padding: 30px;
     }
+    .info-block {
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
     .footer {
       padding: 20px;
       text-align: center;
@@ -44,29 +51,22 @@
       display: inline-block;
       margin-top: 20px;
       padding: 10px 20px;
-       background-color: #d85600;
+      background-color: #d85600;
       color: white;
       text-decoration: none;
       border-radius: 4px;
-    }
-    .info-block {
-      background: #f1f1f1;
-      padding: 15px;
-      border-radius: 6px;
-      margin-top: 15px;
-      font-size: 14px;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-     <img src="<%= logo %>" alt="<%= site_name %> Logo" class="logo" />
+      <img src="<%= logo %>" alt="<%= site_name %> Logo" class="logo" />
     </div>
     <div class="content">
       <p>Hello <strong><%= user.full_name %></strong>,</p>
       
-      <p>We detected a login to your <strong><%= site_name %></strong> account. Below are the details of this activity:</p>
+      <p>We detected a new login to your <strong><%= site_name %></strong> account. Here are the details of this activity:</p>
 
       <div class="info-block">
         <p><strong>Email Address:</strong> <%= user.email %></p>
@@ -75,14 +75,17 @@
         <p><strong>Device:</strong> <%= device_info || 'Unknown' %></p>
       </div>
 
-      <p>If this login was made by you, no further action is required.</p>
-      <p>However, if you did not initiate this activity, we strongly recommend that you reset your password immediately to secure your account.</p>
+      <p>If this was you, you can safely ignore this message.</p>
 
-      <a href="<%= web_url %>/auth/reset-password" class="btn">Secure My Account</a>
+      <p>If you suspect any suspicious activity, we recommend changing your password immediately or contacting support.</p>
+
+      <a href="<%= web_url %>/auth/forgot-password" class="btn">Secure My Account</a>
+
+      <p>Thanks,<br />The <strong><%= site_name %></strong> Team</p>
     </div>
     <div class="footer">
       &copy; <%= new Date().getFullYear() %> <%= site_name %>. All rights reserved. <br />
-      Need assistance? Contact us at <%= contact_email %>.
+      Need help? Contact us at <%= support_email %>.
     </div>
   </div>
 </body>

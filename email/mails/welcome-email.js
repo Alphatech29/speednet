@@ -8,7 +8,7 @@ exports.sendWelcomeEmail = async (user) => {
   try {
     const {
       site_name,
-      contact_email,
+      support_email,
       web_url,
       logo
     } = await getWebSettings();
@@ -18,13 +18,13 @@ exports.sendWelcomeEmail = async (user) => {
     const html = await ejs.renderFile(templatePath, {
       user,
       site_name,
-      contact_email,
+      support_email,
       web_url,
       logo
     });
 
     const mailOptions = {
-      from: `"${site_name}" <${contact_email}>`,
+      from: `"${site_name}" <${support_email}>`,
       to: user.email,
       subject: `Welcome to ${site_name}!`,
       html

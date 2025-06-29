@@ -59,6 +59,68 @@ export const login = async (userData) => {
 };
 
 
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios.post(
+      "/auth/forgot-password",
+      { email },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const { success, message } = response.data;
+
+    return {
+      success,
+      message: message || "Reset link sent to your email.",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error.response?.data?.message ||
+        "An error occurred while requesting password reset.",
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
+export const resetPassword = async (password, token) => {
+  try {
+    const response = await axios.post(
+      "/auth/reset-password",
+      { password, token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    const { success, message } = response.data;
+
+    return {
+      success,
+      message: message || "Password reset successful.",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error.response?.data?.message ||
+        "An error occurred while resetting your password.",
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
+
+
+
 // Logout API call
 export const logoutUser = async () => {
   try {

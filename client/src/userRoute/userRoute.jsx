@@ -21,29 +21,31 @@ import NordLocker from '../views/user/nordService/nordLocker';
 
 
 
+
 const UserRoute = () => {
   return (
     <Routes>
       {/* Parent route for User layout */}
-      <Route path="/" element={<Dashboard/>}>
+      <Route path="/" element={<Dashboard />}>
         {/* Other nested routes */}
         <Route path="dashboard" element={<Marchant />} />
         <Route path="marketplace" element={<Marketplace />} />
         <Route path="wallet" element={<Wallet />} />
-        <Route path='order' element={<Order/>}/>
-        <Route path='become-a-marchant' element={<Apply/>}/>
-        <Route path='check-out' element={<Checkout/>}/>
-        <Route path='my-products' element={<Myproduct/>}/>
-        <Route path='add-product' element={<AddNewProdunct/>}/>
-        <Route path='withdraw' element={<Withdrawal/>}/>
-        <Route path='vtu' element={<Vtu/>}/>
-        <Route path='nord-services/locker' element={<NordLocker/>}/>
-        <Route path='nord-services/vpn' element={<NordVpn/>}/>
-        <Route path='nord-services/vpn/offer' element={<Pricing/>}/>
-        <Route path='referral' element={<Referral/>}/>
-        <Route path='settings' element={<Settings/>}/>
-        <Route path='international-airtime' element={<InternationalAirtime/>}/>
-         <Route path='profile' element={<Profile/>}/>
+        <Route path='order' element={<Order />} />
+        <Route path='become-a-marchant' element={<Apply />} />
+        <Route path='check-out' element={<Checkout />} />
+        <Route path='my-products' element={<Myproduct />} />
+        <Route path='add-product' element={<AddNewProdunct />} />
+        <Route path='withdraw' element={<Withdrawal />} />
+        <Route path='vtu' element={<Vtu />} />
+        <Route path='nord-services/locker' element={<NordLocker />} />
+        <Route path='nord-services/vpn' element={<NordVpn />} />
+        <Route path='nord-services/vpn/offer' element={<Pricing />} />
+        <Route path='referral' element={<Referral />} />
+        <Route path='settings' element={<Settings />} />
+        <Route path='international-airtime' element={<InternationalAirtime />} />
+        <Route path='profile' element={<Profile />} />
+        
 
         {/* GiftCard as a layout route with nested routes */}
         {/*<Route path="giftcard/*" element={<GiftCardOutlet />}>
@@ -52,7 +54,7 @@ const UserRoute = () => {
           <Route path="sell-card" element={<SellCard/>}/>
         </Route> */}
 
-       
+
       </Route>
     </Routes>
   );

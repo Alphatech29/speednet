@@ -8,7 +8,7 @@ exports.sendLoginNotificationEmail = async (user, ip_address = "Unknown", device
   try {
     const {
       site_name,
-      contact_email,
+      support_email,
       web_url,
       logo
     } = await getWebSettings();
@@ -18,7 +18,7 @@ exports.sendLoginNotificationEmail = async (user, ip_address = "Unknown", device
     const html = await ejs.renderFile(templatePath, {
       user,
       site_name,
-      contact_email,
+      support_email,
       web_url,
       logo,
       ip_address,
@@ -26,7 +26,7 @@ exports.sendLoginNotificationEmail = async (user, ip_address = "Unknown", device
     });
 
     const mailOptions = {
-      from: `"${site_name}" <${contact_email}>`,
+      from: `"${site_name}" <${ support_email}>`,
       to: user.email,
       subject: `New Login Detected on ${site_name}`,
       html

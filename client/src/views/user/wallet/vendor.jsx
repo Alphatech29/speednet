@@ -33,7 +33,7 @@ const Marchant = () => {
       <div className="text-lg font-medium text-gray-200 mb-4">Dashboard</div>
 
       {/* Card Stats Section */}
-      <div className="w-full flex flex-wrap justify-start items-center gap-4 mobile:gap-2 mb-6 mobile:mb-4">
+      <div className="w-full flex flex-wrap justify-start pc:justify-center tab:justify-center items-center gap-4 mobile:gap-2 mb-6 mobile:mb-4">
         {/* Available Balance */}
         <div className="bg-primary-600 text-pay px-4 h-20 rounded-lg flex items-center gap-4 min-w-[173px] tab:min-w-[200px] pc:min-w-[250px]">
           <GiWallet className="text-[30px] tab:text-[40px] pc:text-[47px]" />

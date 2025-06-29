@@ -55,7 +55,7 @@ const Home = () => {
           transition={{ duration: 0.8 }}
         >
           <img
-            src="/image/nord.png"
+            src="/image/illustration.png"
             alt="Speednet VPN Marketplace"
             className="w-full h-auto object-cover"
           />

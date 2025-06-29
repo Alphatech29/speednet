@@ -16,6 +16,11 @@ const ResetPassword = () => {
   const handleReset = async (e) => {
     e.preventDefault();
 
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error("Passwords do not match.");
       return;
@@ -57,6 +62,7 @@ const ResetPassword = () => {
         </div>
 
         <form onSubmit={handleReset} className="flex flex-col gap-6 text-pay">
+          {/* New Password */}
           <div className="relative w-full">
             <input
               type="password"
@@ -73,6 +79,7 @@ const ResetPassword = () => {
             </Label>
           </div>
 
+          {/* Confirm Password */}
           <div className="relative w-full">
             <input
               type="password"
@@ -89,6 +96,7 @@ const ResetPassword = () => {
             </Label>
           </div>
 
+          {/* Submit Button */}
           <Button
             type="submit"
             disabled={loading}
@@ -97,6 +105,7 @@ const ResetPassword = () => {
             {loading ? "Resetting..." : "Reset Password"}
           </Button>
 
+          {/* Link to login */}
           <div className="text-center">
             <p className="text-sm text-gray-300">
               Remembered your password?

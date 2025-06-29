@@ -69,8 +69,6 @@ const PinTab = () => {
       const response = await setTransactionPin(payload);
       if (response?.success) {
         toast.success(response.message || "PIN updated successfully.");
-
-        // Reset inputs after success
         setPin("");
         setConfirmPin("");
         setOldPin("");
@@ -85,48 +83,41 @@ const PinTab = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-900 p-4">
+    <div className="min-h-screen flex justify-center items-center ">
       <ToastContainer position="top-right" autoClose={3000} />
-      {!userPinExists ? (
-        // -------- CREATE PIN --------
-        <div className="flex flex-col justify-center items-center border border-gray-600 bg-gray-800 p-6 rounded-lg w-full max-w-md">
-          <div className="text-center text-white mb-6">
-            <h2 className="text-2xl font-bold mb-4">Create Pin</h2>
-            <p>Manage your transaction pin settings here.</p>
-          </div>
-          <div className="p-6 flex flex-col justify-center items-center rounded-lg w-full">
-            <PinInput label="Set Pin" pinValue={pin} setPinValue={setPin} prefix="pin" />
-            <PinInput label="Confirm Pin" pinValue={confirmPin} setPinValue={setConfirmPin} prefix="confirm-pin" />
-            <Button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="mt-4 w-1/2 mx-auto bg-primary-600 hover:bg-primary-700 border-0"
-            >
-              {loading ? "Creating..." : "Create Pin"}
-            </Button>
-          </div>
+      <div className="flex flex-col justify-center items-center border border-gray-600 bg-gray-800 rounded-lg w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg px-4 py-6">
+        <div className="text-center text-white mb-6">
+          <h2 className="text-2xl font-bold mb-4">
+            {userPinExists ? "Change Pin" : "Create Pin"}
+          </h2>
+          <p>
+            {userPinExists
+              ? "You already have a pin. Enter your old pin to set a new one."
+              : "Manage your transaction pin settings here."}
+          </p>
         </div>
-      ) : (
-        // -------- CHANGE PIN --------
-        <div className="flex flex-col justify-center items-center border border-gray-600 bg-gray-8000 p-6 rounded-lg w-full max-w-md">
-          <div className="text-center text-white mb-6">
-            <h2 className="text-2xl font-bold mb-4">Change Pin</h2>
-            <p>You already have a pin. Enter your old pin to set a new one.</p>
-          </div>
-          <div className="p-6 flex flex-col justify-center items-center rounded-lg w-full">
+
+        <div className="w-full flex flex-col items-center">
+          {userPinExists && (
             <PinInput label="Old Pin" pinValue={oldPin} setPinValue={setOldPin} prefix="old-pin" />
-            <PinInput label="New Pin" pinValue={pin} setPinValue={setPin} prefix="new-pin" />
-            <PinInput label="Confirm New Pin" pinValue={confirmPin} setPinValue={setConfirmPin} prefix="confirm-new-pin" />
-            <Button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="mt-4 w-1/2 mx-auto bg-primary-600 hover:bg-primary-700 border-0"
-            >
-              {loading ? "Changing..." : "Change Pin"}
-            </Button>
-          </div>
+          )}
+          <PinInput label="New Pin" pinValue={pin} setPinValue={setPin} prefix="new-pin" />
+          <PinInput
+            label="Confirm New Pin"
+            pinValue={confirmPin}
+            setPinValue={setConfirmPin}
+            prefix="confirm-new-pin"
+          />
+
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="mt-4 w-full tab:w-1/2 bg-primary-600 hover:bg-primary-700 border-0"
+          >
+            {loading ? (userPinExists ? "Changing..." : "Creating...") : userPinExists ? "Change Pin" : "Create Pin"}
+          </Button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

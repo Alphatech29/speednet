@@ -21,11 +21,8 @@ const Wallet = () => {
       try {
         setLoading(true);
         const data = await getUserTransactions(userId);
-
         if (Array.isArray(data)) {
           setTransactions(data);
-        } else {
-          console.warn("Unexpected API response:", data);
         }
       } catch (err) {
         console.error("Error fetching transactions:", err);
@@ -38,88 +35,86 @@ const Wallet = () => {
   }, [userId]);
 
   const formatAmount = (amount) => `${webSettings.currency}${amount}`;
-
   const getStatusColor = (status) => {
     const normalized = status?.toLowerCase();
-    if (normalized === "completed" || normalized === "successful") {
-      return "bg-green-500";
-    } else if (normalized === "failed") {
-      return "bg-red-500";
-    } else {
-      return "bg-yellow-500";
-    }
+    if (normalized === "completed" || normalized === "successful") return "bg-green-500";
+    if (normalized === "failed") return "bg-red-500";
+    return "bg-yellow-500";
   };
 
   return (
-    <div className="w-full h-[100%] flex flex-col">
+    <div className="w-full h-full flex flex-col ">
       {user && webSettings && (
         <>
           <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
-          <div className="w-full pc:flex justify-start items-center pc:min-h-[500px] pc:max-h-[500px] mobile:min-h-[700px] mobile:max-h-[1200px] rounded-lg border border-gray-400 overflow-hidden">
-            <div className="bg-primary-600 pc:w-96 py-4 px-4 pc:h-[500px] flex flex-col gap-2 pc:justify-between items-center">
-              <div className="mt-12 flex flex-col items-center justify-center">
+
+          <div className="flex flex-col pc:flex-row tab:flex-col border border-gray-400 rounded-lg overflow-hidden">
+            {/* Left Panel - Balance and Deposit */}
+            <div className="bg-primary-600 pc:w-[300px] tab:w-full px-4 py-6 flex flex-col items-center justify-between">
+              <div className="flex flex-col items-center justify-center">
                 <span className="text-pay text-sm">Available Balance</span>
-                <p className="text-pay text-lg font-semibold text-center">
-                  {webSettings.currency}
-                  {user?.account_balance}
+                <p className="text-pay text-xl font-bold text-center">
+                  {webSettings.currency}{user?.account_balance}
                 </p>
               </div>
+
               <button
-                className="w-full shadow-white shadow-md py-2 rounded-md flex justify-center items-center gap-3 text-gray-200 pc:text-[17px] mobile:text-[13px] mobile:mt-8"
+                className="w-full shadow-white shadow-md py-2 mt-6 rounded-md flex justify-center items-center gap-2 text-gray-100 text-[14px] tab:text-[16px] pc:text-[17px]"
                 onClick={() => setDepositOpen(true)}
               >
-                <IoMdAddCircle className="pc:text-[20px] mobile:text-[16px]" /> Add Fund
+                <IoMdAddCircle className="text-[18px] tab:text-[20px] pc:text-[22px]" />
+                Add Fund
               </button>
             </div>
 
-            <div className="bg-slate-700 gap-5 pc:h-[500px] flex flex-col w-full px-3 py-4">
-              <div className="w-full flex justify-between items-center text-white pc:text-base mobile:text-[13px]">
+            {/* Right Panel - Transactions */}
+            <div className="bg-slate-700 w-full px-3 py-4 flex flex-col ">
+              <div className="flex justify-between items-center text-white text-[14px] tab:text-[15px] pc:text-[16px]">
                 <span>Recent Transactions</span>
-                <span className="cursor-pointer">View More</span>
+                <span className="cursor-pointer hover:underline">View More</span>
               </div>
 
               <div className="overflow-x-auto text-gray-300">
                 {loading ? (
-                  <p className="text-gray-400 text-center">Loading transactions...</p>
+                  <p className="text-center text-gray-400">Loading transactions...</p>
                 ) : transactions.length > 0 ? (
-                  <Table hoverable className="bg-transparent">
-                    <Table.Head className="bg-transparent text-gray-200">
-                      <Table.HeadCell>Transaction ID</Table.HeadCell>
-                      <Table.HeadCell>Description</Table.HeadCell>
-                      <Table.HeadCell>Amount</Table.HeadCell>
-                      <Table.HeadCell>Status</Table.HeadCell>
-                      <Table.HeadCell>Date</Table.HeadCell>
-                    </Table.Head>
-                    <Table.Body className="divide-y">
-                      {transactions.slice(0, 6).map((transaction) => (
-                        <Table.Row key={transaction.transaction_no}>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
-                            {transaction.transaction_no}
-                          </Table.Cell>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
-                            {transaction.transaction_type}
-                          </Table.Cell>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
-                            {formatAmount(transaction.amount)}
-                          </Table.Cell>
-                          <Table.Cell>
-                            <div
-                              className={`px-3 py-1 mobile:text-[12px] pc:text-sm rounded-full ${getStatusColor(
-                                transaction.status
-                              )} text-white`}
-                            >
-                              {transaction.status}
-                            </div>
-                          </Table.Cell>
-                          <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
-                            {formatDateTime(transaction.created_at)}
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
+                  <Table hoverable className="bg-transparent ">
+  <Table.Head className="bg-transparent text-gray-200">
+    <Table.HeadCell>Transaction ID</Table.HeadCell>
+    <Table.HeadCell>Description</Table.HeadCell>
+    <Table.HeadCell>Amount</Table.HeadCell>
+    <Table.HeadCell>Status</Table.HeadCell>
+    <Table.HeadCell>Date</Table.HeadCell>
+  </Table.Head>
+  <Table.Body className="divide-y divide-gray-600">
+    {transactions.slice(0, 6).map((transaction) => (
+      <Table.Row key={transaction.transaction_no} className="text-gray-400">
+        <Table.Cell className="text-[12px] tab:text-sm">
+          {transaction.transaction_no}
+        </Table.Cell>
+        <Table.Cell className="text-[12px] tab:text-sm">
+          {transaction.transaction_type}
+        </Table.Cell>
+        <Table.Cell className="text-[12px] tab:text-sm">
+          {formatAmount(transaction.amount)}
+        </Table.Cell>
+        <Table.Cell>
+          <span
+            className={`px-3 py-1 text-[12px] tab:text-sm rounded-full ${getStatusColor(transaction.status)} text-white`}
+          >
+            {transaction.status}
+          </span>
+        </Table.Cell>
+        <Table.Cell className="text-[12px] tab:text-sm">
+          {formatDateTime(transaction.created_at)}
+        </Table.Cell>
+      </Table.Row>
+    ))}
+  </Table.Body>
+</Table>
+
                 ) : (
-                  <p className="text-gray-400 text-center">No transactions found</p>
+                  <p className="text-center text-gray-400">No transactions found</p>
                 )}
               </div>
             </div>

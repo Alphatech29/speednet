@@ -15,41 +15,32 @@ const Deposit = ({ onClose }) => {
 
   const handleContinue = async () => {
     if (!amount || !selected) {
-      toast.error("Please enter an amount and select a payment method.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error("Please enter an amount and select a payment method.");
       return;
     }
 
     const numericAmount = parseFloat(amount);
     if (isNaN(numericAmount) || numericAmount <= 0) {
-      toast.error("Amount must be greater than 0.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error("Amount must be greater than 0.");
       return;
     }
 
     if (!user?.uid) {
-      toast.error("User authentication failed. Please login again.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error("User authentication failed. Please login again.");
       return;
     }
 
-    let currency = 'USDT'; 
+    let currency = 'USDT';
     if (selected === 'fapshi' || selected === 'bank') {
-      currency = 'USD';  
+      currency = 'USD';
     }
 
     const payload = {
       user_id: String(user.uid),
       email: String(user.email),
-      amount: numericAmount.toFixed(2), 
+      amount: numericAmount.toFixed(2),
       paymentMethod: selected,
-      currency: currency,
+      currency,
     };
 
     setLoading(true);
@@ -58,110 +49,103 @@ const Deposit = ({ onClose }) => {
       const response = await payWithCryptomus(payload);
 
       if (response.success && response.data?.payment_url) {
-        toast.success(response.message, {
-          position: "top-right",
-          autoClose: 2000,
-        });
-
-        // Redirect in the same tab
+        toast.success(response.message || "Redirecting...");
         window.location.href = response.data.payment_url;
       } else {
-        toast.error(response.message || "Failed to initiate payment.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        toast.error(response.message || "Failed to initiate payment.");
       }
     } catch (error) {
       console.error("Payment error:", error);
-      toast.error("An error occurred during payment processing.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error("An error occurred during payment processing.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center mobile:px-4 items-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex justify-center items-center px-4 bg-black bg-opacity-50 z-50">
       <ToastContainer />
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg pc:w-[500px] flex flex-col gap-4 text-center text-gray-200">
-        <div className="w-full flex flex-col items-start justify-start mb-4">
-          <h2 className="text-xl mobile:text-[16px] font-semibold">Automated Deposit</h2>
-          <p className="pc:text-sm mobile:text-[13px] text-start">
+      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-[500px] flex flex-col gap-5 text-gray-200">
+        {/* Header */}
+        <div className="text-start">
+          <h2 className="text-xl font-semibold mobile:text-lg">Automated Deposit</h2>
+          <p className="text-sm text-gray-400 mobile:text-xs mt-1">
             You can fund your wallet through two channels. Crypto deposits are supported.
           </p>
         </div>
 
-        <div className="w-full flex justify-center items-center rounded-md border border-gray-400 focus-within:border-primary-600">
-          <span className='text-[20px] text-gray-300 pl-4'>$</span>
-          <input 
+        {/* Amount Input */}
+        <div className="flex items-center border border-gray-400 rounded-md focus-within:border-primary-600">
+          <span className="text-gray-300 px-4 text-lg">$</span>
+          <input
             type="number"
             disabled={loading}
-            value={amount} 
-            onChange={(e) => setAmount(e.target.value)} 
-            placeholder="0.0" 
-            className="w-full bg-transparent px-3 py-2 text-gray-300 border-none focus:outline-none"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="0.0"
+            className="w-full bg-transparent px-2 py-2 text-gray-300 focus:outline-none"
           />
         </div>
 
-        <div className='flex gap-3 flex-col'>
-          {/* Bank/Card Option */}
-          <div 
-            className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
-            ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+        {/* Payment Methods */}
+        <div className="flex flex-col gap-3">
+          {/* Bank */}
+          <div
+            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
+              ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
             onClick={() => setSelected('bank')}
           >
             <span className={`border p-3 rounded-full ${selected === 'bank' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <BsBank2 className="pc:text-[25px] mobile:text-[20px]" />
+              <BsBank2 className="text-[22px]" />
             </span>
-            <div className="w-full text-start">
-              <h1 className="pc:text-[15px] mobile:text-[14px] font-semibold">Bank / Card Payment</h1>
-              <p className="pc:text-sm text-slate-400 mobile:text-[12px]">Deposit funds directly using bank transfer or card payment.</p>
+            <div className="text-start">
+              <h1 className="font-semibold text-[15px]">Bank / Card Payment</h1>
+              <p className="text-sm text-slate-400 mobile:text-xs">Deposit via bank transfer or card.</p>
             </div>
           </div>
 
-          {/* MOMO Deposit */}
-          <div 
-            className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
-            ${selected === 'fapshi' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+          {/* MOMO */}
+          <div
+            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
+              ${selected === 'fapshi' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
             onClick={() => setSelected('fapshi')}
           >
             <span className={`border p-3 rounded-full ${selected === 'fapshi' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <BiSolidMobileVibration className="pc:text-[25px] mobile:text-[20px]" />
+              <BiSolidMobileVibration className="text-[22px]" />
             </span>
-            <div className="w-full text-start">
-              <h1 className="pc:text-[15px] font-semibold mobile:text-[14px]">MOMO Deposit(Cameroon)</h1>
-              <p className="pc:text-sm text-slate-400 mobile:text-[12px]">Top up your wallet securely and conveniently using Mobile Money</p>
+            <div className="text-start">
+              <h1 className="font-semibold text-[15px]">MOMO Deposit (Cameroon)</h1>
+              <p className="text-sm text-slate-400 mobile:text-xs">Use Mobile Money to fund your wallet.</p>
             </div>
           </div>
 
-          {/* Crypto Deposit */}
-          <div 
-            className={`flex gap-3 justify-start items-center border p-2 rounded-lg cursor-pointer transition-all 
-            ${selected === 'cryptomus' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+          {/* Crypto */}
+          <div
+            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
+              ${selected === 'cryptomus' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
             onClick={() => setSelected('cryptomus')}
           >
             <span className={`border p-3 rounded-full ${selected === 'cryptomus' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <RiBtcFill className="pc:text-[25px] mobile:text-[20px]" />
+              <RiBtcFill className="text-[22px]" />
             </span>
-            <div className="w-full text-start">
-              <h1 className="pc:text-[15px] font-semibold mobile:text-[14px]">Crypto Deposit(International)</h1>
-              <p className="pc:text-sm text-slate-400 mobile:text-[12px]">Fund your wallet with USDT securely and conveniently.</p>
+            <div className="text-start">
+              <h1 className="font-semibold text-[15px]">Crypto Deposit (International)</h1>
+              <p className="text-sm text-slate-400 mobile:text-xs">Fund wallet with USDT securely.</p>
             </div>
           </div>
         </div>
 
-        <div className="flex w-full justify-end gap-4 mt-5">
-          <button 
-            className="bg-red-500 text-white px-4 py-2 rounded-lg" 
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-3 mt-4">
+          <button
+            className="bg-red-600 text-white px-4 py-2 rounded-md text-sm"
             onClick={onClose}
             disabled={loading}
           >
             Cancel
           </button>
-          <button 
-            className="bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center justify-center" 
+          <button
+            className="bg-primary-600 text-white px-4 py-2 rounded-md text-sm"
             onClick={handleContinue}
             disabled={loading}
           >

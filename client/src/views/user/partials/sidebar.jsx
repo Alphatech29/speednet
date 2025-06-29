@@ -9,18 +9,25 @@ import { MdAddBusiness } from "react-icons/md";
 import { BsBank2 } from "react-icons/bs";
 import { SiNordvpn } from "react-icons/si";
 import { TiFlashOutline } from "react-icons/ti";
-
-
+import { IoMdClose } from "react-icons/io";
 
 const linkClasses = "flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay";
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ toggleSidebar }) => {
   const { user } = useContext(AuthContext);
   const isMerchant = user?.role === "merchant";
 
   return (
-    <div className="w-[265px] overflow-auto text-left h-full fixed top-0 bottom-0  bg-gray-800 text-slate-200 px-4 pb-4 pt-3">
-      <div className="mb-4 w-full border-b border-gray-700">
+    <div className="w-[265px] h-full bg-gray-800 text-slate-200 px-4 pb-4 pt-3 z-50 fixed pc:static top-0 left-0 overflow-y-auto">
+      {/* Mobile Close Button */}
+      <div className="flex justify-between items-center mb-4 pc:hidden">
+        <a href="/">
+          <img src="/image/user-logo.png" alt="Logo" className="h-10" />
+        </a>
+      </div>
+
+      {/* PC Logo */}
+      <div className="hidden pc:block mb-4 w-full border-b border-gray-700">
         <a href="/">
           <img src="/image/user-logo.png" alt="Logo" className="h-10" />
         </a>
@@ -57,6 +64,7 @@ const Sidebar = ({ isOpen }) => {
             </Dropdown.Item>
           </Dropdown>
         )}
+
         <NavLink to="/user/wallet" className={linkClasses}>
           <FaWallet /> <span>My Wallet</span>
         </NavLink>
@@ -95,7 +103,6 @@ const Sidebar = ({ isOpen }) => {
           <TiFlashOutline /> <span>Boost Accounts</span>
         </a>
 
-
         <NavLink to="/user/order" className={linkClasses}>
           <BiSolidPurchaseTag /> <span>My Purchase</span>
         </NavLink>
@@ -103,8 +110,6 @@ const Sidebar = ({ isOpen }) => {
         <NavLink to="/user/international-airtime" className={linkClasses}>
           <BiWorld /> <span>International Airtime</span>
         </NavLink>
-
-
       </div>
     </div>
   );

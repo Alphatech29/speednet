@@ -61,7 +61,7 @@ const Transaction = () => {
   }, [user]);
 
   const getStatusColor = (status) => {
-    if (!status) return "bg-gray-500"; // Default if status is missing
+    if (!status) return "bg-gray-500";
     switch (status.toLowerCase()) {
       case "refunded": return "bg-red-500";
       case "credited":
@@ -73,55 +73,49 @@ const Transaction = () => {
   };
 
   return (
-    <div className="bg-slate-700 flex flex-col w-full border border-gray-400 rounded-lg mt-6 px-3 py-4">
-      <div className="w-full flex justify-between items-center text-white text-base mobile:text-[13px]">
+    <div className="bg-slate-700 flex flex-col mobile:w-full tab:w-full pc:w-full border border-gray-400 rounded-lg  px-3 py-4">
+      <div className="w-full flex justify-between items-center text-white mobile:text-[13px] tab:text-[15px] pc:text-base">
         <span>Recent Transactions</span>
         {!loading && !error && transactions.length > 0 && (
-          <span className="cursor-pointer">View More</span>
+          <span className="cursor-pointer text-primary-400 hover:underline">View More</span>
         )}
       </div>
 
-      <div className="pc:w-full min-h-[300px] flex flex-col gap-2 mt-4 text-gray-300 mobile:overflow-auto">
-        {loading ? (
-          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-gray-300">
+      <div className="min-h-[300px] flex flex-col gap-2 mt-4 text-gray-300 overflow-auto">
+        {loading || error || transactions.length === 0 ? (
+          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 text-gray-300">
             <FaHistory className="text-4xl" />
-            <p>Loading...</p>
-          </div>
-        ) : error ? (
-          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-gray-300">
-            <FaHistory className="text-4xl" />
-            <p>{error}</p>
-          </div>
-        ) : transactions.length === 0 ? (
-          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-gray-300">
-            <FaHistory className="text-4xl" />
-            <p>No Transactions Yet</p>
+            <p>{loading ? "Loading..." : error || "No Transactions Yet"}</p>
           </div>
         ) : (
-          <Table hoverable className="bg-transparent  ">
-            <Table.Head className="bg-transparent text-gray-200 mobile:text-[13px] ">
-              <Table.HeadCell >Order ID/Transaction ID</Table.HeadCell>
-              <Table.HeadCell >Description</Table.HeadCell>
-              <Table.HeadCell >Amount</Table.HeadCell>
-              <Table.HeadCell >Status</Table.HeadCell>
-              <Table.HeadCell >Date</Table.HeadCell>
+          <Table hoverable className="bg-transparent min-w-[700px]">
+            <Table.Head className="bg-transparent text-gray-200">
+              <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Order ID / Transaction ID</Table.HeadCell>
+              <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Description</Table.HeadCell>
+              <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Amount</Table.HeadCell>
+              <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Status</Table.HeadCell>
+              <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Date</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {transactions.slice(0, 10).map((transaction) => {
-                return (
-                  <Table.Row key={transaction.id}>
-                    <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{transaction.source} {transaction.id}</Table.Cell>
-                    <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{transaction.type}</Table.Cell>
-                    <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{webSettings?.currency}{transaction.amount}</Table.Cell>
-                    <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">
-                      <div className={`px-3 py-1 rounded-full text-white ${getStatusColor(transaction.status)}`}>
-                        {transaction.status || "Unknown"}
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell className="text-gray-300 mobile:text-[12px] pc:text-sm">{formatDateTime(transaction.date)}</Table.Cell>
-                  </Table.Row>
-                );
-              })}
+              {transactions.slice(0, 10).map((transaction) => (
+                <Table.Row key={transaction.id}>
+                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                    {transaction.source} {transaction.id}
+                  </Table.Cell>
+                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">{transaction.type}</Table.Cell>
+                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                    {webSettings?.currency}{transaction.amount}
+                  </Table.Cell>
+                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                    <div className={`px-3 py-1 rounded-full text-white text-xs ${getStatusColor(transaction.status)}`}>
+                      {transaction.status || "Unknown"}
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                    {formatDateTime(transaction.date)}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
             </Table.Body>
           </Table>
         )}

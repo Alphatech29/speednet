@@ -13,26 +13,13 @@ const Marchant = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
+    if (!user || !user?.uid) return;
 
-    if (!user) {
-      console.warn("User context is not yet available.");
-      return;
-    }
-
-    if (!user?.uid) {
-      console.error("Invalid or missing user ID:", user?.uid);
-      return;
-    }
-
-    const userUid = String(user.uid);
-
-    getUserOrders(userUid)
+    getUserOrders(String(user.uid))
       .then((response) => {
         setOrders(response);
-
-        // Calculate the total price of all orders and update the state
         const total = response.reduce((sum, order) => sum + parseFloat(order.price), 0);
-        setTotalPrice(total); 
+        setTotalPrice(total);
       })
       .catch((error) => {
         console.error("API request failed:", error);
@@ -43,61 +30,54 @@ const Marchant = () => {
 
   return (
     <div className="w-full pc:h-screen mobile:pb-10 flex flex-col">
-      <div className="text-lg font-medium text-gray-200">Dashboard</div>
-      <div className="w-full pc:gap-4 mobile:gap-2 flex mobile:flex-wrap   justify-start items-center pt-3">
-        <div className="bg-primary-600 text-pay pc:min-w-[250px] mobile:min-w-[175px] px-4 h-20 rounded-lg flex pc:gap-5 mobile:gap-3 justify-center items-center">
-          <span>
-            <GiWallet className="text-[47px] mobile:text-[30px]" />
-          </span>
+      <div className="text-lg font-medium text-gray-200 mb-4">Dashboard</div>
+
+      {/* Card Stats Section */}
+      <div className="w-full flex flex-wrap justify-start items-center gap-4 mobile:gap-2 mb-6 mobile:mb-4">
+        {/* Available Balance */}
+        <div className="bg-primary-600 text-pay px-4 h-20 rounded-lg flex items-center gap-4 min-w-[173px] tab:min-w-[200px] pc:min-w-[250px]">
+          <GiWallet className="text-[30px] tab:text-[40px] pc:text-[47px]" />
           <div>
-            <span className="text-pay pc:text-sm mobile:text-[12px]">Available Balance</span>
-            <p className="text-pay pc:text-base font-semibold mobile:text-[14px] text-center">
+            <span className="block text-[12px] tab:text-sm">Available Balance</span>
+            <p className="font-semibold text-[14px] tab:text-base">
               {webSettings.currency}{user.merchant_balance}
             </p>
           </div>
         </div>
 
-        <div className="pc:min-w-[250px] mobile:min-w-[175px] px-4 bg-zinc-700 shadow-md h-20 rounded-lg flex pc:justify-center items-center p-3">
-          <div className="flex justify-center items-center pc:gap-5 mobile:gap-3 text-pay">
-            <span>
-              <FaMoneyBillTrendUp className="text-[47px] mobile:text-[30px]" />
-            </span>
-            <div>
-              <span className="pc:text-sm mobile:text-[12px]">Sale Balance</span>
-              <p className="font-semibold pc:text-base mobile:text-[14px] text-center">
-                {webSettings.currency}{totalPrice.toFixed(2)}
-              </p>
-            </div>
+        {/* Sale Balance */}
+        <div className="bg-zinc-700 text-pay px-4 h-20 rounded-lg flex items-center gap-4 shadow-md min-w-[173px] tab:min-w-[200px] pc:min-w-[250px]">
+          <FaMoneyBillTrendUp className="text-[30px] tab:text-[40px] pc:text-[47px]" />
+          <div>
+            <span className="block text-[12px] tab:text-sm">Sale Balance</span>
+            <p className="font-semibold text-[14px] tab:text-base">
+              {webSettings.currency}{totalPrice.toFixed(2)}
+            </p>
           </div>
         </div>
 
-        <div className="bg-gray-800 pc:min-w-[250px] mobile:w-[175px] px-4 h-20 rounded-lg shadow-md flex flex-col pc:justify-center items-center p-3">
-          <div className="flex justify-center items-center pc:gap-5 mobile:gap-3 text-pay">
-            <span>
-              <GrMoney className="text-[47px] mobile:text-[30px]" />
-            </span>
-            <div>
-              <span className="pc:text-sm mobile:text-[12px]">Escrow Balance</span>
-              <p className="font-semibold pc:text-base mobile:text-[14px] text-center">
-                {webSettings.currency}{user.escrow_balance}
-              </p>
-            </div>
+        {/* Escrow Balance */}
+        <div className="bg-gray-800 text-pay px-4 h-20 rounded-lg flex items-center gap-4 shadow-md min-w-[173px] tab:min-w-[200px] pc:min-w-[250px]">
+          <GrMoney className="text-[30px] tab:text-[40px] pc:text-[47px]" />
+          <div>
+            <span className="block text-[12px] tab:text-sm">Escrow Balance</span>
+            <p className="font-semibold text-[14px] tab:text-base">
+              {webSettings.currency}{user.escrow_balance}
+            </p>
           </div>
         </div>
 
-        <div className="pc:min-w-[250px] mobile:min-w-[175px] px-4 bg-zinc-700 shadow-md h-20 rounded-lg flex flex-col pc:justify-center items-center p-3">
-          <div className="flex justify-center items-center pc:gap-5 mobile:gap-3 text-pay">
-            <span>
-              <HiMiniWallet className="text-[47px] mobile:text-[30px]" />
-            </span>
-            <div>
-              <span className="pc:text-sm mobile:text-[12px]">Total Cash Out</span>
-              <p className="font-semibold pc:text-base text-center mobile:text-[14px]">$500,000.00</p>
-            </div>
+        {/* Total Cash Out */}
+        <div className="bg-zinc-700 mobile:bg-gray-900 text-pay px-4 h-20 rounded-lg flex items-center gap-4 shadow-md min-w-[173px] tab:min-w-[200px] pc:min-w-[250px]">
+          <HiMiniWallet className="text-[30px] tab:text-[40px] pc:text-[47px]" />
+          <div>
+            <span className="block text-[12px] tab:text-sm">Total Cash Out</span>
+            <p className="font-semibold text-[14px] tab:text-base">$500,000.00</p>
           </div>
         </div>
       </div>
 
+      {/* Transaction Component */}
       <Transaction />
     </div>
   );

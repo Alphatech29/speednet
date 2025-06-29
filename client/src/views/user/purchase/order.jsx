@@ -14,64 +14,39 @@ const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
-    if (!user) {
-      console.warn("User context is not yet available.");
-      return;
-    }
+    if (!user) return;
 
     if (user?.uid) {
-      const userUid = String(user.uid);
-
-      getUserOrders(userUid)
+      getUserOrders(String(user.uid))
         .then((response) => {
-
-          // Group orders by order_no and create_at
-          const groupedOrders = response.reduce((acc, order) => {
-            const { order_no, create_at } = order;
-            const orderDate = new Date(create_at).toISOString();
-
-            const groupKey = `${order_no}_${orderDate}`;
-
-            if (!acc[groupKey]) {
-              acc[groupKey] = [];
-            }
-            acc[groupKey].push(order);
+          const grouped = response.reduce((acc, order) => {
+            const key = `${order.order_no}_${new Date(order.create_at).toISOString()}`;
+            acc[key] = acc[key] || [];
+            acc[key].push(order);
             return acc;
           }, {});
 
-          // Sort the groups by the latest `create_at`
-          const sortedGroupedOrders = Object.keys(groupedOrders)
-            .sort((a, b) => {
-              const latestA = new Date(groupedOrders[a][0].create_at);
-              const latestB = new Date(groupedOrders[b][0].create_at);
-              return latestB - latestA;
-            })
-            .reduce((acc, groupKey) => {
-              acc[groupKey] = groupedOrders[groupKey];
+          const sorted = Object.keys(grouped)
+            .sort((a, b) => new Date(grouped[b][0].create_at) - new Date(grouped[a][0].create_at))
+            .reduce((acc, key) => {
+              acc[key] = grouped[key];
               return acc;
             }, {});
-
-          setOrders(sortedGroupedOrders);
+          setOrders(sorted);
         })
-        .catch((error) => console.error("Error fetching orders:", error))
+        .catch((err) => console.error("Order fetch error:", err))
         .finally(() => setIsLoading(false));
-    } else {
-      console.error("Invalid or missing user ID:", user?.uid);
-      setIsLoading(false);
     }
   }, [user]);
 
   const handleViewDetails = (orderId) => {
-    // Flatten the grouped orders and search for the order by ID
     const allOrders = Object.values(orders).flat();
     const order = allOrders.find((o) => o.id === orderId);
-    
     if (order) {
       setSelectedOrder(order);
       setIsModalOpen(true);
     }
   };
-  
 
   if (isLoading) {
     return (
@@ -82,72 +57,74 @@ const Order = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Header Section */}
+    <div className="flex flex-col gap-4 w-full">
+      {/* Header */}
       <div>
         <span className="text-lg font-medium text-gray-300">My Purchase</span>
       </div>
 
-      {/* Alert Section */}
-      <div
-        className="bg-yellow-100 w-full text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm"
-      >
-        <span className="font-medium mobile:text-[13px] pc:text-base">Important!</span> Customers are not
-        eligible for a refund on any social media product unless it is reported
-        as defective and returned within 24 hours of purchase. To receive
-        prompt assistance, please report any defects immediately after purchase.
+      {/* Alert */}
+      <div className="bg-yellow-100 w-full text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm mobile:text-[13px] pc:text-base">
+        <span className="font-medium">Important!</span> Customers are not eligible for a refund on any social media product unless it is reported as defective and returned within 24 hours of purchase.
       </div>
 
-      {/* Transactions Section */}
-      <div className="bg-slate-700 flex flex-col pc:w-full  border border-gray-400 rounded-lg px-3 py-4">
+      {/* Purchase History */}
+      <div className="bg-slate-700 border border-gray-400 rounded-lg px-3 py-4">
         {Object.keys(orders).length > 0 ? (
           <div className="text-gray-300">
-            {/* Render grouped orders */}
             {Object.keys(orders).map((groupKey) => {
-              const [orderNo, orderDate] = groupKey.split('_');
+              const [orderNo, orderDate] = groupKey.split("_");
+              const orderData = orders[groupKey][0];
+
               return (
-                <div key={groupKey} className="mb-4 bg-gray-800 p-4 rounded-md gap-4 shadow-md">
-                  {/* Order Header */}
+                <div key={groupKey} className="mb-4 bg-gray-800 p-4 rounded-md shadow-md">
+                  {/* Order Info */}
                   <div className="flex flex-col mb-3 border-b pb-2">
-                    <div className="flex flex-col">
-                      <h1 className="pc:text-lg mobile:text-[14px] font-medium text-white">Order No: {orderNo}</h1>
-                      <h1 className="text-white p-1 rounded-md pc:text-[14px] mobile:text-[12px]">
-                        Status: {orders[groupKey][0]?.payment_status || "Pending"}
-                      </h1>
-                      <span className="pc:text-[14px] mobile:text-[12px]">{formatDateTime(orders[groupKey][0]?.create_at)}</span>
-                    </div>
+                    <h1 className="font-medium text-white pc:text-lg mobile:text-[14px]">
+                      Order No: {orderNo}
+                    </h1>
+                    <h2 className="text-white pc:text-sm mobile:text-[12px]">
+                      Status: {orderData.payment_status || "Pending"}
+                    </h2>
+                    <span className="pc:text-sm mobile:text-[12px]">
+                      {formatDateTime(orderData.create_at)}
+                    </span>
                   </div>
 
-                 <div className="overflow-auto">
-                   {/* Table for Orders under this Order No */}
-                  <Table hoverable={true} className="bg-transparent">
-                    <Table.Head>
-                      <Table.HeadCell>S/N</Table.HeadCell>
-                      <Table.HeadCell>Platform</Table.HeadCell>
-                      <Table.HeadCell>Title</Table.HeadCell>
-                      <Table.HeadCell>Price</Table.HeadCell>
-                      <Table.HeadCell>Details</Table.HeadCell>
-                    </Table.Head>
-                    <Table.Body className="divide-y">
-                      {orders[groupKey].map((order, index) => (
-                        <Table.Row className="text-gray-400" key={`${groupKey}-${order.id}`}>
-                          <Table.Cell>{index + 1}</Table.Cell>
-                          <Table.Cell>{order.platform}</Table.Cell>
-                          <Table.Cell>{order.title}</Table.Cell>
-                          <Table.Cell>{webSettings?.currency}{order.price}</Table.Cell>
-                          <Table.Cell>
-                            <Button
-                              className="bg-primary-600 text-sm border-0 text-gray-200 rounded-md cursor-pointer"
-                              onClick={() => handleViewDetails(order.id)}
-                            >
-                              View details
-                            </Button>
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                  </Table>
-                 </div>
+                  {/* Table - Responsive */}
+                  <div className="overflow-x-auto">
+                    <Table hoverable className="bg-transparent min-w-[600px] text-xs tab:text-sm pc:text-base">
+                      <Table.Head className="bg-transparent text-white">
+                        <Table.HeadCell>S/N</Table.HeadCell>
+                        <Table.HeadCell>Platform</Table.HeadCell>
+                        <Table.HeadCell>Title</Table.HeadCell>
+                        <Table.HeadCell>Price</Table.HeadCell>
+                        <Table.HeadCell>Details</Table.HeadCell>
+                      </Table.Head>
+
+                      <Table.Body className="divide-y">
+                        {orders[groupKey].map((order, index) => (
+                          <Table.Row key={order.id} className="text-gray-300">
+                            <Table.Cell>{index + 1}</Table.Cell>
+                            <Table.Cell>{order.platform}</Table.Cell>
+                            <Table.Cell>{order.title}</Table.Cell>
+                            <Table.Cell>
+                              {webSettings?.currency}
+                              {order.price}
+                            </Table.Cell>
+                            <Table.Cell>
+                              <Button
+                                className="bg-primary-600 border-0 text-gray-200 text-sm px-3 py-1 rounded-md hover:bg-primary-700 transition"
+                                onClick={() => handleViewDetails(order.id)}
+                              >
+                                View Details
+                              </Button>
+                            </Table.Cell>
+                          </Table.Row>
+                        ))}
+                      </Table.Body>
+                    </Table>
+                  </div>
                 </div>
               );
             })}
@@ -160,12 +137,9 @@ const Order = () => {
         )}
       </div>
 
-      {/* OrderDetails Modal */}
+      {/* Modal */}
       {isModalOpen && selectedOrder && (
-        <OrderDetails
-          order={selectedOrder}
-          onClose={() => setIsModalOpen(false)}s
-        />
+        <OrderDetails order={selectedOrder} onClose={() => setIsModalOpen(false)} />
       )}
     </div>
   );

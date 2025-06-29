@@ -24,7 +24,6 @@ const PasswordTab = () => {
     e.preventDefault();
     const { oldPassword, newPassword, confirmPassword } = formData;
 
-    // Validation
     if (!oldPassword || !newPassword || !confirmPassword) {
       return toast.error("All fields are required.");
     }
@@ -34,7 +33,6 @@ const PasswordTab = () => {
     }
 
     if (newPassword !== confirmPassword) {
-      
       return toast.error("New password and confirm password must match.");
     }
 
@@ -42,15 +40,12 @@ const PasswordTab = () => {
     try {
       const response = await changePassword({ oldPassword, newPassword });
 
-      console.log("API Response:", response);
-
       if (response?.success) {
         toast.success(response.message || "Password updated successfully");
         setFormData({ oldPassword: '', newPassword: '', confirmPassword: '' });
       } else {
         toast.error(response.message || "Failed to change password");
 
-        // Show additional API error detail if present
         if (response.error && typeof response.error === 'object') {
           Object.entries(response.error).forEach(([key, val]) => {
             toast.error(`${key}: ${val}`);
@@ -60,8 +55,6 @@ const PasswordTab = () => {
         }
       }
     } catch (error) {
-      console.error("Change password error:", error);
-
       if (error.response?.data?.message) {
         toast.error(`Server: ${error.response.data.message}`);
       } else if (error.message) {
@@ -75,9 +68,9 @@ const PasswordTab = () => {
   };
 
   return (
-    <div className="bg-gray-800 p-4 text-gray-100 min-h-[300px]">
-      <div className="max-w-md mx-auto border border-gray-700 p-6 rounded-lg shadow-lg">
-        <ToastContainer />
+    <div className="bg-gray-800 min-h-[300px] mobile:p-4 tab:p-6 pc:p-10 text-gray-100">
+      <ToastContainer />
+      <div className="mx-auto w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg border border-gray-700 p-6 rounded-lg shadow-lg">
         <h2 className="text-xl text-center font-semibold text-white mb-4">Change Password</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">

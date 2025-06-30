@@ -4,9 +4,11 @@ import { Button } from "flowbite-react";
 import { IoIosPersonAdd } from "react-icons/io";
 import { LuLock } from "react-icons/lu";
 import { AuthContext } from "../../../components/control/authContext";
+import { GlobalContext } from "../../../components/control/globalContext";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
+   const { webSettings } = useContext(GlobalContext);
 
   const getDashboardLink = () => {
     if (user?.role === "merchant") return "/user/dashboard";
@@ -20,7 +22,7 @@ const Header = () => {
         {/* Logo */}
         <NavLink to="/">
           <img
-            src="/image/favicon.png"
+            src={webSettings?.logo}
             alt="Logo"
             className="pc:w-36 mobile:w-32 pc:h-12 mobile:h-10"
           />

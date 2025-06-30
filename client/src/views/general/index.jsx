@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { motion } from 'framer-motion';
 import { Button } from 'flowbite-react';
 import { GrShieldSecurity } from "react-icons/gr";
@@ -6,6 +6,7 @@ import { TbSocial } from "react-icons/tb";
 import { MdOutlinePhoneAndroid } from "react-icons/md";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { RiP2pFill } from "react-icons/ri";
+import { GlobalContext } from "../../components/control/globalContext";
 
 
 const fadeInUp = {
@@ -14,6 +15,7 @@ const fadeInUp = {
 };
 
 const Home = () => {
+  const { webSettings } = useContext(GlobalContext);
   return (
     <>
       {/* Hero Section */}
@@ -31,7 +33,7 @@ const Home = () => {
               Explore Unique Accounts in Our Marketplace – Get Cheap Data & Airtime, Including International Purchases!
             </h1>
             <p className="text-base sm:text-lg text-gray-700 mt-2 text-center">
-              Take control of your online presence: Discover, verify, and purchase genuine accounts on Speednet.
+              {webSettings?.web_description}
             </p>
             <div className="w-full flex justify-center items-center">
               <a href="/auth/register">

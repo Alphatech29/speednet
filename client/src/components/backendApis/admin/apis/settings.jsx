@@ -48,30 +48,57 @@ export const getWebSettings = async () => {
 
 export const updateWebSettings = async (updatedFields) => {
   try {
-    const response = await axios.put(`/general/settings`, updatedFields, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    let dataToSend;
+    let headers = {};
+
+    const containsFile = Object.values(updatedFields).some(
+      (value) => value instanceof File || value instanceof Blob
+    );
+
+    console.log("🚀 ~ containsFile:", containsFile);
+
+    if (containsFile) {
+      dataToSend = new FormData();
+      for (const key in updatedFields) {
+        dataToSend.append(key, updatedFields[key]);
+      }
+
+      // Log FormData content
+      console.log("📦 ~ Sending FormData:");
+      for (let pair of dataToSend.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
+      }
+
+      headers["Content-Type"] = "multipart/form-data";
+    } else {
+      dataToSend = updatedFields;
+      headers["Content-Type"] = "application/json";
+      console.log("🧾 ~ Sending JSON:", JSON.stringify(dataToSend, null, 2));
+    }
+
+    const response = await axios.put(`/general/settings`, dataToSend, {
+      headers,
     });
 
-    const result = {
+    console.log("✅ ~ Response:", response.data);
+
+    return {
       success: true,
       message: "Web settings updated successfully!",
       data: response.data,
     };
-
-    return result;
   } catch (error) {
-    const errorMessage = error.response?.data?.message || 
-                         error.message || 
+    const errorMessage = error.response?.data?.message ||
+                         error.message ||
                          "An error occurred while updating web settings.";
 
-    const err = {
+    console.error("❌ ~ Error updating web settings:", errorMessage);
+    console.error("⚠️ ~ Error Details:", error.response?.data || error);
+
+    return {
       success: false,
       message: errorMessage,
       error: error.response?.data || error,
     };
-
-    return err;
   }
 };

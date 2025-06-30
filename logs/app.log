@@ -3092,3 +3092,92 @@
 [2025-06-30T04:30:11.862Z] [ERROR]: Failed to serve index.html
 [2025-06-30T04:30:16.126Z] [INFO]: Server running on http://localhost:8000
 [2025-06-30T04:31:55.228Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T04:42:12.462Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T04:42:43.377Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T04:53:02.800Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T04:59:22.976Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T04:59:49.829Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T05:02:51.260Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T05:03:47.007Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T05:05:41.754Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T05:08:23.900Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T11:38:40.937Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T11:48:50.579Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T11:52:00.915Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T11:56:34.487Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T11:58:44.633Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T11:59:35.095Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:02:42.304Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:02:59.151Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:06:15.867Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:06:40.269Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:08:31.612Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:11:13.350Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:12:37.828Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:14:04.810Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:26:32.075Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:30:35.942Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:38:45.597Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:38:47.132Z] [INFO]: Login notification email sent:
+[2025-06-30T12:39:26.785Z] [INFO]: Fetched 5 accounts
+[2025-06-30T12:40:11.090Z] [INFO]: Fetched 5 accounts
+[2025-06-30T12:40:11.819Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:40:20.053Z] [INFO]: Fetched 5 accounts
+[2025-06-30T12:40:31.506Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:42:23.748Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:44:57.829Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:47:58.463Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:47:59.617Z] [INFO]: Login notification email sent:
+[2025-06-30T12:48:05.127Z] [INFO]: Fetched 5 accounts
+[2025-06-30T12:48:09.455Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:48:32.531Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:48:45.500Z] [INFO]: Fetched 5 platforms
+[2025-06-30T12:48:51.728Z] [INFO]: Fetched 5 accounts
+[2025-06-30T12:50:24.903Z] [INFO]: Fetched 5 accounts
+[2025-06-30T12:50:26.422Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:50:34.011Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:51:42.283Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T12:54:28.372Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:55:47.374Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:58:08.434Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T12:59:49.237Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:13:09.722Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:14:19.516Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:17:12.691Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:35:15.881Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:35:25.401Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:37:45.712Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:48:39.021Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:52:15.786Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:54:11.420Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:54:35.937Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:55:14.633Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:56:39.847Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T13:57:15.724Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:02:54.696Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:06:48.335Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:09:20.645Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:11:04.515Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:11:06.140Z] [ERROR]: getAllWithdrawals error
+[2025-06-30T14:11:09.109Z] [ERROR]: getAllWithdrawals error
+[2025-06-30T14:11:27.341Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:11:37.849Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:14:29.985Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:15:04.175Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:22:15.200Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:26:22.529Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:30:08.816Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:31:39.794Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:32:34.500Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:35:26.198Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:35:40.909Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:37:15.852Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:39:50.287Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:40:18.247Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:40:28.635Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:41:21.163Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:44:52.152Z] [INFO]: Server running on http://localhost:8000
+[2025-06-30T14:47:50.060Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T14:47:50.776Z] [INFO]: Login notification email sent:
+[2025-06-30T14:47:53.906Z] [INFO]: Fetched 6 orders for user: 4
+[2025-06-30T14:49:21.217Z] [INFO]: Server running on http://localhost:8000

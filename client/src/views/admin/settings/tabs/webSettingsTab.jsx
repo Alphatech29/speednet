@@ -13,9 +13,15 @@ const WebSettingsTab = () => {
     merchant_activation_fee: '',
     currency: '',
     xaf_rate: '',
+    naira_rate: '',
+    referral_commission: '',
     contact_number: '',
     address: '',
-    web_url: '', 
+    web_url: '',
+    telegram_url: '',
+    twitter_url: '',
+    instagram_url: '',
+    tiktok_url: '',
   });
 
   const [initialSettings, setInitialSettings] = useState({});
@@ -36,9 +42,15 @@ const WebSettingsTab = () => {
             merchant_activation_fee: data.merchant_activation_fee || '',
             currency: data.currency || '',
             xaf_rate: data.xaf_rate || '',
+            naira_rate: data.naira_rate || '',
+            referral_commission: data.referral_commission || '',
             contact_number: data.contact_number || '',
             address: data.address || '',
-            web_url: data.web_url || '', // ✅ Added web_url
+            web_url: data.web_url || '',
+            telegram_url: data.telegram_url || '',
+            twitter_url: data.twitter_url || '',
+            instagram_url: data.instagram_url || '',
+            tiktok_url: data.tiktok_url || '',
           };
           setSettings(populated);
           setInitialSettings(populated);
@@ -64,7 +76,6 @@ const WebSettingsTab = () => {
 
   const handleUpdate = async () => {
     const changedFields = {};
-
     Object.keys(settings).forEach((key) => {
       if (settings[key] !== initialSettings[key]) {
         changedFields[key] = settings[key];
@@ -93,73 +104,77 @@ const WebSettingsTab = () => {
   };
 
   return (
-    <div className="flex max-w-md flex-col p-4 border rounded-lg web-settings">
+    <div className="w-full px-4 mobile:px-6  tab:px-12 pc:px-24 py-8">
       <ToastContainer />
 
-      <div>
-        <h1 className="text-[20px] font-semibold">Web Settings</h1>
-        <p className="text-[16px]">
-          Customize your website’s configuration including site details, display preferences,
-          security options, and real-time interaction settings to ensure smooth and secure platform performance.
+      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6 tab:p-10 border">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-2">Web Settings</h1>
+        <p className="text-gray-600 mb-6 text-base">
+          Customize your website’s configuration including site details, financial rates, and social links.
         </p>
-      </div>
 
-      <div className="flex max-w-md flex-col gap-4 text-gray-700 mt-3">
-        {[
-          { id: 'site_name', label: 'Site Name' },
-          { id: 'tagline', label: 'Tagline' },
-          { id: 'web_description', label: 'Description' },
-          { id: 'support_email', label: 'Support Email', type: 'email' },
-          { id: 'vat', label: 'VAT (%)', type: 'number' },
-          { id: 'merchant_activation_fee', label: 'Merchant Activation Fee', type: 'number' },
-          { id: 'currency', label: 'Currency' },
-          { id: 'xaf_rate', label: 'XAF Rate', type: 'number' },
-           { id: 'web_url', label: 'Website URL', type: 'url' },
-          { id: 'contact_number', label: 'Contact Number', type: 'tel' },
-          { id: 'address', label: 'Address' },
-         
-        ].map(({ id, label, type = 'text' }) => (
-          <div key={id}>
-            <label htmlFor={id} className="mb-2 block text-sm font-medium text-gray-700">
-              {label}
-            </label>
-            <input
-              id={id}
-              type={type}
-              value={settings[id]}
-              onChange={handleChange}
-              placeholder={`Enter ${label.toLowerCase()}`}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-              readOnly={!isEditing}
-            />
-          </div>
-        ))}
+        <div className="grid grid-cols-1 mobile:grid-cols-2 pc:grid-cols-3 gap-6">
+          {[
+            { id: 'site_name', label: 'Site Name' },
+            { id: 'tagline', label: 'Tagline' },
+            { id: 'web_description', label: 'Description' },
+            { id: 'support_email', label: 'Support Email', type: 'email' },
+            { id: 'vat', label: 'VAT (%)', type: 'number' },
+            { id: 'merchant_activation_fee', label: 'Merchant Activation Fee', type: 'number' },
+            { id: 'currency', label: 'Currency' },
+            { id: 'xaf_rate', label: 'XAF Rate', type: 'number' },
+            { id: 'naira_rate', label: 'Naira Rate', type: 'number' },
+            { id: 'referral_commission', label: 'Referral Commission ($)', type: 'number' },
+            { id: 'web_url', label: 'Website URL', type: 'url' },
+            { id: 'contact_number', label: 'Contact Number', type: 'tel' },
+            { id: 'address', label: 'Address' },
+            { id: 'telegram_url', label: 'Telegram URL', type: 'url' },
+            { id: 'twitter_url', label: 'Twitter URL', type: 'url' },
+            { id: 'instagram_url', label: 'Instagram URL', type: 'url' },
+            { id: 'tiktok_url', label: 'TikTok URL', type: 'url' },
+          ].map(({ id, label, type = 'text' }) => (
+            <div key={id} className="flex flex-col">
+              <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
+                {label}
+              </label>
+              <input
+                id={id}
+                type={type}
+                value={settings[id]}
+                onChange={handleChange}
+                placeholder={`Enter ${label.toLowerCase()}`}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                readOnly={!isEditing}
+              />
+            </div>
+          ))}
+        </div>
 
-        {!isEditing ? (
-          <div className="flex gap-4">
+        <div className="mt-8 flex flex-wrap gap-4 justify-end">
+          {!isEditing ? (
             <button
               onClick={() => setIsEditing(true)}
-              className="bg-blue-600 text-white py-2 px-4 rounded-md"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md transition"
             >
               Edit
             </button>
-          </div>
-        ) : (
-          <div className="flex gap-4">
-            <button
-              onClick={handleUpdate}
-              className="bg-green-600 text-white py-2 px-4 rounded-md"
-            >
-              Save
-            </button>
-            <button
-              onClick={handleCancel}
-              className="bg-gray-400 text-white py-2 px-4 rounded-md"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
+          ) : (
+            <>
+              <button
+                onClick={handleUpdate}
+                className="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded-md transition"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancel}
+                className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-6 rounded-md transition"
+              >
+                Cancel
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

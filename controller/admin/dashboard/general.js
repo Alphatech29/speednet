@@ -33,44 +33,57 @@ const getAllWebSettings = async (req, res) => {
 // Update web settings (only changed fields)
 const updateWebSettings = async (req, res) => {
   try {
-    const updates = req.body;
+    const files = req.files;
+    const body = req.body;
 
-    if (!updates || Object.keys(updates).length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "No fields provided for update.",
-      });
+    const updatedData = {};
+
+    // Add image paths from files if uploaded
+    if (files?.logo?.[0]) {
+      updatedData.logo = `/uploads/${files.logo[0].filename}`;
     }
 
+    if (files?.favicon?.[0]) {
+      updatedData.favicon = `/uploads/${files.favicon[0].filename}`;
+    }
+
+    // Merge text fields
+    for (const [key, value] of Object.entries(body)) {
+      updatedData[key] = value;
+    }
+
+    if (Object.keys(updatedData).length === 0) {
+      return res.status(400).json({ success: false, message: "No data to update." });
+    }
+
+    // Build dynamic SQL
     const setClauses = [];
     const values = [];
 
-    for (const [key, value] of Object.entries(updates)) {
+    for (const [key, value] of Object.entries(updatedData)) {
       setClauses.push(`${key} = ?`);
       values.push(value);
     }
 
-    const sql = `UPDATE web_settings SET ${setClauses.join(", ")} LIMIT 1`;
+    const sql = `UPDATE web_settings SET ${setClauses.join(', ')} LIMIT 1`;
 
     const [result] = await db.execute(sql, values);
 
-  
-
     return res.status(200).json({
       success: true,
-      message: "Web settings updated successfully",
-      data: updates,
+      message: "Web settings updated successfully.",
+      data: updatedData,
     });
 
   } catch (error) {
-    console.error("❌ Update error:", error);
+    console.error("Error updating web settings:", error);
     return res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: "Internal server error.",
+      error: error.message,
     });
   }
 };
-
 
 
 module.exports = {

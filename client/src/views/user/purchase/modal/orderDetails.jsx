@@ -85,7 +85,7 @@ const OrderDetails = ({ order, onClose }) => {
       </Modal.Body>
 
       <Modal.Footer className="justify-end bg-gray-800 px-4 pb-4">
-        <Button color="failure" onClick={onClose}>
+        <Button  size="sm" color="failure" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

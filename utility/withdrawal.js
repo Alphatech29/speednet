@@ -98,4 +98,37 @@ const storeWithdrawal = async (data) => {
   }
 };
 
-module.exports = { storeWithdrawal };
+
+const getAllWithdrawals = async () => {
+  try {
+    const query = `
+      SELECT 
+        w.*, 
+        u.full_name, 
+        u.email, 
+        u.username
+      FROM withdrawal w
+      LEFT JOIN users u ON w.user_id = u.uid
+      ORDER BY w.created_at DESC
+    `;
+    
+    const [rows] = await pool.execute(query);
+
+    return {
+      success: true,
+      data: rows,
+    };
+  } catch (error) {
+    logger.error('getAllWithdrawals error', {
+      message: error.message,
+      stack: error.stack,
+    });
+
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+
+module.exports = { storeWithdrawal, getAllWithdrawals  };

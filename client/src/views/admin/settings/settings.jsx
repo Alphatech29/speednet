@@ -6,21 +6,22 @@ import { HiMiniServer } from "react-icons/hi2";
 import {  HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import { IoWifiSharp } from "react-icons/io5";
+import { SiWebmoney } from "react-icons/si";
 import { FaCode } from "react-icons/fa";
 import PasswordTab from './tabs/passwordTab';
 import PaymentTab from './tabs/paymentTab';
-import Profile from './tabs/profile';
 import WebSettingsTab from './tabs/webSettingsTab';
 import VtuTab from './tabs/vtuTab';
 import ApisTab from './tabs/apisTab';
 import ExternalCode from './tabs/externalCode';
+import WebLogoTab from './tabs/webLogoTab';
 
 const Settings = () => {
   return (
     <div className='bg-white rounded-md p-4'>
       <Tabs aria-label="Default tabs" variant="default">
-      <TabItem active title="Profile" icon={HiUserCircle}>
-        <Profile/>
+      <TabItem active title="Web Logo" icon={SiWebmoney}>
+        <WebLogoTab/>
       </TabItem>
       <TabItem title="Payment Settings" icon={MdDashboard}>
        <PaymentTab/>

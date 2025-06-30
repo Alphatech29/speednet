@@ -114,6 +114,7 @@ const Order = () => {
                             </Table.Cell>
                             <Table.Cell>
                               <Button
+                               size="sm"
                                 className="bg-primary-600 border-0 text-gray-200 text-sm px-3 py-1 rounded-md hover:bg-primary-700 transition"
                                 onClick={() => handleViewDetails(order.id)}
                               >

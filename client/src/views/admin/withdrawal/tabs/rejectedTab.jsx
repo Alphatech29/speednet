@@ -4,12 +4,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
-  getAllWithdrawals,
-  updateWithdrawalStatus
+  getAllWithdrawals
 } from '../../../../components/backendApis/admin/apis/withdrawal';
 
-const PendingTab = () => {
-  const [pendingWithdrawals, setPendingWithdrawals] = useState([]);
+const RejectedTab = () => {
+  const [completedWithdrawals, setCompletedWithdrawals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,17 +16,12 @@ const PendingTab = () => {
   // Fetch withdrawals
   const fetchWithdrawals = async () => {
     setLoading(true);
-    try {
-      const result = await getAllWithdrawals();
-      if (result.success && Array.isArray(result.data)) {
-        const filtered = result.data.filter(w => w.status === 'pending');
-        setPendingWithdrawals(filtered);
-      } else {
-        toast.error('Failed to load withdrawals');
-      }
-    } catch (err) {
-      toast.error('Error loading withdrawals');
-      console.error('Error fetching withdrawals:', err);
+    const result = await getAllWithdrawals();
+    if (result.success && Array.isArray(result.data)) {
+      const filtered = result.data.filter(w => w.status === 'rejected');
+      setCompletedWithdrawals(filtered);
+    } else {
+      toast.error("Failed to fetch withdrawals.");
     }
     setLoading(false);
   };
@@ -35,40 +29,6 @@ const PendingTab = () => {
   useEffect(() => {
     fetchWithdrawals();
   }, []);
-
-  // Approve
-  const handleApprove = async (id) => {
-    try {
-      const res = await updateWithdrawalStatus(id, 'completed');
-      if (res.success) {
-        toast.success('Withdrawal approved successfully');
-        setIsModalOpen(false);
-        await fetchWithdrawals();
-      } else {
-        toast.error(res.message || 'Failed to approve withdrawal');
-      }
-    } catch (err) {
-      toast.error('Error approving withdrawal');
-      console.error('Error approving withdrawal:', err);
-    }
-  };
-
-  // Reject
-  const handleReject = async (id) => {
-    try {
-      const res = await updateWithdrawalStatus(id, 'rejected');
-      if (res.success) {
-        toast.success('Withdrawal rejected successfully');
-        setIsModalOpen(false);
-        await fetchWithdrawals();
-      } else {
-        toast.error(res.message || 'Failed to reject withdrawal');
-      }
-    } catch (err) {
-      toast.error('Error rejecting withdrawal');
-      console.error('Error rejecting withdrawal:', err);
-    }
-  };
 
   const handleViewDetails = (withdrawal) => {
     setSelectedWithdrawal(withdrawal);
@@ -116,26 +76,15 @@ const PendingTab = () => {
   if (loading) {
     return (
       <div className="text-center py-8">
-        <Spinner aria-label="Loading pending withdrawals" />
+        <Spinner aria-label="Loading completed withdrawals" />
       </div>
     );
   }
 
   return (
     <div className="w-full">
-      <ToastContainer 
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Pending Withdrawals</h2>
+      <ToastContainer />
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">Completed Withdrawals</h2>
 
       <div className="overflow-x-auto">
         <Table hoverable className="bg-transparent">
@@ -150,21 +99,21 @@ const PendingTab = () => {
           </Table.Head>
 
           <Table.Body className="divide-y">
-            {pendingWithdrawals.length > 0 ? (
-              pendingWithdrawals.map((withdrawal, index) => (
+            {completedWithdrawals.length > 0 ? (
+              completedWithdrawals.map((withdrawal, index) => (
                 <Table.Row key={withdrawal.id} className="text-gray-800">
                   <Table.Cell>{index + 1}</Table.Cell>
                   <Table.Cell>{withdrawal.full_name}</Table.Cell>
                   <Table.Cell>${Number(withdrawal.amount).toLocaleString()}</Table.Cell>
                   <Table.Cell>{withdrawal.method}</Table.Cell>
                   <Table.Cell>
-                    <span className="px-2 py-1 rounded-full text-yellow-800 text-xs bg-yellow-100 capitalize">
+                    <span className="px-2 py-1 rounded-full text-red-800 text-xs bg-red-100 capitalize">
                       {withdrawal.status}
                     </span>
                   </Table.Cell>
                   <Table.Cell>
-                    {withdrawal.created_at
-                      ? new Date(withdrawal.created_at).toLocaleString()
+                    {withdrawal.updated_at
+                      ? new Date(withdrawal.updated_at).toLocaleString()
                       : 'N/A'}
                   </Table.Cell>
                   <Table.Cell>
@@ -183,7 +132,7 @@ const PendingTab = () => {
             ) : (
               <Table.Row>
                 <Table.Cell colSpan={7} className="text-center py-4 text-gray-500">
-                  No pending withdrawals found.
+                  No completed withdrawals found.
                 </Table.Cell>
               </Table.Row>
             )}
@@ -200,24 +149,6 @@ const PendingTab = () => {
             </h3>
             {renderDetails()}
             <div className="flex justify-end gap-2 pt-6">
-              <Button
-                className="bg-green-700 text-white"
-                size="sm"
-                onClick={() =>
-                  selectedWithdrawal && handleApprove(selectedWithdrawal.id)
-                }
-              >
-                Approve
-              </Button>
-              <Button
-                className="bg-red-700 text-white"
-                size="sm"
-                onClick={() =>
-                  selectedWithdrawal && handleReject(selectedWithdrawal.id)
-                }
-              >
-                Reject
-              </Button>
               <Button size="sm" color="gray" onClick={() => setIsModalOpen(false)}>
                 Close
               </Button>
@@ -229,4 +160,4 @@ const PendingTab = () => {
   );
 };
 
-export default PendingTab;
+export default RejectedTab;

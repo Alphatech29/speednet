@@ -131,4 +131,45 @@ const getAllWithdrawals = async () => {
   }
 };
 
-module.exports = { storeWithdrawal, getAllWithdrawals  };
+
+const updateWithdrawalStatusById = async (id, status) => {
+  try {
+    const validStatuses = ['completed', 'rejected'];
+    if (!validStatuses.includes(status.toLowerCase())) {
+      return {
+        success: false,
+        message: 'Invalid status provided.',
+      };
+    }
+
+    const query = `UPDATE withdrawal SET status = ? WHERE id = ?`;
+    const [result] = await pool.execute(query, [status, id]);
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        message: 'No withdrawal found with the specified ID.',
+      };
+    }
+
+    return {
+      success: true,
+      message: `Withdrawal status updated to '${status}'.`,
+    };
+  } catch (error) {
+    logger.error('updateWithdrawalStatusById error', {
+      message: error.message,
+      stack: error.stack,
+      id,
+      status,
+    });
+
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+
+
+module.exports = { storeWithdrawal, getAllWithdrawals, updateWithdrawalStatusById  };

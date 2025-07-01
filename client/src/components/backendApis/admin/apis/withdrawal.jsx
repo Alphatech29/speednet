@@ -9,7 +9,6 @@ export const getAllWithdrawals = async () => {
     });
 
     const withdrawals = response.data?.data || [];
-    console.log("withdrawals", withdrawals)
 
     const result = {
       success: true,
@@ -28,3 +27,27 @@ export const getAllWithdrawals = async () => {
     return err;
   }
 };
+
+
+export const updateWithdrawalStatus = async (id, status) => {
+  try {
+    const response = await axios.put(`/general/withdrawal/${id}`, { status }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return {
+      success: true,
+      message: "Withdrawal status updated successfully!",
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An error occurred while updating withdrawal status.",
+      error: error.response?.data || error.message,
+    };
+  }
+};
+

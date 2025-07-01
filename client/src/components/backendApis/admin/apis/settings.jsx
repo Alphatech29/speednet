@@ -54,9 +54,6 @@ export const updateWebSettings = async (updatedFields) => {
     const containsFile = Object.values(updatedFields).some(
       (value) => value instanceof File || value instanceof Blob
     );
-
-    console.log("🚀 ~ containsFile:", containsFile);
-
     if (containsFile) {
       dataToSend = new FormData();
       for (const key in updatedFields) {
@@ -64,23 +61,18 @@ export const updateWebSettings = async (updatedFields) => {
       }
 
       // Log FormData content
-      console.log("📦 ~ Sending FormData:");
       for (let pair of dataToSend.entries()) {
-        console.log(`${pair[0]}:`, pair[1]);
       }
 
       headers["Content-Type"] = "multipart/form-data";
     } else {
       dataToSend = updatedFields;
       headers["Content-Type"] = "application/json";
-      console.log("🧾 ~ Sending JSON:", JSON.stringify(dataToSend, null, 2));
     }
 
     const response = await axios.put(`/general/settings`, dataToSend, {
       headers,
     });
-
-    console.log("✅ ~ Response:", response.data);
 
     return {
       success: true,

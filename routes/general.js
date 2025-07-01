@@ -15,7 +15,7 @@ const { getAccounts } = require("../controller/user/accounts");
 const { accountCreation } = require("../controller/user/createAccount");
 const { Deposit } = require("../controller/user/deposit");
 const { getBanks, verifyAccount } = require("../utility/bankVerify");
-const { getAllUsers } = require("../controller/admin/dashboard/users");
+const { getAllUsers, getUserById, updateUserById } = require("../controller/admin/dashboard/users");
 const {
   getAllAccount,
   getAllOrders,
@@ -48,7 +48,7 @@ const {
 } = require("../controller/user/vtpassInternational");
 const { setTransactionPin } = require("../controller/user/TransactionPin");
 const { updateUserProfile } = require("../controller/user/user");
-const { getAllWithdrawal } = require("../controller/admin/dashboard/withdrawal");
+const { getAllWithdrawal , updateWithdrawalStatus } = require("../controller/admin/dashboard/withdrawal");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -114,10 +114,13 @@ generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);
+generalRoute.get("/users/:uid", getUserById);
+generalRoute.put("/users/:uid", updateUserById);
 generalRoute.get("/product", getAllAccount);
 generalRoute.get("/order", getAllOrders);
 generalRoute.post("/platform", upload.single("image"), addPlatform);
 generalRoute.get("/platform", fetchPlatforms);
 generalRoute.get("/withdrawal", getAllWithdrawal);
+generalRoute.put("/withdrawal/:id", updateWithdrawalStatus);
 
 module.exports = generalRoute;

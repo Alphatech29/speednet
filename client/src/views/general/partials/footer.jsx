@@ -72,7 +72,7 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="text-center py-4 text-sm text-white bg-secondary border-t border-primary-600">
-        <p>&copy; {currentYear} Speednet™. All rights reserved.</p>
+        <p>&copy; {currentYear} {webSettings?.site_name}™. All rights reserved.</p>
         <p className="text-center text-sm text-white/50 mt-1">
           <a
             href="https://wa.me/2349129079450"
@@ -84,6 +84,11 @@ const Footer = () => {
           </a>
         </p>
       </div>
+
+
+      {webSettings?.footer_code && (
+        <div dangerouslySetInnerHTML={{ __html: webSettings.footer_code }} />
+      )}
     </div>
   );
 };

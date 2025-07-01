@@ -8,6 +8,7 @@ import User from '../dashboard/users/user';
 import Products from '../product/products';
 import Withdrawal from '../withdrawal/withdrawal';
 import Platform from '../platform/platform';
+import EditeUser from '../dashboard/users/editeUser';
 
 
 
@@ -22,6 +23,7 @@ const AdminRoute = () => {
          <Route path="settings" element={<Settings />} />
          <Route path="products" element={<Products />} />
          <Route path="users" element={<User />} />
+         <Route path="users/:uid" element={<EditeUser />} />
          <Route path="withdrawal" element={<Withdrawal />} />
          <Route path="platform" element={<Platform />} />
 

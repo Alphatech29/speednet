@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Table, Spinner } from "flowbite-react";
+import { Table, Spinner, Button } from "flowbite-react";
 import { getAllUsers } from "../../../../components/backendApis/admin/apis/users";
+import { NavLink } from "react-router-dom";
 
 const User = () => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
 
   const fetchUsers = async () => {
     try {
       const res = await getAllUsers();
       if (res?.success && Array.isArray(res.data)) {
         setUsers(res.data);
+        setFilteredUsers(res.data);
       } else {
         setUsers([]);
+        setFilteredUsers([]);
       }
     } catch (error) {
       console.error("Error fetching users:", error);
       setUsers([]);
+      setFilteredUsers([]);
     } finally {
       setLoading(false);
     }
@@ -25,6 +32,28 @@ const User = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  // Handle search and filter
+  useEffect(() => {
+    let filtered = [...users];
+
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        (user) =>
+          user.username?.toLowerCase().includes(term) ||
+          user.email?.toLowerCase().includes(term)
+      );
+    }
+
+    if (statusFilter !== "") {
+      filtered = filtered.filter(
+        (user) => String(user.status) === statusFilter
+      );
+    }
+
+    setFilteredUsers(filtered);
+  }, [searchTerm, statusFilter, users]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -35,6 +64,27 @@ const User = () => {
       </div>
 
       <div className="bg-white flex flex-col w-full border rounded-lg px-3 py-4">
+        {/* Search and Filter */}
+        <div className="flex justify-between items-center gap-2 flex-wrap">
+          <input
+            className="rounded-md border px-2 py-1 pc:w-[300px]"
+            type="search"
+            placeholder="Search by Username or Email"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+            className="rounded-md border px-2 py-1"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="">All Users</option>
+            <option value="1">Active Users</option>
+            <option value="0">Suspended Users</option>
+          </select>
+        </div>
+
+        {/* Table */}
         <div className="pc:w-full min-h-[400px] flex flex-col gap-2 mt-4 text-gray-800 mobile:overflow-auto">
           {loading ? (
             <div className="w-full flex justify-center items-center py-10">
@@ -54,8 +104,8 @@ const User = () => {
               </Table.Head>
 
               <Table.Body className="divide-y">
-                {users.length > 0 ? (
-                  users.map((user, index) => (
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user, index) => (
                     <Table.Row key={user.uid}>
                       <Table.Cell className="mobile:text-[12px] pc:text-sm">
                         {index + 1}
@@ -80,21 +130,24 @@ const User = () => {
                         ${Number(user.account_balance).toLocaleString()}
                       </Table.Cell>
                       <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        <span className="px-2 py-1 rounded-full text-white text-xs bg-green-500">
-                          {user.status}
+                        <span
+                          className={`px-2 py-1 rounded-full text-white text-xs ${
+                            user.status === 1 ? "bg-green-500" : "bg-red-500"
+                          }`}
+                        >
+                          {user.status === 1 ? "Active" : "Suspended"}
                         </span>
                       </Table.Cell>
                       <Table.Cell className="mobile:text-[12px] pc:text-sm">
                         <div className="flex gap-2">
-                          <button className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
-                            View
-                          </button>
-                          <button className="px-2 py-1 bg-yellow-500 text-white rounded text-xs hover:bg-yellow-600">
-                            Edit
-                          </button>
-                          <button className="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700">
-                            Delete
-                          </button>
+                          <NavLink to={`/admin/users/${user.uid}`}>
+                            <Button
+                              size="sm"
+                              className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700"
+                            >
+                              View
+                            </Button>
+                          </NavLink>
                         </div>
                       </Table.Cell>
                     </Table.Row>

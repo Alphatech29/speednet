@@ -7,10 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../cssFile/login.css';
 
 import { adminLoginApi } from '../../../components/backendApis/admin/auth';
-import { useAdminAuth } from '../../../components/control/adminContext'; // <-- UPDATED
+import { useAdminAuth } from '../../../components/control/adminContext'; 
 
 const AdminLogin = () => {
-  const { signInAdmin } = useAdminAuth(); // <-- UPDATED
+  const { signInAdmin } = useAdminAuth(); 
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -37,10 +37,9 @@ const AdminLogin = () => {
         // Store in context
         signInAdmin({
           token: response.token,
-          user: admin, // This goes into `adminDetails`
+          user: admin,
         });
 
-        // Store in localStorage if "remember me" is checked
         if (rememberMe) {
           localStorage.setItem('adminToken', response.token);
           localStorage.setItem('admin', JSON.stringify(admin));
@@ -48,12 +47,11 @@ const AdminLogin = () => {
 
         toast.success(response.message || 'Login successful', { position: 'top-right' });
 
-        // TODO: redirect or update app state here
       } else {
         toast.error(response.message || 'Login failed', { position: 'top-right' });
       }
     } catch (error) {
-      console.error('❌ API Call Error:', error);
+      console.error(' API Call Error:', error);
 
       const apiMessage = error?.response?.data?.message;
       toast.error(apiMessage || 'An unexpected error occurred', { position: 'top-right' });
@@ -135,9 +133,7 @@ const AdminLogin = () => {
                 />
                 <Label htmlFor="remember">Remember me</Label>
               </div>
-              <NavLink to="/auth/forgot-password" className="text-primary-600 hover:underline text-sm">
-                Forgot Password?
-              </NavLink>
+             
             </div>
 
             <Button

@@ -4,16 +4,16 @@ import '../../cssFile/dashboard.css';
 import RecentSubmition from './partials/deposit&submition';
 import { getAllUsers } from '../../../../components/backendApis/admin/apis/users';
 import { GiTwoCoins } from "react-icons/gi";
-
+import { getAllWithdrawals } from "../../../../components/backendApis/admin/apis/withdrawal";
 
 const DefaultDashboard = () => {
   const [users, setUsers] = useState([]);
+  const [totalWithdrawal, setTotalWithdrawal] = useState(0);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await getAllUsers();
-
         if (res?.data && Array.isArray(res.data)) {
           setUsers(res.data);
         } else {
@@ -29,6 +29,28 @@ const DefaultDashboard = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const fetchWithdrawals = async () => {
+      try {
+        const res = await getAllWithdrawals();
+
+        if (res.success && Array.isArray(res.data)) {
+          const completedWithdrawals = res.data.filter(w => w.status === 'completed');
+          const total = completedWithdrawals.reduce(
+            (sum, w) => sum + Number(w.amount || 0),
+            0
+          );
+
+          setTotalWithdrawal(total);
+        }
+      } catch (error) {
+        console.error("Error fetching withdrawals:", error);
+      }
+    };
+
+    fetchWithdrawals();
+  }, []);
+
   const merchantCount = users.filter(user => user.role === 'merchant').length;
 
   return (
@@ -42,29 +64,25 @@ const DefaultDashboard = () => {
         <div className='bibb flex flex-col bg-white rounded-md gap-2 border-b-[0.90px] border-[#006666]'>
           <span className='text-zinc-400'>Users</span>
           <div className='flex justify-between items-center'>
-            <h1 className='text-zinc-900 font-bold text-[25px]'>
-              {users.length}
-            </h1>
+            <h1 className='text-zinc-900 font-bold text-[25px]'>{users.length}</h1>
             <div className='bg-[#006666]/50 h-[45px] w-[45px] rounded-md flex justify-center items-center'>
               <FaUsers className='text-[24px] text-[#006666]' />
             </div>
           </div>
         </div>
 
-        {/* Dynamic Merchant Card */}
+        {/* Merchant Card */}
         <div className='bibb flex flex-col bg-white rounded-md gap-2 border-b-[0.90px] border-[#f7a740]'>
           <span className='text-zinc-400'>Merchants</span>
           <div className='flex justify-between items-center'>
-            <h1 className='text-zinc-900 font-bold text-[25px]'>
-              {merchantCount}
-            </h1>
+            <h1 className='text-zinc-900 font-bold text-[25px]'>{merchantCount}</h1>
             <div className='bg-[#f7a740]/50 h-[45px] w-[45px] rounded-md flex justify-center items-center'>
               <FaUsers className='text-[24px] text-[#f7a740]' />
             </div>
           </div>
         </div>
 
-        {/* Static Cards (as-is) */}
+        {/* Static Products Card */}
         <div className='bibb flex flex-col bg-white rounded-md gap-2 border-b-[0.90px] border-[#e65733]'>
           <span className='text-zinc-400'>Product's</span>
           <div className='flex justify-between items-center'>
@@ -75,10 +93,13 @@ const DefaultDashboard = () => {
           </div>
         </div>
 
+        {/* Total Payout (Dynamic from completed withdrawals) */}
         <div className='bibb flex flex-col bg-white rounded-md gap-2 border-b-[0.90px] border-[#979797]'>
           <span className='text-zinc-400'>Total Payout</span>
           <div className='flex justify-between items-center'>
-            <h1 className='text-zinc-900 font-bold text-[25px]'>$2,000</h1>
+            <h1 className='text-zinc-900 font-bold text-[25px]'>
+              ${totalWithdrawal.toLocaleString()}
+            </h1>
             <div className='bg-[#979797]/50 h-[45px] w-[45px] rounded-md flex justify-center items-center'>
               <GiTwoCoins className='text-[24px] text-[#979797]' />
             </div>

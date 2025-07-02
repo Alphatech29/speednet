@@ -49,6 +49,7 @@ const {
 const { setTransactionPin } = require("../controller/user/TransactionPin");
 const { updateUserProfile } = require("../controller/user/user");
 const { getAllWithdrawal , updateWithdrawalStatus } = require("../controller/admin/dashboard/withdrawal");
+const { getAllNotices, createNotice,updateNoticeById } = require("../controller/admin/dashboard/notice");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -125,5 +126,8 @@ generalRoute.get("/platform", fetchPlatforms);
 generalRoute.delete("/platform/:id", deletePlatformByIdHandler);
 generalRoute.get("/withdrawal", getAllWithdrawal);
 generalRoute.put("/withdrawal/:id", updateWithdrawalStatus);
+generalRoute.get("/notice", getAllNotices)
+generalRoute.post("/notice/create", createNotice)
+generalRoute.put("/notice/:id", updateNoticeById)
 
 module.exports = generalRoute;

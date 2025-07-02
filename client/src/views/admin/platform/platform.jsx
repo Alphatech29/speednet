@@ -99,6 +99,7 @@ const Platform = () => {
                   <Button
                     size="sm"
                     color="failure"
+                    className='py-2'
                     onClick={() => handleDelete(platform.id, platform.name)}
                   >
                     Delete

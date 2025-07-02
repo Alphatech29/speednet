@@ -6,11 +6,18 @@ import { GrMoney } from "react-icons/gr";
 import { HiMiniWallet } from "react-icons/hi2";
 import { AuthContext } from "../../../components/control/authContext";
 import { getUserOrders } from "../../../components/backendApis/history/orderHistory";
+import Notice from "../wallet/modal/notice"; // <-- import Notice modal
 
 const Marchant = () => {
   const { user, webSettings } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  // Get user role lowercase for comparison
+  const userRole = user?.role?.toLowerCase();
+
+  // Show notice modal only if user.notice === 0 and role is 'merchant'
+  const [showNotice, setShowNotice] = useState(user?.notice === 0 && userRole === "merchant");
 
   useEffect(() => {
     if (!user || !user?.uid) return;
@@ -26,10 +33,18 @@ const Marchant = () => {
       });
   }, [user]);
 
+  // Update showNotice if user.notice or role changes
+  useEffect(() => {
+    setShowNotice(user?.notice === 0 && userRole === "merchant");
+  }, [user?.notice, userRole]);
+
   if (!user || !webSettings) return null;
 
   return (
     <div className="w-full pc:h-screen mobile:pb-10 flex flex-col">
+      {/* Conditionally render Notice modal */}
+      {showNotice && <Notice onClose={() => setShowNotice(false)} />}
+
       <div className="text-lg font-medium text-gray-200 mb-4">Dashboard</div>
 
       {/* Card Stats Section */}

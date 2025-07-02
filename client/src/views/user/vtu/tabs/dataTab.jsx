@@ -166,7 +166,7 @@ const DataTab = () => {
 
         {/* Phone Input */}
         <div>
-          <Label htmlFor="phone" value="Phone Number" />
+          <Label htmlFor="phone" value="Phone Number" className="text-white"/>
           <div className="flex items-center mt-2 relative" ref={dropdownRef}>
             <div
               onClick={() => setShowDropdown(!showDropdown)}
@@ -206,7 +206,7 @@ const DataTab = () => {
 
         {/* Select Data Variations */}
         <div>
-          <Label htmlFor="data-variations" value="Data Variations" />
+          <Label htmlFor="data-variations" value="Data Variations" className="text-white"/>
           <select
             id="data-variations"
             name="data-variations"
@@ -225,7 +225,7 @@ const DataTab = () => {
 
         {/* Amount Input */}
         <div>
-          <Label htmlFor="amount" value="Amount" />
+          <Label htmlFor="amount" value="Amount" className="text-white"/>
           <input
             id="amount"
             name="amount"
@@ -240,7 +240,7 @@ const DataTab = () => {
         {/* Quick Variation Top-Up */}
         {dataVariations.length > 0 && (
           <div>
-            <Label value="Quick Top-Up" />
+            <Label value="Quick Top-Up" className="text-white"/>
             <div className="flex flex-wrap gap-2 mt-2">
               {dataVariations.slice(0, 6).map((variation) => (
                 <button

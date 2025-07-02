@@ -10,6 +10,9 @@ import Withdrawal from '../withdrawal/withdrawal';
 import Platform from '../platform/platform';
 import EditeUser from '../dashboard/users/editeUser';
 import EditeProduct from '../product/editeProduct';
+import Notice from '../notice/notice';
+import Create from '../notice/create';
+import EditNotice from '../notice/edit';
 
 
 
@@ -28,6 +31,9 @@ const AdminRoute = () => {
          <Route path="users/:uid" element={<EditeUser />} />
          <Route path="withdrawal" element={<Withdrawal />} />
          <Route path="platform" element={<Platform />} />
+         <Route path="announcement" element={<Notice />} />
+         <Route path="announcement/create" element={<Create />} />
+          <Route path="announcement/edit" element={<EditNotice />} />
 
       </Route>
     </Routes>

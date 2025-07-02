@@ -255,7 +255,7 @@ const InternationalAirtime = () => {
       <form onSubmit={handleSubmit}  className="gap-5 flex flex-col justify-center items-center w-full">
         {/* Country Dropdown */}
         <div ref={dropdownRef} className="w-full">
-          <Label value="Select Country" />
+          <Label value="Select Country" className="text-white"/>
           <div className="relative mt-1">
             <div
               className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 cursor-pointer flex items-center justify-between"
@@ -302,7 +302,7 @@ const InternationalAirtime = () => {
 
         {/* Product Type */}
         <div className="w-full">
-          <Label htmlFor="productType" value="Product Type" />
+          <Label htmlFor="productType" value="Product Type" className="text-white"/>
           <select
             id="productType"
             value={selectedProductType}
@@ -327,7 +327,7 @@ const InternationalAirtime = () => {
 
         {/* Operator Dropdown */}
         <div className="w-full">
-          <Label htmlFor="operator" value="Operator" />
+          <Label htmlFor="operator" value="Operator" className="text-white"/>
           {loadingOperators ? (
             <div className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-400">
               Loading operators...
@@ -358,7 +358,7 @@ const InternationalAirtime = () => {
 
         {/* Variation Dropdown */}
         <div className="w-full">
-          <Label htmlFor="variation" value="Variation" />
+          <Label htmlFor="variation" value="Variation" className="text-white"/>
           <select
             id="variation"
             value={selectedVariation}
@@ -384,7 +384,7 @@ const InternationalAirtime = () => {
 
         {/* Email */}
         <div className="w-full">
-          <Label htmlFor="email" value="Email Address" />
+          <Label htmlFor="email" value="Email Address" className="text-white"/>
           <input
             id="email"
             type="email"
@@ -397,7 +397,7 @@ const InternationalAirtime = () => {
 
         {/* Phone */}
         <div className="w-full">
-          <Label htmlFor="phone" value="Phone Number" />
+          <Label htmlFor="phone" value="Phone Number" className="text-white"/>
           <input
             id="phone"
             type="tel"
@@ -413,7 +413,7 @@ const InternationalAirtime = () => {
 
         {/* Amount */}
         <div className="w-full">
-          <Label htmlFor="amount" value="Amount (₦)" />
+          <Label htmlFor="amount" value="Amount (₦)" className="text-white"/>
           <input
             id="amount"
             type="text"

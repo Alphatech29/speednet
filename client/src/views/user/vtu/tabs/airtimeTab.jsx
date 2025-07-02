@@ -138,7 +138,7 @@ const PinTab = () => {
 
         {/* Phone Input */}
         <div>
-          <Label htmlFor="phone" value="Phone Number" />
+          <Label htmlFor="phone" value="Phone Number" className="text-white"/>
           <div className="flex items-center mt-2 relative" ref={dropdownRef}>
             <div
               onClick={() => setShowDropdown(!showDropdown)}
@@ -177,8 +177,8 @@ const PinTab = () => {
         </div>
 
         {/* Amount Input */}
-        <div>
-          <Label htmlFor="amount" value="Amount" />
+        <div >
+          <Label htmlFor="amount" value="Amount" className="text-white"/>
           <input
             id="amount"
             name="amount"
@@ -192,7 +192,7 @@ const PinTab = () => {
 
         {/* Quick Top-up */}
         <div>
-          <Label value="Quick Top-Up" />
+          <Label value="Quick Top-Up" className="text-white" />
           <div className="flex flex-wrap gap-2 mt-2">
             {[100, 200, 500, 1000, 2000].map((amt) => (
               <button

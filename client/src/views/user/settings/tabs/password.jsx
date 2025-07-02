@@ -75,7 +75,7 @@ const PasswordTab = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="oldPassword" value="Old Password" />
+            <Label htmlFor="oldPassword" value="Old Password" className="text-white"/>
             <input
               id="oldPassword"
               name="oldPassword"
@@ -87,7 +87,7 @@ const PasswordTab = () => {
           </div>
 
           <div>
-            <Label htmlFor="newPassword" value="New Password" />
+            <Label htmlFor="newPassword" value="New Password" className="text-white"/>
             <input
               id="newPassword"
               name="newPassword"
@@ -99,7 +99,7 @@ const PasswordTab = () => {
           </div>
 
           <div>
-            <Label htmlFor="confirmPassword" value="Confirm New Password" />
+            <Label htmlFor="confirmPassword" value="Confirm New Password" className="text-white"/>
             <input
               id="confirmPassword"
               name="confirmPassword"

@@ -59,7 +59,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-full w-full flex mobile:flex-col tab:flex-row pc:justify-between tab:justify-between items-center bg-slate-700 px-4 pc:px-20 pc:py-5 tab:py-5">
+    <div className="h-[100%] w-full flex mobile:flex-col tab:flex-row pc:justify-between tab:justify-between items-center bg-slate-700 px-4 pc:px-20 pc:py-5 tab:py-5">
       <ToastContainer />
 
       {/* Left Panel (PC only) */}

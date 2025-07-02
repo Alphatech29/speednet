@@ -171,7 +171,7 @@ const PendingTab = () => {
                     <div className="flex gap-2 justify-center flex-wrap">
                       <Button
                         size="sm"
-                        className="px-2 bg-slate-800 text-white rounded text-xs hover:bg-gray-700"
+                        className="px-2 py-1 bg-slate-800 text-white rounded text-xs hover:bg-gray-700"
                         onClick={() => handleViewDetails(withdrawal)}
                       >
                         Details
@@ -201,7 +201,7 @@ const PendingTab = () => {
             {renderDetails()}
             <div className="flex justify-end gap-2 pt-6">
               <Button
-                className="bg-green-700 text-white"
+                className="bg-green-700 text-white py-1"
                 size="sm"
                 onClick={() =>
                   selectedWithdrawal && handleApprove(selectedWithdrawal.id)
@@ -210,7 +210,7 @@ const PendingTab = () => {
                 Approve
               </Button>
               <Button
-                className="bg-red-700 text-white"
+                className="bg-red-700 text-white py-1"
                 size="sm"
                 onClick={() =>
                   selectedWithdrawal && handleReject(selectedWithdrawal.id)
@@ -218,7 +218,7 @@ const PendingTab = () => {
               >
                 Reject
               </Button>
-              <Button size="sm" color="gray" onClick={() => setIsModalOpen(false)}>
+              <Button size="sm" color="gray" className='py-1' onClick={() => setIsModalOpen(false)}>
                 Close
               </Button>
             </div>

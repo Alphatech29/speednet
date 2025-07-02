@@ -120,7 +120,7 @@ const RejectedTab = () => {
                     <div className="flex gap-2 justify-center flex-wrap">
                       <Button
                         size="sm"
-                        className="px-2 bg-slate-800 text-white rounded text-xs hover:bg-gray-700"
+                        className="px-2 py-1 bg-slate-800 text-white rounded text-xs hover:bg-gray-700"
                         onClick={() => handleViewDetails(withdrawal)}
                       >
                         Details

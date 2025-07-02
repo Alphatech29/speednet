@@ -36,6 +36,85 @@ const getAllAccount = async (req, res) => {
   }
 };
 
+const getAccountById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [accounts] = await db.execute(
+      `
+      SELECT 
+        accounts.*,
+        users.full_name,
+        users.username,
+        users.email,
+        users.phone_number
+      FROM accounts
+      JOIN users ON accounts.user_id = users.uid
+      WHERE accounts.id = ?
+      `,
+      [id]
+    );
+
+    if (!accounts || accounts.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: `Account with ID ${id} not found`,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: accounts[0], // Return the single account object
+    });
+
+  } catch (error) {
+    console.error("Database error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+
+const updateProductById = async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  try {
+    // Check if product exists
+    const [existing] = await db.execute(`SELECT * FROM accounts WHERE id = ?`, [id]);
+    if (!existing || existing.length === 0) {
+      return res.status(404).json({ success: false, message: `Product with ID ${id} not found` });
+    }
+
+    // Build dynamic update fields
+    const fields = Object.keys(updates);
+    if (fields.length === 0) {
+      return res.status(400).json({ success: false, message: 'No fields to update' });
+    }
+
+    const setClause = fields.map(field => `${field} = ?`).join(', ');
+    const values = fields.map(field => updates[field]);
+
+    await db.execute(`UPDATE accounts SET ${setClause} WHERE id = ?`, [...values, id]);
+
+    // Return updated product
+    const [updated] = await db.execute(`SELECT * FROM accounts WHERE id = ?`, [id]);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Product updated successfully',
+      data: updated[0],
+    });
+  } catch (error) {
+    console.error('Error updating product:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+
+
 // This function retrieves all orders from the database, including seller and buyer details.
 const getAllOrders = async (req, res) => {
   try {
@@ -82,5 +161,5 @@ const getAllOrders = async (req, res) => {
 
 
 module.exports = {
-  getAllAccount , getAllOrders,
+  getAllAccount , getAllOrders, getAccountById, updateProductById
 };

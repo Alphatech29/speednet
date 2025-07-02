@@ -11,13 +11,18 @@ const Platform = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const fetchPlatforms = async () => {
-    const response = await getAllPlatforms();
-    if (response.success) {
-      setPlatforms(response.data);
-    } else {
-      toast.error("Error fetching platforms");
+    try {
+      const response = await getAllPlatforms();
+      if (response.success) {
+        setPlatforms(response.data);
+      } else {
+        toast.error('Error fetching platforms');
+      }
+    } catch (error) {
+      toast.error('Unexpected error occurred while fetching platforms');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -26,7 +31,7 @@ const Platform = () => {
 
   const handleDelete = async (id, name) => {
     try {
-      const response = await deletePlatformById({ platformId: id });
+      const response = await deletePlatformById(id);
       if (response.success) {
         setPlatforms((prev) => prev.filter((p) => p.id !== id));
         toast.success(`"${name}" has been deleted successfully`);
@@ -38,8 +43,7 @@ const Platform = () => {
     }
   };
 
-  // Filter platforms based on search term
-  const filteredPlatforms = platforms.filter(platform =>
+  const filteredPlatforms = platforms.filter((platform) =>
     platform.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -48,10 +52,10 @@ const Platform = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="text-xl font-semibold mb-4">List of Platforms</h2>
 
-      <div className="w-full flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => setModalOpen(true)}
-          className="bg-primary-600 px-2 py-1 rounded-md text-white"
+          className="bg-primary-600 px-4 py-2 rounded-md text-white"
         >
           Add Platform
         </button>
@@ -60,7 +64,7 @@ const Platform = () => {
           placeholder="Search platform"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="text-gray-700 px-3 py-1 rounded-md border border-gray-300"
+          className="text-gray-700 px-3 py-2 rounded-md border border-gray-300"
         />
       </div>
 
@@ -81,20 +85,21 @@ const Platform = () => {
             </Table.Row>
           ) : filteredPlatforms.length > 0 ? (
             filteredPlatforms.map((platform, index) => (
-              <Table.Row key={platform.id} className="text-sm">
+              <Table.Row key={platform.id}>
                 <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>
                   <img
                     src={platform.image_path}
                     alt={platform.name}
-                    className="h-10 w-10 rounded-full bg-white object-cover"
+                    className="h-10 w-10 rounded-full object-cover"
                   />
                 </Table.Cell>
                 <Table.Cell className="font-medium">{platform.name}</Table.Cell>
                 <Table.Cell>
                   <Button
+                    size="sm"
+                    color="failure"
                     onClick={() => handleDelete(platform.id, platform.name)}
-                    className="bg-red-600 text-white rounded-lg text-xs hover:bg-red-700 cursor-pointer"
                   >
                     Delete
                   </Button>
@@ -111,14 +116,13 @@ const Platform = () => {
         </Table.Body>
       </Table>
 
-      {/* Modal for Add Platform */}
       <Modal show={modalOpen} onClose={() => setModalOpen(false)}>
         <Modal.Header>Add Platform</Modal.Header>
         <Modal.Body>
           <Add
             onClose={() => {
               setModalOpen(false);
-              fetchPlatforms();
+              fetchPlatforms(); // Refresh list after adding
             }}
           />
         </Modal.Body>

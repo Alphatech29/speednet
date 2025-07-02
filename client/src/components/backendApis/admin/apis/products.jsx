@@ -34,6 +34,60 @@ export const getAllProducts = async () => {
   }
 };
 
+export const getProductById = async (id) => {
+  try {
+    const response = await axios.get(`/general/product/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const productData = Array.isArray(response.data) ? response.data[0] : response.data;
+
+    const result = {
+      success: true,
+      message: 'Product retrieved successfully!',
+      data: productData?.data || productData, 
+    };
+
+    return result;
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error.response?.data?.message || 'An error occurred while fetching the product.',
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
+
+export const updateProductById = async (id, payload) => {
+  try {
+    const response = await axios.put(`/general/product/${id}`, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const updatedData = Array.isArray(response.data) ? response.data[0] : response.data;
+
+    return {
+      success: true,
+      message: updatedData?.message || 'Product updated successfully!',
+      data: updatedData?.data || updatedData,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error.response?.data?.message || 'An error occurred while updating the product.',
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
+
 
 // This function retrieves all orders from the database, including seller and buyer details.
 export const getAllOrders = async () => {

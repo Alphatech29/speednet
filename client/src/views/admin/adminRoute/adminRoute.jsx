@@ -9,6 +9,7 @@ import Products from '../product/products';
 import Withdrawal from '../withdrawal/withdrawal';
 import Platform from '../platform/platform';
 import EditeUser from '../dashboard/users/editeUser';
+import EditeProduct from '../product/editeProduct';
 
 
 
@@ -22,6 +23,7 @@ const AdminRoute = () => {
          <Route path="nord-admin" element={<NordAdmin />} />
          <Route path="settings" element={<Settings />} />
          <Route path="products" element={<Products />} />
+         <Route path="products/:id" element={<EditeProduct />} />
          <Route path="users" element={<User />} />
          <Route path="users/:uid" element={<EditeUser />} />
          <Route path="withdrawal" element={<Withdrawal />} />

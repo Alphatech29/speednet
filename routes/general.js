@@ -18,7 +18,7 @@ const { getBanks, verifyAccount } = require("../utility/bankVerify");
 const { getAllUsers, getUserById, updateUserById } = require("../controller/admin/dashboard/users");
 const {
   getAllAccount,
-  getAllOrders,
+  getAllOrders,getAccountById, updateProductById
 } = require("../controller/admin/dashboard/accounts");
 const {
   getAllWebSettings,
@@ -31,7 +31,7 @@ const { fetchReferralsByReferrer } = require("../controller/user/referral");
 const verifyToken = require("./../middleWare/verifyToken");
 const {
   addPlatform,
-  fetchPlatforms,
+  fetchPlatforms,deletePlatformByIdHandler
 } = require("../controller/admin/dashboard/platform");
 const upload = require("../utility/multerConfig");
 const {
@@ -117,9 +117,12 @@ generalRoute.get("/users", getAllUsers);
 generalRoute.get("/users/:uid", getUserById);
 generalRoute.put("/users/:uid", updateUserById);
 generalRoute.get("/product", getAllAccount);
+generalRoute.get("/product/:id", getAccountById);
+generalRoute.put("/product/:id", updateProductById);
 generalRoute.get("/order", getAllOrders);
 generalRoute.post("/platform", upload.single("image"), addPlatform);
 generalRoute.get("/platform", fetchPlatforms);
+generalRoute.delete("/platform/:id", deletePlatformByIdHandler);
 generalRoute.get("/withdrawal", getAllWithdrawal);
 generalRoute.put("/withdrawal/:id", updateWithdrawalStatus);
 

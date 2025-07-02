@@ -58,28 +58,28 @@ export const addPlatform = async (formData) => {
   }
 };
 
-export const deletePlatformById = async (platformId) => {
+
+export const deletePlatformById = async (id) => {
+  console.log('ID sent to backend:', id);
+  
   try {
-    const response = await axios.delete(`/platform/${platformId}`, {
+    const response = await axios.delete(`/general/platform/${id}`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
-    const result = {
+    return {
       success: true,
-      message: response.data.message || "Platform deleted successfully!",
+      message: response.data.message || 'Platform deleted successfully!',
     };
-
-    return result;
   } catch (error) {
-    const err = {
+    return {
       success: false,
-      message:
-        error.response?.data?.message || "An error occurred while deleting the platform.",
+      message: error.response?.data?.message || 'An error occurred while deleting the platform.',
       error: error.response?.data || error.message,
     };
-
-    return err;
   }
 };
+
+

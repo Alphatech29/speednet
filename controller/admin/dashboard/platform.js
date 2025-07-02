@@ -1,4 +1,4 @@
-const { insertPlatform, getAllPlatforms } = require('../../../utility/platform');
+const { insertPlatform, getAllPlatforms,deletePlatformById } = require('../../../utility/platform');
 
 const addPlatform = async (req, res) => {
   try {
@@ -33,4 +33,20 @@ const fetchPlatforms = async (req, res) => {
   }
 };
 
-module.exports = { addPlatform, fetchPlatforms };
+const deletePlatformByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  console.log('id received from frontend', id)
+
+  try {
+    const deleted = await deletePlatformById(id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Platform not found' });
+    }
+
+    res.status(200).json({ message: 'Platform deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error while deleting platform' });
+  }
+};
+
+module.exports = { addPlatform, fetchPlatforms,deletePlatformByIdHandler };

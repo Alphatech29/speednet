@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'flowbite-react';
+import { Table, Button } from 'flowbite-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllProducts } from '../../../../components/backendApis/admin/apis/products';
+import { NavLink } from 'react-router-dom';
 
 const AllproductTab = () => {
   const [products, setProducts] = useState([]);
@@ -89,15 +90,12 @@ useEffect(() => {
                       </Table.Cell>
                       <Table.Cell>
                         <div className="flex gap-2">
-                          <button className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
+                          <NavLink to={`/admin/products/${product.id}`}> 
+                          <Button size="sm" className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
                             View
-                          </button>
-                          <button className="px-2 py-1 bg-yellow-500 text-white rounded text-xs hover:bg-yellow-600">
-                            Edit
-                          </button>
-                          <button className="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700">
-                            Delete
-                          </button>
+                          </Button>
+                          </NavLink>
+                         
                         </div>
                       </Table.Cell>
                     </Table.Row>

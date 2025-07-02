@@ -43,8 +43,21 @@ async function getAllPlatforms() {
   }
 }
 
+async function deletePlatformById(id) {
+  const sql = 'DELETE FROM platforms WHERE id = ?';
+
+  try {
+    const [result] = await pool.query(sql, [id]);
+    return result.affectedRows > 0; 
+  } catch (error) {
+    console.error('Error deleting platform:', error);
+    throw new Error('Failed to delete platform');
+  }
+}
+
 
 module.exports = {
   insertPlatform,
-  getAllPlatforms
+  getAllPlatforms,
+  deletePlatformById
 };

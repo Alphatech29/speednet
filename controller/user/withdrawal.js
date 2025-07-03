@@ -6,6 +6,7 @@ const {
 } = require("../../utility/userInfo");
 const logger = require("../../utility/logger");
 const { storeMerchantTransaction } = require("../../utility/merchantHistory");
+const { sendWithdrawalNotificationEmail } = require("../../email/mails/withdrawal");
 
 const WithdrawalRequest = async (req, res) => {
   try {
@@ -21,7 +22,6 @@ const WithdrawalRequest = async (req, res) => {
       coinName,
       momoNumber,
     } = req.body;
-
 
     // Validate essential fields
     if (!userId || !amount || !method) {
@@ -113,7 +113,7 @@ const WithdrawalRequest = async (req, res) => {
       throw new Error("Failed to store withdrawal request.");
     }
 
-  
+    // Log transaction
     const transactionLogged = await storeMerchantTransaction({
       seller_id: userId,
       transaction_id: reference,
@@ -129,6 +129,21 @@ const WithdrawalRequest = async (req, res) => {
       });
     }
 
+    // Send withdrawal email notification
+    try {
+      await sendWithdrawalNotificationEmail(user, {
+        amount: withdrawalAmount,
+        method,
+        reference,
+        currencySymbol: "$"
+      });
+    } catch (emailError) {
+      logger.warn("Withdrawal email notification failed", {
+        userId,
+        reference,
+        error: emailError.message,
+      });
+    }
 
     // Success response
     return res.status(201).json({

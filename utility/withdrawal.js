@@ -131,6 +131,47 @@ const getAllWithdrawals = async () => {
   }
 };
 
+const getWithdrawalById = async (withdrawalId) => {
+  try {
+    const query = `
+      SELECT 
+        w.*, 
+        u.full_name, 
+        u.email, 
+        u.username
+      FROM withdrawal w
+      LEFT JOIN users u ON w.user_id = u.uid
+      WHERE w.id = ?
+      LIMIT 1
+    `;
+
+    const [rows] = await pool.execute(query, [withdrawalId]);
+
+    if (rows.length === 0) {
+      return {
+        success: false,
+        message: 'Withdrawal not found',
+      };
+    }
+
+    return {
+      success: true,
+      data: rows[0],
+    };
+  } catch (error) {
+    logger.error('getWithdrawalById error', {
+      message: error.message,
+      stack: error.stack,
+    });
+
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+
+
 
 const updateWithdrawalStatusById = async (id, status) => {
   try {
@@ -172,4 +213,4 @@ const updateWithdrawalStatusById = async (id, status) => {
 };
 
 
-module.exports = { storeWithdrawal, getAllWithdrawals, updateWithdrawalStatusById  };
+module.exports = { storeWithdrawal, getAllWithdrawals,getWithdrawalById, updateWithdrawalStatusById  };

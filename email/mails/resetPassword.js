@@ -6,11 +6,6 @@ const logger = require("../../utility/logger");
 
 exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
   try {
-    console.log("🔧 sendResetPasswordEmail CALLED");
-    console.log("🟡 Email:", email);
-    console.log("🟡 Full Name:", full_name);
-    console.log("🟡 Reset Link:", resetLink);
-
     const {
       site_name,
        support_email,
@@ -18,21 +13,13 @@ exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
       logo
     } = await getWebSettings();
 
-    console.log("✅ Web settings loaded:", {
-      site_name,
-      support_email,
-      web_url,
-      logo,
-    });
-
     const user = {
       full_name: typeof email === "string" ? (full_name || email.split("@")[0]) : full_name || "User",
       email,
     };
 
     const templatePath = path.join(process.cwd(), "email", "templates", "resetPassword.ejs");
-    console.log("📁 Template path:", templatePath);
-
+    
     const html = await ejs.renderFile(templatePath, {
       user,
       resetLink,
@@ -42,8 +29,6 @@ exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
       logo
     });
 
-    console.log("📄 Compiled EJS HTML:");
-    console.log(html);
 
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
@@ -56,17 +41,16 @@ exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        logger.error("❌ Error sending reset password email:", error.message || error);
-        console.error("❌ Full transporter error:", error);
+        logger.error("Error sending reset password email:", error.message || error);
+        console.error("Full transporter error:", error);
         return;
       }
 
-      logger.info("✅ Reset password email sent:", info.response);
-      console.log("✅ Email sent successfully:", info.response);
+      logger.info(" Reset password email sent:", info.response);
     });
 
   } catch (err) {
-    logger.error("❌ sendResetPasswordEmail error:", err.message || err);
-    console.error("❌ Stack trace:", err.stack);
+    logger.error(" sendResetPasswordEmail error:", err.message || err);
+    console.error("Stack trace:", err.stack);
   }
 };

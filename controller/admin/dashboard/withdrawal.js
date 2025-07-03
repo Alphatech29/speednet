@@ -1,6 +1,15 @@
-const { getAllWithdrawals , updateWithdrawalStatusById} = require('../../../utility/withdrawal');
+const {
+  getAllWithdrawals,
+  getWithdrawalById,
+  updateWithdrawalStatusById
+} = require('../../../utility/withdrawal');
+
+const {
+  sendWithdrawalNotificationEmail
+} = require('../../../email/mails/withdrawal-approved');
 
 
+// GET all withdrawals
 const getAllWithdrawal = async (req, res) => {
   try {
     const result = await getAllWithdrawals();
@@ -16,15 +25,40 @@ const getAllWithdrawal = async (req, res) => {
 };
 
 
+// Pure function to get a withdrawal by ID
+const getWithdrawalByIdFn = async (id) => {
+  try {
+    const result = await getWithdrawalById(id);
+
+    if (result.success) {
+      return {
+        success: true,
+        data: result.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || 'Withdrawal not found',
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    };
+  }
+};
+
+
+// Update withdrawal status (admin action)
 const updateWithdrawalStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
   console.log('Received update request:', { id, status });
 
-  // Input validation
   if (!id || !status) {
-    console.log('Validation failed: Missing ID or status');
     return res.status(400).json({
       success: false,
       message: 'Withdrawal ID and status are required.',
@@ -34,10 +68,7 @@ const updateWithdrawalStatus = async (req, res) => {
   const normalizedStatus = status.toLowerCase();
   const validStatuses = ['completed', 'rejected'];
 
-  console.log('Normalized status:', normalizedStatus);
-
   if (!validStatuses.includes(normalizedStatus)) {
-    console.log('Validation failed: Invalid status value');
     return res.status(400).json({
       success: false,
       message: 'Invalid status. Allowed: completed, rejected.',
@@ -45,11 +76,42 @@ const updateWithdrawalStatus = async (req, res) => {
   }
 
   try {
-    console.log(`Attempting to update withdrawal ${id} to status: ${normalizedStatus}`);
     const result = await updateWithdrawalStatusById(id, normalizedStatus);
     console.log('Database update result:', result);
 
     if (result.success) {
+      const withdrawalResult = await getWithdrawalByIdFn(id);
+
+      if (withdrawalResult.success) {
+        const withdrawal = withdrawalResult.data;
+        console.log('Updated withdrawal info:', withdrawal);
+
+        // ✅ Send email if approved
+        if (normalizedStatus === 'completed') {
+          try {
+            await sendWithdrawalNotificationEmail(
+              {
+                full_name: withdrawal.full_name,
+                email: withdrawal.email,
+                username: withdrawal.username
+              },
+              {
+                amount: withdrawal.amount,
+                method: withdrawal.method,
+                reference: withdrawal.reference,
+                currencySymbol: withdrawal.currency || '$'
+              }
+            );
+            console.log(`Approval email sent to ${withdrawal.email}`);
+          } catch (emailErr) {
+            console.error('Failed to send approval email:', emailErr.message);
+          }
+        }
+
+      } else {
+        console.warn('Failed to fetch updated withdrawal:', withdrawalResult.message);
+      }
+
       return res.status(200).json({
         success: true,
         message: `Withdrawal marked as ${normalizedStatus}.`,
@@ -74,4 +136,7 @@ const updateWithdrawalStatus = async (req, res) => {
 };
 
 
-module.exports = { getAllWithdrawal, updateWithdrawalStatus };
+module.exports = {
+  getAllWithdrawal,
+  updateWithdrawalStatus
+};

@@ -84,7 +84,7 @@ const apis = [
     expires_on: "2025-07-014",
     premium_plan: {
       plan: "Pro",
-      price_usd: 45,
+      price_usd: 87.97,
       billing_cycle: "monthly",
     },
   },

@@ -1,8 +1,9 @@
 const { createAccount, getPlatformsData } = require('../../utility/accounts');
+const { sendProductSubmissionEmailToAdmin } = require('../../email/mails/product-submitted');
+const { getUserDetailsByUid } = require('../../utility/userInfo');
 
 const accountCreation = async (req, res) => {
   try {
-
     const {
       userUid,
       platform = 'N/A',
@@ -22,29 +23,23 @@ const accountCreation = async (req, res) => {
       additionalPassword = 'N/A'
     } = req.body;
 
-
-    // Determine if email or username
     const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     const username = isEmail(emailORusername) ? 'N/A' : emailORusername;
     const email = isEmail(emailORusername) ? emailORusername : 'N/A';
 
-    // Validate platform
     if (platform === 'N/A') {
-
       return res.status(400).json({ status: 'error', message: 'Platform ID is missing or invalid.' });
     }
 
     const platformData = await getPlatformsData(platform);
-
     const platformDetails = platformData?.data?.[0];
+
     if (!platformDetails || !platformDetails.name || !platformDetails.image_path) {
-    
       return res.status(502).json({ status: 'error', message: 'Invalid platform data received.' });
     }
 
     const { name, image_path, category } = platformDetails;
 
-    // Prepare account data
     const accountData = {
       user_id: userUid,
       title,
@@ -65,14 +60,34 @@ const accountCreation = async (req, res) => {
       expiry_date,
       two_factor_enabled,
       two_factor_description,
-       status: 'under reviewing'
+      status: 'under reviewing'
     };
 
-    // Call the createAccount function
     const creationResult = await createAccount(accountData);
 
+    try {
+      const merchant = await getUserDetailsByUid(userUid);
+
+      await sendProductSubmissionEmailToAdmin(
+        {
+          full_name: merchant.full_name,
+          email: merchant.email
+        },
+        {
+          name: name,
+          title: title,
+          price: price,
+          currencySymbol: '$'
+        }
+      );
+    } catch (merchantErr) {
+      console.warn(' Failed to fetch merchant details. Admin email not sent.');
+    }
+
     return res.status(200).json({ status: 'success', data: creationResult });
+
   } catch (error) {
+    console.error('Account creation error:', error);
     return res.status(500).json({ status: 'error', message: 'Internal server error. Please try again.' });
   }
 };

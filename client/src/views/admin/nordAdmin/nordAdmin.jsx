@@ -4,7 +4,7 @@ import { FaMoneyCheckAlt } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa";
 import { PiChartPieSliceThin } from "react-icons/pi";
 
-import '../cssFile/dashboard.css'; // Assuming you have a CSS file for dashboard styles
+import '../cssFile/dashboard.css'; 
 
 
 
@@ -15,6 +15,11 @@ const NordAdmin = () => {
       <div>
         <h1 className='title text-[18px] font-semibold text-zinc-700'>Nord Reseller Admin</h1>
       </div>
+        {/* Alert */}
+      <div className="bg-yellow-100 w-full text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm mobile:text-[13px] pc:text-[14px]">
+  <span className="font-medium">Notice:</span> All dashboard services and features are securely managed and powered by the Nord Server to ensure optimal performance and reliability.
+</div>
+
       <div className='flex gap-5 '>
         <div className='bibb flex flex-col bg-white rounded-md px-6 py-4 gap-2 border-b-[0.90px] border-[#006666]'>
           <span className='text-zinc-400'>Funds</span>

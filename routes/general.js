@@ -50,6 +50,7 @@ const { setTransactionPin } = require("../controller/user/TransactionPin");
 const { updateUserProfile } = require("../controller/user/user");
 const { getAllWithdrawal , updateWithdrawalStatus } = require("../controller/admin/dashboard/withdrawal");
 const { getAllNotices, createNotice,updateNoticeById } = require("../controller/admin/dashboard/notice");
+const { getAllTransactions,getAllMerchantTransactions,getAllAccountOrders } = require("../controller/admin/dashboard/histroy");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -129,5 +130,8 @@ generalRoute.put("/withdrawal/:id", updateWithdrawalStatus);
 generalRoute.get("/notice", getAllNotices)
 generalRoute.post("/notice/create", createNotice)
 generalRoute.put("/notice/:id", updateNoticeById)
+generalRoute.get("/transaction", getAllTransactions)
+generalRoute.get("/merchant", getAllMerchantTransactions)
+generalRoute.get("/account_order", getAllAccountOrders)
 
 module.exports = generalRoute;

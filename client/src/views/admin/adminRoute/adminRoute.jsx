@@ -13,6 +13,9 @@ import EditeProduct from '../product/editeProduct';
 import Notice from '../notice/notice';
 import Create from '../notice/create';
 import EditNotice from '../notice/edit';
+import Transaction from '../histroy/transaction';
+import Merchant from '../histroy/merchant';
+import AccountOrder from '../histroy/accountOrder';
 
 
 
@@ -34,6 +37,9 @@ const AdminRoute = () => {
          <Route path="announcement" element={<Notice />} />
          <Route path="announcement/create" element={<Create />} />
           <Route path="announcement/edit" element={<EditNotice />} />
+          <Route path="histroy/transaction" element={<Transaction />} />
+          <Route path="histroy/merchant" element={<Merchant />} />
+          <Route path="order" element={<AccountOrder />} />
 
       </Route>
     </Routes>

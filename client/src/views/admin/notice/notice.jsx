@@ -81,7 +81,7 @@ const Notice = () => {
               ))
             ) : (
               <Table.Row>
-                <Table.Cell colSpan={6} className="text-center py-4">
+                <Table.Cell colSpan={6} className="py-24 text-gray-500 text-center">
                   No notices available.
                 </Table.Cell>
               </Table.Row>

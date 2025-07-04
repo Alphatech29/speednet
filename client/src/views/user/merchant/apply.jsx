@@ -8,13 +8,13 @@ const Apply = () => {
   const { webSettings } = useContext(AuthContext);
 
   return (
-    <div className="flex flex-col gap-6 mobile:px-4 tab:px-8 pc:px-0 pc:max-w-4xl pc:mx-auto">
+    <div className="flex flex-col gap-3 mobile:px-0 tab:px-8 pc:px-0 w-full pc:mx-auto">
       {/* Header */}
       <div className="text-gray-100 flex flex-col">
         <span className="mobile:text-[22px] tab:text-[26px] pc:text-[30px] font-semibold leading-tight">
           Become a Merchant
         </span>
-        <p className="text-gray-400 mobile:text-sm tab:text-base mt-2">
+        <p className="text-gray-400 mobile:text-sm tab:text-base mt-1">
           A one-time payment is required to complete your merchant registration.
         </p>
       </div>
@@ -38,8 +38,8 @@ const Apply = () => {
         <h1 className="font-semibold mobile:text-[15px] tab:text-[17px] mt-2">How It Works?</h1>
         <ol className="list-decimal list-inside space-y-1 text-gray-300 mobile:text-sm tab:text-base">
           <li>
-            Sign Up & Pay {webSettings?.currency}
-            {webSettings?.merchant_activation_fee} – Register and make a one-time merchant activation payment.
+            Sign Up & Pay {webSettings?.currency || '$'}
+            {webSettings?.merchant_activation_fee || '0.00'} – Register and make a one-time merchant activation payment.
           </li>
           <li>Upload Accounts – List available accounts with pricing and details.</li>
           <li>Start Selling – Buyers purchase from your listings with secure transactions.</li>

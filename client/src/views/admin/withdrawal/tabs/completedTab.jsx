@@ -131,7 +131,7 @@ const CompletedTab = () => {
               ))
             ) : (
               <Table.Row>
-                <Table.Cell colSpan={7} className="text-center py-4 text-gray-500">
+                <Table.Cell colSpan={7} className="py-24 text-gray-500 text-center">
                   No completed withdrawals found.
                 </Table.Cell>
               </Table.Row>

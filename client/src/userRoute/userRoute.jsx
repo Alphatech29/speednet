@@ -5,7 +5,6 @@ import Wallet from '../views/user/wallet/wallet';
 import Marketplace from '../views/user/shop/marketplace/marketplace';
 import Order from '../views/user/purchase/order';
 import Marchant from '../views/user/wallet/vendor';
-import Apply from '../views/user/merchant/apply';
 import Checkout from '../views/user/shop/checkOut/checkOut';
 import Myproduct from "./../views/user/product/myProduct";
 import AddNewProdunct from '../views/user/product/addNewProduct';
@@ -18,6 +17,8 @@ import Settings from '../views/user/settings/settings';
 import InternationalAirtime from '../views/user/internationalAirtime/internationalAirtime';
 import Profile from '../views/user/profile/profile';
 import NordLocker from '../views/user/nordService/nordLocker';
+import Chat from '../views/user/escrowChat/chat';
+import Apply from "./../views/user/merchant/apply";
 
 
 
@@ -45,14 +46,10 @@ const UserRoute = () => {
         <Route path='settings' element={<Settings />} />
         <Route path='international-airtime' element={<InternationalAirtime />} />
         <Route path='profile' element={<Profile />} />
+        <Route path='chat' element={<Chat />} />
         
 
-        {/* GiftCard as a layout route with nested routes */}
-        {/*<Route path="giftcard/*" element={<GiftCardOutlet />}>
-          <Route index element={<GiftCard  />} />
-          <Route path="buy-card" element={<Buycard />} />
-          <Route path="sell-card" element={<SellCard/>}/>
-        </Route> */}
+     
 
 
       </Route>

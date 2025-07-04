@@ -139,7 +139,7 @@ const PaymentTab = () => {
       return;
     }
 
-    const response = await updateWebSettings(payload); // Only changed fields are sent
+    const response = await updateWebSettings(payload); 
     if (response.success) {
       setSettings((prev) => ({ ...prev, ...payload }));
       setEditing((prev) => ({ ...prev, [provider]: false }));
@@ -184,7 +184,7 @@ const PaymentTab = () => {
   );
 
   const renderSection = (provider, fields, description) => (
-    <div className="flex max-w-md flex-col gap-4 p-4 border rounded-lg">
+    <div className="flex w-full flex-col gap-4 p-4 border rounded-lg">
       <div>
         <h1 className="text-xl font-semibold">{provider.charAt(0).toUpperCase() + provider.slice(1)} Payment APIs</h1>
         <p className="text-gray-600">{description}</p>
@@ -233,7 +233,7 @@ const PaymentTab = () => {
   return (
     <>
       <ToastContainer />
-      <div className="flex flex-col gap-8">
+      <div className="flex  gap-4">
         {renderSection('fapshi', [
           { label: 'Fapshi URL', id: 'fapshiUrl', name: 'fapshi_url' },
           { label: 'Fapshi User', id: 'fapshiUser', name: 'fapshi_user' },

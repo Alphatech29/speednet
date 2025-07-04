@@ -118,7 +118,7 @@ const Myproduct = () => {
               ))
             ) : (
               <Table.Row>
-                <Table.Cell colSpan="8" className="text-center text-gray-500">
+                <Table.Cell colSpan="8" className="py-24 text-gray-500 text-center">
                   No products available
                 </Table.Cell>
               </Table.Row>

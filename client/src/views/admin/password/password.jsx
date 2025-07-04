@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { adminUpdatePasswordApi } from '../../../../components/backendApis/admin/auth';
-import { useAdminAuth } from '../../../../components/control/adminContext';
+import { adminUpdatePasswordApi } from '../../../components/backendApis/admin/auth';
+import { useAdminAuth } from '../../../components/control/adminContext';
 
-const PasswordTab = () => {
+const Password = () => {
   const { adminToken } = useAdminAuth();
 
   const [formData, setFormData] = useState({
@@ -87,7 +87,10 @@ const PasswordTab = () => {
   return (
     <form onSubmit={handleSubmit}>
       <ToastContainer />
-      <div className="flex max-w-md flex-col gap-4 text-gray-700">
+      <div className='bg-white p-4 rounded-lg shadow-md'>
+        <h1 className='text-xl font-semibold mb-4'>Change Password</h1>
+        <div className='items-center'>
+          <div className="flex flex-col gap-4 text-gray-700">
         <div>
           <label htmlFor="oldPassword" className="mb-2 block text-sm font-medium text-gray-700">
             Old Password
@@ -151,8 +154,10 @@ const PasswordTab = () => {
         </button>
         </div>
       </div>
+        </div>
+      </div>
     </form>
   );
 };
 
-export default PasswordTab;
+export default Password;

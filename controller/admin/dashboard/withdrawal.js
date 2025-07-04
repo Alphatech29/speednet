@@ -1,7 +1,7 @@
 const {
   getAllWithdrawals,
   getWithdrawalById,
-  updateWithdrawalStatusById
+  updateWithdrawalStatusById,updateMerchantTransactionStatusByReference
 } = require('../../../utility/withdrawal');
 
 const {
@@ -51,12 +51,11 @@ const getWithdrawalByIdFn = async (id) => {
 };
 
 
+
 // Update withdrawal status (admin action)
 const updateWithdrawalStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
-
-  console.log('Received update request:', { id, status });
 
   if (!id || !status) {
     return res.status(400).json({
@@ -76,52 +75,63 @@ const updateWithdrawalStatus = async (req, res) => {
   }
 
   try {
+    // Step 1: Update withdrawal status
     const result = await updateWithdrawalStatusById(id, normalizedStatus);
-    console.log('Database update result:', result);
 
-    if (result.success) {
-      const withdrawalResult = await getWithdrawalByIdFn(id);
-
-      if (withdrawalResult.success) {
-        const withdrawal = withdrawalResult.data;
-        console.log('Updated withdrawal info:', withdrawal);
-
-        // ✅ Send email if approved
-        if (normalizedStatus === 'completed') {
-          try {
-            await sendWithdrawalNotificationEmail(
-              {
-                full_name: withdrawal.full_name,
-                email: withdrawal.email,
-                username: withdrawal.username
-              },
-              {
-                amount: withdrawal.amount,
-                method: withdrawal.method,
-                reference: withdrawal.reference,
-                currencySymbol: withdrawal.currency || '$'
-              }
-            );
-            console.log(`Approval email sent to ${withdrawal.email}`);
-          } catch (emailErr) {
-            console.error('Failed to send approval email:', emailErr.message);
-          }
-        }
-
-      } else {
-        console.warn('Failed to fetch updated withdrawal:', withdrawalResult.message);
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: `Withdrawal marked as ${normalizedStatus}.`,
-      });
-    } else {
+    if (!result.success) {
       return res.status(404).json({
         success: false,
         message: result.message || 'Withdrawal not found or update failed.',
       });
     }
+
+    // Step 2: Fetch updated withdrawal
+    const withdrawalResult = await getWithdrawalById(id);
+    if (!withdrawalResult.success) {
+      return res.status(404).json({
+        success: false,
+        message: 'Withdrawal found but failed to fetch details.',
+      });
+    }
+
+    const withdrawal = withdrawalResult.data;
+
+    // Step 3: Update related merchant transaction status using reference
+    const merchantUpdateResult = await updateMerchantTransactionStatusByReference(
+      withdrawal.reference,
+      normalizedStatus
+    );
+
+    if (!merchantUpdateResult.success) {
+      console.warn('Merchant transaction status update failed:', merchantUpdateResult.message);
+    }
+
+    // Step 4: Send approval email if completed
+    if (normalizedStatus === 'completed') {
+      try {
+        await sendWithdrawalNotificationEmail(
+          {
+            full_name: withdrawal.full_name,
+            email: withdrawal.email,
+            username: withdrawal.username
+          },
+          {
+            amount: withdrawal.amount,
+            method: withdrawal.method,
+            reference: withdrawal.reference,
+            currencySymbol: withdrawal.currency || '$'
+          }
+        );
+      } catch (emailErr) {
+        console.error('Failed to send approval email:', emailErr.message);
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Withdrawal and transaction marked as ${normalizedStatus}.`,
+    });
+
   } catch (error) {
     console.error('Error updating withdrawal status:', {
       error: error.message,

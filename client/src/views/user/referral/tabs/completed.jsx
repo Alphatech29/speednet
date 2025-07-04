@@ -62,7 +62,7 @@ const Completed = () => {
               ))
             ) : (
               <Table.Row>
-                <Table.Cell colSpan={4} className="text-center py-4 text-gray-300">
+                <Table.Cell colSpan={4} className="py-24 text-gray-500 text-center">
                   No completed referrals found.
                 </Table.Cell>
               </Table.Row>

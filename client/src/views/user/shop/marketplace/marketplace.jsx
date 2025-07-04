@@ -85,7 +85,7 @@ const Marketplace = () => {
   );
 
   return (
-    <div className="bg-gray-800 mobile:px-2 px-6 rounded-md pb-5">
+    <div className="bg-gray-800 mobile:px-2 px-6 rounded-md pb-5 ">
       <ToastContainer className="text-sm" />
 
       <div className="flex flex-col gap-4">
@@ -102,7 +102,7 @@ const Marketplace = () => {
             id="search"
             value={searchQuery}
             onChange={handleSearchChange}
-            placeholder="Search by name or category"
+            placeholder="Search by name(e.g Facebook)"
             className="px-2 pc:w-56 mobile:w-full border mobile:py-1 shadow-md border-slate-50 rounded-md bg-transparent text-white placeholder-gray-400 mobile:placeholder:text-sm"
           />
         </div>
@@ -175,7 +175,7 @@ const Marketplace = () => {
               );
             })
           ) : (
-            <div className="text-white text-center">No products found</div>
+            <div className="py-24 text-gray-500 text-center">No products found</div>
           )}
         </div>
 

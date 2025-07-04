@@ -1,13 +1,16 @@
 import React, { Fragment, useContext } from 'react';
 import { Menu } from '@headlessui/react';
 import { IoNotificationsOutline } from "react-icons/io5";
-import { AdminAuthContext } from "./../../../components/control/adminContext";
+import { AdminAuthContext } from "../../../components/control/adminContext";
+import { GlobalContext } from '../../../components/control/globalContext';
 
 const Header = () => {
   const { logoutAdmin } = useContext(AdminAuthContext);
+   const { webSettings } = useContext(GlobalContext);
+  
 
   const links = [
-    { href: '/admin/profile', label: 'Profile' },
+    { href: '/admin/password', label: 'Password' },
     { onClick: logoutAdmin, label: 'Sign out' },
   ];
 
@@ -36,19 +39,19 @@ const Header = () => {
 
         <Menu as="div" className="relative inline-block text-left">
           <Menu.Button className="rounded-full focus:outline-none">
-            <img src="/image/iuuu" alt="profile" className='h-10 w-10 rounded-full bg-white' />
+            <img src={webSettings?.favicon} alt="profile" className='h-10 w-10 rounded-full bg-white' />
           </Menu.Button>
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg focus:outline-none z-50">
             {/* Profile link */}
             <Menu.Item as={Fragment}>
               {({ active }) => (
                 <a
-                  href="/admin/profile"
+                  href="/admin/password"
                   className={`block px-4 py-2 text-sm ${
                     active ? 'bg-blue-500 text-white' : 'text-gray-700'
                   }`}
                 >
-                  Profile
+                  Password
                 </a>
               )}
             </Menu.Item>

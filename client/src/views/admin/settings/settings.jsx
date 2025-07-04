@@ -8,7 +8,6 @@ import { MdDashboard } from "react-icons/md";
 import { IoWifiSharp } from "react-icons/io5";
 import { SiWebmoney } from "react-icons/si";
 import { FaCode } from "react-icons/fa";
-import PasswordTab from './tabs/passwordTab';
 import PaymentTab from './tabs/paymentTab';
 import WebSettingsTab from './tabs/webSettingsTab';
 import VtuTab from './tabs/vtuTab';
@@ -26,9 +25,7 @@ const Settings = () => {
       <TabItem title="Payment Settings" icon={MdDashboard}>
        <PaymentTab/>
       </TabItem>
-      <TabItem title="Password" icon={ImKey}>
-       <PasswordTab/>
-      </TabItem>
+    
       <TabItem title="Paid API" icon={HiMiniServer}>
        <ApisTab/>
       </TabItem>

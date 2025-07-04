@@ -5,35 +5,53 @@ import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
 import { HiMiniWallet } from "react-icons/hi2";
 import { AuthContext } from "../../../components/control/authContext";
-import { getUserOrders } from "../../../components/backendApis/history/orderHistory";
-import Notice from "../wallet/modal/notice"; // <-- import Notice modal
+import { getUserOrderHistory } from "../../../components/backendApis/history/orderHistory";
+import Notice from "../wallet/modal/notice";
 
 const Marchant = () => {
   const { user, webSettings } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalWithdrawn, setTotalWithdrawn] = useState(0);
 
-  // Get user role lowercase for comparison
   const userRole = user?.role?.toLowerCase();
-
-  // Show notice modal only if user.notice === 0 and role is 'merchant'
   const [showNotice, setShowNotice] = useState(user?.notice === 0 && userRole === "merchant");
 
   useEffect(() => {
     if (!user || !user?.uid) return;
 
-    getUserOrders(String(user.uid))
-      .then((response) => {
-        setOrders(response);
-        const total = response.reduce((sum, order) => sum + parseFloat(order.price), 0);
-        setTotalPrice(total);
+    getUserOrderHistory(String(user.uid))
+      .then((res) => {
+        if (!res.success) {
+          console.error("Failed to fetch order history:", res.message);
+          return;
+        }
+
+        const { orderHistory = [], merchantHistory = [] } = res.data || {};
+
+        setOrders(orderHistory);
+
+        // ✅ Calculate Sale Total
+        const totalSale = orderHistory.reduce((sum, order) => sum + parseFloat(order.amount || 0), 0);
+        setTotalPrice(totalSale);
+
+        // ✅ Calculate Total Completed Withdrawals
+        const totalCompletedWithdrawals = merchantHistory
+          .filter(
+            (txn) =>
+              String(txn.transaction_type).toLowerCase() === "withdrawal request" &&
+              String(txn.status).toLowerCase() === "completed"
+          )
+          .reduce((sum, txn) => sum + parseFloat(txn.amount || 0), 0);
+
+        setTotalWithdrawn(totalCompletedWithdrawals);
+        console.log("✅ Total Completed Withdrawals:", totalCompletedWithdrawals);
       })
       .catch((error) => {
-        console.error("API request failed:", error);
+        console.error("API error:", error);
       });
   }, [user]);
 
-  // Update showNotice if user.notice or role changes
   useEffect(() => {
     setShowNotice(user?.notice === 0 && userRole === "merchant");
   }, [user?.notice, userRole]);
@@ -42,12 +60,10 @@ const Marchant = () => {
 
   return (
     <div className="w-full pc:h-screen mobile:pb-10 flex flex-col">
-      {/* Conditionally render Notice modal */}
       {showNotice && <Notice onClose={() => setShowNotice(false)} />}
 
       <div className="text-lg font-medium text-gray-200 mb-4">Dashboard</div>
 
-      {/* Card Stats Section */}
       <div className="w-full flex flex-wrap justify-start pc:justify-center tab:justify-center items-center gap-4 mobile:gap-2 mb-6 mobile:mb-4">
         {/* Available Balance */}
         <div className="bg-primary-600 text-pay px-4 h-20 rounded-lg flex items-center gap-4 min-w-[173px] tab:min-w-[200px] pc:min-w-[250px]">
@@ -87,7 +103,9 @@ const Marchant = () => {
           <HiMiniWallet className="text-[30px] tab:text-[40px] pc:text-[47px]" />
           <div>
             <span className="block text-[12px] tab:text-sm">Total Cash Out</span>
-            <p className="font-semibold text-[14px] tab:text-base">$500,000.00</p>
+            <p className="font-semibold text-[14px] tab:text-base">
+              {webSettings.currency}{totalWithdrawn}
+            </p>
           </div>
         </div>
       </div>

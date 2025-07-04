@@ -16,6 +16,8 @@ import EditNotice from '../notice/edit';
 import Transaction from '../histroy/transaction';
 import Merchant from '../histroy/merchant';
 import AccountOrder from '../histroy/accountOrder';
+import Password from '../password/password';
+
 
 
 
@@ -23,23 +25,24 @@ const AdminRoute = () => {
   return (
     <Routes>
       {/* Parent route for User layout */}
-      <Route path="/" element={<Dashboard/>}>
+      <Route path="/" element={<Dashboard />}>
         {/* Other nested routes */}
         <Route path="dashboard" element={<DefaultDashboard />} />
-         <Route path="nord-admin" element={<NordAdmin />} />
-         <Route path="settings" element={<Settings />} />
-         <Route path="products" element={<Products />} />
-         <Route path="products/:id" element={<EditeProduct />} />
-         <Route path="users" element={<User />} />
-         <Route path="users/:uid" element={<EditeUser />} />
-         <Route path="withdrawal" element={<Withdrawal />} />
-         <Route path="platform" element={<Platform />} />
-         <Route path="announcement" element={<Notice />} />
-         <Route path="announcement/create" element={<Create />} />
-          <Route path="announcement/edit" element={<EditNotice />} />
-          <Route path="histroy/transaction" element={<Transaction />} />
-          <Route path="histroy/merchant" element={<Merchant />} />
-          <Route path="order" element={<AccountOrder />} />
+        <Route path="nord-admin" element={<NordAdmin />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="products" element={<Products />} />
+        <Route path="products/:id" element={<EditeProduct />} />
+        <Route path="users" element={<User />} />
+        <Route path="users/:uid" element={<EditeUser />} />
+        <Route path="withdrawal" element={<Withdrawal />} />
+        <Route path="platform" element={<Platform />} />
+        <Route path="announcement" element={<Notice />} />
+        <Route path="announcement/create" element={<Create />} />
+        <Route path="announcement/edit" element={<EditNotice />} />
+        <Route path="histroy/transaction" element={<Transaction />} />
+        <Route path="histroy/merchant" element={<Merchant />} />
+        <Route path="order" element={<AccountOrder />} />
+        <Route path="password" element={<Password />} />
 
       </Route>
     </Routes>

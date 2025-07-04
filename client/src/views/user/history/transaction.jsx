@@ -12,16 +12,17 @@ const Transaction = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!user?.uid) {
-      setError("User not authenticated");
-      setLoading(false);
-      return;
-    }
+    let intervalId;
 
     const fetchOrderHistory = async () => {
+      if (!user?.uid) {
+        setError("User not authenticated");
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await getUserOrderHistory(String(user.uid));
-
         const { orderHistory = [], merchantHistory = [] } = response.data || {};
 
         if (orderHistory.length || merchantHistory.length) {
@@ -46,7 +47,9 @@ const Transaction = () => {
 
           mergedTransactions.sort((a, b) => b.date - a.date);
           setTransactions(mergedTransactions);
+          setError(null);
         } else {
+          setTransactions([]);
           setError("No transactions found");
         }
       } catch (err) {
@@ -57,23 +60,35 @@ const Transaction = () => {
       }
     };
 
+    // Initial fetch
     fetchOrderHistory();
+
+    // Polling every 30 seconds
+    intervalId = setInterval(fetchOrderHistory, 30000);
+
+    // Cleanup on unmount
+    return () => clearInterval(intervalId);
   }, [user]);
 
   const getStatusColor = (status) => {
     if (!status) return "bg-gray-500";
     switch (status.toLowerCase()) {
-      case "refunded": return "bg-red-500";
+      case "refunded":
+        return "bg-red-500";
       case "credited":
-      case "completed": return "bg-green-500";
-      case "pending": return "bg-yellow-500";
-      case "system": return "bg-gray-500";
-      default: return "bg-blue-500";
+      case "completed":
+        return "bg-green-500";
+      case "pending":
+        return "bg-yellow-500";
+      case "system":
+        return "bg-gray-500";
+      default:
+        return "bg-blue-500";
     }
   };
 
   return (
-    <div className="bg-slate-700 flex flex-col mobile:w-full tab:w-full pc:w-full border border-gray-400 rounded-lg  px-3 py-4">
+    <div className="bg-slate-700 flex flex-col mobile:w-full tab:w-full pc:w-full border border-gray-400 rounded-lg px-3 py-4">
       <div className="w-full flex justify-between items-center text-white mobile:text-[13px] tab:text-[15px] pc:text-base">
         <span>Recent Transactions</span>
         {!loading && !error && transactions.length > 0 && (

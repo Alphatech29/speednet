@@ -92,7 +92,7 @@ const RejectedTab = () => {
                 ))
               ) : (
                 <Table.Row>
-                  <Table.Cell colSpan={8} className="text-center py-4">
+                  <Table.Cell colSpan={8} className="py-24 text-gray-500 text-center">
                     No products found.
                   </Table.Cell>
                 </Table.Row>

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '../../../../views/admin/partials/sidebar';
 import Header from '../../../../views/admin/partials/Header';
 import '../../cssFile/dashboard.css'; 
+import Footer from '../../partials/footer';
 
 const Dashboard = () => {
  
@@ -21,6 +22,8 @@ const Dashboard = () => {
         <div className="flex-grow  overflow-auto pc:py-4 mobile:py-4 mobile:mb-14 px:px-6 mobile:px-4">
           <Outlet />
         </div>
+        {/* Sticky Header */}
+        <Footer />
       </div>
     </div>
   );

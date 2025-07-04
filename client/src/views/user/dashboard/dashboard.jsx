@@ -12,26 +12,27 @@ const sidebarVariants = {
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
 
-  // Resize listener to set PC/mobile state
   useEffect(() => {
     const handleResize = () => {
       const wide = window.innerWidth >= 1024;
       setIsDesktop(wide);
-      if (wide) setSidebarOpen(false); 
+      if (wide) setSidebarOpen(false);
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
-    <div className="flex min-h-screen w-full bg-slate-600 overflow-x-hidden">
+    <div className="min-h-[calc(100vh-1px)] w-full bg-slate-600 flex">
       {/* Sidebar */}
       {isDesktop ? (
-        <div className="hidden pc:block w-[265px]">
+        <div className="hidden pc:block w-[265px] bg-slate-800 z-50">
           <Sidebar />
         </div>
       ) : (
@@ -50,6 +51,7 @@ const Dashboard = () => {
           )}
         </AnimatePresence>
       )}
+
       {/* Mobile overlay */}
       {sidebarOpen && !isDesktop && (
         <div
@@ -57,13 +59,13 @@ const Dashboard = () => {
           onClick={() => setSidebarOpen(false)}
         />
       )}
+
       {/* Main content */}
-   <div className="ml-0 flex w-full flex-col transition-all duration-300">
+      <div className="ml-0 w-full  pc:w-[calc(100%-265px)] flex flex-col">
         <Header />
-        <div className="flex-grow overflow-auto pc:py-4 mobile:py-4 mobile:mb-14 px-6 mobile:px-4">
+        <div className="flex-grow overflow-auto mobile:py-4 mobile:mb-14 px-6 mobile:px-4">
           <Outlet />
         </div>
-        {/* Footer still has optional control */}
         <Footer toggleSidebar={() => setSidebarOpen((prev) => !prev)} />
       </div>
     </div>

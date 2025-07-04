@@ -55,7 +55,7 @@ const Wallet = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col ">
+    <div className="w-full pc:h-screen flex flex-col ">
       {user && webSettings && (
         <>
           {/* Notice modal rendered only if showNotice is true */}

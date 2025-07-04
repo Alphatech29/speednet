@@ -212,5 +212,45 @@ const updateWithdrawalStatusById = async (id, status) => {
   }
 };
 
+const updateMerchantTransactionStatusByReference = async (transactionId, status) => {
+  try {
+    const validStatuses = ['completed', 'rejected'];
+    if (!validStatuses.includes(status.toLowerCase())) {
+      return {
+        success: false,
+        message: 'Invalid status provided.',
+      };
+    }
 
-module.exports = { storeWithdrawal, getAllWithdrawals,getWithdrawalById, updateWithdrawalStatusById  };
+    const query = `UPDATE merchant_history SET status = ? WHERE transaction_id = ?`;
+    const [result] = await pool.execute(query, [status, transactionId]);
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        message: 'No transaction found with the specified transaction ID.',
+      };
+    }
+
+    return {
+      success: true,
+      message: `Merchant transaction status updated to '${status}'.`,
+    };
+  } catch (error) {
+    logger.error('updateMerchantTransactionStatusByReference error', {
+      message: error.message,
+      stack: error.stack,
+      transactionId,
+      status,
+    });
+
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+
+
+
+module.exports = { storeWithdrawal, getAllWithdrawals,getWithdrawalById, updateWithdrawalStatusById,updateMerchantTransactionStatusByReference  };

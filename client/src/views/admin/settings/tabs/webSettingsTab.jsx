@@ -104,21 +104,23 @@ const WebSettingsTab = () => {
   };
 
   return (
-    <div className="w-full px-4 mobile:px-6  tab:px-12 pc:px-24 py-8">
+    <div className="mx-auto bg-white rounded-xl shadow-lg p-6 pc:pt-2 tab:p-10 border">
       <ToastContainer />
 
-      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6 tab:p-10 border">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-2">Web Settings</h1>
+      <div className="flex flex-col mb-6">
+       <div>
+         <h1 className="text-2xl font-semibold text-gray-800 mb-2">Web Settings</h1>
         <p className="text-gray-600 mb-6 text-base">
           Customize your website’s configuration including site details, financial rates, and social links.
         </p>
-
+       </div>
         <div className="grid grid-cols-1 mobile:grid-cols-2 pc:grid-cols-3 gap-6">
           {[
             { id: 'site_name', label: 'Site Name' },
             { id: 'tagline', label: 'Tagline' },
             { id: 'web_description', label: 'Description' },
             { id: 'support_email', label: 'Support Email', type: 'email' },
+            { id: 'admin_alert_email', label: 'Notification Email', type: 'email' },
             { id: 'vat', label: 'VAT (%)', type: 'number' },
             { id: 'merchant_activation_fee', label: 'Merchant Activation Fee', type: 'number' },
             { id: 'currency', label: 'Currency' },
@@ -126,6 +128,7 @@ const WebSettingsTab = () => {
             { id: 'naira_rate', label: 'Naira Rate', type: 'number' },
             { id: 'referral_commission', label: 'Referral Commission ($)', type: 'number' },
             { id: 'web_url', label: 'Website URL', type: 'url' },
+            { id: 'escrow_minutes', label: 'Escrow Time(Set in minutes)', type: 'text' },
             { id: 'contact_number', label: 'Contact Number', type: 'tel' },
             { id: 'address', label: 'Address' },
             { id: 'telegram_url', label: 'Telegram URL', type: 'url' },

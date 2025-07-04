@@ -24,7 +24,7 @@ const Pricing = () => {
         <div className='pc:flex gap-5 mobile:space-y-2 mt-4'>
           {/* BASIC PLAN */}
           <div className='px-3 py-3 border-2 border-gray-600 rounded-lg pc:w-[50%]'>
-            <span className='text-gray-300 text-lg'>Basic</span>
+            <span className='text-gray-300 text-lg'>Standard</span>
             <h1 className='text-xl font-semibold text-gray-400'>$10.99<span>/mo</span></h1>
             <ul className='text-gray-300 text-base mt-3'>
               <li className='flex items-center gap-3'><IoCheckmark className='text-green-500' />Secure, high-speed VPN</li>
@@ -34,7 +34,7 @@ const Pricing = () => {
               <li className='flex items-center gap-3'><IoCheckmark className='text-green-500' />2 devices secured at once</li>
             </ul>
             <Button className='bg-primary-600 border-0 mt-4 w-full' onClick={() => openModal({ name: 'Basic', price: '$10.99' })}>
-              Get Basic
+              Get Standard
             </Button>
           </div>
 

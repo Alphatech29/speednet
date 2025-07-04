@@ -73,7 +73,7 @@ const Sidebar = () => {
 
           {showHistory && (
             <div className="ml-6 mt-1 flex flex-col gap-1">
-              <NavLink to="/admin/histroy/transaction" className="text-[14px] text-pay hhover:bg-white/40 p-2 hover:p-2 hover:rounded-md">
+              <NavLink to="/admin/histroy/transaction" className="text-[14px] text-pay hover:bg-white/40 p-2 hover:p-2 hover:rounded-md">
                 Transaction History
               </NavLink>
               <NavLink to="/admin/histroy/merchant" className="text-[14px] text-pay hover:bg-white/40 p-2 hover:p-2 hover:rounded-md">

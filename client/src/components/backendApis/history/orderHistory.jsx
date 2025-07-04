@@ -8,12 +8,12 @@ export const getUserOrderHistory = async (userUid) => {
       throw new Error("Invalid user UID provided.");
     }
 
-    // 🔍 Send request to backend
+    //  Send request to backend
     const response = await axios.get(`/general/orderhistory/${userUid.trim()}`, {
       headers: { "Content-Type": "application/json" },
     });
 
-    // ✅ Ensure correct response structure
+    // Ensure correct response structure
     if (response.data && response.data.success) {
       const { orderHistory = [], merchantHistory = [] } = response.data.data || {};
       
@@ -29,7 +29,7 @@ export const getUserOrderHistory = async (userUid) => {
       throw new Error(response.data.message || "Failed to fetch transactions.");
     }
   } catch (error) {
-    console.error("❌ Error fetching transactions:", error.message);
+    console.error("Error fetching transactions:", error.message);
     return {
       success: false,
       message: "Error fetching user history",

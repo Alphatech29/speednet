@@ -10,6 +10,7 @@ const {
   getUserOrderHistory,
 } = require("../controller/user/history");
 const { collectOrder } = require("../controller/user/purchase");
+const { report, getMyReports } = require("../controller/user/report");
 const { fetchUserOrders } = require("../controller/user/accountOrder");
 const { getAccounts } = require("../controller/user/accounts");
 const { accountCreation } = require("../controller/user/createAccount");
@@ -51,6 +52,7 @@ const { updateUserProfile } = require("../controller/user/user");
 const { getAllWithdrawal , updateWithdrawalStatus } = require("../controller/admin/dashboard/withdrawal");
 const { getAllNotices, createNotice,updateNoticeById } = require("../controller/admin/dashboard/notice");
 const { getAllTransactions,getAllMerchantTransactions,getAllAccountOrders } = require("../controller/admin/dashboard/histroy");
+const { getAllReportsController,updateReportStatusController } = require("../controller/admin/dashboard/report");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -104,6 +106,8 @@ generalRoute.get("/apis", (req, res) => {
 });
 
 generalRoute.post("/purchase", collectOrder);
+generalRoute.post("/purchase/report", verifyToken, report);
+generalRoute.get("/purchase/report", verifyToken, getMyReports);
 generalRoute.get("/get-accounts/:userUid", getAccounts);
 generalRoute.post("/pay", Deposit);
 generalRoute.post("/fapshi/webhook", fapshiWebhook);
@@ -133,5 +137,7 @@ generalRoute.put("/notice/:id", updateNoticeById)
 generalRoute.get("/transaction", getAllTransactions)
 generalRoute.get("/merchant", getAllMerchantTransactions)
 generalRoute.get("/account_order", getAllAccountOrders)
+generalRoute.get("/all-report", getAllReportsController)
+generalRoute.put("/update-report/:reportId", updateReportStatusController)
 
 module.exports = generalRoute;

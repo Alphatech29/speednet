@@ -12,6 +12,8 @@ import { TfiAnnouncement } from "react-icons/tfi";
 import { CiViewList } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { LiaFirstOrder } from "react-icons/lia";
+import { TbMessageReport } from "react-icons/tb";
+
 
 
 const Sidebar = () => {
@@ -43,6 +45,10 @@ const Sidebar = () => {
 
         <NavLink to="/admin/products" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
           <FaCartShopping /> <span>Products</span>
+        </NavLink>
+
+        <NavLink to="/admin/report" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
+          <TbMessageReport /> <span>Reports</span>
         </NavLink>
 
          <NavLink to="/admin/order" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">

@@ -128,7 +128,7 @@ const WebSettingsTab = () => {
             { id: 'naira_rate', label: 'Naira Rate', type: 'number' },
             { id: 'referral_commission', label: 'Referral Commission ($)', type: 'number' },
             { id: 'web_url', label: 'Website URL', type: 'url' },
-            { id: 'escrow_minutes', label: 'Escrow Time(Set in minutes)', type: 'text' },
+            { id: 'escrow_time', label: 'Escrow Time(Set in minutes)', type: 'text' },
             { id: 'contact_number', label: 'Contact Number', type: 'tel' },
             { id: 'address', label: 'Address' },
             { id: 'telegram_url', label: 'Telegram URL', type: 'url' },

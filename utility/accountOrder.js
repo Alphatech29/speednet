@@ -7,8 +7,10 @@ const storeOrder = async (orderData) => {
         const query = `
             INSERT INTO account_order 
             (account_id, seller_id, buyer_id, order_no, title, platform, email, recovery_email, 
-             username, password, description, two_factor_enabled, two_factor_description, price, payment_status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+             username, password, description, two_factor_enabled, two_factor_description, price, 
+             payment_status, escrow_expires_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
 
         const values = [
             orderData.account_id || null,
@@ -25,7 +27,8 @@ const storeOrder = async (orderData) => {
             orderData.two_factor_enabled || false,
             orderData.two_factor_description || null,
             orderData.price || 0,
-            orderData.payment_status || "Pending"
+            orderData.payment_status || "Pending",
+            orderData.escrow_expires_at || null  
         ];
 
         const [result] = await pool.execute(query, values);

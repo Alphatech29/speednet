@@ -8,12 +8,14 @@ import { MdDashboard } from "react-icons/md";
 import { IoWifiSharp } from "react-icons/io5";
 import { SiWebmoney } from "react-icons/si";
 import { FaCode } from "react-icons/fa";
+import { FaNode } from "react-icons/fa";
 import PaymentTab from './tabs/paymentTab';
 import WebSettingsTab from './tabs/webSettingsTab';
 import VtuTab from './tabs/vtuTab';
 import ApisTab from './tabs/apisTab';
 import ExternalCode from './tabs/externalCode';
 import WebLogoTab from './tabs/webLogoTab';
+import SmtpserverTab from './tabs/smtpserverTab';
 
 const Settings = () => {
   return (
@@ -34,6 +36,9 @@ const Settings = () => {
       </TabItem>
        <TabItem  title="Vtu Service" icon={IoWifiSharp}>
         <VtuTab/>
+      </TabItem>
+       <TabItem  title="SMTP Server" icon={FaNode}>
+        <SmtpserverTab/>
       </TabItem>
        <TabItem  title="External Code" icon={FaCode}>
         <ExternalCode/>

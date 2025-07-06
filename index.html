@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Product Submission Notification</title>
+  <title>Merchant Activation Notification</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -64,30 +64,28 @@
       <img src="<%= web_url %><%= logo %>" alt="<%= site_name %> Logo" class="logo" />
     </div>
     <div class="content">
-      <p>Hello Admin,</p>
-      
-      <p>A new product has just been submitted on <strong><%= site_name %></strong>. Please review the details below:</p>
+      <p>Hello <strong><%= user.full_name %></strong>,</p>
+
+      <p>Your account has been successfully upgraded to a <strong>Merchant</strong> on <%= site_name %>.</p>
 
       <div class="info-block">
-        <p><strong>Product Name:</strong> <%= product.name %></p>
-        <p><strong>Title:</strong> <%= product.title %></p>
-        <p><strong>Price:</strong> <%= product.currencySymbol || '₦' %><%= product.price %></p>
-        <hr>
-        <h4><strong>Submitted By:</h4>
-        <p><strong>Merchant Name:</strong>  <%= merchant.full_name %></p>
-        <p><strong>Merchant Email:</strong> <%= merchant.email %></p>
-        <hr>
-        <p><strong>Submitted On:</strong> <%= date %> UTC</p>
+        <p><strong>Activation Fee Deducted:</strong> <%= currencySymbol %><%= amount %></p>
+        <p><strong>New Role:</strong> Merchant</p>
+        <p><strong>Status:</strong> Activated</p>
+        <p><strong>Reference:</strong> <%= reference %></p>
+        <p><strong>Date:</strong> <%= new Date().toLocaleString('en-US', { timeZone: 'UTC' }) %> UTC</p>
       </div>
 
-      <p>This product is pending review. You can take action from the admin dashboard.</p>
+      <p>You now have access to exclusive merchant features and tools to grow your business.</p>
 
-      <a href="<%= web_url %>/admin/products" class="btn">Review Product</a>
+      <p>If you have any questions or need assistance, feel free to contact our support team.</p>
 
-      <p>Thanks,<br />The <strong><%= site_name %></strong> System</p>
+      <a href="<%= web_url %>/support" class="btn">Contact Support</a>
+
+      <p>Thanks,<br />The <strong><%= site_name %></strong> Team</p>
     </div>
     <div class="footer">
-      &copy; <%= year %> <%= site_name %>. All rights reserved. <br />
+      &copy; <%= new Date().getFullYear() %> <%= site_name %>. All rights reserved. <br />
       Need help? Contact us at <%= support_email %>.
     </div>
   </div>

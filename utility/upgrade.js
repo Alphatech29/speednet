@@ -1,15 +1,12 @@
 const pool = require('../model/db');
 const { getWebSettings } = require('./general');
 const { createTransactionHistory } = require('./history');
+const { sendMerchantActivationEmail } = require('../email/mails/merchant_activation');
 
 const getUserDetailsDirectly = async (userUid) => {
     try {
-
         const [rows] = await pool.execute("SELECT * FROM users WHERE uid = ?", [Number(userUid)]);
-
-        if (rows.length === 0) {
-            return null;
-        }
+        if (rows.length === 0) return null;
         return rows[0];
     } catch (error) {
         console.error("Database error:", error);
@@ -44,13 +41,24 @@ const activateAccount = async (req, res) => {
         }
 
         const newBalance = userBalance - activationFee;
-        await pool.execute("UPDATE users SET account_balance = ? WHERE uid = ?", [newBalance, Number(userUid)]);
 
-        await pool.execute("UPDATE users SET role = 'merchant' WHERE uid = ?", [Number(userUid)]);
+        // Deduct balance and update role
+        await pool.execute("UPDATE users SET account_balance = ?, role = 'merchant' WHERE uid = ?", [newBalance, Number(userUid)]);
 
+        // Create transaction history
+        const transactionResult = await createTransactionHistory(
+            userUid,
+            activationFee,
+            'Merchant Activation',
+            'completed'
+        );
 
-        // Create transaction history with 'completed' status
-        const transactionResult = await createTransactionHistory(userUid, activationFee, 'Merchant Activation', 'completed');
+        // Send activation email
+        await sendMerchantActivationEmail(userDetails, {
+            amount: activationFee,
+            reference: transactionResult?.reference || 'N/A',
+            currencySymbol: webSettings.currency_symbol || "$"
+        });
 
         return res.status(200).json({ success: true, message: 'Account activated successfully' });
     } catch (error) {

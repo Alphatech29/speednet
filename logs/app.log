@@ -4075,3 +4075,729 @@
 [2025-07-04T15:16:40.021Z] [INFO]: Fetched 7 accounts
 [2025-07-04T15:18:24.444Z] [INFO]: Fetched 7 accounts
 [2025-07-04T15:19:23.699Z] [INFO]: Fetched 7 accounts
+[2025-07-04T22:10:38.112Z] [INFO]: Fetched 7 accounts
+[2025-07-04T22:10:40.904Z] [INFO]: Login notification email sent:
+[2025-07-04T22:10:48.915Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-04T22:10:50.239Z] [INFO]: Fetched 7 accounts
+[2025-07-04T22:11:03.685Z] [INFO]: Fetched 7 accounts
+[2025-07-04T23:04:03.370Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:05:59.675Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:06:16.567Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:10:56.362Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:11:30.430Z] [INFO]: Fetched 7 accounts
+[2025-07-04T23:11:32.337Z] [INFO]: Login notification email sent:
+[2025-07-04T23:13:11.370Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:13:28.884Z] [INFO]: Fetched 7 accounts
+[2025-07-04T23:15:03.483Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:19:02.595Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:21:12.740Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:22:16.163Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:22:32.738Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:24:36.193Z] [INFO]: Server running on http://localhost:8000
+[2025-07-04T23:54:41.555Z] [INFO]: Fetched 7 accounts
+[2025-07-04T23:54:43.272Z] [INFO]: Login notification email sent:
+[2025-07-05T00:03:34.002Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:05:24.063Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:05:45.253Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:08:00.607Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:08:28.865Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:10:40.702Z] [INFO]: Fetched 7 accounts
+[2025-07-05T00:10:42.239Z] [INFO]: Login notification email sent:
+[2025-07-05T00:11:05.288Z] [INFO]: Merchant activation email sent:
+[2025-07-05T00:15:03.623Z] [INFO]: Fetched 7 accounts
+[2025-07-05T00:16:44.258Z] [INFO]: Fetched 7 accounts
+[2025-07-05T00:36:15.506Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:47:45.291Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:49:02.999Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:49:04.140Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T00:49:53.621Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:49:55.736Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T00:51:17.026Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:51:18.097Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T00:52:07.042Z] [ERROR]: sendLoginNotificationEmail error:
+[2025-07-05T00:52:08.455Z] [INFO]: Fetched 7 accounts
+[2025-07-05T00:53:47.191Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:54:38.696Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:55:17.347Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:55:45.478Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:59:09.528Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T00:59:10.866Z] [INFO]: ✅ Transporter is ready to send emails
+[2025-07-05T00:59:24.790Z] [ERROR]: sendLoginNotificationEmail error:
+[2025-07-05T00:59:25.869Z] [INFO]: Fetched 7 accounts
+[2025-07-05T01:00:17.709Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:00:38.702Z] [ERROR]: sendLoginNotificationEmail error:
+[2025-07-05T01:00:39.770Z] [INFO]: Fetched 7 accounts
+[2025-07-05T01:01:44.497Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:05:30.351Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:05:36.351Z] [INFO]: ✅ Transporter is ready to send emails
+[2025-07-05T01:05:36.990Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:17:09.943Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:17:10.353Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:17:36.844Z] [INFO]: Fetched 7 accounts
+[2025-07-05T01:17:39.509Z] [INFO]: Login notification email sent:
+[2025-07-05T01:27:19.777Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:27:20.321Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:27:41.188Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:27:41.905Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:40:40.716Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T01:42:57.032Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:42:57.741Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:43:11.302Z] [INFO]: Fetched 7 accounts
+[2025-07-05T01:43:12.809Z] [INFO]: Login notification email sent:
+[2025-07-05T01:43:16.180Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T01:44:38.355Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:44:38.797Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:45:43.933Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T01:47:02.508Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:47:03.745Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:47:09.624Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T01:52:31.442Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:52:32.205Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:55:34.462Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:55:35.345Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:56:25.168Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:56:25.628Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:57:20.871Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T01:59:13.141Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:59:14.310Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:59:44.682Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:59:45.235Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T01:59:55.524Z] [ERROR]: Failed to serve index.html
+[2025-07-05T01:59:59.492Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T01:59:59.940Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:00:13.780Z] [INFO]: Fetched 7 accounts
+[2025-07-05T02:00:15.349Z] [INFO]: Login notification email sent:
+[2025-07-05T02:00:16.330Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T02:01:45.335Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:01:46.449Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:02:14.793Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T02:02:22.731Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:02:23.153Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:02:28.810Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T02:03:32.428Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:03:32.919Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:03:38.611Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T02:07:46.718Z] [INFO]: Merchant activation email sent:
+[2025-07-05T02:07:52.575Z] [INFO]: Fetched 6 platforms
+[2025-07-05T02:19:19.801Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:19:20.272Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:39:25.392Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:39:25.883Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:42:25.179Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:42:25.867Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:42:50.330Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:42:50.768Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:45:25.772Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:45:27.086Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:45:34.364Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:45:35.177Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:46:14.485Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:46:14.948Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:46:38.789Z] [INFO]: Login notification email sent:
+[2025-07-05T02:46:39.710Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T02:50:05.197Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:50:06.020Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:50:08.746Z] [ERROR]: Failed to serve index.html
+[2025-07-05T02:50:08.794Z] [ERROR]: Failed to serve index.html
+[2025-07-05T02:50:12.562Z] [ERROR]: Failed to serve index.html
+[2025-07-05T02:50:17.753Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T02:50:18.470Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T02:50:22.873Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:06:43.034Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:06:44.719Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:19:21.058Z] [INFO]: Login notification email sent:
+[2025-07-05T12:19:24.433Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:20:37.359Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:20:37.818Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:21:38.395Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:21:38.715Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:23:54.557Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:23:54.860Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:24:36.470Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:25:02.725Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:25:14.349Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:25:15.065Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:25:19.083Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:27:22.803Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:29:48.448Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:29:48.820Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:30:37.005Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:30:37.498Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:31:06.022Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:33:00.675Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:33:01.351Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:33:38.331Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:33:38.917Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:33:50.321Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:33:50.680Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:35:35.013Z] [INFO]: Login notification email sent:
+[2025-07-05T12:35:48.352Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:39:52.338Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:39:52.848Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:40:04.158Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:40:04.496Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:40:21.793Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:42:50.796Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:42:51.947Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:43:10.479Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:43:11.055Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:43:50.953Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:43:51.526Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:44:18.998Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T12:44:19.351Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T12:45:32.903Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T12:45:44.023Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:01:59.840Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:02:00.174Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:03:18.154Z] [INFO]: Login notification email sent:
+[2025-07-05T13:03:23.019Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:04:44.275Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:04:44.609Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:08:46.242Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:10:09.708Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:10:10.027Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:13:54.742Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:15:01.948Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:15:02.292Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:17:27.530Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:18:16.761Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:18:17.179Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:22:36.543Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:22:36.864Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:24:39.180Z] [INFO]: Login notification email sent:
+[2025-07-05T13:24:41.889Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:43:47.833Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:43:48.286Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:45:01.106Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:45:01.683Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:47:34.857Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:47:35.362Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:48:20.048Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:48:20.868Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:49:04.908Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:49:05.263Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T13:50:10.951Z] [INFO]: Login notification email sent:
+[2025-07-05T13:50:18.088Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T13:52:59.345Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T13:52:59.728Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:05:07.630Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:05:08.224Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:05:34.291Z] [INFO]: Login notification email sent:
+[2025-07-05T14:05:35.188Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T14:22:40.021Z] [INFO]: Login notification email sent:
+[2025-07-05T14:24:10.121Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T14:26:18.904Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:26:19.266Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:28:29.654Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:28:30.252Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:29:39.031Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:29:39.606Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:32:13.328Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:32:30.815Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:35:07.861Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:35:43.641Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:36:33.845Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:38:30.007Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:41:14.996Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:41:15.717Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:42:07.406Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:42:07.925Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:43:55.932Z] [INFO]: Login notification email sent:
+[2025-07-05T14:44:42.101Z] [INFO]: Fetched 7 accounts
+[2025-07-05T14:44:49.010Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T14:47:16.715Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:47:17.011Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:48:00.985Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T14:49:35.151Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:49:35.485Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:51:57.619Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:51:58.053Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:54:38.593Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:54:38.907Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:54:55.612Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:54:55.911Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:57:03.384Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:57:03.824Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:57:14.326Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:57:14.859Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:58:18.137Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:58:19.290Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T14:59:17.409Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:59:50.031Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T14:59:50.356Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:02:46.286Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:02:47.090Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:04:11.335Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:04:12.114Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:04:20.178Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:04:21.268Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:05:26.332Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:05:26.778Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:08:58.769Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:08:59.181Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:13:23.655Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:13:24.274Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:13:46.321Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:13:46.640Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:15:38.647Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:15:39.057Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:15:57.742Z] [INFO]: Login notification email sent:
+[2025-07-05T15:22:51.813Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:22:52.166Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:23:58.795Z] [INFO]: Fetched 7 accounts
+[2025-07-05T15:24:00.867Z] [INFO]: Fetched 6 platforms
+[2025-07-05T15:24:03.565Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T15:27:03.105Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:27:03.930Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:27:58.740Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:27:59.101Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:29:11.712Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:29:12.047Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:31:15.476Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:31:15.793Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:33:14.066Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:33:14.449Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:36:24.568Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:36:27.653Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:36:28.027Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:36:56.930Z] [INFO]: Login notification email sent:
+[2025-07-05T15:39:00.954Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:39:01.628Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:39:36.504Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:39:36.832Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T15:45:12.247Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T15:45:12.635Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:12:09.237Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-05T21:12:55.494Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:12:55.857Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:13:28.133Z] [INFO]: Login notification email sent:
+[2025-07-05T21:49:05.472Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:49:05.903Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:49:57.019Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:49:57.438Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:51:28.057Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:51:28.358Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:52:21.438Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:52:21.809Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:53:16.065Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:53:16.729Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:54:11.068Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:54:11.430Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:55:58.211Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:55:58.607Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T21:56:05.893Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T21:56:06.217Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:07:31.840Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:07:32.263Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:09:14.664Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:09:15.624Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:09:26.531Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:09:27.012Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:09:36.144Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:09:36.465Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:35:12.616Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:35:14.619Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:36:36.181Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:36:38.038Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:37:22.120Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:37:24.690Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:46:36.762Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:46:37.160Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:48:22.364Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:48:22.670Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:52:19.888Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:52:20.345Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:52:25.550Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:52:25.889Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:53:58.671Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:53:59.040Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:55:05.849Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:55:06.913Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:57:40.148Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:57:40.519Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T22:59:20.167Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T22:59:20.493Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:01:19.690Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:01:20.057Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:02:33.396Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:02:33.716Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:06:52.085Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:06:52.397Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:11:54.532Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:11:54.840Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:14:20.976Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:14:21.489Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:19:08.473Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:19:09.246Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:19:23.734Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:19:24.775Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:20:23.255Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:20:23.563Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:26:30.134Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:26:30.476Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:29:36.418Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:29:37.176Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:29:56.578Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:29:57.011Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:30:07.434Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:30:07.845Z] [INFO]: Server running on http://localhost:8000
+[2025-07-05T23:44:44.277Z] [INFO]: Transporter is ready to send emails
+[2025-07-05T23:44:44.600Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:11:13.594Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:11:13.931Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:12:23.410Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:12:23.833Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:13:49.918Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:20:00.819Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:20:01.238Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:20:14.385Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:20:14.839Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:21:01.430Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:21:01.749Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:23:23.010Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:23:23.333Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:23:26.614Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:23:27.160Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:23:39.743Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:23:40.039Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:23:56.545Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:23:56.950Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:26:18.925Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:26:20.056Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:26:54.895Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:26:55.214Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:27:40.938Z] [INFO]: Login notification email sent:
+[2025-07-06T00:28:15.456Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:28:16.000Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:29:42.510Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:29:42.932Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:35:24.337Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:35:24.925Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:35:30.821Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:35:31.142Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:36:43.314Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:36:43.641Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:44:46.729Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:44:47.098Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:49:20.209Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:49:20.628Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T00:50:35.840Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T00:50:36.146Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T01:13:47.266Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-06T01:32:15.577Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T01:32:15.998Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T01:32:40.499Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T01:32:40.891Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T01:34:47.631Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T01:34:47.990Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T01:42:42.112Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T01:42:42.416Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T01:50:28.394Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T01:50:28.733Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T01:50:51.539Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T01:50:52.032Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:00:15.860Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:00:16.247Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:00:44.879Z] [INFO]: Login notification email sent:
+[2025-07-06T02:00:46.893Z] [WARN]: No orders found for user: 4
+[2025-07-06T02:00:56.577Z] [INFO]: Fetched 7 accounts
+[2025-07-06T02:01:05.443Z] [INFO]: Order stored successfully with ID: 214
+[2025-07-06T02:01:05.521Z] [INFO]: Order history stored successfully with ID: 86
+[2025-07-06T02:01:06.862Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T02:03:55.799Z] [INFO]: Fetched 7 accounts
+[2025-07-06T02:06:59.389Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:07:35.777Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:07:36.124Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:13:28.363Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:13:28.698Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:15:33.896Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:15:34.417Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:17:01.625Z] [INFO]: Login notification email sent:
+[2025-07-06T02:17:08.853Z] [INFO]: Fetched 7 accounts
+[2025-07-06T02:17:12.904Z] [WARN]: No orders found for user: 4
+[2025-07-06T02:17:15.004Z] [INFO]: Fetched 7 accounts
+[2025-07-06T02:17:23.127Z] [INFO]: Order stored successfully with ID: 215
+[2025-07-06T02:17:23.354Z] [INFO]: Order history stored successfully with ID: 87
+[2025-07-06T02:17:24.709Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T02:24:25.897Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:24:26.700Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:24:33.729Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:24:34.457Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:25:56.399Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:25:57.006Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:26:04.713Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:26:05.581Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:26:21.147Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T02:26:30.070Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:26:30.375Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:26:37.879Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T02:26:43.856Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T02:30:18.963Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:30:19.312Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:30:44.142Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T02:37:19.624Z] [INFO]: Fetched 7 accounts
+[2025-07-06T02:37:28.765Z] [INFO]: Order stored successfully with ID: 216
+[2025-07-06T02:37:28.965Z] [INFO]: Order history stored successfully with ID: 88
+[2025-07-06T02:37:30.343Z] [INFO]: Fetched 2 orders for user: 4
+[2025-07-06T02:41:33.535Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T02:41:33.838Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T02:55:43.040Z] [INFO]: Login notification email sent:
+[2025-07-06T02:56:09.576Z] [INFO]: Fetched 7 accounts
+[2025-07-06T02:56:17.525Z] [INFO]: Order stored successfully with ID: 217
+[2025-07-06T02:56:17.602Z] [INFO]: Order history stored successfully with ID: 89
+[2025-07-06T02:56:19.043Z] [INFO]: Fetched 3 orders for user: 4
+[2025-07-06T03:34:47.303Z] [INFO]: Fetched 7 accounts
+[2025-07-06T03:50:43.887Z] [INFO]: Login notification email sent:
+[2025-07-06T03:50:44.093Z] [INFO]: Fetched 7 accounts
+[2025-07-06T03:50:57.870Z] [INFO]: Order stored successfully with ID: 218
+[2025-07-06T03:50:58.059Z] [INFO]: Order stored successfully with ID: 219
+[2025-07-06T03:50:58.137Z] [INFO]: Order history stored successfully with ID: 90
+[2025-07-06T03:50:59.563Z] [INFO]: Fetched 5 orders for user: 4
+[2025-07-06T03:51:05.543Z] [INFO]: Fetched 5 orders for user: 4
+[2025-07-06T03:56:44.494Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T03:56:44.883Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T03:57:13.376Z] [INFO]: Fetched 5 orders for user: 4
+[2025-07-06T03:57:35.933Z] [INFO]: Fetched 7 accounts
+[2025-07-06T03:57:49.973Z] [INFO]: Order stored successfully with ID: 220
+[2025-07-06T03:57:50.094Z] [INFO]: Order stored successfully with ID: 221
+[2025-07-06T03:57:50.206Z] [INFO]: Order history stored successfully with ID: 91
+[2025-07-06T03:57:51.574Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T03:58:32.429Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T03:58:52.982Z] [INFO]: Fetched 7 accounts
+[2025-07-06T04:02:25.350Z] [INFO]: Fetched 7 accounts
+[2025-07-06T04:02:36.037Z] [INFO]: Order stored successfully with ID: 222
+[2025-07-06T04:02:36.158Z] [INFO]: Order stored successfully with ID: 223
+[2025-07-06T04:02:36.313Z] [INFO]: Order history stored successfully with ID: 92
+[2025-07-06T04:02:37.713Z] [INFO]: Fetched 9 orders for user: 4
+[2025-07-06T04:04:39.164Z] [INFO]: Fetched 9 orders for user: 4
+[2025-07-06T04:07:23.777Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T04:07:24.123Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T04:13:18.385Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T04:13:19.279Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T04:14:08.188Z] [INFO]: Login notification email sent:
+[2025-07-06T04:14:15.771Z] [INFO]: Fetched 7 accounts
+[2025-07-06T04:14:25.456Z] [INFO]: Order stored successfully with ID: 224
+[2025-07-06T04:14:25.494Z] [INFO]: Order stored successfully with ID: 225
+[2025-07-06T04:14:25.968Z] [INFO]: Order history stored successfully with ID: 93
+[2025-07-06T04:14:27.436Z] [INFO]: Fetched 11 orders for user: 4
+[2025-07-06T04:14:28.081Z] [WARN]: escrow_expires_at missing for seller 4, executing immediately.
+[2025-07-06T04:14:28.394Z] [INFO]: Fetched 7 accounts
+[2025-07-06T04:14:35.973Z] [INFO]: Order stored successfully with ID: 226
+[2025-07-06T04:14:36.162Z] [INFO]: Order history stored successfully with ID: 94
+[2025-07-06T04:14:37.632Z] [INFO]: Fetched 12 orders for user: 4
+[2025-07-06T04:14:38.253Z] [WARN]: escrow_expires_at missing for seller 4, executing immediately.
+[2025-07-06T04:18:17.384Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T04:18:18.302Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T04:20:52.928Z] [INFO]: Fetched 7 accounts
+[2025-07-06T04:22:36.786Z] [INFO]: Fetched 7 accounts
+[2025-07-06T04:24:19.400Z] [INFO]: Fetched 12 orders for user: 4
+[2025-07-06T04:30:21.514Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T04:30:21.984Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T04:32:14.061Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T04:32:14.590Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T13:24:24.497Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T13:24:24.952Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T13:35:29.236Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T13:35:29.689Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T13:57:26.258Z] [INFO]: Login notification email sent:
+[2025-07-06T13:59:58.241Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T13:59:58.563Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T14:17:29.287Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T14:18:47.090Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T14:21:46.882Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T14:21:47.565Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T14:21:54.285Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T14:21:54.690Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T14:22:38.525Z] [INFO]: Login notification email sent:
+[2025-07-06T14:22:40.148Z] [INFO]: Fetched 7 accounts
+[2025-07-06T14:22:50.836Z] [INFO]: Order stored successfully with ID: 227
+[2025-07-06T14:22:50.868Z] [INFO]: Order stored successfully with ID: 228
+[2025-07-06T14:22:51.057Z] [INFO]: Order history stored successfully with ID: 95
+[2025-07-06T14:22:52.420Z] [INFO]: Fetched 14 orders for user: 4
+[2025-07-06T14:22:53.196Z] [WARN]: No escrow_expires_at for seller 4, skipping transfer.
+[2025-07-06T14:22:53.723Z] [INFO]: Fetched 7 accounts
+[2025-07-06T14:40:27.327Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T14:40:27.871Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T15:06:09.387Z] [INFO]: Login notification email sent:
+[2025-07-06T15:06:40.712Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T15:06:41.064Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T15:07:34.170Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:07:43.982Z] [INFO]: Order stored successfully with ID: 229
+[2025-07-06T15:07:44.070Z] [INFO]: Order history stored successfully with ID: 96
+[2025-07-06T15:07:45.909Z] [INFO]: Fetched 15 orders for user: 4
+[2025-07-06T15:07:46.240Z] [WARN]: No escrow_expires_at for seller 4, skipping transfer.
+[2025-07-06T15:08:14.231Z] [INFO]: Login notification email sent:
+[2025-07-06T15:25:17.492Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T15:25:17.825Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T15:28:00.571Z] [INFO]: Login notification email sent:
+[2025-07-06T15:28:12.079Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:28:19.265Z] [INFO]: Order stored successfully with ID: 230
+[2025-07-06T15:28:19.343Z] [INFO]: Order history stored successfully with ID: 97
+[2025-07-06T15:28:20.736Z] [INFO]: Fetched 16 orders for user: 4
+[2025-07-06T15:28:21.513Z] [WARN]: No escrow_expires_at for seller 4, skipping transfer.
+[2025-07-06T15:51:59.588Z] [INFO]: Login notification email sent:
+[2025-07-06T15:52:01.305Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:52:09.694Z] [INFO]: Order stored successfully with ID: 231
+[2025-07-06T15:52:09.982Z] [INFO]: Order history stored successfully with ID: 98
+[2025-07-06T15:52:11.443Z] [INFO]: Fetched 17 orders for user: 4
+[2025-07-06T15:52:12.108Z] [WARN]: No escrow_expires_at for seller 4, skipping transfer.
+[2025-07-06T15:52:33.928Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T15:52:34.283Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T15:52:44.334Z] [INFO]: Fetched 17 orders for user: 4
+[2025-07-06T15:53:34.633Z] [INFO]: Fetched 17 orders for user: 4
+[2025-07-06T15:53:46.428Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:57:46.985Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T15:57:47.373Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T15:58:24.895Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T15:58:25.682Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T15:58:25.976Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:58:30.062Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:58:36.676Z] [INFO]: Order stored successfully with ID: 232
+[2025-07-06T15:58:36.753Z] [INFO]: Order history stored successfully with ID: 99
+[2025-07-06T15:58:38.144Z] [INFO]: Fetched 18 orders for user: 4
+[2025-07-06T15:58:38.879Z] [ERROR]: Error processing escrow for order 531532: datetimeStr.replace is not a function
+[2025-07-06T15:58:40.317Z] [INFO]: Fetched 7 accounts
+[2025-07-06T15:58:58.580Z] [INFO]: Fetched 18 orders for user: 4
+[2025-07-06T16:04:45.916Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:04:46.447Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:05:12.802Z] [INFO]: Fetched 18 orders for user: 4
+[2025-07-06T16:05:20.142Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:05:30.646Z] [INFO]: Order stored successfully with ID: 233
+[2025-07-06T16:05:30.734Z] [INFO]: Order history stored successfully with ID: 100
+[2025-07-06T16:05:32.116Z] [INFO]: Fetched 19 orders for user: 4
+[2025-07-06T16:05:32.905Z] [WARN]: Escrow already expired for order 711967. Processing immediately.
+[2025-07-06T16:27:47.476Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:27:47.920Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:31:20.881Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:31:21.281Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:32:13.539Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:32:14.123Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:32:27.712Z] [INFO]: Login notification email sent:
+[2025-07-06T16:32:33.390Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:32:39.811Z] [INFO]: Order stored successfully with ID: 234
+[2025-07-06T16:32:40.010Z] [INFO]: Order history stored successfully with ID: 101
+[2025-07-06T16:32:41.400Z] [INFO]: Fetched 20 orders for user: 4
+[2025-07-06T16:32:42.091Z] [WARN]: Escrow already expired for order 967342. Processing immediately.
+[2025-07-06T16:35:09.725Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:35:10.444Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:35:18.179Z] [INFO]: Fetched 20 orders for user: 4
+[2025-07-06T16:35:20.351Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:35:28.594Z] [INFO]: Order stored successfully with ID: 235
+[2025-07-06T16:35:28.800Z] [INFO]: Order history stored successfully with ID: 102
+[2025-07-06T16:35:30.251Z] [INFO]: Fetched 21 orders for user: 4
+[2025-07-06T16:35:30.926Z] [ERROR]: Error processing escrow for order 100211: Parsed invalid date from input: Sun Jul 06 2025 17:36:28 GMT+0100 (West Africa Standard Time)
+[2025-07-06T16:39:55.220Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:39:55.702Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:42:22.493Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:42:23.327Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:43:08.530Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:43:08.873Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:43:14.038Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:44:09.097Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:44:19.267Z] [INFO]: Order stored successfully with ID: 236
+[2025-07-06T16:44:19.365Z] [INFO]: Order history stored successfully with ID: 103
+[2025-07-06T16:44:20.727Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T16:44:21.566Z] [INFO]: Order 128209 escrow expires at: 2025-07-06T16:45:19.000Z
+[2025-07-06T16:44:21.567Z] [INFO]: Current UTC time: 2025-07-06T16:44:21.566Z
+[2025-07-06T16:44:21.568Z] [INFO]: Delay (ms): 57434
+[2025-07-06T16:44:21.568Z] [INFO]: Scheduling transfer for order 128209 after 57434ms
+[2025-07-06T16:44:28.389Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:44:35.346Z] [INFO]: Fetched 1 orders for user: 4
+[2025-07-06T16:48:56.777Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:48:57.228Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:49:13.109Z] [INFO]: Login notification email sent:
+[2025-07-06T16:49:17.165Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:49:25.594Z] [INFO]: Order stored successfully with ID: 237
+[2025-07-06T16:49:25.836Z] [INFO]: Order history stored successfully with ID: 104
+[2025-07-06T16:49:27.284Z] [INFO]: Fetched 2 orders for user: 4
+[2025-07-06T16:49:27.919Z] [ERROR]: Error processing escrow for order 295703: buyer_id is not defined
+[2025-07-06T16:49:27.921Z] [ERROR]: No valid escrow transactions were processed.
+[2025-07-06T16:49:27.923Z] [ERROR]: Failed to process escrow batch:
+[2025-07-06T16:49:27.930Z] [ERROR]: Unhandled Rejection
+[2025-07-06T16:50:25.175Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:50:25.757Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:50:33.961Z] [INFO]: Fetched 2 orders for user: 4
+[2025-07-06T16:50:41.126Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:50:47.952Z] [INFO]: Order stored successfully with ID: 238
+[2025-07-06T16:50:48.108Z] [INFO]: Order history stored successfully with ID: 105
+[2025-07-06T16:50:49.515Z] [INFO]: Fetched 3 orders for user: 4
+[2025-07-06T16:50:50.215Z] [ERROR]: Error processing escrow for order 636944: Cannot access 'processRelease' before initialization
+[2025-07-06T16:50:55.590Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:52:31.155Z] [INFO]: Fetched 3 orders for user: 4
+[2025-07-06T16:53:07.146Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T16:53:07.494Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T16:53:16.445Z] [INFO]: Fetched 7 accounts
+[2025-07-06T16:53:22.442Z] [INFO]: Order stored successfully with ID: 239
+[2025-07-06T16:53:22.632Z] [INFO]: Order history stored successfully with ID: 106
+[2025-07-06T16:53:24.064Z] [INFO]: Fetched 4 orders for user: 4
+[2025-07-06T16:53:24.841Z] [INFO]: Scheduling transfer for order 917157 after 57166ms
+[2025-07-06T16:54:38.522Z] [INFO]: Fetched 4 orders for user: 4
+[2025-07-06T17:05:03.131Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T17:05:03.826Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T17:05:20.849Z] [INFO]: Login notification email sent:
+[2025-07-06T17:05:23.037Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:05:28.882Z] [INFO]: Order stored successfully with ID: 240
+[2025-07-06T17:05:28.959Z] [INFO]: Order history stored successfully with ID: 107
+[2025-07-06T17:05:30.340Z] [INFO]: Fetched 5 orders for user: 4
+[2025-07-06T17:05:31.145Z] [INFO]: Scheduling transfer for order 477259 after 56859ms
+[2025-07-06T17:06:29.178Z] [INFO]: [RELEASED] Order 477259 processed. Final: ₦18.00, Commission: $2.00
+[2025-07-06T17:07:58.153Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:08:07.337Z] [INFO]: Order stored successfully with ID: 241
+[2025-07-06T17:08:07.570Z] [INFO]: Order stored successfully with ID: 242
+[2025-07-06T17:08:07.690Z] [INFO]: Order history stored successfully with ID: 108
+[2025-07-06T17:08:09.334Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T17:08:41.460Z] [INFO]: Scheduling transfer for order 177210 after 57172ms
+[2025-07-06T17:08:41.509Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T17:08:41.592Z] [INFO]: Scheduling transfer for order 177210 after 25413ms
+[2025-07-06T17:08:42.796Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T17:09:08.231Z] [INFO]: [RELEASED] Order 177210 processed. Final: ₦18.00, Commission: $2.00
+[2025-07-06T17:09:39.947Z] [INFO]: [RELEASED] Order 177210 processed. Final: ₦18.00, Commission: $2.00
+[2025-07-06T17:10:02.109Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:11:54.967Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:13:11.633Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T17:13:11.939Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T17:13:56.874Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:14:16.815Z] [INFO]: Order stored successfully with ID: 243
+[2025-07-06T17:14:16.850Z] [INFO]: Order stored successfully with ID: 244
+[2025-07-06T17:14:17.027Z] [INFO]: Order history stored successfully with ID: 109
+[2025-07-06T17:14:18.439Z] [INFO]: Fetched 2 orders for user: 4
+[2025-07-06T17:14:19.168Z] [INFO]: Scheduling transfer for order 941171 after 56836ms
+[2025-07-06T17:14:19.256Z] [INFO]: Scheduling transfer for order 941171 after 56748ms
+[2025-07-06T17:15:17.374Z] [INFO]: [RELEASED] Order 941171 processed. Final: ₦18.00, Commission: $2.00
+[2025-07-06T17:15:17.441Z] [INFO]: [RELEASED] Order 941171 processed. Final: ₦18.00, Commission: $2.00
+[2025-07-06T17:26:53.419Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T17:26:53.868Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T17:27:50.557Z] [INFO]: Login notification email sent:
+[2025-07-06T17:27:51.159Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:27:59.804Z] [INFO]: Order stored successfully with ID: 245
+[2025-07-06T17:27:59.839Z] [INFO]: Order stored successfully with ID: 246
+[2025-07-06T17:28:00.050Z] [INFO]: Order history stored successfully with ID: 110
+[2025-07-06T17:28:01.441Z] [INFO]: Fetched 4 orders for user: 4
+[2025-07-06T17:28:02.181Z] [INFO]: Scheduling transfer for order 184786 after 56824ms
+[2025-07-06T17:29:00.224Z] [INFO]: [RELEASED] Order 184786 processed. Final: ₦36.00, Commission: $4.00
+[2025-07-06T17:31:19.450Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T17:31:19.757Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T17:32:35.813Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:32:47.512Z] [INFO]: Order stored successfully with ID: 247
+[2025-07-06T17:32:47.561Z] [INFO]: Order stored successfully with ID: 248
+[2025-07-06T17:32:47.744Z] [INFO]: Order history stored successfully with ID: 111
+[2025-07-06T17:32:49.128Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-06T17:32:49.945Z] [INFO]: Scheduling transfer for order 468473 after 57063ms
+[2025-07-06T17:33:06.248Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-06T17:33:48.308Z] [INFO]: [RELEASED] Order 468473 processed. Final: ₦36.00, Commission: $4.00
+[2025-07-06T17:36:10.431Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:38:01.533Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T17:38:01.901Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T17:38:29.720Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:38:32.150Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:39:37.725Z] [INFO]: Fetched 7 accounts
+[2025-07-06T17:39:45.454Z] [INFO]: Order stored successfully with ID: 249
+[2025-07-06T17:39:45.531Z] [INFO]: Order history stored successfully with ID: 112
+[2025-07-06T17:39:46.935Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T17:39:47.693Z] [INFO]: Scheduling transfer for order 980703 after 57312ms
+[2025-07-06T17:40:22.612Z] [INFO]: Fetched 7 orders for user: 4
+[2025-07-06T17:40:46.260Z] [INFO]: [RELEASED] Order 980703 processed. Final: ₦18.00, Commission: $2.00
+[2025-07-06T18:10:25.763Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T18:10:26.162Z] [INFO]: Server running on http://localhost:8000
+[2025-07-06T18:11:52.126Z] [INFO]: Transporter is ready to send emails
+[2025-07-06T18:11:52.496Z] [INFO]: Server running on http://localhost:8000

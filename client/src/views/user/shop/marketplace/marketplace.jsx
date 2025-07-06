@@ -113,7 +113,7 @@ const Marketplace = () => {
 
         {error && <p className="text-red-500 text-center">{error}</p>}
 
-        <div className="w-full grid pc:grid-cols-5 mobile:grid-cols-2 gap-3 mt-3">
+        <div className="w-full grid pc:grid-cols-5 mobile:grid-cols-2 tab:grid-cols-3 gap-3 mt-3">
           {paginatedProducts.length > 0 ? (
             paginatedProducts.map((product) => {
               const isAdded = cart.some((item) => item.id === product.id);

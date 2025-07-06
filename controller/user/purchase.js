@@ -1,32 +1,47 @@
+// Importing utility functions for user, product, order, escrow, and history management
 const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
 const { getProductDetailsById, updateAccountStatusById } = require("../../utility/product");
 const { storeOrder, storeOrderHistory } = require("../../utility/accountOrder");
 const { generateUniqueRandomNumber } = require("../../utility/random");
 const { createTransactionHistory } = require("../../utility/history");
 const { creditEscrow } = require('../../utility/escrow');
+const { getEscrowExpiry } = require("../../utility/countDown");
 
+// Main controller function to handle order collection
 const collectOrder = async (req, res) => {
     try {
         const { userId, products, totalAmount } = req.body;
         const userUid = String(userId);
 
         if (!userUid || !Array.isArray(products) || products.length === 0 || totalAmount === undefined) {
-            return res.status(400).json({ success: false, message: "Invalid request: Ensure userId, products array, and totalAmount are provided correctly." });
+            return res.status(400).json({
+                success: false,
+                message: "Invalid request: Ensure userId, products array, and totalAmount are provided correctly."
+            });
         }
 
         const amountToDeduct = parseFloat(totalAmount);
         if (isNaN(amountToDeduct) || amountToDeduct <= 0) {
-            return res.status(400).json({ success: false, message: "Invalid amount: totalAmount must be a positive number." });
+            return res.status(400).json({
+                success: false,
+                message: "Invalid amount: totalAmount must be a positive number."
+            });
         }
 
         const userDetails = await getUserDetailsByUid(userUid);
         if (!userDetails) {
-            return res.status(404).json({ success: false, message: "User not found. Please check the user ID." });
+            return res.status(404).json({
+                success: false,
+                message: "User not found. Please check the user ID."
+            });
         }
 
         const accountBalance = parseFloat(userDetails.account_balance);
         if (isNaN(accountBalance) || accountBalance < amountToDeduct) {
-            return res.status(400).json({ success: false, message: "Insufficient balance. Please add funds to your wallet." });
+            return res.status(400).json({
+                success: false,
+                message: "Insufficient balance. Please add funds to your wallet."
+            });
         }
 
         let productDetailsArray = [];
@@ -43,27 +58,33 @@ const collectOrder = async (req, res) => {
         }
 
         let totalProductAmount = 0;
-        productDetailsArray.forEach(productDetails => {
-            totalProductAmount += parseFloat(productDetails.price) || 0;
+        productDetailsArray.forEach(product => {
+            totalProductAmount += parseFloat(product.price) || 0;
         });
 
         const newBalance = (accountBalance - amountToDeduct).toFixed(2);
         const updateSuccess = await updateUserBalance(userUid, newBalance);
         if (!updateSuccess || updateSuccess.affectedRows === 0) {
-            return res.status(500).json({ success: false, message: "Failed to update user balance. Please try again later." });
+            return res.status(500).json({
+                success: false,
+                message: "Failed to update user balance. Please try again later."
+            });
         }
 
         await createTransactionHistory(userUid, amountToDeduct, "Account Purchased", "Completed");
+
         const orderNo = generateUniqueRandomNumber(6);
 
         let failedOrders = [];
         let successfulOrders = [];
         let escrowData = [];
 
+        const escrowExpiresAt = await getEscrowExpiry();
+
         await Promise.all(
             productDetailsArray.map(async (productDetails) => {
                 try {
-                    let orderData = {
+                    const orderData = {
                         account_id: productDetails.id ?? null,
                         seller_id: productDetails.user_id ?? null,
                         buyer_id: userUid,
@@ -79,6 +100,7 @@ const collectOrder = async (req, res) => {
                         two_factor_description: productDetails.two_factor_description ?? null,
                         price: productDetails.price ?? 0,
                         payment_status: "Completed",
+                        escrow_expires_at: escrowExpiresAt,
                     };
 
                     Object.keys(orderData).forEach((key) => {
@@ -90,16 +112,23 @@ const collectOrder = async (req, res) => {
                         failedOrders.push(productDetails.id);
                     } else {
                         successfulOrders.push(productDetails.id);
-                        escrowData.push({
-                            seller_id: productDetails.user_id,
-                            amount: productDetails.price,
-                            product_id: productDetails.id,
-                            buyer_id: userUid,
-                        });
 
-                        // ✅ Update product/account status to 'sold'
+                        // Group escrow data by seller
+                        const existing = escrowData.find(e => e.seller_id === productDetails.user_id);
+                        if (existing) {
+                            existing.amount += parseFloat(productDetails.price) || 0;
+                            existing.product_ids.push(productDetails.id);
+                        } else {
+                            escrowData.push({
+                                seller_id: productDetails.user_id,
+                                amount: parseFloat(productDetails.price) || 0,
+                                product_ids: [productDetails.id],
+                                order_no: orderNo,
+                                escrow_expires_at: escrowExpiresAt,
+                            });
+                        }
+
                         await updateAccountStatusById(String(productDetails.id), "sold");
-
                     }
                 } catch (err) {
                     failedOrders.push(productDetails.id);
@@ -107,7 +136,6 @@ const collectOrder = async (req, res) => {
             })
         );
 
-        // ✅ Store order history once
         if (successfulOrders.length > 0) {
             const orderHistoryData = {
                 seller_id: productDetailsArray[0].user_id,
@@ -122,10 +150,9 @@ const collectOrder = async (req, res) => {
                 console.error("Failed to store order history for order:", orderNo);
             }
 
-            // ✅ Wait for 2 seconds before running escrow
             setTimeout(async () => {
                 await creditEscrow(escrowData);
-            }, 2000); // 2 seconds delay
+            }, 2000);
         }
 
         if (failedOrders.length > 0) {
@@ -146,11 +173,17 @@ const collectOrder = async (req, res) => {
                 totalAmount: totalProductAmount,
                 newBalance,
                 order_no: orderNo,
+                escrow_expires_at: escrowExpiresAt,
             },
         });
+
     } catch (error) {
         console.error("Error processing order:", error);
-        return res.status(500).json({ success: false, message: "Internal server error. Please try again later.", error: error.message || "Unknown error occurred." });
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error. Please try again later.",
+            error: error.message || "Unknown error occurred."
+        });
     }
 };
 

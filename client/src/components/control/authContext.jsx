@@ -1,4 +1,9 @@
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useMemo
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { getWebSettings } from "../backendApis/general/general";
 import { getCurrentUser } from "../backendApis/user/user";
@@ -13,6 +18,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Fetch global site settings
   const fetchWebSettings = async () => {
     try {
       const result = await getWebSettings();
@@ -20,13 +26,17 @@ const AuthProvider = ({ children }) => {
         setWebSettings(result.data);
         return result.data;
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Failed to fetch web settings:", error);
+    }
     return null;
   };
 
+  // Fetch currently authenticated user
   const fetchUser = async () => {
     try {
       const result = await getCurrentUser();
+      console.log("Fetched user:", result);
       if (result?.success && result.data) {
         setUser(result.data);
         return result.data;
@@ -35,11 +45,13 @@ const AuthProvider = ({ children }) => {
         return null;
       }
     } catch (error) {
+      console.error("Error fetching current user:", error);
       setUser(null);
       return null;
     }
   };
 
+  // Manual sign-in or auto-navigate after refresh
   const signIn = async () => {
     try {
       const currentUser = await fetchUser();
@@ -52,10 +64,12 @@ const AuthProvider = ({ children }) => {
         }
       }
     } catch (error) {
+      console.error("Error in signIn:", error);
       setUser(null);
     }
   };
 
+  // Run on mount (page load/refresh)
   useEffect(() => {
     const initialize = async () => {
       setLoading(true);
@@ -65,22 +79,28 @@ const AuthProvider = ({ children }) => {
     initialize();
   }, []);
 
+  // Handle logout
   const logout = async () => {
     try {
       await logoutUser();
-    } catch (error) {}
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
     setUser(null);
     setCart([]);
     setWebSettings(null);
     navigate("/auth/login");
   };
 
+  // Update cart state manually
   const updateCartState = (newCart) => setCart(newCart);
 
+  // Remove an item from cart
   const removeFromCart = (itemId) => {
     setCart((prev) => prev.filter((item) => item.id !== itemId));
   };
 
+  // Provide global auth context
   const contextValue = useMemo(
     () => ({
       user,
@@ -94,6 +114,7 @@ const AuthProvider = ({ children }) => {
     [user, cart, webSettings]
   );
 
+  // Show loader while initializing
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-white">
@@ -102,7 +123,11 @@ const AuthProvider = ({ children }) => {
     );
   }
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export { AuthContext, AuthProvider };

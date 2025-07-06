@@ -78,7 +78,6 @@ const creditEscrow = async (escrowData) => {
           transaction_type: "To Escrow Wallet",
           amount: Number(amount).toFixed(2),
           status: "pending",
-          order_no,
           product_id,
         });
 
@@ -86,7 +85,6 @@ const creditEscrow = async (escrowData) => {
           seller_id,
           buyer_id,
           product_id,
-          order_no,
           transactionId,
           amount: Number(amount).toFixed(2),
           escrow_expires_at,
@@ -127,7 +125,6 @@ const creditEscrow = async (escrowData) => {
                 transaction_type: "Commission Deduction",
                 amount: commissionAmount.toFixed(2),
                 status: "system",
-                order_no,
                 product_id,
               });
 
@@ -138,7 +135,6 @@ const creditEscrow = async (escrowData) => {
                   transaction_type: "From Escrow to Merchant Wallet",
                   amount: finalAmount.toFixed(2),
                   status: "credited",
-                  order_no,
                   product_id,
                 });
 

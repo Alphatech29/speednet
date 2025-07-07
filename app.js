@@ -1,4 +1,3 @@
-// server.js
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -12,19 +11,18 @@ const logger = require("./utility/logger");
 dotenv.config();
 const app = express();
 
-// ────────────────────────────────
 // Middleware Setup
-// ────────────────────────────────
 app.use(helmet());
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
       imgSrc: ["*", "data:", "blob:"],
       connectSrc: ["'self'", "https://restcountries.com"],
-      fontSrc: ["'self'", "data:"],
+      fontSrc: ["'self'", "data:", "fonts.gstatic.com"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
     },
@@ -47,13 +45,17 @@ app.use(xssClean());
 app.use(compression());
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
+// Routes
 const authRoute = require("./routes/auth");
 const generalRoute = require("./routes/general");
+
 app.use("/auth", authRoute);
 app.use("/general", generalRoute);
 
+// Serve Client App (e.g., React/Vue build)
 const staticPath = path.join(__dirname, "client", "dist");
 app.use(express.static(staticPath));
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(staticPath, "index.html"), (err) => {
     if (err) {
@@ -66,33 +68,29 @@ app.get("*", (req, res) => {
   });
 });
 
-// ────────────────────────────────
-// Start Bee‑Queue Worker
-// ────────────────────────────────
+// Start Queue Worker (JobQueue or escrow logic)
 try {
-  require("./redis/queues");
-  logger.info("Escrow worker loaded and running...");
-  console.log("Escrow worker loaded and running...");
+  require("./jobs/jobQueues");
+  logger.info("Escrow job queue loaded successfully.");
+  console.log("Escrow job queue loaded successfully.");
 } catch (err) {
-  logger.error("Failed to initialize Bee-Queue escrow worker", {
+  console.error("Escrow queue load failed:", err);
+  logger.error("Failed to initialize escrow job queue", {
     message: err.message,
     stack: err.stack,
   });
   process.exit(1);
 }
 
-// ────────────────────────────────
+
 // Start HTTP Server
-// ────────────────────────────────
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  logger.info(`Server running on http://localhost:${PORT}`);
+  console.log(`Server Successfully Connected`);
+  logger.info(`Server started on http://localhost:${PORT}`);
 });
 
-// ────────────────────────────────
 // Global Error Handlers
-// ────────────────────────────────
 process.on("uncaughtException", (err) => {
   logger.error("Uncaught Exception", { message: err.message, stack: err.stack });
   console.error("Uncaught Exception:", err);
@@ -102,7 +100,7 @@ process.on("uncaughtException", (err) => {
 process.on("unhandledRejection", (reason, promise) => {
   const message = reason instanceof Error ? reason.message : String(reason);
   const stack = reason instanceof Error ? reason.stack : undefined;
-  logger.error("Unhandled Rejection", { message, stack, promise });
+  logger.error("Unhandled Rejection", { message, stack });
   console.error("Unhandled Rejection at:", promise, "reason:", reason);
   process.exit(1);
 });

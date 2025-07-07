@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -8,13 +9,11 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const logger = require("./utility/logger");
 
-// Load environment variables
 dotenv.config();
-
 const app = express();
 
 // ────────────────────────────────
-// Security Middleware
+// Middleware Setup
 // ────────────────────────────────
 app.use(helmet());
 app.use(
@@ -25,66 +24,38 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["*", "data:", "blob:"],
       connectSrc: ["'self'", "https://restcountries.com"],
-      fontSrc: ["'self'"],
+      fontSrc: ["'self'", "data:"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
     },
   })
 );
 
-// ────────────────────────────────
-// CORS
-// ────────────────────────────────
-app.use(cors({
-  origin: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, 
-}));
+app.use(
+  cors({
+    origin: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
-// ────────────────────────────────
-//Parsers
-// ────────────────────────────────
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
-
-// ────────────────────────────────
-//Cookie & XSS
-// ────────────────────────────────
 app.use(cookieParser());
 app.use(xssClean());
-
-// ────────────────────────────────
-// Compression
-// ────────────────────────────────
 app.use(compression());
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
-// ────────────────────────────────
-// Serve Uploaded Files (e.g., Multer)
-// ────────────────────────────────
-app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
-
-// ────────────────────────────────
-//Routes
-// ────────────────────────────────
 const authRoute = require("./routes/auth");
 const generalRoute = require("./routes/general");
-
 app.use("/auth", authRoute);
 app.use("/general", generalRoute);
 
-// ────────────────────────────────
-// Serve Static Files (Frontend)
-// ────────────────────────────────
 const staticPath = path.join(__dirname, "client", "dist");
 app.use(express.static(staticPath));
-
-// ────────────────────────────────
-// Fallback to index.html (SPA)
-// ────────────────────────────────
 app.get("*", (req, res) => {
-  const indexPath = path.join(staticPath, "index.html");
-  res.sendFile(indexPath, (err) => {
+  res.sendFile(path.join(staticPath, "index.html"), (err) => {
     if (err) {
       logger.error("Failed to serve index.html", {
         message: err.message,
@@ -96,37 +67,50 @@ app.get("*", (req, res) => {
 });
 
 // ────────────────────────────────
-//Start Server
+// Start Bee‑Queue Worker
 // ────────────────────────────────
-const PORT = process.env.PORT || 8000;
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  logger.info(`Server running on http://localhost:${PORT}`);
-});
-
-// ────────────────────────────────
-// Graceful Shutdown & Errors
-// ────────────────────────────────
-process.on("uncaughtException", (err) => {
-  logger.error("Uncaught Exception", {
+try {
+  require("./redis/queues");
+  logger.info("Escrow worker loaded and running...");
+  console.log("Escrow worker loaded and running...");
+} catch (err) {
+  logger.error("Failed to initialize Bee-Queue escrow worker", {
     message: err.message,
     stack: err.stack,
   });
   process.exit(1);
+}
+
+// ────────────────────────────────
+// Start HTTP Server
+// ────────────────────────────────
+const PORT = process.env.PORT || 8000;
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on http://localhost:${PORT}`);
+});
+
+// ────────────────────────────────
+// Global Error Handlers
+// ────────────────────────────────
+process.on("uncaughtException", (err) => {
+  logger.error("Uncaught Exception", { message: err.message, stack: err.stack });
+  console.error("Uncaught Exception:", err);
+  process.exit(1);
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-  logger.error("Unhandled Rejection", {
-    reason,
-    promise,
-  });
+  const message = reason instanceof Error ? reason.message : String(reason);
+  const stack = reason instanceof Error ? reason.stack : undefined;
+  logger.error("Unhandled Rejection", { message, stack, promise });
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
   process.exit(1);
 });
 
 process.on("SIGTERM", () => {
   logger.info("SIGTERM received. Shutting down gracefully...");
   server.close(() => {
-    logger.info("Server closed.");
+    logger.info("HTTP server closed.");
     process.exit(0);
   });
 });

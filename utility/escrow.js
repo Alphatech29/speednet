@@ -2,11 +2,12 @@ const { getWebSettings } = require("./general");
 const { getUserDetailsByUid, updateUser } = require("./userInfo");
 const { storeMerchantTransaction, updateTransactionStatus } = require("./merchantHistory");
 const { generateUniqueRandomNumber } = require("./random");
+const { getEscrowExpiryByOrderNo } = require("./accountOrder");
 const logger = require('../utility/logger');
 
 /**
- * Parse WAT datetime string (format: "YYYY-MM-DD HH:mm:ss") into a JS Date (UTC)
- * WAT = UTC+1, so we subtract 1 hour to get UTC
+ * Convert "YYYY-MM-DD HH:mm:ss" datetime string into a UTC JS Date.
+ * Assumes the datetime is already in UTC.
  */
 const parseWATDatetime = (datetimeInput) => {
   if (typeof datetimeInput !== 'string') {
@@ -23,7 +24,8 @@ const parseWATDatetime = (datetimeInput) => {
   const [year, month, day] = datePart.split("-").map(Number);
   const [hour, minute, second] = timePart.split(":").map(Number);
 
-  const utcDate = new Date(Date.UTC(year, month - 1, day, hour - 1, minute, second)); // WAT → UTC
+  // Assuming the time is already in UTC (no WAT offset subtraction)
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
 
   if (isNaN(utcDate.getTime())) {
     throw new Error(`Parsed invalid date from input: ${datetimeStr}`);
@@ -41,13 +43,12 @@ const creditEscrow = async (escrowData) => {
 
     const settings = await getWebSettings();
     const commission = Number(settings?.commission || 0) / 100;
-
     const processedTransactions = [];
 
     for (const entry of escrowData) {
-      const { seller_id, buyer_id, amount, escrow_expires_at, order_no, product_id } = entry;
+      const { seller_id, buyer_id, amount, order_no, product_id } = entry;
 
-      if (!seller_id || isNaN(amount) || !escrow_expires_at || !order_no) {
+      if (!seller_id || isNaN(amount) || !order_no) {
         logger.warn(`Skipping invalid escrow entry: ${JSON.stringify(entry)}`);
         continue;
       }
@@ -58,6 +59,23 @@ const creditEscrow = async (escrowData) => {
           logger.error(`Seller ${seller_id} not found.`);
           continue;
         }
+
+        // Get escrow expiry date
+        const escrowExpiresAt = await getEscrowExpiryByOrderNo(order_no);
+        console.log('Date received from getEscrowExpiryByOrderNo:', escrowExpiresAt);
+
+        if (!escrowExpiresAt) {
+          logger.error(`No escrow expiry date found for order ${order_no}`);
+          continue;
+        }
+
+        const expiresAt = parseWATDatetime(escrowExpiresAt);
+        const now = new Date();
+        const delay = expiresAt.getTime() - now.getTime();
+
+        console.log(`Order ${order_no} expires at: ${expiresAt.toISOString()}`);
+        console.log(`Current UTC time: ${now.toISOString()}`);
+        console.log(`Delay until release: ${delay}ms`);
 
         let currentEscrowBalance = isNaN(userDetails.escrow_balance)
           ? 0
@@ -87,16 +105,8 @@ const creditEscrow = async (escrowData) => {
           product_id,
           transactionId,
           amount: Number(amount).toFixed(2),
-          escrow_expires_at,
+          escrow_expires_at: escrowExpiresAt,
         });
-
-        const expiresAt = parseWATDatetime(escrow_expires_at);
-        const now = new Date();
-        const delay = expiresAt.getTime() - now.getTime();
-
-        console.log(`Order ${order_no} escrow expires at: ${expiresAt.toISOString()}`);
-        console.log(`Current UTC time: ${now.toISOString()}`);
-        console.log(`Delay (ms): ${delay}`);
 
         const processRelease = async () => {
           try {
@@ -138,9 +148,8 @@ const creditEscrow = async (escrowData) => {
                   product_id,
                 });
 
-                // ✅ Log successful release
                 console.log(`[RELEASED] Order ${order_no}: ₦${finalAmount.toFixed(2)} released to merchant (Commission: ₦${commissionAmount.toFixed(2)})`);
-                logger.info(`[RELEASED] Order ${order_no} processed. Final: ₦${finalAmount.toFixed(2)}, Commission: $${commissionAmount.toFixed(2)}`);
+                logger.info(`[RELEASED] Order ${order_no} processed. Final: ₦${finalAmount.toFixed(2)}, Commission: ₦${commissionAmount.toFixed(2)}`);
               }, 1000);
             } else {
               logger.error(`Failed to finalize transaction ${transactionId} for seller ${seller_id}.`);
@@ -164,8 +173,8 @@ const creditEscrow = async (escrowData) => {
     }
 
     if (processedTransactions.length === 0) {
-      logger.error("No valid escrow transactions were processed.");
-      throw new Error("No valid escrow transactions.");
+      logger.warn("Escrow batch completed with 0 valid transactions.");
+      return [];
     }
 
     return processedTransactions;

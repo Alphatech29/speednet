@@ -101,4 +101,39 @@ const getOrdersByUser = async (userUid) => {
     }
 };
 
-module.exports = { storeOrder, storeOrderHistory, getOrdersByUser };
+// Function to get unique order_no and escrow_expires_at combinations
+const getEscrowExpiryByOrderNo = async (orderNo) => {
+  try {
+    if (!orderNo || typeof orderNo !== "string") {
+      throw new Error("Invalid order_no provided. Expected a non-empty string.");
+    }
+
+    const query = `
+      SELECT escrow_expires_at
+      FROM account_order
+      WHERE order_no = ?
+        AND escrow_expires_at IS NOT NULL
+      LIMIT 1
+    `;
+
+    const [rows] = await pool.execute(query, [orderNo]);
+
+    if (rows.length === 0) {
+      logger.warn(`No escrow_expires_at found for order_no: ${orderNo}`);
+      return null;
+    }
+
+    logger.info(`Escrow expiry for order_no ${orderNo} is ${rows[0].escrow_expires_at}`);
+    return rows[0].escrow_expires_at instanceof Date
+  ? rows[0].escrow_expires_at.toISOString().replace("T", " ").slice(0, 19)
+  : rows[0].escrow_expires_at;
+
+
+  } catch (error) {
+    logger.error(`Error getting escrow_expires_at for order_no ${orderNo}: ${error.message}`);
+    return null;
+  }
+};
+
+
+module.exports = { storeOrder, storeOrderHistory, getOrdersByUser, getEscrowExpiryByOrderNo };

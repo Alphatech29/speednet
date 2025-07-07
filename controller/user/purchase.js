@@ -1,4 +1,3 @@
-// Importing utility functions for user, product, order, escrow, and history management
 const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
 const { getProductDetailsById, updateAccountStatusById } = require("../../utility/product");
 const { storeOrder, storeOrderHistory } = require("../../utility/accountOrder");
@@ -124,7 +123,6 @@ const collectOrder = async (req, res) => {
                                 amount: parseFloat(productDetails.price) || 0,
                                 product_ids: [productDetails.id],
                                 order_no: orderNo,
-                                escrow_expires_at: escrowExpiresAt,
                             });
                         }
 

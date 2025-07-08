@@ -667,3 +667,4 @@
 [2025-07-07T23:27:46.781Z] [INFO]: Transporter is ready to send emails
 [2025-07-07T23:27:47.689Z] [INFO]: Escrow job queue loaded successfully.
 [2025-07-07T23:27:47.701Z] [INFO]: Server started on http://localhost:8000
+[2025-07-08T00:15:23.559Z] [INFO]: Fetched 6 orders for user: 4

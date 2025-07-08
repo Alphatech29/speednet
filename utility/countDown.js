@@ -1,41 +1,29 @@
-const { getWebSettings } = require("./general");
+const moment = require('moment-timezone');
+const { getWebSettings } = require('./general');
 
-const formatDateToWATString = (date) => {
-  const pad = (num) => String(num).padStart(2, '0');
-
-  // Convert from UTC to WAT (UTC+1)
-  const watDate = new Date(date.getTime() + 60 * 60 * 1000); // +1 hour
-
-  const year = watDate.getUTCFullYear();
-  const month = pad(watDate.getUTCMonth() + 1);
-  const day = pad(watDate.getUTCDate());
-  const hours = pad(watDate.getUTCHours());
-  const minutes = pad(watDate.getUTCMinutes());
-  const seconds = pad(watDate.getUTCSeconds());
-
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
+const TIMEZONE = 'Africa/Lagos';
 
 const getEscrowExpiry = async () => {
   try {
     const settings = await getWebSettings();
-
     if (!settings) {
       throw new Error("Web settings not found");
     }
 
     const escrowMinutes = parseInt(settings.escrow_time, 10);
-
     if (isNaN(escrowMinutes) || escrowMinutes <= 0) {
       throw new Error("'escrow_time' is missing or invalid in web_settings");
     }
 
-    const now = new Date();
-    const expiresAt = new Date(now.getTime() + escrowMinutes * 60 * 1000);
+    // ✅ Always use timezone-aware moment at creation
+    const now = moment.tz(TIMEZONE);
+    const expiresAt = now.clone().add(escrowMinutes, 'minutes');
 
-    const formattedExpiry = formatDateToWATString(expiresAt);
+    // ✅ Log actual values for debugging
+    console.log(`[GENERATOR] Now (${TIMEZONE}): ${now.format('YYYY-MM-DD HH:mm:ss')} / Expiry: ${expiresAt.format('YYYY-MM-DD HH:mm:ss')}`);
 
-    return formattedExpiry; // e.g., "2025-07-06 18:45:00"
+    // ✅ Save in WAT format (not UTC)
+    return expiresAt.format('YYYY-MM-DD HH:mm:ss');
   } catch (error) {
     console.error("[getEscrowExpiry] Failed:", error.message || error);
     throw new Error("Failed to calculate escrow expiry time");

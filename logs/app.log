@@ -679,3 +679,4 @@
 [2025-07-08T15:02:40.764Z] [INFO]: Transporter is ready to send emails
 [2025-07-08T15:02:41.550Z] [INFO]: Escrow job queue loaded successfully.
 [2025-07-08T15:02:41.592Z] [INFO]: Server started on http://localhost:8000
+[2025-07-08T15:05:40.678Z] [INFO]: Login notification email sent:

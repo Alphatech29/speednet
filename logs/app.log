@@ -668,3 +668,14 @@
 [2025-07-07T23:27:47.689Z] [INFO]: Escrow job queue loaded successfully.
 [2025-07-07T23:27:47.701Z] [INFO]: Server started on http://localhost:8000
 [2025-07-08T00:15:23.559Z] [INFO]: Fetched 6 orders for user: 4
+[2025-07-08T00:39:21.967Z] [INFO]: Transporter is ready to send emails
+[2025-07-08T00:39:22.452Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-08T00:39:22.464Z] [INFO]: Server started on http://localhost:8000
+[2025-07-08T14:01:27.696Z] [INFO]: Transporter is ready to send emails
+[2025-07-08T14:01:28.641Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-08T14:01:28.653Z] [INFO]: Server started on http://localhost:8000
+[2025-07-08T15:02:19.632Z] [ERROR]: Database error: Access denied for user 'root'@'localhost' (using password: YES)
+[2025-07-08T15:02:19.655Z] [ERROR]: Failed to setup transporter: Cannot read properties of null (reading 'smtp_service')
+[2025-07-08T15:02:40.764Z] [INFO]: Transporter is ready to send emails
+[2025-07-08T15:02:41.550Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-08T15:02:41.592Z] [INFO]: Server started on http://localhost:8000

@@ -1,8 +1,6 @@
 const pool = require('../model/db');
 
-/**
- * Insert a new referral record
- */
+
 async function createReferral(referral1_id, referral2_id, referral_amount = 0, referral_status = 0) {
   const sql = `
     INSERT INTO referrals (
@@ -28,9 +26,7 @@ async function createReferral(referral1_id, referral2_id, referral_amount = 0, r
   }
 }
 
-/**
- * Retrieve a referral record by its ID
- */
+
 async function getReferralById(referralId) {
   const sql = `SELECT * FROM referrals WHERE id = ?`;
 
@@ -48,10 +44,7 @@ async function getReferralById(referralId) {
   }
 }
 
-/**
- * Get all referrals made by a specific user (referral1_id)
- * along with full_name and email of each referred user.
- */
+
 async function getReferralsByReferrer(referral1_id) {
   const sql = `
     SELECT 

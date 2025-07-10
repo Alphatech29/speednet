@@ -10,6 +10,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const Register = () => {
   const [fullname, setFullname] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,22 +25,25 @@ const Register = () => {
   const searchParams = new URLSearchParams(location.search);
   const referralCode = searchParams.get("ref");
 
+  // ✅ Hardcoded country list (no external fetch)
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const res = await fetch("/general/country");
-        const data = await res.json();
-        const countryNames = data.countries.sort();
-        setCountries(countryNames);
-      } catch (error) {
-        console.error("Error fetching countries", error);
-      }
-    };
-    fetchCountries();
+    const allowedCountries = [
+      "Nigeria",
+      "Cameroon",
+      "Ghana",
+      "South Africa",
+      "Kenya",
+      "Rwanda",
+      "United Kingdom",
+      "United States",
+      "Canada"
+    ];
+    setCountries(allowedCountries);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match.");
@@ -49,6 +53,7 @@ const Register = () => {
     try {
       const formData = {
         full_name: fullname,
+        username,
         email,
         phone_number,
         password,
@@ -61,6 +66,7 @@ const Register = () => {
       if (response?.success) {
         toast.success("Registration successful!");
         setFullname("");
+        setUsername("");
         setEmail("");
         setPhone("");
         setPassword("");
@@ -131,6 +137,20 @@ const Register = () => {
               </label>
             </div>
 
+            {/* Username */}
+            <div className="relative">
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer"
+                placeholder=" "
+              />
+              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
+                Username
+              </label>
+            </div>
+
             {/* Email */}
             <div className="relative">
               <input
@@ -148,15 +168,17 @@ const Register = () => {
             {/* Phone and Country */}
             <div className="flex flex-col tab:flex-row gap-4">
               <PhoneInput
-                country={"us"}
+                country={"ng"}
                 value={phone_number}
                 onChange={(value) => setPhone(value)}
                 enableSearch={true}
+                onlyCountries={["ng", "cm", "gh", "za", "ke", "rw", "gb", "us", "ca"]}
                 containerClass="w-full"
                 inputClass="!text-base !w-full !py-5 !border !border-gray-500 !bg-gray-800 !text-white !rounded-md"
                 buttonClass="!bg-gray-800 !border-gray-500 !rounded-l-md"
                 dropdownClass="!bg-gray-800 !text-white"
               />
+
               <select
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}

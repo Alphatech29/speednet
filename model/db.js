@@ -21,10 +21,10 @@ const pool = mysql.createPool(dbConfig).promise();
 (async () => {
   try {
     const conn = await pool.getConnection();
-    console.log("✅ Database Connected Successfully");
+    console.log("Database Connected Successfully");
     conn.release();
   } catch (err) {
-    console.error("❌ Database connection failed:", err.message);
+    console.error("Database connection failed:", err.message);
   }
 })();
 

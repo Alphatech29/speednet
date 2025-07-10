@@ -10,8 +10,8 @@ const dayDifference = (expiryDateStr) => {
 const apis = [
   {
     name: "540 Cron Jobs Apis",
-    start_on: "2024-06-14",
-    expires_on: "2025-07-10",
+    start_on: "2025-07-09",
+    expires_on: "2025-08-07",
     premium_plan: {
       plan: "Pro",
       price_usd: 100,
@@ -60,8 +60,8 @@ const apis = [
   },
   {
     name: "Redis Cloud",
-    start_on: "2024-06-14",
-    expires_on: "2025-07-8",
+    start_on: "2025-07-09",
+    expires_on: "2025-08-07",
     premium_plan: {
       plan: "Cloud",
       price_usd: 100,

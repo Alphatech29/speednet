@@ -1,682 +1,111 @@
-[2025-07-06T22:54:33.236Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T22:54:34.273Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T22:54:34.284Z] [ERROR]: Uncaught Exception
-[2025-07-06T22:55:38.236Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T22:55:38.698Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T22:55:38.707Z] [ERROR]: Uncaught Exception
-[2025-07-06T22:56:09.983Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T22:56:10.708Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T22:56:10.718Z] [ERROR]: Uncaught Exception
-[2025-07-06T22:57:08.154Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T22:57:09.082Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T22:57:09.095Z] [ERROR]: Uncaught Exception
-[2025-07-06T22:59:02.816Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T22:59:03.760Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T22:59:03.807Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:02:05.905Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:02:06.945Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:02:06.966Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:02:19.176Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:02:19.770Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:02:19.801Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:04:23.251Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:04:26.459Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:04:27.331Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:04:27.345Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:04:30.668Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:04:31.259Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:04:31.272Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:09:02.926Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:09:03.502Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:09:03.513Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:09:03.524Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:11:16.501Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:11:16.957Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:11:16.964Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:11:16.973Z] [ERROR]: Uncaught Exception
-[2025-07-06T23:21:15.802Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:21:16.443Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:21:16.450Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:22:06.559Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:22:07.124Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:22:07.140Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:23:22.770Z] [INFO]: Login notification email sent:
-[2025-07-06T23:23:22.844Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:23:44.666Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:24:07.955Z] [INFO]: Order stored successfully with ID: 263
-[2025-07-06T23:24:08.033Z] [INFO]: Order history stored successfully with ID: 125
-[2025-07-06T23:24:09.115Z] [INFO]: Fetched 21 orders for user: 4
-[2025-07-06T23:24:10.051Z] [INFO]: Escrow expiry for order_no 562984 is Mon Jul 07 2025 00:25:07 GMT+0100 (West Africa Standard Time)
-[2025-07-06T23:24:22.864Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:24:32.697Z] [INFO]: Fetched 21 orders for user: 4
-[2025-07-06T23:38:59.120Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:38:59.837Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:38:59.846Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:39:04.319Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:39:31.662Z] [INFO]: Login notification email sent:
-[2025-07-06T23:39:38.632Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:39:45.427Z] [INFO]: Order stored successfully with ID: 264
-[2025-07-06T23:39:45.628Z] [INFO]: Order history stored successfully with ID: 126
-[2025-07-06T23:39:46.664Z] [INFO]: Fetched 22 orders for user: 4
-[2025-07-06T23:39:47.657Z] [INFO]: Escrow expiry for order_no 747593 is Mon Jul 07 2025 00:40:45 GMT+0100 (West Africa Standard Time)
-[2025-07-06T23:41:32.147Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:41:33.057Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:41:33.069Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:43:04.005Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:43:04.804Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:43:04.826Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:43:25.856Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:43:26.747Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:43:26.754Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:43:39.594Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:43:40.604Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:43:40.617Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:43:41.595Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:44:04.279Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:44:12.416Z] [INFO]: Order stored successfully with ID: 265
-[2025-07-06T23:44:12.575Z] [INFO]: Order history stored successfully with ID: 127
-[2025-07-06T23:44:13.619Z] [INFO]: Fetched 23 orders for user: 4
-[2025-07-06T23:44:14.591Z] [INFO]: Escrow expiry for order_no 819007 is Mon Jul 07 2025 00:45:12 GMT+0100 (West Africa Standard Time)
-[2025-07-06T23:44:36.315Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:44:42.535Z] [INFO]: Fetched 23 orders for user: 4
-[2025-07-06T23:45:59.524Z] [INFO]: Fetched 23 orders for user: 4
-[2025-07-06T23:53:45.919Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:53:51.689Z] [INFO]: Order stored successfully with ID: 266
-[2025-07-06T23:53:51.918Z] [INFO]: Order history stored successfully with ID: 128
-[2025-07-06T23:53:52.954Z] [INFO]: Fetched 24 orders for user: 4
-[2025-07-06T23:54:11.665Z] [INFO]: Escrow expiry for order_no 963888 is Mon Jul 07 2025 00:54:51 GMT+0100 (West Africa Standard Time)
-[2025-07-06T23:54:11.717Z] [INFO]: Fetched 7 accounts
-[2025-07-06T23:54:18.841Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:54:19.304Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:54:19.317Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:54:37.201Z] [INFO]: Fetched 24 orders for user: 4
-[2025-07-06T23:55:18.143Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:55:18.621Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:55:18.629Z] [INFO]: Server running on http://localhost:8000
-[2025-07-06T23:55:35.489Z] [INFO]: Login notification email sent:
-[2025-07-06T23:59:14.594Z] [INFO]: Transporter is ready to send emails
-[2025-07-06T23:59:15.481Z] [INFO]: Escrow worker loaded and running...
-[2025-07-06T23:59:15.525Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T00:13:45.640Z] [INFO]: Login notification email sent:
-[2025-07-07T00:21:45.020Z] [INFO]: Fetched 7 accounts
-[2025-07-07T00:21:53.781Z] [INFO]: Order stored successfully with ID: 267
-[2025-07-07T00:21:53.965Z] [INFO]: Order history stored successfully with ID: 129
-[2025-07-07T00:21:55.009Z] [INFO]: Fetched 25 orders for user: 4
-[2025-07-07T00:21:55.982Z] [INFO]: Escrow expiry for order_no 199976 is Mon Jul 07 2025 01:22:53 GMT+0100 (West Africa Standard Time)
-[2025-07-07T00:21:56.208Z] [ERROR]: [ORDER 199976] Error: queue.createJob(...).delay is not a function
-[2025-07-07T00:21:56.211Z] [ERROR]: Failed to process escrow batch:
-[2025-07-07T00:21:56.213Z] [ERROR]: Unhandled Rejection
-[2025-07-07T00:23:53.906Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T00:23:54.426Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T00:23:54.436Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T00:24:33.519Z] [INFO]: Fetched 7 accounts
-[2025-07-07T00:24:53.011Z] [INFO]: Fetched 7 accounts
-[2025-07-07T00:25:00.831Z] [INFO]: Order stored successfully with ID: 268
-[2025-07-07T00:25:01.007Z] [INFO]: Order history stored successfully with ID: 130
-[2025-07-07T00:25:02.056Z] [INFO]: Fetched 26 orders for user: 4
-[2025-07-07T00:25:03.020Z] [INFO]: Escrow expiry for order_no 476891 is Mon Jul 07 2025 01:26:00 GMT+0100 (West Africa Standard Time)
-[2025-07-07T00:25:16.443Z] [INFO]: Fetched 26 orders for user: 4
-[2025-07-07T00:26:15.249Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T00:26:15.905Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T00:26:15.916Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T11:04:14.003Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T11:04:15.512Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T11:04:15.521Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T11:04:52.013Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T11:04:52.956Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T11:04:52.973Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T12:03:19.056Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:04:33.306Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:04:33.965Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T12:04:33.978Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T12:05:11.750Z] [INFO]: Login notification email sent:
-[2025-07-07T12:05:12.680Z] [INFO]: Fetched 7 accounts
-[2025-07-07T12:05:26.695Z] [INFO]: Fetched 7 accounts
-[2025-07-07T12:05:33.433Z] [INFO]: Order stored successfully with ID: 269
-[2025-07-07T12:05:33.511Z] [INFO]: Order history stored successfully with ID: 131
-[2025-07-07T12:05:34.564Z] [INFO]: Fetched 27 orders for user: 4
-[2025-07-07T12:05:35.528Z] [WARN]: Skipping invalid escrow entry: {"seller_id":4,"amount":20,"product_ids":[4],"order_no":"146141"}
-[2025-07-07T12:05:35.530Z] [ERROR]: No valid escrow transactions were processed.
-[2025-07-07T12:05:35.532Z] [ERROR]: Failed to process escrow batch:
-[2025-07-07T12:05:35.535Z] [ERROR]: Unhandled Rejection
-[2025-07-07T12:06:01.994Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:06:02.427Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T12:06:02.435Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T12:07:40.570Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:07:41.108Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T12:07:41.120Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T12:07:56.628Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:07:57.119Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T12:07:57.128Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T12:08:24.233Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:08:25.060Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T12:08:25.069Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T12:08:42.207Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T12:08:43.109Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T12:08:43.118Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T13:40:05.925Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T13:40:06.387Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T13:40:06.395Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T13:43:38.647Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T13:43:39.674Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T13:43:39.686Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T13:46:08.297Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T13:46:09.998Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T13:46:10.007Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T13:47:02.006Z] [INFO]: Login notification email sent:
-[2025-07-07T13:50:24.893Z] [INFO]: Fetched 7 accounts
-[2025-07-07T13:50:31.421Z] [INFO]: Order stored successfully with ID: 270
-[2025-07-07T13:50:31.738Z] [INFO]: Order history stored successfully with ID: 132
-[2025-07-07T13:50:32.787Z] [INFO]: Fetched 28 orders for user: 4
-[2025-07-07T13:50:33.759Z] [INFO]: Escrow expiry for order_no 540750 is Mon Jul 07 2025 14:51:31 GMT+0100 (West Africa Standard Time)
-[2025-07-07T13:50:33.760Z] [ERROR]: No escrow expiry date found for order 540750
-[2025-07-07T13:50:33.762Z] [ERROR]: No valid escrow transactions were processed.
-[2025-07-07T13:50:33.765Z] [ERROR]: Failed to process escrow batch:
-[2025-07-07T13:50:33.768Z] [ERROR]: Unhandled Rejection
-[2025-07-07T13:53:26.229Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T13:53:27.222Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T13:53:27.235Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T13:54:20.555Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T13:54:21.033Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T13:54:21.043Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T13:55:12.499Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T13:55:12.922Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T13:55:12.931Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T14:29:43.822Z] [INFO]: Fetched 7 accounts
-[2025-07-07T14:29:44.180Z] [INFO]: Login notification email sent:
-[2025-07-07T14:29:50.973Z] [INFO]: Order stored successfully with ID: 271
-[2025-07-07T14:29:51.188Z] [INFO]: Order history stored successfully with ID: 133
-[2025-07-07T14:29:52.242Z] [INFO]: Fetched 29 orders for user: 4
-[2025-07-07T14:29:53.210Z] [INFO]: Escrow expiry for order_no 596354 is Mon Jul 07 2025 15:30:50 GMT+0100 (West Africa Standard Time)
-[2025-07-07T14:29:53.211Z] [ERROR]: Error processing escrow for order 596354: Expected datetime string in 'YYYY-MM-DD HH:mm:ss' format, got: object
-[2025-07-07T14:29:53.213Z] [WARN]: Escrow batch completed with 0 valid transactions.
-[2025-07-07T14:31:31.881Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T14:31:33.005Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T14:31:33.012Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T14:33:00.077Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T14:33:01.490Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T14:33:01.514Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T14:33:17.152Z] [INFO]: Fetched 7 accounts
-[2025-07-07T14:33:26.040Z] [INFO]: Order stored successfully with ID: 272
-[2025-07-07T14:33:26.118Z] [INFO]: Order history stored successfully with ID: 134
-[2025-07-07T14:33:27.173Z] [INFO]: Fetched 30 orders for user: 4
-[2025-07-07T14:33:28.133Z] [INFO]: Escrow expiry for order_no 250237 is Mon Jul 07 2025 15:34:25 GMT+0100 (West Africa Standard Time)
-[2025-07-07T14:33:28.243Z] [WARN]: Escrow already expired for order 250237. Processing immediately.
-[2025-07-07T14:33:29.528Z] [INFO]: [RELEASED] Order 250237 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T14:36:27.959Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T14:36:28.676Z] [INFO]: Escrow worker loaded and running...
-[2025-07-07T14:36:28.688Z] [INFO]: Server running on http://localhost:8000
-[2025-07-07T14:36:41.615Z] [INFO]: Fetched 7 accounts
-[2025-07-07T14:36:48.329Z] [INFO]: Order stored successfully with ID: 273
-[2025-07-07T14:36:48.407Z] [INFO]: Order history stored successfully with ID: 135
-[2025-07-07T14:36:49.461Z] [INFO]: Fetched 31 orders for user: 4
-[2025-07-07T14:36:49.937Z] [INFO]: Fetched 7 accounts
-[2025-07-07T14:36:50.416Z] [INFO]: Escrow expiry for order_no 322980 is Mon Jul 07 2025 15:37:48 GMT+0100 (West Africa Standard Time)
-[2025-07-07T14:36:50.548Z] [INFO]: Scheduling transfer for order 322980 after 57582ms
-[2025-07-07T14:36:57.934Z] [INFO]: Fetched 31 orders for user: 4
-[2025-07-07T14:37:49.395Z] [INFO]: [RELEASED] Order 322980 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T16:06:00.888Z] [INFO]: Login notification email sent:
-[2025-07-07T16:50:32.644Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:51:22.855Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:51:34.691Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:52:26.693Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:52:27.396Z] [ERROR]: Failed to initialize escrow job queue
-[2025-07-07T16:53:10.858Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:53:11.382Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:53:11.395Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:53:59.408Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:53:59.809Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:53:59.833Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:54:11.228Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:54:11.553Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:54:11.567Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:54:18.303Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:54:18.612Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:54:18.621Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:54:23.266Z] [INFO]: Fetched 7 accounts
-[2025-07-07T16:54:44.557Z] [INFO]: Login notification email sent:
-[2025-07-07T16:54:47.252Z] [INFO]: Fetched 7 accounts
-[2025-07-07T16:54:54.886Z] [INFO]: Order stored successfully with ID: 274
-[2025-07-07T16:54:54.964Z] [INFO]: Order history stored successfully with ID: 136
-[2025-07-07T16:54:56.024Z] [INFO]: Fetched 32 orders for user: 4
-[2025-07-07T16:54:56.986Z] [INFO]: Escrow expiry for order_no 211373 is Mon Jul 07 2025 17:55:54 GMT+0100 (West Africa Standard Time)
-[2025-07-07T16:54:59.716Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:55:00.076Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:55:00.084Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:55:00.251Z] [INFO]: [RELEASED] Order 211373 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T16:55:02.434Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:55:02.748Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:55:02.757Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:55:15.999Z] [INFO]: Fetched 7 accounts
-[2025-07-07T16:55:50.123Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:55:50.610Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:55:50.621Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:56:03.469Z] [INFO]: Fetched 7 accounts
-[2025-07-07T16:56:09.651Z] [INFO]: Order stored successfully with ID: 275
-[2025-07-07T16:56:09.806Z] [INFO]: Order history stored successfully with ID: 137
-[2025-07-07T16:56:10.860Z] [INFO]: Fetched 33 orders for user: 4
-[2025-07-07T16:56:11.678Z] [INFO]: Fetched 7 accounts
-[2025-07-07T16:56:11.828Z] [INFO]: Escrow expiry for order_no 640834 is Mon Jul 07 2025 17:57:09 GMT+0100 (West Africa Standard Time)
-[2025-07-07T16:56:14.339Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:56:14.646Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:56:14.656Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:56:14.876Z] [INFO]: [RELEASED] Order 640834 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T16:56:16.961Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T16:56:17.277Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T16:56:17.288Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T16:59:27.352Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:00:44.642Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:00:44.964Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:00:44.972Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:01:01.904Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:01:10.445Z] [INFO]: Order stored successfully with ID: 276
-[2025-07-07T17:01:10.534Z] [INFO]: Order history stored successfully with ID: 138
-[2025-07-07T17:01:11.587Z] [INFO]: Fetched 34 orders for user: 4
-[2025-07-07T17:01:12.554Z] [INFO]: Escrow expiry for order_no 101917 is Mon Jul 07 2025 18:02:10 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:01:14.900Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:01:15.209Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:01:15.218Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:01:15.681Z] [INFO]: [RELEASED] Order 101917 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T17:01:17.850Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:01:18.157Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:01:18.165Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:09:11.248Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:09:11.727Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:09:11.736Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:11:23.959Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:12:13.782Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:13:12.408Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:13:42.492Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:13:42.859Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:13:42.867Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:14:05.152Z] [INFO]: Login notification email sent:
-[2025-07-07T17:15:27.795Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:15:33.860Z] [INFO]: Order stored successfully with ID: 277
-[2025-07-07T17:15:33.938Z] [INFO]: Order history stored successfully with ID: 139
-[2025-07-07T17:15:35.001Z] [INFO]: Fetched 35 orders for user: 4
-[2025-07-07T17:15:35.954Z] [INFO]: Escrow expiry for order_no 498778 is Mon Jul 07 2025 18:16:33 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:15:39.850Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:15:40.010Z] [INFO]: [QUEUE START] Processing order 498778
-[2025-07-07T17:15:40.276Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:15:40.289Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:15:40.495Z] [INFO]: [RELEASED] Order 498778 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T17:15:40.496Z] [INFO]: [QUEUE END] Order 498778 completed
-[2025-07-07T17:15:42.900Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:15:43.204Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:15:43.211Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:15:43.311Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:20:33.460Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:20:41.248Z] [INFO]: Order stored successfully with ID: 278
-[2025-07-07T17:20:41.325Z] [INFO]: Order history stored successfully with ID: 140
-[2025-07-07T17:20:42.381Z] [INFO]: Fetched 36 orders for user: 4
-[2025-07-07T17:20:43.341Z] [INFO]: Escrow expiry for order_no 816899 is Mon Jul 07 2025 18:21:41 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:20:45.968Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:20:46.108Z] [INFO]: [QUEUE START] Processing order 816899
-[2025-07-07T17:20:46.282Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:20:46.291Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:20:46.547Z] [INFO]: [RELEASED] Order 816899 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T17:20:46.548Z] [INFO]: [QUEUE END] Order 816899 completed
-[2025-07-07T17:20:48.958Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:20:49.310Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:20:49.318Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:24:28.467Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:24:29.278Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:24:29.387Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:25:19.594Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:25:19.983Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:25:19.992Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:25:33.787Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:25:40.379Z] [INFO]: Order stored successfully with ID: 279
-[2025-07-07T17:25:40.494Z] [INFO]: Order history stored successfully with ID: 141
-[2025-07-07T17:25:41.559Z] [INFO]: Fetched 37 orders for user: 4
-[2025-07-07T17:25:42.528Z] [INFO]: Escrow expiry for order_no 469894 is Mon Jul 07 2025 18:26:40 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:25:49.882Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:25:50.023Z] [INFO]: [QUEUE START] Processing order 469894
-[2025-07-07T17:25:50.203Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:25:50.212Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:25:50.425Z] [INFO]: [RELEASED] Order 469894 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T17:25:50.427Z] [INFO]: [QUEUE END] Order 469894 completed
-[2025-07-07T17:25:52.691Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:25:53.048Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:25:53.054Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:30:07.867Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:30:08.238Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:30:08.245Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:34:15.507Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:34:16.109Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:34:16.121Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:34:36.005Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:34:36.394Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:34:36.401Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:36:36.307Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:36:36.700Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:36:36.717Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:36:54.805Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:36:55.262Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:36:55.271Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:36:55.593Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:37:17.172Z] [INFO]: Login notification email sent:
-[2025-07-07T17:37:25.982Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:37:32.268Z] [INFO]: Order stored successfully with ID: 280
-[2025-07-07T17:37:32.699Z] [INFO]: Order history stored successfully with ID: 142
-[2025-07-07T17:37:33.753Z] [INFO]: Fetched 38 orders for user: 4
-[2025-07-07T17:37:34.720Z] [INFO]: Escrow expiry for order_no 615802 is Mon Jul 07 2025 18:38:32 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:37:57.014Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:38:01.831Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:40:18.746Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:40:19.176Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:40:19.185Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:45:51.993Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:45:52.450Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:45:52.460Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:46:07.711Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:46:32.910Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:46:39.703Z] [INFO]: Order stored successfully with ID: 281
-[2025-07-07T17:46:39.781Z] [INFO]: Order history stored successfully with ID: 143
-[2025-07-07T17:46:40.855Z] [INFO]: Fetched 39 orders for user: 4
-[2025-07-07T17:46:41.812Z] [INFO]: Escrow expiry for order_no 539612 is Mon Jul 07 2025 18:47:39 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:49:06.397Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:49:07.342Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:49:07.355Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:49:27.168Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:49:39.502Z] [INFO]: Order stored successfully with ID: 282
-[2025-07-07T17:49:39.581Z] [INFO]: Order history stored successfully with ID: 144
-[2025-07-07T17:49:40.641Z] [INFO]: Fetched 40 orders for user: 4
-[2025-07-07T17:49:41.611Z] [INFO]: Escrow expiry for order_no 399247 is Mon Jul 07 2025 18:50:39 GMT+0100 (West Africa Standard Time)
-[2025-07-07T17:53:37.182Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:53:37.596Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:53:37.607Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:53:49.692Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T17:53:50.130Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T17:53:50.138Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T17:54:49.091Z] [INFO]: Login notification email sent:
-[2025-07-07T17:54:52.299Z] [INFO]: Fetched 7 accounts
-[2025-07-07T17:54:58.241Z] [INFO]: Order stored successfully with ID: 283
-[2025-07-07T17:54:58.330Z] [INFO]: Order history stored successfully with ID: 145
-[2025-07-07T17:54:59.381Z] [INFO]: Fetched 41 orders for user: 4
-[2025-07-07T17:55:00.357Z] [INFO]: Escrow expiry for order_no 922515 is Mon Jul 07 2025 18:55:58 GMT+0100 (West Africa Standard Time)
-[2025-07-07T18:00:11.176Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T18:00:11.613Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T18:00:11.621Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T19:58:33.662Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T19:58:34.022Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T19:58:34.029Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T19:59:31.727Z] [INFO]: Login notification email sent:
-[2025-07-07T20:00:13.393Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:00:26.645Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:00:32.390Z] [INFO]: Order stored successfully with ID: 284
-[2025-07-07T20:00:32.467Z] [INFO]: Order history stored successfully with ID: 146
-[2025-07-07T20:00:33.522Z] [INFO]: Fetched 42 orders for user: 4
-[2025-07-07T20:00:34.483Z] [INFO]: Escrow expiry for order_no 259291 is Mon Jul 07 2025 21:01:32 GMT+0100 (West Africa Standard Time)
-[2025-07-07T20:12:05.099Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:12:05.513Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:12:05.524Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:12:19.734Z] [INFO]: Fetched 42 orders for user: 4
-[2025-07-07T20:12:22.082Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:12:28.630Z] [INFO]: Order stored successfully with ID: 285
-[2025-07-07T20:12:28.708Z] [INFO]: Order history stored successfully with ID: 147
-[2025-07-07T20:12:29.757Z] [INFO]: Fetched 43 orders for user: 4
-[2025-07-07T20:12:30.733Z] [INFO]: Escrow expiry for order_no 384636 is Mon Jul 07 2025 21:13:28 GMT+0100 (West Africa Standard Time)
-[2025-07-07T20:16:06.096Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:16:06.425Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:16:06.433Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:16:18.737Z] [INFO]: Login notification email sent:
-[2025-07-07T20:16:35.842Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:16:41.714Z] [INFO]: Order stored successfully with ID: 286
-[2025-07-07T20:16:42.032Z] [INFO]: Order history stored successfully with ID: 148
-[2025-07-07T20:16:43.120Z] [INFO]: Fetched 44 orders for user: 4
-[2025-07-07T20:16:44.057Z] [INFO]: Escrow expiry for order_no 573929 is Mon Jul 07 2025 21:17:41 GMT+0100 (West Africa Standard Time)
-[2025-07-07T20:19:16.711Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:19:17.196Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:19:17.206Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:19:26.336Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:19:41.270Z] [INFO]: Order stored successfully with ID: 287
-[2025-07-07T20:19:41.347Z] [INFO]: Order history stored successfully with ID: 149
-[2025-07-07T20:19:42.402Z] [INFO]: Fetched 45 orders for user: 4
-[2025-07-07T20:19:43.366Z] [INFO]: Escrow expiry for order_no 130029 is Mon Jul 07 2025 21:20:41 GMT+0100 (West Africa Standard Time)
-[2025-07-07T20:22:03.491Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:22:03.855Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:22:03.863Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:22:17.384Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:22:22.851Z] [INFO]: Order stored successfully with ID: 288
-[2025-07-07T20:22:22.929Z] [INFO]: Order history stored successfully with ID: 150
-[2025-07-07T20:22:23.994Z] [INFO]: Fetched 46 orders for user: 4
-[2025-07-07T20:22:24.950Z] [INFO]: Escrow expiry for order_no 396922 is Mon Jul 07 2025 21:23:22 GMT+0100 (West Africa Standard Time)
-[2025-07-07T20:22:27.265Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:22:27.428Z] [INFO]: [QUEUE START] Processing order 396922
-[2025-07-07T20:22:27.617Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:22:27.628Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:22:27.834Z] [INFO]: [RELEASED] Order 396922 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T20:22:27.835Z] [INFO]: [QUEUE END] Order 396922 completed
-[2025-07-07T20:22:30.028Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:22:30.364Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:22:30.372Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:24:43.165Z] [INFO]: Fetched 7 accounts
-[2025-07-07T20:30:13.247Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:30:13.904Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:30:13.915Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:30:19.185Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:30:19.721Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:30:19.733Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:31:17.175Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:31:17.543Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:31:17.552Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:52:17.996Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:56:53.550Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:57:57.446Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:57:58.465Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:57:58.524Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T20:59:50.437Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T20:59:51.020Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T20:59:51.047Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:01:54.717Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:01:55.353Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:01:55.361Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:02:50.046Z] [INFO]: Login notification email sent:
-[2025-07-07T21:02:51.599Z] [INFO]: Fetched 7 accounts
-[2025-07-07T21:02:57.613Z] [INFO]: Order stored successfully with ID: 289
-[2025-07-07T21:02:57.713Z] [INFO]: Order history stored successfully with ID: 151
-[2025-07-07T21:02:58.758Z] [INFO]: Fetched 47 orders for user: 4
-[2025-07-07T21:02:59.728Z] [INFO]: Escrow expiry for order_no 304074 is Mon Jul 07 2025 22:03:57 GMT+0100 (West Africa Standard Time)
-[2025-07-07T21:06:31.297Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:06:31.711Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:06:31.719Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:06:50.802Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:06:51.322Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:06:51.332Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:08:10.857Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:08:11.302Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:08:11.310Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:08:22.855Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:08:23.368Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:08:23.377Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:09:29.132Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:09:29.816Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:09:29.827Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:09:50.944Z] [INFO]: Fetched 47 orders for user: 4
-[2025-07-07T21:09:52.923Z] [INFO]: Fetched 7 accounts
-[2025-07-07T21:10:02.780Z] [INFO]: Order stored successfully with ID: 290
-[2025-07-07T21:10:02.857Z] [INFO]: Order history stored successfully with ID: 152
-[2025-07-07T21:10:03.908Z] [INFO]: Fetched 48 orders for user: 4
-[2025-07-07T21:10:04.883Z] [INFO]: Escrow expiry for order_no 906266 is Mon Jul 07 2025 22:11:02 GMT+0100 (West Africa Standard Time)
-[2025-07-07T21:39:25.078Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:39:25.673Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:39:25.684Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:39:42.060Z] [INFO]: Fetched 7 accounts
-[2025-07-07T21:39:42.131Z] [INFO]: Login notification email sent:
-[2025-07-07T21:39:58.903Z] [INFO]: Order stored successfully with ID: 291
-[2025-07-07T21:39:58.981Z] [INFO]: Order history stored successfully with ID: 153
-[2025-07-07T21:40:00.044Z] [INFO]: Fetched 49 orders for user: 4
-[2025-07-07T21:40:00.998Z] [INFO]: Escrow expiry for order_no 815736 is Mon Jul 07 2025 22:40:58 GMT+0100 (West Africa Standard Time)
-[2025-07-07T21:44:23.002Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:44:23.867Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:44:23.875Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:44:31.228Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:44:31.914Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:44:31.929Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:44:43.039Z] [INFO]: Fetched 49 orders for user: 4
-[2025-07-07T21:44:55.257Z] [INFO]: Fetched 49 orders for user: 4
-[2025-07-07T21:44:56.295Z] [INFO]: Fetched 7 accounts
-[2025-07-07T21:45:05.027Z] [INFO]: Order stored successfully with ID: 292
-[2025-07-07T21:45:05.215Z] [INFO]: Order history stored successfully with ID: 154
-[2025-07-07T21:45:06.253Z] [INFO]: Fetched 50 orders for user: 4
-[2025-07-07T21:45:07.242Z] [INFO]: Escrow expiry for order_no 696871 is Mon Jul 07 2025 22:46:04 GMT+0100 (West Africa Standard Time)
-[2025-07-07T21:49:32.047Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:49:32.454Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:49:32.465Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:55:01.329Z] [INFO]: Fetched 7 accounts
-[2025-07-07T21:55:07.450Z] [INFO]: Order stored successfully with ID: 293
-[2025-07-07T21:55:07.601Z] [INFO]: Order history stored successfully with ID: 155
-[2025-07-07T21:55:08.648Z] [INFO]: Fetched 1 orders for user: 4
-[2025-07-07T21:55:09.624Z] [INFO]: Escrow expiry for order_no 959791 is 2025-07-07 22:56:07
-[2025-07-07T21:55:11.906Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:55:12.089Z] [INFO]: [QUEUE START] Processing order 959791
-[2025-07-07T21:55:12.301Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:55:12.309Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:55:12.610Z] [INFO]: [RELEASED] Order 959791 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T21:55:12.611Z] [INFO]: [QUEUE END] Order 959791 completed
-[2025-07-07T21:55:15.371Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:55:15.731Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:55:15.740Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:59:13.989Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T21:59:14.589Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T21:59:14.613Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T21:59:44.179Z] [INFO]: Fetched 7 accounts
-[2025-07-07T21:59:45.318Z] [INFO]: Login notification email sent:
-[2025-07-07T21:59:55.675Z] [INFO]: Order stored successfully with ID: 294
-[2025-07-07T21:59:55.890Z] [INFO]: Order history stored successfully with ID: 156
-[2025-07-07T21:59:56.942Z] [INFO]: Fetched 2 orders for user: 4
-[2025-07-07T21:59:57.915Z] [INFO]: Escrow expiry for order_no 809111 is 2025-07-07 23:00:55
-[2025-07-07T21:59:58.242Z] [INFO]: [QUEUE START] Processing order 809111
-[2025-07-07T22:00:00.454Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:00:00.853Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:00:00.861Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:02:51.086Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:02:51.566Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:02:51.576Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:06:21.017Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:06:21.664Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:06:21.675Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:06:31.501Z] [INFO]: Fetched 7 accounts
-[2025-07-07T22:06:39.050Z] [INFO]: Order stored successfully with ID: 295
-[2025-07-07T22:06:39.127Z] [INFO]: Order history stored successfully with ID: 157
-[2025-07-07T22:06:40.162Z] [INFO]: Fetched 3 orders for user: 4
-[2025-07-07T22:06:41.142Z] [INFO]: Escrow expiry for order_no 270679 is 2025-07-07 23:07:38
-[2025-07-07T22:06:43.819Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:06:44.247Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:06:44.258Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:07:38.494Z] [INFO]: [QUEUE START] Processing order 270679
-[2025-07-07T22:07:38.699Z] [INFO]: [RELEASED] Order 270679 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T22:07:38.700Z] [INFO]: [QUEUE END] Order 270679 completed
-[2025-07-07T22:07:40.979Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:07:41.349Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:07:41.363Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:20:10.595Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:20:11.034Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:20:11.041Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:20:16.710Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:20:17.228Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:20:17.243Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:20:31.106Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:20:31.614Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:20:31.626Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:20:53.433Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:20:53.831Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:20:53.842Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:23:00.662Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:23:01.029Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:23:01.036Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:23:03.736Z] [INFO]: Fetched 7 accounts
-[2025-07-07T22:23:13.806Z] [INFO]: Order stored successfully with ID: 296
-[2025-07-07T22:23:14.005Z] [INFO]: Order stored successfully with ID: 297
-[2025-07-07T22:23:14.120Z] [INFO]: Order history stored successfully with ID: 158
-[2025-07-07T22:23:15.174Z] [INFO]: Fetched 5 orders for user: 4
-[2025-07-07T22:23:16.141Z] [INFO]: Escrow expiry for order_no 368195 is 2025-07-07 23:24:13
-[2025-07-07T22:23:18.467Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:23:18.837Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:23:18.845Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:24:13.176Z] [INFO]: [QUEUE START] Processing order 368195
-[2025-07-07T22:24:13.790Z] [INFO]: [RELEASED] Order 368195 processed. Final: ₦36.00, Commission: ₦4.00
-[2025-07-07T22:24:13.791Z] [INFO]: [QUEUE END] Order 368195 completed
-[2025-07-07T22:24:17.419Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:24:17.845Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:24:17.853Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:32:10.934Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:32:11.319Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:32:11.327Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:34:48.199Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:34:48.654Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:34:48.666Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:35:21.455Z] [INFO]: Login notification email sent:
-[2025-07-07T22:35:23.052Z] [INFO]: Fetched 7 accounts
-[2025-07-07T22:35:30.188Z] [INFO]: Order stored successfully with ID: 298
-[2025-07-07T22:35:30.366Z] [INFO]: Order history stored successfully with ID: 159
-[2025-07-07T22:35:31.429Z] [INFO]: Fetched 6 orders for user: 4
-[2025-07-07T22:35:32.396Z] [INFO]: Escrow expiry for order_no 792472 is 2025-07-07 23:36:30
-[2025-07-07T22:35:34.828Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:35:35.196Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:35:35.205Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:36:30.151Z] [INFO]: [QUEUE START] Processing order 792472
-[2025-07-07T22:36:30.358Z] [INFO]: [RELEASED] Order 792472 processed. Final: ₦18.00, Commission: ₦2.00
-[2025-07-07T22:36:30.359Z] [INFO]: [QUEUE END] Order 792472 completed
-[2025-07-07T22:36:32.745Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:36:33.178Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:36:33.186Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:38:03.061Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:38:03.466Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:38:03.479Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:38:44.804Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:38:45.570Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:38:45.596Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:39:32.432Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:39:34.366Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:39:34.687Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:39:47.720Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:39:48.551Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:39:48.567Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:40:15.207Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:40:15.655Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:40:15.666Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:45:20.835Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:45:29.824Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:45:30.439Z] [ERROR]: Failed to initialize escrow job queue
-[2025-07-07T22:45:39.705Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:45:55.599Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:45:56.232Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:45:56.251Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:45:58.736Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:45:59.114Z] [ERROR]: Failed to initialize escrow job queue
-[2025-07-07T22:46:17.823Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:46:18.279Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:46:18.298Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:46:47.338Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:46:48.077Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:46:48.108Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T22:47:07.840Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T22:47:08.352Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T22:47:08.363Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T23:25:46.701Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T23:25:47.229Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T23:25:47.250Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T23:27:19.060Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T23:27:19.594Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T23:27:19.614Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T23:27:33.665Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T23:27:34.711Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T23:27:34.781Z] [INFO]: Server started on http://localhost:8000
-[2025-07-07T23:27:46.781Z] [INFO]: Transporter is ready to send emails
-[2025-07-07T23:27:47.689Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-07T23:27:47.701Z] [INFO]: Server started on http://localhost:8000
-[2025-07-08T00:15:23.559Z] [INFO]: Fetched 6 orders for user: 4
-[2025-07-08T00:39:21.967Z] [INFO]: Transporter is ready to send emails
-[2025-07-08T00:39:22.452Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-08T00:39:22.464Z] [INFO]: Server started on http://localhost:8000
-[2025-07-08T14:01:27.696Z] [INFO]: Transporter is ready to send emails
-[2025-07-08T14:01:28.641Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-08T14:01:28.653Z] [INFO]: Server started on http://localhost:8000
-[2025-07-08T15:02:19.632Z] [ERROR]: Database error: Access denied for user 'root'@'localhost' (using password: YES)
-[2025-07-08T15:02:19.655Z] [ERROR]: Failed to setup transporter: Cannot read properties of null (reading 'smtp_service')
-[2025-07-08T15:02:40.764Z] [INFO]: Transporter is ready to send emails
-[2025-07-08T15:02:41.550Z] [INFO]: Escrow job queue loaded successfully.
-[2025-07-08T15:02:41.592Z] [INFO]: Server started on http://localhost:8000
-[2025-07-08T15:05:40.678Z] [INFO]: Login notification email sent:
+[2025-07-09T20:16:13.942Z] [INFO]: Transporter is ready to send emails
+[2025-07-09T20:16:14.444Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-09T20:16:14.453Z] [INFO]: Server started on http://localhost:8000
+[2025-07-09T20:18:28.762Z] [INFO]: Received registration request
+[2025-07-09T20:18:32.067Z] [INFO]: Welcome email sent:
+[2025-07-10T11:11:55.076Z] [INFO]: Received registration request
+[2025-07-10T11:11:58.697Z] [INFO]: Welcome email sent:
+[2025-07-10T11:12:24.296Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T11:12:24.738Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T11:12:24.747Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T12:03:02.742Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T12:03:03.214Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T12:03:03.221Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T12:09:59.893Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T12:10:00.357Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T12:10:00.371Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T13:44:52.894Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T13:44:53.745Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T13:44:53.763Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T13:45:26.571Z] [INFO]: Received registration request
+[2025-07-10T13:45:26.572Z] [INFO]: Checking for existing user...
+[2025-07-10T13:45:26.577Z] [INFO]: Hashing password...
+[2025-07-10T13:45:26.729Z] [INFO]: Generating unique username...
+[2025-07-10T13:45:26.732Z] [INFO]: Username generated:
+[2025-07-10T13:45:26.733Z] [INFO]: Inserting user into database...
+[2025-07-10T13:45:26.811Z] [INFO]: User insert successful
+[2025-07-10T13:45:30.713Z] [INFO]: Welcome email sent:
+[2025-07-10T14:22:45.399Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:22:45.911Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:22:45.938Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:25:25.955Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:25:26.479Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:25:26.492Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:26:33.906Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:26:34.355Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:26:34.362Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:29:02.207Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:29:02.641Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:29:02.652Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:30:15.761Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:30:16.226Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:30:16.234Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:30:43.954Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:30:44.562Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:30:44.580Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:30:49.712Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:30:50.138Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:30:50.150Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:43:46.142Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:43:46.664Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:43:46.705Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:47:35.548Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:47:36.359Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:47:36.372Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:50:12.726Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:50:13.493Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:50:13.513Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:51:12.189Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:51:12.564Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:51:12.573Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:52:59.562Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:53:00.157Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:53:00.171Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T14:54:03.473Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T14:54:03.843Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T14:54:03.851Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:03:43.775Z] [INFO]: Received registration request
+[2025-07-10T15:03:43.776Z] [INFO]: Checking for existing user...
+[2025-07-10T15:03:43.782Z] [INFO]: Inserting user using insertUser utility...
+[2025-07-10T15:03:43.785Z] [ERROR]: insertUser failed
+[2025-07-10T15:09:08.573Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:09:08.932Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:09:08.942Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:11:04.646Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:11:05.040Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:11:05.048Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:11:30.149Z] [INFO]: Received registration request
+[2025-07-10T15:11:30.150Z] [INFO]: Checking for existing user...
+[2025-07-10T15:11:30.159Z] [INFO]: Inserting user using insertUser utility...
+[2025-07-10T15:11:30.165Z] [ERROR]: insertUser failed
+[2025-07-10T15:14:22.332Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:14:22.911Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:14:22.926Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:14:45.525Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:14:46.172Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:14:46.183Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:14:50.176Z] [INFO]: Received registration request
+[2025-07-10T15:14:50.177Z] [INFO]: Checking for existing user...
+[2025-07-10T15:14:50.184Z] [INFO]: Inserting user using insertUser utility...
+[2025-07-10T15:14:50.256Z] [INFO]: User insert successful
+[2025-07-10T15:14:52.960Z] [INFO]: Welcome email sent:
+[2025-07-10T15:19:18.543Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:19:19.024Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:19:19.033Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:19:31.072Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:19:31.506Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:19:31.517Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:21:04.903Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:21:05.283Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:21:05.294Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:24:30.451Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:27:17.364Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:29:28.175Z] [INFO]: Transporter is ready to send emails
+[2025-07-10T15:29:28.670Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-10T15:29:28.678Z] [INFO]: Server started on http://localhost:8000
+[2025-07-10T15:30:23.711Z] [INFO]: Received registration request
+[2025-07-10T15:30:23.711Z] [INFO]: Checking for existing user credentials...
+[2025-07-10T15:30:23.864Z] [INFO]: Inserting new user...
+[2025-07-10T15:30:23.945Z] [INFO]: User inserted successfully
+[2025-07-10T15:30:23.980Z] [INFO]: Welcome email sent
+[2025-07-10T15:30:27.379Z] [INFO]: Welcome email sent:

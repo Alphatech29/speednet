@@ -22,18 +22,29 @@ const login = async (req, res) => {
     );
 
     if (!results || results.length === 0) {
-      return res
-        .status(404)
-        .json({ code: "USER_NOT_FOUND", message: "Account not found" });
+      return res.status(404).json({
+        code: "USER_NOT_FOUND",
+        message: "Account not found",
+      });
     }
 
     const user = results[0];
+
+    // ✅ Check if user status is inactive (e.g., blocked, deactivated)
+    if (user.status !== 1) {
+      return res.status(403).json({
+        code: "ACCOUNT_INACTIVE",
+        message: "Your account is subspended. Please contact support.",
+      });
+    }
+
     const isMatch = await bcrypt.compare(password.trim(), user.password);
 
     if (!isMatch) {
-      return res
-        .status(401)
-        .json({ code: "INVALID_CREDENTIALS", message: "Incorrect password" });
+      return res.status(401).json({
+        code: "INVALID_CREDENTIALS",
+        message: "Incorrect password",
+      });
     }
 
     delete user.password;
@@ -55,10 +66,7 @@ const login = async (req, res) => {
     try {
       await sendLoginNotificationEmail(user, req.ip, req.headers["user-agent"]);
     } catch (emailErr) {
-      console.error(
-        "⚠️ Failed to send login notification email:",
-        emailErr.message
-      );
+      console.error("Failed to send login notification email:", emailErr.message);
     }
 
     return res.status(200).json({
@@ -68,9 +76,10 @@ const login = async (req, res) => {
     });
   } catch (error) {
     console.error("System Error:", error.message);
-    return res
-      .status(500)
-      .json({ code: "SYSTEM_ERROR", message: "Internal authentication system error" });
+    return res.status(500).json({
+      code: "SYSTEM_ERROR",
+      message: "Internal authentication system error",
+    });
   }
 };
 

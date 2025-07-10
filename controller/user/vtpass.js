@@ -1,4 +1,4 @@
-const asyncHandler = require("../../middleware/asyncHandler");
+const asyncHandler = require("../../middleWare/asyncHandler");
 const { rechargeAirtime, dataVariations, rechargeData, rechargeInternationalAirtime  } = require("../../utility/vtpass");
 const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
 const { validateTransactionPin } = require("../../controller/user/TransactionPin");

@@ -1,4 +1,4 @@
-const transporter = require("../transporter/transporter");
+const transporterPromise = require("../transporter/transporter");
 const ejs = require("ejs");
 const path = require("path");
 const { getWebSettings } = require("../../utility/general");
@@ -32,6 +32,8 @@ exports.sendProductSubmissionEmailToAdmin = async (merchant, product) => {
       year: new Date().getFullYear()
     });
 
+    const transporter = await transporterPromise; // ✅ Await the transporter
+
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
       to: admin_alert_email,
@@ -39,13 +41,8 @@ exports.sendProductSubmissionEmailToAdmin = async (merchant, product) => {
       html
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        logger.error("Error sending product submission email:", error);
-        return;
-      }
-      logger.info("Product submission email sent to admin:", info.response);
-    });
+    const info = await transporter.sendMail(mailOptions); // ✅ Await sendMail
+    logger.info("Product submission email sent to admin:", info.response);
 
   } catch (err) {
     logger.error("sendProductSubmissionEmailToAdmin error:", err);

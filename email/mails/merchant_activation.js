@@ -1,4 +1,4 @@
-const transporter = require("../transporter/transporter");
+const transporterPromise = require("../transporter/transporter");
 const ejs = require("ejs");
 const path = require("path");
 const { getWebSettings } = require("../../utility/general");
@@ -27,6 +27,8 @@ exports.sendMerchantActivationEmail = async (user, activationInfo) => {
       date: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
     });
 
+    const transporter = await transporterPromise; // ✅ Await the transporter
+
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
       to: user.email,
@@ -34,13 +36,8 @@ exports.sendMerchantActivationEmail = async (user, activationInfo) => {
       html
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        logger.error("Error sending merchant activation email:", error);
-        return;
-      }
-      logger.info("Merchant activation email sent:", info.response);
-    });
+    const info = await transporter.sendMail(mailOptions); // ✅ Await sendMail
+    logger.info("Merchant activation email sent:", info.response);
 
   } catch (err) {
     logger.error("sendMerchantActivationEmail error:", err);

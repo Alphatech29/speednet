@@ -1,17 +1,12 @@
 const nodemailer = require("nodemailer");
 const logger = require("../../utility/logger");
 const { getWebSettings } = require("../../utility/general");
-const deasync = require("deasync");
 
-let transporter;
-let done = false;
-let error = null;
-
-(async () => {
+let transporterPromise = (async () => {
   try {
     const settings = await getWebSettings();
 
-    transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       service: settings.smtp_service,
       port: settings.smtp_port,
       secure: true,
@@ -24,29 +19,15 @@ let error = null;
       },
     });
 
-    transporter.verify((err) => {
-      if (err) {
-        logger.error(`Transporter verify error: ${err.message}`);
-        error = err;
-      } else {
-        logger.info("Transporter is ready to send emails");
-        console.log("Transporter is ready to send emails");
-      }
-      done = true;
-    });
-  } catch (err) {
-    error = err;
-    logger.error(`Failed to setup transporter: ${err.message}`);
-    console.error(`Failed to setup transporter: ${err.message}`);
-    done = true;
+    // Verify transporter connection
+    await transporter.verify();
+    logger.info("Transporter is ready to send emails");
+    console.log("Transporter is ready to send emails");
+    return transporter;
+  } catch (error) {
+    logger.error(`Failed to setup transporter: ${error.message}`);
+    throw error;
   }
 })();
 
-//  Block here until async function is done
-while (!done) {
-  deasync.runLoopOnce();
-}
-
-if (error) throw error;
-
-module.exports = transporter;
+module.exports = transporterPromise;

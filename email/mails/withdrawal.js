@@ -1,4 +1,4 @@
-const transporter = require("../transporter/transporter");
+const transporterPromise = require("../transporter/transporter");
 const ejs = require("ejs");
 const path = require("path");
 const { getWebSettings } = require("../../utility/general");
@@ -28,6 +28,8 @@ exports.sendWithdrawalNotificationEmail = async (user, withdrawalInfo) => {
       date: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
     });
 
+    const transporter = await transporterPromise; // ✅ Await the promise
+
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
       to: user.email,
@@ -35,16 +37,14 @@ exports.sendWithdrawalNotificationEmail = async (user, withdrawalInfo) => {
       html
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        logger.error("Error sending withdrawal notification email:", error);
-        return;
-      }
-      logger.info("Withdrawal notification email sent:", info.response);
-    });
+    const info = await transporter.sendMail(mailOptions); // ✅ Use async/await
+    logger.info("Withdrawal notification email sent:", info.response);
 
   } catch (err) {
-    logger.error("sendWithdrawalNotificationEmail error:", err);
+    logger.error("sendWithdrawalNotificationEmail error:", {
+      message: err.message,
+      stack: err.stack,
+    });
     console.error("Stack trace:", err.stack);
   }
 };

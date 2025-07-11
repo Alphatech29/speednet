@@ -1,4 +1,4 @@
-const transporter = require("../transporter/transporter");
+const transporterPromise = require("../transporter/transporter");
 const ejs = require("ejs");
 const path = require("path");
 const { getWebSettings } = require("../../utility/general");
@@ -33,6 +33,8 @@ exports.sendWithdrawalNotificationEmail = async (user, withdrawalInfo) => {
       date: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
     });
 
+    const transporter = await transporterPromise; // ✅ Await the transporter here
+
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
       to: user.email,
@@ -40,8 +42,7 @@ exports.sendWithdrawalNotificationEmail = async (user, withdrawalInfo) => {
       html
     };
 
-    // Use async/await for sendMail
-    const info = await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions); // ✅ Use awaited transporter
     logger.info("Withdrawal approval email sent:", info.response);
 
   } catch (err) {

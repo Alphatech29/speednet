@@ -1,4 +1,4 @@
-const transporter = require("../transporter/transporter");
+const transporterPromise = require("../transporter/transporter");
 const ejs = require("ejs");
 const path = require("path");
 const { getWebSettings } = require("../../utility/general");
@@ -23,6 +23,8 @@ exports.sendWelcomeEmail = async (user) => {
       logo
     });
 
+    const transporter = await transporterPromise; // ✅ Await the async transporter
+
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
       to: user.email,
@@ -30,13 +32,8 @@ exports.sendWelcomeEmail = async (user) => {
       html
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        logger.error("Error sending welcome email:", error);
-        return;
-      }
-      logger.info("Welcome email sent:", info.response);
-    });
+    const info = await transporter.sendMail(mailOptions); // ✅ Await sendMail
+    logger.info("Welcome email sent:", info.response);
 
   } catch (err) {
     logger.error("sendWelcomeEmail error:", err);

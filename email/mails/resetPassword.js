@@ -1,4 +1,4 @@
-const transporter = require("../transporter/transporter");
+const transporterPromise = require("../transporter/transporter");
 const ejs = require("ejs");
 const path = require("path");
 const { getWebSettings } = require("../../utility/general");
@@ -8,7 +8,7 @@ exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
   try {
     const {
       site_name,
-       support_email,
+      support_email,
       web_url,
       logo
     } = await getWebSettings();
@@ -19,16 +19,17 @@ exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
     };
 
     const templatePath = path.join(process.cwd(), "email", "templates", "resetPassword.ejs");
-    
+
     const html = await ejs.renderFile(templatePath, {
       user,
       resetLink,
       site_name,
-       support_email,
+      support_email,
       web_url,
       logo
     });
 
+    const transporter = await transporterPromise; // ✅ Await the resolved transporter
 
     const mailOptions = {
       from: `"${site_name}" <${support_email}>`,
@@ -39,18 +40,11 @@ exports.sendResetPasswordEmail = async (email, full_name, resetLink) => {
 
     console.log("📤 Mail Options:", mailOptions);
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        logger.error("Error sending reset password email:", error.message || error);
-        console.error("Full transporter error:", error);
-        return;
-      }
-
-      logger.info(" Reset password email sent:", info.response);
-    });
+    const info = await transporter.sendMail(mailOptions); // ✅ Await the sendMail call
+    logger.info("Reset password email sent:", info.response);
 
   } catch (err) {
-    logger.error(" sendResetPasswordEmail error:", err.message || err);
+    logger.error("sendResetPasswordEmail error:", err.message || err);
     console.error("Stack trace:", err.stack);
   }
 };

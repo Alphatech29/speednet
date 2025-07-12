@@ -153,3 +153,14 @@
 [2025-07-11T11:31:43.767Z] [INFO]: Escrow job queue loaded successfully.
 [2025-07-11T11:31:43.786Z] [INFO]: Server started on http://localhost:8000
 [2025-07-11T11:31:47.325Z] [INFO]: Transporter is ready to send emails
+[2025-07-12T12:12:52.231Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-12T12:12:52.254Z] [INFO]: Server started on http://localhost:8000
+[2025-07-12T12:12:59.177Z] [ERROR]: Failed to serve index.html
+[2025-07-12T12:12:59.721Z] [ERROR]: Failed to serve index.html
+[2025-07-12T12:12:59.851Z] [INFO]: Transporter is ready to send emails
+[2025-07-12T12:13:03.683Z] [ERROR]: Failed to serve index.html
+[2025-07-12T12:13:05.344Z] [ERROR]: Failed to serve index.html
+[2025-07-12T12:13:05.568Z] [ERROR]: Failed to serve index.html
+[2025-07-12T12:15:09.826Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-12T12:15:09.848Z] [INFO]: Server started on http://localhost:8000
+[2025-07-12T12:15:11.352Z] [INFO]: Transporter is ready to send emails

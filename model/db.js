@@ -1,19 +1,24 @@
 const mysql = require("mysql2");
 require("dotenv").config();
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const dbConfig = {
-  host: isProduction ? process.env.PROD_DB_HOST : process.env.DEV_DB_HOST || "localhost",
-  user: isProduction ? process.env.PROD_DB_USER : process.env.DEV_DB_USER || "root",
-  password: isProduction ? process.env.PROD_DB_PASSWORD : process.env.DEV_DB_PASSWORD,
-  database: isProduction ? process.env.PROD_DB_NAME : process.env.DEV_DB_NAME,
-  port: parseInt(process.env.DB_PORT) || 3306,
+  host: process.env.DEV_DB_HOST || "localhost",
+  user: process.env.DEV_DB_USER || "root",
+  password: process.env.DEV_DB_PASSWORD || "",
+  database: process.env.DEV_DB_NAME || "speednet",
+  port: parseInt(process.env.DB_PORT) || 9030,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
   connectTimeout: 10000,
 };
+
+//console.log("Connecting to MySQL with config:", {
+  //host: dbConfig.host,
+  //user: dbConfig.user,
+  //database: dbConfig.database,
+  //port: dbConfig.port,
+//});
 
 const pool = mysql.createPool(dbConfig).promise();
 
@@ -25,6 +30,8 @@ const pool = mysql.createPool(dbConfig).promise();
     conn.release();
   } catch (err) {
     console.error("Database connection failed:", err.message);
+    console.error(err);
+    process.exit(1);
   }
 })();
 

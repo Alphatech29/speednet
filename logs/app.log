@@ -189,3 +189,26 @@
 [2025-07-13T12:23:12.432Z] [INFO]: Escrow job queue loaded successfully.
 [2025-07-13T12:23:12.444Z] [INFO]: Server started on http://localhost:8000
 [2025-07-13T12:23:13.598Z] [INFO]: Transporter is ready to send emails
+[2025-07-13T12:31:54.908Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:31:54.922Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:32:04.467Z] [ERROR]: Database error: connect ETIMEDOUT
+[2025-07-13T12:32:04.474Z] [ERROR]: Failed to setup transporter: Cannot read properties of null (reading 'smtp_service')
+[2025-07-13T12:32:04.509Z] [ERROR]: Unhandled Rejection
+[2025-07-13T12:32:32.463Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:32:32.488Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:32:34.900Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:32:34.910Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:32:44.545Z] [ERROR]: Database error: connect ETIMEDOUT
+[2025-07-13T12:32:44.556Z] [ERROR]: Failed to setup transporter: Cannot read properties of null (reading 'smtp_service')
+[2025-07-13T12:32:44.568Z] [ERROR]: Unhandled Rejection
+[2025-07-13T12:34:30.988Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:34:31.003Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:36:07.803Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:36:07.824Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:36:09.274Z] [INFO]: Transporter is ready to send emails
+[2025-07-13T12:36:49.432Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:36:49.446Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:36:50.755Z] [INFO]: Transporter is ready to send emails
+[2025-07-13T12:37:47.208Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-13T12:37:47.221Z] [INFO]: Server started on http://localhost:8000
+[2025-07-13T12:37:48.397Z] [INFO]: Transporter is ready to send emails

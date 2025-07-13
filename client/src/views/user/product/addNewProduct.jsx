@@ -39,20 +39,20 @@ const useAddAccountLogic = (userUid, setCurrentStep) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const validationErrors = validateForm();
     setErrors(validationErrors);
-  
+
     if (Object.keys(validationErrors).length === 0) {
       try {
         const payLoad = {
           ...formData,
           price: parseFloat(formData.price),
-          userUid: userUid 
+          userUid: userUid
         };
-  
+
         const result = await createAccount(payLoad);
-        
+
         if (result?.success) {
           toast.success(result.message, {
             position: "top-right",
@@ -80,18 +80,18 @@ const useAddAccountLogic = (userUid, setCurrentStep) => {
             setCurrentStep(1);
           }
         } else {
-          const errorMessage = result?.message || 
-                              result?.error || 
-                              'Failed to add account';
+          const errorMessage = result?.message ||
+            result?.error ||
+            'Failed to add account';
           toast.error(errorMessage, {
             position: "top-right",
           });
         }
       } catch (err) {
         console.error("Error creating account:", err);
-        const errorMessage = err.response?.data?.message || 
-                            err.message || 
-                            'Network error occurred';
+        const errorMessage = err.response?.data?.message ||
+          err.message ||
+          'Network error occurred';
         toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,
@@ -256,7 +256,7 @@ const AddNewProduct = () => {
         position="top-right"
         autoClose={3000}
       />
-      
+
       <h1 className='text-lg font-semibold'>Add New Product</h1>
       <p className='mb-4 pc:text-sm mobile:text-xs'>
         Easily add new products to your store! Fill in the details, set the price,
@@ -319,8 +319,8 @@ const AddNewProduct = () => {
                     </select>
                     {selectedPlatform && (
                       <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <img 
-                          src={selectedPlatform.image_path} 
+                        <img
+                          src={selectedPlatform.image_path}
                           alt={selectedPlatform.name}
                           className="h-5 w-5 object-contain"
                         />
@@ -411,6 +411,30 @@ const AddNewProduct = () => {
 
               <div className='flex flex-col'>
                 <div className='flex justify-center items-center'>
+                  <h1 className='text-[17px] font-semibold'>Recovery Details</h1>
+                </div>
+                <InputField
+                  id="recoveryEmail"
+                  label="Recovery Email"
+                  type="email"
+                  value={recoveryEmail}
+                  onChange={handleChange}
+                  placeholder="Recovery email for the account"
+                  error={errors.recoveryEmail}
+                />
+                <InputField
+                  id="recoveryEmailPassword"
+                  label="Recovery Email Password"
+                  type="password"
+                  value={recoveryEmailPassword}
+                  onChange={handleChange}
+                  placeholder="Password for recovery email"
+                  error={errors.recoveryEmailPassword}
+                />
+              </div>
+
+              <div className='flex flex-col'>
+                <div className='flex justify-center items-center'>
                   <h1 className='text-[17px] font-semibold'>Additional Information (optional)</h1>
                 </div>
                 <InputField
@@ -433,29 +457,7 @@ const AddNewProduct = () => {
                 />
               </div>
 
-              <div className='flex flex-col'>
-                <div className='flex justify-center items-center'>
-                  <h1 className='text-[17px] font-semibold'>Recovery Details</h1>
-                </div>
-                <InputField
-                  id="recoveryEmail"
-                  label="Recovery Email"
-                  type="email"
-                  value={recoveryEmail}
-                  onChange={handleChange}
-                  placeholder="Recovery email for the account"
-                  error={errors.recoveryEmail}
-                />
-                <InputField
-                  id="recoveryEmailPassword"
-                  label="Recovery Email Password"
-                  type="password"
-                  value={recoveryEmailPassword}
-                  onChange={handleChange}
-                  placeholder="Password for recovery email"
-                  error={errors.recoveryEmailPassword}
-                />
-              </div>
+
 
               <div className="flex justify-end mt-6 gap-3">
                 <button
@@ -504,14 +506,35 @@ const AddNewProduct = () => {
                 />
               )}
 
-              <InputField
-                id="two_factor_enabled"
-                label="2-Factor Authentication"
-                type="checkbox"
-                checked={two_factor_enabled}
-                onChange={handleChange}
-                error={errors.two_factor_enabled}
-              />
+              <div className="flex items-center justify-between">
+                <label htmlFor="two_factor_enabled" className="text-sm font-medium text-white">
+                  2-Factor Authentication
+                </label>
+                <button
+                  id="two_factor_enabled"
+                  type="button"
+                  role="switch"
+                  aria-checked={two_factor_enabled}
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      two_factor_enabled: !prev.two_factor_enabled,
+                    }))
+                  }
+                  className={`relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${two_factor_enabled ? 'bg-green-700' : 'bg-gray-500'
+                    }`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`inline-block h-[18px] w-[18px] transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${two_factor_enabled ? 'translate-x-5' : 'translate-x-0.5'
+                      }`}
+                  />
+                </button>
+              </div>
+              {errors.two_factor_enabled && (
+                <p className="text-xs text-red-500 mt-1">{errors.two_factor_enabled}</p>
+              )}
+
 
               {two_factor_enabled && (
                 <div className={`transition-all duration-300 ${two_factor_enabled ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>

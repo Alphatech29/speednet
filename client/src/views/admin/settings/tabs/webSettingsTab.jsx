@@ -9,12 +9,15 @@ const WebSettingsTab = () => {
     tagline: '',
     web_description: '',
     support_email: '',
+    admin_alert_email: '',
     vat: '',
+    commission: '',
     merchant_activation_fee: '',
     currency: '',
     xaf_rate: '',
     naira_rate: '',
     referral_commission: '',
+    escrow_time: '',
     contact_number: '',
     address: '',
     web_url: '',
@@ -38,12 +41,15 @@ const WebSettingsTab = () => {
             tagline: data.tagline || '',
             web_description: data.web_description || '',
             support_email: data.support_email || '',
+            admin_alert_email: data.admin_alert_email || '',
             vat: data.vat || '',
+            commission: data.commission || '',
             merchant_activation_fee: data.merchant_activation_fee || '',
             currency: data.currency || '',
             xaf_rate: data.xaf_rate || '',
             naira_rate: data.naira_rate || '',
             referral_commission: data.referral_commission || '',
+            escrow_time: data.escrow_time || '',
             contact_number: data.contact_number || '',
             address: data.address || '',
             web_url: data.web_url || '',
@@ -58,7 +64,7 @@ const WebSettingsTab = () => {
           toast.error('No web settings found');
         }
       } catch (error) {
-        console.error("❌ Error fetching web settings:", error);
+        console.error("Error fetching web settings:", error);
         toast.error(error?.response?.data?.message || 'Failed to fetch web settings');
       }
     };
@@ -93,7 +99,7 @@ const WebSettingsTab = () => {
       setInitialSettings(settings);
       setIsEditing(false);
     } catch (error) {
-      console.error("❌ Update error:", error);
+      console.error("Update error:", error);
       toast.error(error?.response?.data?.message || 'Update failed');
     }
   };
@@ -108,12 +114,12 @@ const WebSettingsTab = () => {
       <ToastContainer />
 
       <div className="flex flex-col mb-6">
-       <div>
-         <h1 className="text-2xl font-semibold text-gray-800 mb-2">Web Settings</h1>
-        <p className="text-gray-600 mb-6 text-base">
-          Customize your website’s configuration including site details, financial rates, and social links.
-        </p>
-       </div>
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-800 mb-2">Web Settings</h1>
+          <p className="text-gray-600 mb-6 text-base">
+            Customize your website’s configuration including site details, financial rates, and social links.
+          </p>
+        </div>
         <div className="grid grid-cols-1 mobile:grid-cols-2 pc:grid-cols-3 gap-6">
           {[
             { id: 'site_name', label: 'Site Name' },
@@ -122,13 +128,14 @@ const WebSettingsTab = () => {
             { id: 'support_email', label: 'Support Email', type: 'email' },
             { id: 'admin_alert_email', label: 'Notification Email', type: 'email' },
             { id: 'vat', label: 'VAT (%)', type: 'number' },
+            { id: 'commission', label: 'Escrow Commission (%)', type: 'number' },
             { id: 'merchant_activation_fee', label: 'Merchant Activation Fee', type: 'number' },
             { id: 'currency', label: 'Currency' },
             { id: 'xaf_rate', label: 'XAF Rate', type: 'number' },
             { id: 'naira_rate', label: 'Naira Rate', type: 'number' },
             { id: 'referral_commission', label: 'Referral Commission ($)', type: 'number' },
             { id: 'web_url', label: 'Website URL', type: 'url' },
-            { id: 'escrow_time', label: 'Escrow Time(Set in minutes)', type: 'text' },
+            { id: 'escrow_time', label: 'Escrow Time (minutes)', type: 'text' },
             { id: 'contact_number', label: 'Contact Number', type: 'tel' },
             { id: 'address', label: 'Address' },
             { id: 'telegram_url', label: 'Telegram URL', type: 'url' },

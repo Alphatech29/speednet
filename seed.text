@@ -212,6 +212,3 @@ CREATE TABLE notice (
   role ENUM('user', 'merchant') NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
-

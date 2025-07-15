@@ -53,6 +53,7 @@ const { getAllWithdrawal , updateWithdrawalStatus } = require("../controller/adm
 const { getAllNotices, createNotice,updateNoticeById } = require("../controller/admin/dashboard/notice");
 const { getAllTransactions,getAllMerchantTransactions,getAllAccountOrders } = require("../controller/admin/dashboard/histroy");
 const { getAllReportsController,updateReportStatusController } = require("../controller/admin/dashboard/report");
+const transfer = require("../controller/admin/dashboard/transfer");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -139,5 +140,6 @@ generalRoute.get("/merchant", getAllMerchantTransactions)
 generalRoute.get("/account_order", getAllAccountOrders)
 generalRoute.get("/all-report", getAllReportsController)
 generalRoute.put("/update-report/:reportId", updateReportStatusController)
+generalRoute.post("/transfer/funds", transfer)
 
 module.exports = generalRoute;

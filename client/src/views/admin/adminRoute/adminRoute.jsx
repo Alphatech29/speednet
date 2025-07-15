@@ -18,6 +18,7 @@ import Merchant from '../histroy/merchant';
 import AccountOrder from '../histroy/accountOrder';
 import Password from '../password/password';
 import Report from '../report/report';
+import Transfer from '../transfer/transfer';
 
 
 
@@ -44,6 +45,7 @@ const AdminRoute = () => {
         <Route path="order" element={<AccountOrder />} />
         <Route path="password" element={<Password />} />
         <Route path="report" element={<Report />} />
+        <Route path="transfer" element={<Transfer />} />
 
       </Route>
     </Routes>

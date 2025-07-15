@@ -53,4 +53,40 @@ const createTransactionHistory = async (user_uid, amount, transaction_type, stat
     }
 };
 
-module.exports = { createTransactionHistory };
+
+const getDepositTransactionsByUserUid = async (user_uid) => {
+    try {
+        const uid = Number(user_uid);
+        
+        if (isNaN(uid)) {
+            logger.error("ERROR: Invalid user_uid provided!", user_uid);
+            return {
+                success: false,
+                message: "Invalid user ID"
+            };
+        }
+
+        const sql = `
+            SELECT * FROM transactions 
+            WHERE user_uid = ? 
+            AND transaction_type LIKE '%Deposit'
+            ORDER BY id DESC
+        `;
+
+        const [rows] = await pool.execute(sql, [uid]);
+
+        return {
+            success: true,
+            message: "Deposit transactions retrieved successfully.",
+            data: rows
+        };
+    } catch (error) {
+        logger.error('Database error while fetching deposit transactions:', error);
+        return {
+            success: false,
+            message: 'Error: ' + error.message
+        };
+    }
+};
+
+module.exports = { createTransactionHistory, getDepositTransactionsByUserUid };

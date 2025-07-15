@@ -2,6 +2,7 @@ const { createPayment } = require('../../utility/cryptomus');
 const { fapshiPayment } = require('../../utility/fapshi');
 
 const Deposit = async (req, res) => {
+
   const { amount, currency, user_id, email, paymentMethod } = req.body;
 
   // Validate required fields

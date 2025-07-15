@@ -89,21 +89,7 @@ const Deposit = ({ onClose }) => {
 
         {/* Payment Methods */}
         <div className="flex flex-col gap-3">
-          {/* Bank */}
-          <div
-            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
-              ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
-            onClick={() => setSelected('bank')}
-          >
-            <span className={`border p-3 rounded-full ${selected === 'bank' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <BsBank2 className="text-[22px]" />
-            </span>
-            <div className="text-start">
-              <h1 className="font-semibold text-[15px]">Bank / Card Payment</h1>
-              <p className="text-sm text-slate-400 mobile:text-xs">Deposit via bank transfer or card.</p>
-            </div>
-          </div>
-
+         
           {/* MOMO */}
           <div
             className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
@@ -134,6 +120,21 @@ const Deposit = ({ onClose }) => {
             </div>
           </div>
         </div>
+
+         {/* Bank */}
+          <div
+            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
+              ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+            onClick={() => setSelected('bank')}
+          >
+            <span className={`border p-3 rounded-full ${selected === 'bank' ? 'border-primary-600' : 'border-primary-600/50'}`}>
+              <BsBank2 className="text-[22px]" />
+            </span>
+            <div className="text-start">
+              <h1 className="font-semibold text-[15px]">Bank / Card Payment</h1>
+              <p className="text-sm text-slate-400 mobile:text-xs">Deposit via bank transfer or card.</p>
+            </div>
+          </div>
 
         {/* Action Buttons */}
         <div className="flex justify-end gap-3 mt-4">

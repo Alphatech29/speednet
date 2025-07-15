@@ -84,7 +84,7 @@ const Wallet = () => {
             </div>
 
             {/* Right Panel */}
-            <div className="bg-slate-700 w-full px-3 py-4 flex flex-col ">
+            <div className="bg-slate-700 w-full px-3 py-4 flex flex-col pc:min-h-[400px]">
               <div className="flex justify-between items-center text-white text-[14px] tab:text-[15px] pc:text-[16px]">
                 <span>Recent Transactions</span>
                 <span className="cursor-pointer hover:underline">View More</span>
@@ -119,7 +119,7 @@ const Wallet = () => {
                     </Table.Body>
                   </Table>
                 ) : (
-                  <p className="text-center text-gray-400">No transactions found</p>
+                  <p className="text-center text-gray-400 pc:py-32">No transactions found</p>
                 )}
               </div>
             </div>

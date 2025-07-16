@@ -27,6 +27,8 @@ const getCurrentUser = async (req, res) => {
 
 // Insert new user into the 'users' table (uid excluded)
 
+
+
 const insertUser = async ({ full_name, username, email, password, phone_number, country }) => {
   try {
     const sql = `
@@ -49,8 +51,6 @@ const insertUser = async ({ full_name, username, email, password, phone_number, 
     throw new Error("Internal server error while inserting user.");
   }
 };
-
-
 
 
 module.exports = { getCurrentUser, insertUser };

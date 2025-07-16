@@ -48,6 +48,34 @@ const updateUserBalance = async (userUid, newBalance) => {
 };
 
 
+// Update user's account balance
+const updateReferralBalance = async (userUid, newBalance) => {
+    try {
+        if (!userUid || newBalance === undefined || isNaN(newBalance)) {
+            throw new Error("Invalid parameters: userUid and newBalance are required");
+        }
+
+        const query = `
+            UPDATE users 
+            SET referral_balance = ?, updated_at = CURRENT_TIMESTAMP 
+            WHERE uid = ?
+        `;
+        const [result] = await pool.execute(query, [newBalance, userUid]);
+
+        if (result.affectedRows > 0) {
+            return { success: true, affectedRows: result.affectedRows };
+        } else {
+            console.warn(`⚠️ No rows affected, user not found: userUid=${userUid}`);
+            return { success: false, message: "User not found or no change in balance" };
+        }
+    } catch (error) {
+        console.error("❌ Error updating balance:", error);
+        return { success: false, error: error.message };
+    }
+};
+
+
+
 // Update multiple user fields (generic update function)
 const updateUser = async (userUid, updateFields) => {
     try {
@@ -91,4 +119,4 @@ const updateUser = async (userUid, updateFields) => {
     }
 };
 
-module.exports = { getUserDetailsByUid, updateUserBalance, updateUser };
+module.exports = { getUserDetailsByUid, updateUserBalance, updateUser, updateReferralBalance };

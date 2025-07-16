@@ -50,8 +50,8 @@ const apis = [
   },
   {
     name: "Chat IPv4 API",
-    start_on: "2024-06-14",
-    expires_on: "2025-07-14",
+    start_on: "2025-07-16",
+    expires_on: "2025-08-14",
     premium_plan: {
       plan: "Business",
       price_usd: 95,
@@ -80,8 +80,8 @@ const apis = [
   },
    {
     name: "VTPass Api",
-    start_on: "2025-01-01",
-    expires_on: "2025-07-014",
+    start_on: "2025-07-16",
+    expires_on: "2025-08-14",
     premium_plan: {
       plan: "Pro",
       price_usd: 87.97,

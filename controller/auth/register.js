@@ -20,6 +20,7 @@ const register = async (req, res) => {
       referral_code,
     } = req.body;
 
+
     // Trim inputs
     full_name = full_name?.trim();
     username = username?.trim();
@@ -29,9 +30,6 @@ const register = async (req, res) => {
     country = country?.trim();
     referral_code = referral_code?.trim();
 
-    logger.info("Received registration request", { email, phone_number });
-
-    // Validate required fields
     if (!full_name || !username || !email || !phone_number || !password || !country) {
       return res.status(400).json({
         success: false,
@@ -54,8 +52,6 @@ const register = async (req, res) => {
       });
     }
 
-    // Check for existing user
-    logger.info("Checking for existing user credentials...");
     const [existingUsers] = await pool.query(
       `SELECT email, phone_number, username FROM users WHERE email = ? OR phone_number = ? OR username = ?`,
       [email, phone_number, username]
@@ -76,7 +72,6 @@ const register = async (req, res) => {
       });
     }
 
-    // Hash the password
     const saltRounds = 10;
     let hashedPassword;
     try {
@@ -89,11 +84,9 @@ const register = async (req, res) => {
       });
     }
 
-    // Insert user
-    logger.info("Inserting new user...");
-    let insertResult;
+    let userUid;
     try {
-      insertResult = await insertUser({
+      userUid = await insertUser({
         full_name,
         username,
         email,
@@ -101,8 +94,6 @@ const register = async (req, res) => {
         password: hashedPassword,
         country,
       });
-
-      logger.info("User inserted successfully", { userId: insertResult.uid });
     } catch (err) {
       logger.error("Error inserting user", {
         values: { full_name, username, email, phone_number, country },
@@ -117,22 +108,47 @@ const register = async (req, res) => {
     }
 
     const newUser = {
-      uid: insertResult.uid,
-      name: full_name,
+      uid: userUid,
+      full_name,
       email,
       username,
+      phone_number,
+      country,
     };
 
-    // Handle referral
+  
     if (referral_code) {
       try {
         const referrer = await getUserDetailsByUid(referral_code);
-        if (referrer?.uid) {
+        if (referrer?.uid && newUser.uid) {
           const commission = await getReferralCommission() || 0;
-          await createReferral(referrer.uid, newUser.uid, commission, 0);
-          logger.info("Referral created", { referrerId: referrer.uid, refereeId: newUser.uid });
+          const referralRes = await createReferral(
+            referrer.uid,      // referral1_id
+            newUser.uid,       // referral2_id
+            commission,        // referral_amount
+            0                  // referral_status
+          );
+
+          if (referralRes.success) {
+            logger.info("Referral created", {
+              referral1_id: referrer.uid,
+              referral2_id: newUser.uid,
+              commission,
+            });
+          } else {
+            console.warn("Referral creation failed", referralRes.error);
+            logger.warn("Referral creation failed", {
+              referral_code,
+              error: referralRes.error,
+            });
+          }
         } else {
-          logger.warn("Invalid referral code used", { referral_code });
+          console.warn("Invalid referral code or missing UID.");
+          logger.warn("Invalid referral code or user UID missing", {
+            referral_code,
+            referrer_uid: referrer?.uid,
+            new_user_uid: newUser.uid,
+          });
         }
       } catch (referralErr) {
         logger.error("Referral processing failed", {

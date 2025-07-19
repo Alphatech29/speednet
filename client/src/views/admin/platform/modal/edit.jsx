@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addPlatform } from '../../../../components/backendApis/admin/apis/platform';
+import { updatePlatformById } from '../../../../components/backendApis/admin/apis/platform';
 
-const Add = ({ onClose }) => {
+const Edit = ({ onClose, existingData }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [platformName, setPlatformName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (existingData) {
+      setPlatformName(existingData.name || '');
+      setImagePreview(existingData.imageUrl || null);
+    }
+  }, [existingData]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,8 +40,8 @@ const Add = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!platformName || !imageFile) {
-      toast.error('Please fill all fields');
+    if (!platformName) {
+      toast.error('Platform name is required');
       return;
     }
 
@@ -43,21 +50,18 @@ const Add = ({ onClose }) => {
     try {
       const formData = new FormData();
       formData.append('name', platformName);
-      formData.append('image', imageFile);
+      if (imageFile) formData.append('image', imageFile);
 
-      const response = await addPlatform(formData);
+      const response = await updatePlatformById(existingData.id, formData);
 
-      if (response.success || response.platformId) {
-        toast.success(response.message || 'Platform added successfully');
-        setPlatformName('');
-        setImageFile(null);
-        setImagePreview(null);
+      if (response.success) {
+        toast.success(response.message || 'Platform updated successfully');
         if (onClose) onClose();
       } else {
-        toast.error(response.message || 'Failed to add platform');
+        toast.error(response.message || 'Failed to update platform');
       }
     } catch (err) {
-      toast.error('Error adding platform');
+      toast.error('Error updating platform');
     } finally {
       setIsSubmitting(false);
     }
@@ -75,13 +79,13 @@ const Add = ({ onClose }) => {
           <input
             type="text"
             id="platformName"
-            name="platformName"
             value={platformName}
             onChange={(e) => setPlatformName(e.target.value)}
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
+
         <div>
           <label htmlFor="platformImage" className="block text-sm font-medium text-gray-700">
             Platform Image (.png, .jpeg | Max: 2MB)
@@ -89,10 +93,8 @@ const Add = ({ onClose }) => {
           <input
             type="file"
             id="platformImage"
-            name="image"
             accept=".png, .jpeg, .jpg"
             onChange={handleImageChange}
-            required
             className="mt-1 block w-full border border-gray-300 rounded-md text-sm"
           />
           {imagePreview && (
@@ -103,6 +105,7 @@ const Add = ({ onClose }) => {
             />
           )}
         </div>
+
         <div className="flex justify-end gap-2">
           <button
             type="button"
@@ -118,7 +121,7 @@ const Add = ({ onClose }) => {
               isSubmitting ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'
             }`}
           >
-            {isSubmitting ? 'Submitting...' : 'Add'}
+            {isSubmitting ? 'Updating...' : 'Update'}
           </button>
         </div>
       </form>
@@ -126,4 +129,4 @@ const Add = ({ onClose }) => {
   );
 };
 
-export default Add;
+export default Edit;

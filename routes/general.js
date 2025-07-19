@@ -32,7 +32,7 @@ const { fetchReferralsByReferrer } = require("../controller/user/referral");
 const verifyToken = require("./../middleWare/verifyToken");
 const {
   addPlatform,
-  fetchPlatforms,deletePlatformByIdHandler
+  fetchPlatforms,deletePlatformByIdHandler,editPlatformById
 } = require("../controller/admin/dashboard/platform");
 const upload = require("../utility/multerConfig");
 const {
@@ -134,6 +134,7 @@ generalRoute.get("/order", getAllOrders);
 generalRoute.post("/platform", upload.single("image"), addPlatform);
 generalRoute.get("/platform", fetchPlatforms);
 generalRoute.delete("/platform/:id", deletePlatformByIdHandler);
+generalRoute.put("/platform/:id", upload.single("image"), editPlatformById);
 generalRoute.get("/withdrawal", getAllWithdrawal);
 generalRoute.put("/withdrawal/:id", updateWithdrawalStatus);
 generalRoute.get("/notice", getAllNotices)

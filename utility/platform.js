@@ -28,6 +28,40 @@ async function insertPlatform(platformData) {
 }
 
 
+async function updatePlatformById(id, platformData) {
+  const updates = [];
+  const values = [];
+
+  for (const [key, value] of Object.entries(platformData)) {
+    if (value !== undefined && value !== null) {
+      updates.push(`${key} = ?`);
+      values.push(value);
+    }
+  }
+
+  // Ensure there’s at least one field to update
+  if (updates.length === 0) {
+    throw new Error('No data provided to update');
+  }
+
+  values.push(id); // For WHERE clause
+
+  const sql = `
+    UPDATE platforms
+    SET ${updates.join(', ')}
+    WHERE id = ?
+  `;
+
+  try {
+    const [result] = await pool.query(sql, values);
+    return result.affectedRows > 0;
+  } catch (error) {
+    console.error('Error updating platform:', error.message);
+    throw new Error('Failed to update platform');
+  }
+}
+
+
 /**
  * Fetches all platforms from the platforms table
  */
@@ -59,5 +93,6 @@ async function deletePlatformById(id) {
 module.exports = {
   insertPlatform,
   getAllPlatforms,
-  deletePlatformById
+  deletePlatformById,
+  updatePlatformById
 };

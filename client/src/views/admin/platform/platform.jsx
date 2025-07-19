@@ -3,23 +3,26 @@ import { getAllPlatforms, deletePlatformById } from '../../../components/backend
 import { Table, Modal, Button } from 'flowbite-react';
 import Swal from 'sweetalert2';
 import Add from './modal/add';
+import Edit from './modal/edit';
 
 const Platform = () => {
   const [platforms, setPlatforms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editingPlatform, setEditingPlatform] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Fetch platforms from backend
   const fetchPlatforms = async () => {
     try {
       const response = await getAllPlatforms();
       if (response.success) {
         setPlatforms(response.data);
       } else {
-        console.error('Error', 'Error fetching platforms', 'error');
+        console.error('Error fetching platforms:', response.message);
       }
     } catch (error) {
-     console.error('Unexpected Error', 'An error occurred while fetching platforms', 'error');
+      console.error('Unexpected error while fetching platforms:', error);
     } finally {
       setLoading(false);
     }
@@ -29,6 +32,7 @@ const Platform = () => {
     fetchPlatforms();
   }, []);
 
+  // Delete platform with confirmation
   const handleDelete = async (id, name) => {
     const result = await Swal.fire({
       title: `Delete "${name}"?`,
@@ -47,12 +51,22 @@ const Platform = () => {
           setPlatforms((prev) => prev.filter((p) => p.id !== id));
           Swal.fire('Deleted!', `"${name}" has been deleted.`, 'success');
         } else {
-          Swal.fire('Error', `Failed to delete "${name}": ${response.message}`, 'error');
+          Swal.fire('Error', response.message || `Failed to delete "${name}"`, 'error');
         }
       } catch (error) {
         Swal.fire('Error', `Error deleting "${name}"`, 'error');
       }
     }
+  };
+
+  const handleEdit = (platform) => {
+    setEditingPlatform(platform); // Trigger edit modal
+    setModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setEditingPlatform(null); // Trigger add modal
+    setModalOpen(true);
   };
 
   const filteredPlatforms = platforms.filter((platform) =>
@@ -65,7 +79,7 @@ const Platform = () => {
 
       <div className="flex items-center justify-between mb-4">
         <button
-          onClick={() => setModalOpen(true)}
+          onClick={handleAdd}
           className="bg-primary-600 px-4 py-2 rounded-md text-white"
         >
           Add Platform
@@ -106,11 +120,18 @@ const Platform = () => {
                   />
                 </Table.Cell>
                 <Table.Cell className="font-medium">{platform.name}</Table.Cell>
-                <Table.Cell>
+                <Table.Cell className="flex gap-2">
                   <Button
                     size="sm"
+                    className="bg-gray-200 text-gray-700 py-2"
+                    onClick={() => handleEdit(platform)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="py-2"
                     color="failure"
-                    className='py-2'
                     onClick={() => handleDelete(platform.id, platform.name)}
                   >
                     Delete
@@ -128,15 +149,28 @@ const Platform = () => {
         </Table.Body>
       </Table>
 
+      {/* Modal for Add / Edit */}
       <Modal show={modalOpen} onClose={() => setModalOpen(false)}>
-        <Modal.Header>Add Platform</Modal.Header>
+        <Modal.Header className="px-8 pt-6">
+          {editingPlatform ? 'Edit Platform' : 'Add New Platform'}
+        </Modal.Header>
         <Modal.Body>
-          <Add
-            onClose={() => {
-              setModalOpen(false);
-              fetchPlatforms();
-            }}
-          />
+          {editingPlatform ? (
+            <Edit
+              existingData={editingPlatform}
+              onClose={() => {
+                setModalOpen(false);
+                fetchPlatforms();
+              }}
+            />
+          ) : (
+            <Add
+              onClose={() => {
+                setModalOpen(false);
+                fetchPlatforms();
+              }}
+            />
+          )}
         </Modal.Body>
       </Modal>
     </div>

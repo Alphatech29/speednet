@@ -83,3 +83,30 @@ export const deletePlatformById = async (id) => {
 };
 
 
+
+export const updatePlatformById = async (platformId, formData) => {
+  try {
+    const response = await axios.put(`/general/platform/${platformId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return {
+      success: true,
+      message: response.data?.message || 'Platform updated successfully!',
+      platformId: response.data?.platformId,
+    };
+  } catch (error) {
+    const fallbackMessage = 'An error occurred while updating the platform.';
+
+    return {
+      success: false,
+      message: error.response?.data?.message || fallbackMessage,
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
+
+

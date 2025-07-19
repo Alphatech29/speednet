@@ -1,4 +1,9 @@
-const { insertPlatform, getAllPlatforms,deletePlatformById } = require('../../../utility/platform');
+const {
+  insertPlatform,
+  getAllPlatforms,
+  deletePlatformById,
+  updatePlatformById,
+} = require('../../../utility/platform');
 
 const addPlatform = async (req, res) => {
   try {
@@ -10,7 +15,6 @@ const addPlatform = async (req, res) => {
     }
 
     const image_path = `/uploads/${file.filename}`;
-
     const newId = await insertPlatform({ name, image_path });
 
     return res.status(201).json({
@@ -35,7 +39,7 @@ const fetchPlatforms = async (req, res) => {
 
 const deletePlatformByIdHandler = async (req, res) => {
   const { id } = req.params;
-  console.log('id received from frontend', id)
+  console.log('id received from frontend', id);
 
   try {
     const deleted = await deletePlatformById(id);
@@ -49,4 +53,36 @@ const deletePlatformByIdHandler = async (req, res) => {
   }
 };
 
-module.exports = { addPlatform, fetchPlatforms,deletePlatformByIdHandler };
+const editPlatformById = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const file = req.file;
+
+  const updatedData = {};
+  if (name) updatedData.name = name;
+  if (file) updatedData.image_path = `/uploads/${file.filename}`;
+
+  if (Object.keys(updatedData).length === 0) {
+    return res.status(400).json({ message: 'No valid fields to update.' });
+  }
+
+  try {
+    const success = await updatePlatformById(id, updatedData);
+
+    if (!success) {
+      return res.status(404).json({ message: 'Platform not found or not updated' });
+    }
+
+    return res.status(200).json({ message: 'Platform updated successfully' });
+  } catch (error) {
+    console.error('Error in editPlatformById:', error.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+module.exports = {
+  addPlatform,
+  fetchPlatforms,
+  deletePlatformByIdHandler,
+  editPlatformById,
+};

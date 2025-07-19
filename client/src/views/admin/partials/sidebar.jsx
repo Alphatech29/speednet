@@ -14,6 +14,8 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { LiaFirstOrder } from "react-icons/lia";
 import { TbMessageReport } from "react-icons/tb";
 import { BiTransfer } from "react-icons/bi";
+import { GiBookPile } from "react-icons/gi";
+
 
 
 
@@ -47,6 +49,10 @@ const Sidebar = () => {
 
         <NavLink to="/admin/transfer" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
           <BiTransfer /> <span>Transfer</span>
+        </NavLink>
+
+        <NavLink to="/admin/page" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
+          <GiBookPile /> <span>Page</span>
         </NavLink>
 
         <NavLink to="/admin/products" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">

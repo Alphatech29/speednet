@@ -14,6 +14,7 @@ import UserRoute from "./userRoute/userRoute";
 import ForgetPassword from "./views/general/ForgetPassword";
 import ResetPassword from "./views/general/resetPaword";
 import SeoManager from "./components/utils/seoManager";
+import Page from "./views/user/page/page";
 
 function App() {
   return (
@@ -32,6 +33,15 @@ function App() {
                 </Layout>
               }
             />
+             <Route
+              path="/page/:slug"
+              element={
+                <Layout>
+                  <Page />
+                </Layout>
+              }
+            />
+           
             <Route
               path="/auth/login"
               element={

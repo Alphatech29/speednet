@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllPlatforms, deletePlatformById } from '../../../components/backendApis/admin/apis/platform';
 import { Table, Modal, Button } from 'flowbite-react';
-import { ToastContainer, toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import Add from './modal/add';
 
 const Platform = () => {
@@ -16,10 +16,10 @@ const Platform = () => {
       if (response.success) {
         setPlatforms(response.data);
       } else {
-        toast.error('Error fetching platforms');
+        console.error('Error', 'Error fetching platforms', 'error');
       }
     } catch (error) {
-      toast.error('Unexpected error occurred while fetching platforms');
+     console.error('Unexpected Error', 'An error occurred while fetching platforms', 'error');
     } finally {
       setLoading(false);
     }
@@ -30,16 +30,28 @@ const Platform = () => {
   }, []);
 
   const handleDelete = async (id, name) => {
-    try {
-      const response = await deletePlatformById(id);
-      if (response.success) {
-        setPlatforms((prev) => prev.filter((p) => p.id !== id));
-        toast.success(`"${name}" has been deleted successfully`);
-      } else {
-        toast.error(`Failed to delete "${name}": ${response.message}`);
+    const result = await Swal.fire({
+      title: `Delete "${name}"?`,
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await deletePlatformById(id);
+        if (response.success) {
+          setPlatforms((prev) => prev.filter((p) => p.id !== id));
+          Swal.fire('Deleted!', `"${name}" has been deleted.`, 'success');
+        } else {
+          Swal.fire('Error', `Failed to delete "${name}": ${response.message}`, 'error');
+        }
+      } catch (error) {
+        Swal.fire('Error', `Error deleting "${name}"`, 'error');
       }
-    } catch (error) {
-      toast.error(`Error deleting "${name}"`);
     }
   };
 
@@ -49,7 +61,6 @@ const Platform = () => {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
-      <ToastContainer position="top-right" autoClose={3000} />
       <h2 className="text-xl font-semibold mb-4">List of Platforms</h2>
 
       <div className="flex items-center justify-between mb-4">
@@ -123,7 +134,7 @@ const Platform = () => {
           <Add
             onClose={() => {
               setModalOpen(false);
-              fetchPlatforms(); // Refresh list after adding
+              fetchPlatforms();
             }}
           />
         </Modal.Body>

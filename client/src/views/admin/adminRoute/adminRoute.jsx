@@ -19,6 +19,9 @@ import AccountOrder from '../histroy/accountOrder';
 import Password from '../password/password';
 import Report from '../report/report';
 import Transfer from '../transfer/transfer';
+import CreatePage from '../page/create';
+import Pages from '../page/pages';
+import Edit from '../page/edit';
 
 
 
@@ -46,6 +49,9 @@ const AdminRoute = () => {
         <Route path="password" element={<Password />} />
         <Route path="report" element={<Report />} />
         <Route path="transfer" element={<Transfer />} />
+        <Route path="page/create" element={<CreatePage />} />
+         <Route path="page" element={<Pages />} />
+         <Route path="page/edit" element={<Edit />} />
 
       </Route>
     </Routes>

@@ -54,6 +54,9 @@ const { getAllNotices, createNotice,updateNoticeById } = require("../controller/
 const { getAllTransactions,getAllMerchantTransactions,getAllAccountOrders } = require("../controller/admin/dashboard/histroy");
 const { getAllReportsController,updateReportStatusController } = require("../controller/admin/dashboard/report");
 const transfer = require("../controller/admin/dashboard/transfer");
+const { createPage, getPages, deletePage, editPage } = require("../controller/admin/dashboard/page");
+const { getPagesBySlug } = require("../controller/user/page");
+
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -118,6 +121,7 @@ generalRoute.get("/country", getCountrys);
 generalRoute.post("/verify-bank-account", verifyAccount);
 generalRoute.post("/withdrawal", WithdrawalRequest);
 generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
+generalRoute.get("/page/:slug", getPagesBySlug);
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);
@@ -141,5 +145,9 @@ generalRoute.get("/account_order", getAllAccountOrders)
 generalRoute.get("/all-report", getAllReportsController)
 generalRoute.put("/update-report/:reportId", updateReportStatusController)
 generalRoute.post("/transfer/funds", transfer)
+generalRoute.post("/create-page", createPage)
+generalRoute.get("/get-pages", getPages)
+generalRoute.delete('/delete-page/:id', deletePage);
+generalRoute.put("/page/:id", editPage);
 
 module.exports = generalRoute;

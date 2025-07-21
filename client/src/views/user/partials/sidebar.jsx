@@ -111,8 +111,8 @@ const Sidebar = ({ toggleSidebar }) => {
           </NavLink>
         )}
 
-        {/* VTU Service - Hide for Cameroon */}
-        {country !== 'Cameroon' && (
+        {/* VTU Service - Only for Nigeria */}
+        {country === 'Nigeria' && (
           <NavLink to="/user/vtu" className={linkClasses}>
             <FaMobile /> <span>VTU Service</span>
           </NavLink>

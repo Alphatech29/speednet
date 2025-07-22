@@ -5,6 +5,7 @@ import SelectField2 from "../../../components/interFace/SelectField2";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from "../../../components/control/authContext";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 const useAddAccountLogic = (userUid, setCurrentStep) => {
   const [formData, setFormData] = useState({
@@ -58,7 +59,6 @@ const useAddAccountLogic = (userUid, setCurrentStep) => {
             position: "top-right",
             autoClose: 3000,
           });
-          // Reset form after successful submission
           setFormData({
             platform: '',
             title: '',
@@ -172,6 +172,7 @@ const AddNewProduct = () => {
   const [platformOptions, setPlatformOptions] = useState([]);
   const [loadingPlatforms, setLoadingPlatforms] = useState(true);
   const [platformError, setPlatformError] = useState(null);
+  const [isPlatformDropdownOpen, setIsPlatformDropdownOpen] = useState(false);
 
   const { user } = useContext(AuthContext);
   const userUid = user?.uid || null;
@@ -221,12 +222,12 @@ const AddNewProduct = () => {
     setFormData
   } = useAddAccountLogic(userUid, setCurrentStep);
 
-  const handlePlatformChange = (e) => {
-    const { value } = e.target;
+  const handlePlatformSelect = (platformId) => {
     setFormData(prev => ({
       ...prev,
-      platform: value
+      platform: platformId
     }));
+    setIsPlatformDropdownOpen(false);
   };
 
   const steps = [
@@ -299,35 +300,53 @@ const AddNewProduct = () => {
                 <label htmlFor="platform" className="block text-sm font-medium text-white mb-1">
                   Select Platform
                 </label>
-                {loadingPlatforms ? (
-                  <div className="text-center py-2">Loading platforms...</div>
-                ) : (
-                  <div className="relative">
-                    <select
-                      id="platform"
-                      name="platform"
-                      className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 appearance-none"
-                      value={platform}
-                      onChange={handlePlatformChange}
+                <div className="relative">
+                    <div 
+                      className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
+                      onClick={() => setIsPlatformDropdownOpen(!isPlatformDropdownOpen)}
                     >
-                      <option value="" disabled>Select a platform...</option>
-                      {platformOptions.map((option) => (
-                        <option key={option.id} value={option.id}>
-                          {option.name}
-                        </option>
-                      ))}
-                    </select>
-                    {selectedPlatform && (
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <img
-                          src={selectedPlatform.image_path}
-                          alt={selectedPlatform.name}
-                          className="h-5 w-5 object-contain"
-                        />
+                      {platform ? (
+                        <>
+                          {selectedPlatform?.image_path && (
+                            <img 
+                              src={selectedPlatform.image_path} 
+                              alt={selectedPlatform.name}
+                              className="h-5 w-5 rounded-full object-contain mr-2"
+                            />
+                          )}
+                          {selectedPlatform?.name || 'Select a platform...'}
+                        </>
+                      ) : (
+                        'Select a platform...'
+                      )}
+                      {isPlatformDropdownOpen ? (
+                        <ChevronUpIcon className="h-4 w-4 absolute right-2" />
+                      ) : (
+                        <ChevronDownIcon className="h-4 w-4 absolute right-2" />
+                      )}
+                    </div>
+                    
+                    {isPlatformDropdownOpen && (
+                      <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
+                        {platformOptions.map((option) => (
+                          <div
+                            key={option.id}
+                            className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
+                            onClick={() => handlePlatformSelect(option.id)}
+                          >
+                            {option.image_path && (
+                              <img 
+                                src={option.image_path} 
+                                alt={option.name}
+                                className="h-5 w-5 rounded-full object-contain mr-2"
+                              />
+                            )}
+                            {option.name}
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
-                )}
                 {errors.platform && <p className="text-xs text-red-500 mt-1">{errors.platform}</p>}
               </div>
 
@@ -457,8 +476,6 @@ const AddNewProduct = () => {
                 />
               </div>
 
-
-
               <div className="flex justify-end mt-6 gap-3">
                 <button
                   onClick={handleBack}
@@ -534,7 +551,6 @@ const AddNewProduct = () => {
               {errors.two_factor_enabled && (
                 <p className="text-xs text-red-500 mt-1">{errors.two_factor_enabled}</p>
               )}
-
 
               {two_factor_enabled && (
                 <div className={`transition-all duration-300 ${two_factor_enabled ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>

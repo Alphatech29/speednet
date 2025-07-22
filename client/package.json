@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@heroicons/react": "^2.2.0",
     "@vitejs/plugin-react": "^4.3.4",
     "axios": "^1.8.2",
     "crypto-js": "^4.2.0",
@@ -26,6 +27,7 @@
     "react-helmet": "^6.1.0",
     "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^7.3.0",
+    "react-select": "^5.10.2",
     "react-toastify": "^11.0.5",
     "sweetalert2": "^11.6.13"
   },

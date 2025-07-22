@@ -892,3 +892,18 @@
 [2025-07-22T04:10:45.781Z] [INFO]: Fetched 7 accounts
 [2025-07-22T04:10:47.721Z] [INFO]: Fetched 6 platforms
 [2025-07-22T04:26:27.341Z] [INFO]: Fetched 6 platforms
+[2025-07-22T05:01:19.075Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-22T05:01:19.092Z] [INFO]: Server started on http://localhost:8000
+[2025-07-22T05:01:20.227Z] [INFO]: Transporter is ready to send emails
+[2025-07-22T06:29:25.853Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-22T06:29:25.868Z] [INFO]: Server started on http://localhost:8000
+[2025-07-22T06:29:29.440Z] [INFO]: Transporter is ready to send emails
+[2025-07-22T06:31:22.121Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-22T06:31:22.139Z] [INFO]: Server started on http://localhost:8000
+[2025-07-22T06:31:26.120Z] [INFO]: Transporter is ready to send emails
+[2025-07-22T07:14:07.008Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-22T07:14:07.027Z] [INFO]: Server started on http://localhost:8000
+[2025-07-22T07:14:09.355Z] [INFO]: Transporter is ready to send emails
+[2025-07-22T07:16:44.917Z] [INFO]: Escrow job queue loaded successfully.
+[2025-07-22T07:16:44.933Z] [INFO]: Server started on http://localhost:8000
+[2025-07-22T07:16:46.264Z] [INFO]: Transporter is ready to send emails

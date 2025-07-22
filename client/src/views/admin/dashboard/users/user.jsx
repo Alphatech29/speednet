@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Spinner, Button } from "flowbite-react";
 import { getAllUsers } from "../../../../components/backendApis/admin/apis/users";
 import { NavLink } from "react-router-dom";
+import Pagination from "../../partials/pagination";
 
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -9,6 +10,9 @@ const User = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 50;
 
   const fetchUsers = async () => {
     try {
@@ -53,7 +57,14 @@ const User = () => {
     }
 
     setFilteredUsers(filtered);
+    setCurrentPage(1); // Reset page on filter/search
   }, [searchTerm, statusFilter, users]);
+
+  // Pagination calculations
+  const indexOfLastUser = currentPage * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
   return (
     <div className="flex flex-col gap-3">
@@ -91,76 +102,89 @@ const User = () => {
               <Spinner size="lg" />
             </div>
           ) : (
-            <Table hoverable className="bg-transparent">
-              <Table.Head className="bg-transparent text-gray-600 mobile:text-[13px]">
-                <Table.HeadCell>S/N</Table.HeadCell>
-                <Table.HeadCell>Avatar</Table.HeadCell>
-                <Table.HeadCell>Full name</Table.HeadCell>
-                <Table.HeadCell>Role</Table.HeadCell>
-                <Table.HeadCell>Country</Table.HeadCell>
-                <Table.HeadCell>Balance</Table.HeadCell>
-                <Table.HeadCell>Status</Table.HeadCell>
-                <Table.HeadCell>Action</Table.HeadCell>
-              </Table.Head>
+            <>
+              <Table hoverable className="bg-transparent">
+                <Table.Head className="bg-transparent text-gray-600 mobile:text-[13px]">
+                  <Table.HeadCell>S/N</Table.HeadCell>
+                  <Table.HeadCell>Avatar</Table.HeadCell>
+                  <Table.HeadCell>Full name</Table.HeadCell>
+                  <Table.HeadCell>Role</Table.HeadCell>
+                  <Table.HeadCell>Country</Table.HeadCell>
+                  <Table.HeadCell>Balance</Table.HeadCell>
+                  <Table.HeadCell>Status</Table.HeadCell>
+                  <Table.HeadCell>Action</Table.HeadCell>
+                </Table.Head>
 
-              <Table.Body className="divide-y">
-                {filteredUsers.length > 0 ? (
-                  filteredUsers.map((user, index) => (
-                    <Table.Row key={user.uid}>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        {index + 1}
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        <img
-                          src={user.avatar}
-                          alt="avatar"
-                          className="h-10 w-10 rounded-full bg-white object-fill"
-                        />
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        {user.full_name}
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        {user.role}
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        {user.country}
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        ${Number(user.account_balance).toLocaleString()}
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        <span
-                          className={`px-2 py-1 rounded-full text-white text-xs ${
-                            user.status === 1 ? "bg-green-500" : "bg-red-500"
-                          }`}
-                        >
-                          {user.status === 1 ? "Active" : "Suspended"}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell className="mobile:text-[12px] pc:text-sm">
-                        <div className="flex gap-2">
-                          <NavLink to={`/admin/users/${user.uid}`}>
-                            <Button
-                              size="sm"
-                              className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700"
-                            >
-                              View
-                            </Button>
-                          </NavLink>
-                        </div>
+                <Table.Body className="divide-y">
+                  {currentUsers.length > 0 ? (
+                    currentUsers.map((user, index) => (
+                      <Table.Row key={user.uid}>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          {indexOfFirstUser + index + 1}
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          <img
+                            src={user.avatar}
+                            alt="avatar"
+                            className="h-10 w-10 rounded-full bg-white object-fill"
+                          />
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          {user.full_name}
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          {user.role}
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          {user.country}
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          ${Number(user.account_balance).toLocaleString()}
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          <span
+                            className={`px-2 py-1 rounded-full text-white text-xs ${
+                              user.status === 1 ? "bg-green-500" : "bg-red-500"
+                            }`}
+                          >
+                            {user.status === 1 ? "Active" : "Suspended"}
+                          </span>
+                        </Table.Cell>
+                        <Table.Cell className="mobile:text-[12px] pc:text-sm">
+                          <div className="flex gap-2">
+                            <NavLink to={`/admin/users/${user.uid}`}>
+                              <Button
+                                size="sm"
+                                className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700"
+                              >
+                                View
+                              </Button>
+                            </NavLink>
+                          </div>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))
+                  ) : (
+                    <Table.Row>
+                      <Table.Cell colSpan={8} className="text-center py-4">
+                        No users found.
                       </Table.Cell>
                     </Table.Row>
-                  ))
-                ) : (
-                  <Table.Row>
-                    <Table.Cell colSpan={8} className="text-center py-4">
-                      No users found.
-                    </Table.Cell>
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table>
+                  )}
+                </Table.Body>
+              </Table>
+
+              {/* Pagination - Only show if more than one page exists */}
+              {totalPages > 1 && (
+                <div className="flex justify-center mt-4">
+                  <Pagination
+                    totalPages={totalPages}
+                    initialPage={currentPage}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

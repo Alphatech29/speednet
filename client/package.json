@@ -28,6 +28,7 @@
     "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^7.3.0",
     "react-select": "^5.10.2",
+    "react-select-country-list": "^2.2.3",
     "react-toastify": "^11.0.5",
     "sweetalert2": "^11.6.13"
   },

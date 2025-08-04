@@ -76,7 +76,11 @@ const Sidebar = ({ toggleSidebar }) => {
           <FaWallet /> <span>My Wallet</span>
         </NavLink>
 
-        {/* SweetAlert for SMS-Virtual-Phone */}
+        <NavLink to="/user/sms-service" className={linkClasses}>
+          <GiVirtualMarker /> <span>Sms-Virtual-Phone</span>
+        </NavLink>
+
+        {/* 
         <div
           onClick={() => {
             Swal.fire({
@@ -90,6 +94,7 @@ const Sidebar = ({ toggleSidebar }) => {
         >
           <GiVirtualMarker /> <span>Sms-Virtual-Phone</span>
         </div>
+         */}
 
         <Dropdown
           label={<span className="flex items-center gap-2"><SiNordvpn /> Nord Services</span>}

@@ -24,6 +24,8 @@ import Chat from '../views/user/escrowChat/chat';
 import Apply from '../views/user/merchant/apply';
 import Unauthorized from '../views/user/unauthorized/unauthorized';
 import ReportList from '../views/user/purchase/reportList';
+import SmsActivate from '../views/user/smsActivate/smsActivate';
+import GetNumber from '../views/user/smsActivate/getNumber';
 
 // Role-based guards
 const RequireRole = ({ user, role, children }) => {
@@ -52,6 +54,8 @@ const UserRoute = () => {
         <Route path="nord-services/locker" element={<NordLocker />} />
         <Route path="nord-services/vpn" element={<NordVpn />} />
         <Route path="nord-services/vpn/offer" element={<Pricing />} />
+        <Route path="sms-service" element={<SmsActivate />} />
+        <Route path="get-number" element={<GetNumber />} />
         {/* Unauthorized page */}
         <Route path="/unauthorized" element={<Unauthorized />} />
 

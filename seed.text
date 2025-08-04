@@ -221,3 +221,2626 @@ CREATE TABLE pages (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+CREATE TABLE nord_plan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    package_name VARCHAR(100) NOT NULL,
+    duration INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    status TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
+
+
+
+
+
+result from getTariffs[📦 Full getTariffs result: {
+  "success": true,
+  "data": {
+    "response": "1",
+    "countries": {
+      "_7": {
+        "name": "Russia",
+        "original": "russia",
+        "code": 7,
+        "pos": 0,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_380": {
+        "name": "Ukraine",
+        "original": "ukraine",
+        "code": 380,
+        "pos": 1,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_49": {
+        "name": "Germany",
+        "original": "germany",
+        "code": 49,
+        "pos": 2,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_44": {
+        "name": "Britain",
+        "original": "united_kingdom",
+        "code": 44,
+        "pos": 3,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_33": {
+        "name": "France",
+        "original": "france",
+        "code": 33,
+        "pos": 4,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_34": {
+        "name": "Spain",
+        "original": "spain",
+        "code": 34,
+        "pos": 5,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_46": {
+        "name": "Sweden",
+        "original": "sweden",
+        "code": 46,
+        "pos": 6,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_1": {
+        "name": "USA",
+        "original": "usa",
+        "code": 1,
+        "pos": 7,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_48": {
+        "name": "Poland",
+        "original": "poland",
+        "code": 48,
+        "pos": 8,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_31": {
+        "name": "Netherlands",
+        "original": "netherlands",
+        "code": 31,
+        "pos": 9,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_359": {
+        "name": "Bulgaria",
+        "original": "bulgaria",
+        "code": 359,
+        "pos": 10,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_212": {
+        "name": "Morocco",
+        "original": "morocco",
+        "code": 212,
+        "pos": 11,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_91": {
+        "name": "India",
+        "original": "india",
+        "code": 91,
+        "pos": 12,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_45": {
+        "name": "Denmark",
+        "original": "denmark",
+        "code": 45,
+        "pos": 13,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_351": {
+        "name": "Portugal",
+        "original": "portugal",
+        "code": 351,
+        "pos": 14,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_62": {
+        "name": "Indonesia",
+        "original": "indonesia",
+        "code": 62,
+        "pos": 15,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_357": {
+        "name": "Cyprus",
+        "original": "cyprus",
+        "code": 357,
+        "pos": 16,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_1000": {
+        "name": "Canada Virtual",
+        "original": "canada",
+        "code": 1000,
+        "pos": 17,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_420": {
+        "name": "Czech",
+        "original": "czech",
+        "code": 420,
+        "pos": 18,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_40": {
+        "name": "Romania",
+        "original": "romania",
+        "code": 40,
+        "pos": 19,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_63": {
+        "name": "Philippines",
+        "original": "philippines",
+        "code": 63,
+        "pos": 20,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_84": {
+        "name": "Vietnam",
+        "original": "vietnam",
+        "code": 84,
+        "pos": 21,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_61": {
+        "name": "Australia",
+        "original": "australia",
+        "code": 61,
+        "pos": 22,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_371": {
+        "name": "Latvia",
+        "original": "latvia",
+        "code": 371,
+        "pos": 23,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_381": {
+        "name": "Serbia",
+        "original": "serbia",
+        "code": 381,
+        "pos": 24,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_370": {
+        "name": "Lithuania",
+        "original": "lithuania",
+        "code": 370,
+        "pos": 25,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_372": {
+        "name": "Estonia",
+        "original": "estonia",
+        "code": 372,
+        "pos": 26,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_373": {
+        "name": "Moldova",
+        "original": "moldova",
+        "code": 373,
+        "pos": 27,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_995": {
+        "name": "Georgia",
+        "original": "georgia",
+        "code": 995,
+        "pos": 28,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_77": {
+        "name": "Kazakhstan",
+        "original": "kazakhstan",
+        "code": 77,
+        "pos": 29,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_996": {
+        "name": "Kyrgyzstan",
+        "original": "kyrgyzstan",
+        "code": 996,
+        "pos": 30,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_55": {
+        "name": "Brazil",
+        "original": "brazil",
+        "code": 55,
+        "pos": 31,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_254": {
+        "name": "Kenya",
+        "original": "kenya",
+        "code": 254,
+        "pos": 32,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_52": {
+        "name": "Mexico",
+        "original": "mexico",
+        "code": 52,
+        "pos": 33,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_54": {
+        "name": "Argentina",
+        "original": "argentina",
+        "code": 54,
+        "pos": 34,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_90": {
+        "name": "Turkey",
+        "original": "turkey",
+        "code": 90,
+        "pos": 35,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_998": {
+        "name": "Uzbekistan",
+        "original": "uzbekistan",
+        "code": 998,
+        "pos": 36,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_20": {
+        "name": "Egypt",
+        "original": "egypt",
+        "code": 20,
+        "pos": 37,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_972": {
+        "name": "Israel",
+        "original": "israel",
+        "code": 972,
+        "pos": 38,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_967": {
+        "name": "Yemen",
+        "original": "yemen",
+        "code": 967,
+        "pos": 39,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_852": {
+        "name": "Hong Kong",
+        "original": "hongkong",
+        "code": 852,
+        "pos": 40,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_234": {
+        "name": "Nigeria",
+        "original": "nigeria",
+        "code": 234,
+        "pos": 41,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_353": {
+        "name": "Ireland",
+        "original": "ireland",
+        "code": 353,
+        "pos": 42,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_225": {
+        "name": "Ivory Coast",
+        "original": "ivory",
+        "code": 225,
+        "pos": 43,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_233": {
+        "name": "Ghana",
+        "original": "ghana",
+        "code": 233,
+        "pos": 44,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_232": {
+        "name": "Sierre Lyone",
+        "original": "sierraleone",
+        "code": 232,
+        "pos": 45,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_509": {
+        "name": "Haiti",
+        "original": "haiti",
+        "code": 509,
+        "pos": 46,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_886": {
+        "name": "Taiwan",
+        "original": "taiwan",
+        "code": 886,
+        "pos": 47,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_216": {
+        "name": "Tunisia",
+        "original": "tunis",
+        "code": 216,
+        "pos": 48,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_964": {
+        "name": "Iraq",
+        "original": "iraq",
+        "code": 964,
+        "pos": 49,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_57": {
+        "name": "Colombia",
+        "original": "colombia",
+        "code": 57,
+        "pos": 50,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_60": {
+        "name": "Malaysia",
+        "original": "malaysia",
+        "code": 60,
+        "pos": 51,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_504": {
+        "name": "Honduras",
+        "original": "honduras",
+        "code": 504,
+        "pos": 52,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_235": {
+        "name": "Chad",
+        "original": "chad",
+        "code": 235,
+        "pos": 53,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_226": {
+        "name": "Burkina Faso",
+        "original": "burkinafaso",
+        "code": 226,
+        "pos": 54,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_92": {
+        "name": "Pakistan",
+        "original": "pakistan",
+        "code": 92,
+        "pos": 55,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_220": {
+        "name": "Gambia",
+        "original": "gambia",
+        "code": 220,
+        "pos": 56,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_992": {
+        "name": "Tajikistan",
+        "original": "tajikistan",
+        "code": 992,
+        "pos": 57,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_98": {
+        "name": "Iran",
+        "original": "iran",
+        "code": 98,
+        "pos": 58,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_994": {
+        "name": "Azerbaijan",
+        "original": "azerbaijan",
+        "code": 994,
+        "pos": 59,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_93": {
+        "name": "Afghanistan",
+        "original": "afghanistan",
+        "code": 93,
+        "pos": 60,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_591": {
+        "name": "Bolivia",
+        "original": "bolivia",
+        "code": 591,
+        "pos": 61,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_231": {
+        "name": "Liberia",
+        "original": "liberia",
+        "code": 231,
+        "pos": 62,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_976": {
+        "name": "Mongolia",
+        "original": "mongolia",
+        "code": 976,
+        "pos": 63,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_977": {
+        "name": "Nepal",
+        "original": "nepal",
+        "code": 977,
+        "pos": 64,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_223": {
+        "name": "Mali",
+        "original": "mali",
+        "code": 223,
+        "pos": 65,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_358": {
+        "name": "Finland",
+        "original": "finland",
+        "code": 358,
+        "pos": 66,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_224": {
+        "name": "Guinea",
+        "original": "guinea",
+        "code": 224,
+        "pos": 67,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_66": {
+        "name": "Thailand",
+        "original": "thailand",
+        "code": 66,
+        "pos": 68,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_30": {
+        "name": "Greece",
+        "original": "greece",
+        "code": 30,
+        "pos": 69,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_65": {
+        "name": "Singapore",
+        "original": "singapore",
+        "code": 65,
+        "pos": 70,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_375": {
+        "name": "Belarus",
+        "original": "belorussia",
+        "code": 375,
+        "pos": 71,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_32": {
+        "name": "Belgium",
+        "original": "belgium",
+        "code": 32,
+        "pos": 72,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_237": {
+        "name": "Cameroon",
+        "original": "cameroon",
+        "code": 237,
+        "pos": 73,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_39": {
+        "name": "Italy",
+        "original": "italy",
+        "code": 39,
+        "pos": 74,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_593": {
+        "name": "Ecuador",
+        "original": "ecuador",
+        "code": 593,
+        "pos": 75,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_966": {
+        "name": "Saudi Arabia",
+        "original": "saudiarabia",
+        "code": 966,
+        "pos": 76,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_41": {
+        "name": "Switzerland",
+        "original": "switzerland",
+        "code": 41,
+        "pos": 77,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_421": {
+        "name": "Slovakia",
+        "original": "slovakia",
+        "code": 421,
+        "pos": 78,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_36": {
+        "name": "Hungary",
+        "original": "hungary",
+        "code": 36,
+        "pos": 79,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_389": {
+        "name": "North Macedonia",
+        "original": "northmacedonia",
+        "code": 389,
+        "pos": 80,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_386": {
+        "name": "Slovenia",
+        "original": "slovenia",
+        "code": 386,
+        "pos": 81,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_51": {
+        "name": "Peru",
+        "original": "peru",
+        "code": 51,
+        "pos": 82,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_505": {
+        "name": "Nicaragua",
+        "original": "nicaragua",
+        "code": 505,
+        "pos": 83,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_249": {
+        "name": "Sudan",
+        "original": "sudan",
+        "code": 249,
+        "pos": 84,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_503": {
+        "name": "Salvador",
+        "original": "salvador",
+        "code": 503,
+        "pos": 85,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_256": {
+        "name": "Uganda",
+        "original": "uganda",
+        "code": 256,
+        "pos": 86,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_260": {
+        "name": "Zambia",
+        "original": "zambia",
+        "code": 260,
+        "pos": 87,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_265": {
+        "name": "Malawi",
+        "original": "malawi",
+        "code": 265,
+        "pos": 88,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_245": {
+        "name": "Guinea Bissau",
+        "original": "guinea bissau",
+        "code": 245,
+        "pos": 89,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_222": {
+        "name": "Mauritania",
+        "original": "mauritania",
+        "code": 222,
+        "pos": 90,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_221": {
+        "name": "Senegal",
+        "original": "senegal",
+        "code": 221,
+        "pos": 91,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_43": {
+        "name": "Austria",
+        "original": "austria",
+        "code": 43,
+        "pos": 92,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_385": {
+        "name": "Croatia",
+        "original": "croatia",
+        "code": 385,
+        "pos": 93,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_86": {
+        "name": "China",
+        "original": "china",
+        "code": 86,
+        "pos": 94,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_856": {
+        "name": "Laos",
+        "original": "laos",
+        "code": 856,
+        "pos": 95,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_95": {
+        "name": "Myanmar",
+        "original": "myanmar",
+        "code": 95,
+        "pos": 96,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_855": {
+        "name": "Cambodia",
+        "original": "cambodia",
+        "code": 855,
+        "pos": 97,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_56": {
+        "name": "Chile",
+        "original": "chile",
+        "code": 56,
+        "pos": 98,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_64": {
+        "name": "New Zealand",
+        "original": "new zealand",
+        "code": 64,
+        "pos": 99,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_507": {
+        "name": "Panama",
+        "original": "panama",
+        "code": 507,
+        "pos": 100,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_241": {
+        "name": "Gabon",
+        "original": "gabon",
+        "code": 241,
+        "pos": 101,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_251": {
+        "name": "Ethiopia",
+        "original": "ethiopia",
+        "code": 251,
+        "pos": 102,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_243": {
+        "name": "Congo",
+        "original": "congo",
+        "code": 243,
+        "pos": 103,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_257": {
+        "name": "Burundi",
+        "original": "burundi",
+        "code": 257,
+        "pos": 104,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_229": {
+        "name": "Benin",
+        "original": "benin",
+        "code": 229,
+        "pos": 105,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_27": {
+        "name": "South Africa",
+        "original": "republic of south africa",
+        "code": 27,
+        "pos": 106,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_244": {
+        "name": "Angola",
+        "original": "angola",
+        "code": 244,
+        "pos": 107,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_961": {
+        "name": "Liban",
+        "original": "lebanon",
+        "code": 961,
+        "pos": 108,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_258": {
+        "name": "Mozambique",
+        "original": "mozambique",
+        "code": 258,
+        "pos": 109,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_963": {
+        "name": "Syrie",
+        "original": "syria",
+        "code": 963,
+        "pos": 110,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_81": {
+        "name": "Japan",
+        "original": "japan",
+        "code": 81,
+        "pos": 111,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_94": {
+        "name": "Sri Lanka",
+        "original": "srilanka",
+        "code": 94,
+        "pos": 112,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_975": {
+        "name": "Bhutan",
+        "original": "bhutan",
+        "code": 975,
+        "pos": 113,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_880": {
+        "name": "Bangladesh",
+        "original": "bangladesh",
+        "code": 880,
+        "pos": 114,
+        "other": false,
+        "new": false,
+        "enable": true
+      }
+    },
+    "services": {
+      "_vkcom": {
+        "id": 1,
+        "count": 2459,
+        "price": "1.00",
+        "service": "VKontakte + Mail.ru",
+        "slug": "vkcom"
+      },
+      "_3223": {
+        "id": 2,
+        "count": 9999,
+        "price": "0.29",
+        "service": "Facebook",
+        "slug": "3223"
+      },
+      "_odklru": {
+        "id": 3,
+        "count": 9999,
+        "price": "0.59",
+        "service": "Odnoklassniki",
+        "slug": "odklru"
+      },
+      "_yandex": {
+        "id": 4,
+        "count": 4245,
+        "price": "0.22",
+        "service": "Yandeks",
+        "slug": "yandex"
+      },
+      "_viber": {
+        "id": 5,
+        "count": 9999,
+        "price": "0.21",
+        "service": "Viber",
+        "slug": "viber"
+      },
+      "_whatsapp": {
+        "id": 6,
+        "count": 1536,
+        "price": "2.00",
+        "service": "WhatsApp",
+        "slug": "whatsapp"
+      },
+      "_telegram": {
+        "id": 7,
+        "count": 8294,
+        "price": "3.20",
+        "service": "Telegram",
+        "slug": "telegram"
+      },
+      "_fastfriend": {
+        "id": 8,
+        "count": 9999,
+        "price": "0.06",
+        "service": "DrugVokrug",
+        "slug": "fastfriend"
+      },
+      "_instagram": {
+        "id": 9,
+        "count": 9999,
+        "price": "0.22",
+        "service": "Instagram",
+        "slug": "instagram"
+      },
+      "_wechat": {
+        "id": 10,
+        "count": 9999,
+        "price": "0.33",
+        "service": "WeChat",
+        "slug": "wechat"
+      },
+      "_steam": {
+        "id": 11,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Steam",
+        "slug": "steam"
+      },
+      "_uber": {
+        "id": 12,
+        "count": 9999,
+        "price": "0.17",
+        "service": "Uber",
+        "slug": "uber"
+      },
+      "_microsoft": {
+        "id": 13,
+        "count": 9999,
+        "price": "0.13",
+        "service": "Microsoft",
+        "slug": "microsoft"
+      },
+      "_twitter": {
+        "id": 14,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Twitter|X",
+        "slug": "twitter"
+      },
+      "_gett": {
+        "id": 15,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Gett",
+        "slug": "gett"
+      },
+      "_meetme": {
+        "id": 16,
+        "count": 9920,
+        "price": "0.07",
+        "service": "MeetMe",
+        "slug": "meetme"
+      },
+      "_linemessenger": {
+        "id": 17,
+        "count": 9999,
+        "price": "0.07",
+        "service": "LINE",
+        "slug": "linemessenger"
+      },
+      "_yahoo": {
+        "id": 18,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Yahoo",
+        "slug": "yahoo"
+      },
+      "_tencentqq": {
+        "id": 19,
+        "count": 6466,
+        "price": "0.07",
+        "service": "QQ",
+        "slug": "tencentqq"
+      },
+      "_taximaxim": {
+        "id": 20,
+        "count": 9890,
+        "price": "0.07",
+        "service": "taxiMaxim",
+        "slug": "taximaxim"
+      },
+      "_tantan": {
+        "id": 21,
+        "count": 9999,
+        "price": "0.07",
+        "service": "TanTan",
+        "slug": "tantan"
+      },
+      "_tinder": {
+        "id": 22,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Tinder",
+        "slug": "tinder"
+      },
+      "_mamba": {
+        "id": 23,
+        "count": 9999,
+        "price": "0.43",
+        "service": "Mamba",
+        "slug": "mamba"
+      },
+      "_drom": {
+        "id": 24,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Drom",
+        "slug": "drom"
+      },
+      "_kakaotalk": {
+        "id": 25,
+        "count": 9999,
+        "price": "0.28",
+        "service": "KakaoTalk",
+        "slug": "kakaotalk"
+      },
+      "_aol": {
+        "id": 26,
+        "count": 6026,
+        "price": "0.07",
+        "service": "AOL",
+        "slug": "aol"
+      },
+      "_linkedin": {
+        "id": 27,
+        "count": 9999,
+        "price": "0.07",
+        "service": "LinkedIn",
+        "slug": "linkedin"
+      },
+      "_bolt": {
+        "id": 28,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Bolt",
+        "slug": "bolt"
+      },
+      "_airbnb": {
+        "id": 29,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Airbnb",
+        "slug": "airbnb"
+      },
+      "_livescore": {
+        "id": 30,
+        "count": 9999,
+        "price": "0.07",
+        "service": "LiveScore",
+        "slug": "livescore"
+      }
+    },
+    "favorite_countries": {},
+    "favorite_services": [],
+    "page": 1,
+    "country": 7,
+    "filter": "",
+    "end": false,
+    "favorites": {}
+  }
+}
+[nodemon] restarting due to changes...
+[nodemon] starting `node app.js`
+Connecting to MySQL with config: { host: 'localhost', user: 'root', database: 'speednet', port: 9030 }
+Escrow job queue loaded successfully.
+Server Successfully Connected
+Database Connected Successfully
+Transporter is ready to send emails
+❌ Invalid or failed response from OnlineSim.
+[nodemon] restarting due to changes...
+[nodemon] starting `node app.js`
+Connecting to MySQL with config: { host: 'localhost', user: 'root', database: 'speednet', port: 9030 }
+Escrow job queue loaded successfully.
+Server Successfully Connected
+Database Connected Successfully
+Transporter is ready to send emails
+📦 getTariffs raw result: {
+  "success": true,
+  "data": {
+    "response": "1",
+    "countries": {
+      "_7": {
+        "name": "Russia",
+        "original": "russia",
+        "code": 7,
+        "pos": 0,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_380": {
+        "name": "Ukraine",
+        "original": "ukraine",
+        "code": 380,
+        "pos": 1,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_49": {
+        "name": "Germany",
+        "original": "germany",
+        "code": 49,
+        "pos": 2,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_44": {
+        "name": "Britain",
+        "original": "united_kingdom",
+        "code": 44,
+        "pos": 3,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_33": {
+        "name": "France",
+        "original": "france",
+        "code": 33,
+        "pos": 4,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_34": {
+        "name": "Spain",
+        "original": "spain",
+        "code": 34,
+        "pos": 5,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_46": {
+        "name": "Sweden",
+        "original": "sweden",
+        "code": 46,
+        "pos": 6,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_1": {
+        "name": "USA",
+        "original": "usa",
+        "code": 1,
+        "pos": 7,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_48": {
+        "name": "Poland",
+        "original": "poland",
+        "code": 48,
+        "pos": 8,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_31": {
+        "name": "Netherlands",
+        "original": "netherlands",
+        "code": 31,
+        "pos": 9,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_359": {
+        "name": "Bulgaria",
+        "original": "bulgaria",
+        "code": 359,
+        "pos": 10,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_212": {
+        "name": "Morocco",
+        "original": "morocco",
+        "code": 212,
+        "pos": 11,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_91": {
+        "name": "India",
+        "original": "india",
+        "code": 91,
+        "pos": 12,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_45": {
+        "name": "Denmark",
+        "original": "denmark",
+        "code": 45,
+        "pos": 13,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_351": {
+        "name": "Portugal",
+        "original": "portugal",
+        "code": 351,
+        "pos": 14,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_62": {
+        "name": "Indonesia",
+        "original": "indonesia",
+        "code": 62,
+        "pos": 15,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_357": {
+        "name": "Cyprus",
+        "original": "cyprus",
+        "code": 357,
+        "pos": 16,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_1000": {
+        "name": "Canada Virtual",
+        "original": "canada",
+        "code": 1000,
+        "pos": 17,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_420": {
+        "name": "Czech",
+        "original": "czech",
+        "code": 420,
+        "pos": 18,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_40": {
+        "name": "Romania",
+        "original": "romania",
+        "code": 40,
+        "pos": 19,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_63": {
+        "name": "Philippines",
+        "original": "philippines",
+        "code": 63,
+        "pos": 20,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_84": {
+        "name": "Vietnam",
+        "original": "vietnam",
+        "code": 84,
+        "pos": 21,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_61": {
+        "name": "Australia",
+        "original": "australia",
+        "code": 61,
+        "pos": 22,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_371": {
+        "name": "Latvia",
+        "original": "latvia",
+        "code": 371,
+        "pos": 23,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_381": {
+        "name": "Serbia",
+        "original": "serbia",
+        "code": 381,
+        "pos": 24,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_370": {
+        "name": "Lithuania",
+        "original": "lithuania",
+        "code": 370,
+        "pos": 25,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_372": {
+        "name": "Estonia",
+        "original": "estonia",
+        "code": 372,
+        "pos": 26,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_373": {
+        "name": "Moldova",
+        "original": "moldova",
+        "code": 373,
+        "pos": 27,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_995": {
+        "name": "Georgia",
+        "original": "georgia",
+        "code": 995,
+        "pos": 28,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_77": {
+        "name": "Kazakhstan",
+        "original": "kazakhstan",
+        "code": 77,
+        "pos": 29,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_996": {
+        "name": "Kyrgyzstan",
+        "original": "kyrgyzstan",
+        "code": 996,
+        "pos": 30,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_55": {
+        "name": "Brazil",
+        "original": "brazil",
+        "code": 55,
+        "pos": 31,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_254": {
+        "name": "Kenya",
+        "original": "kenya",
+        "code": 254,
+        "pos": 32,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_52": {
+        "name": "Mexico",
+        "original": "mexico",
+        "code": 52,
+        "pos": 33,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_54": {
+        "name": "Argentina",
+        "original": "argentina",
+        "code": 54,
+        "pos": 34,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_90": {
+        "name": "Turkey",
+        "original": "turkey",
+        "code": 90,
+        "pos": 35,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_998": {
+        "name": "Uzbekistan",
+        "original": "uzbekistan",
+        "code": 998,
+        "pos": 36,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_20": {
+        "name": "Egypt",
+        "original": "egypt",
+        "code": 20,
+        "pos": 37,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_972": {
+        "name": "Israel",
+        "original": "israel",
+        "code": 972,
+        "pos": 38,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_967": {
+        "name": "Yemen",
+        "original": "yemen",
+        "code": 967,
+        "pos": 39,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_852": {
+        "name": "Hong Kong",
+        "original": "hongkong",
+        "code": 852,
+        "pos": 40,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_234": {
+        "name": "Nigeria",
+        "original": "nigeria",
+        "code": 234,
+        "pos": 41,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_353": {
+        "name": "Ireland",
+        "original": "ireland",
+        "code": 353,
+        "pos": 42,
+        "other": false,
+        "new": true,
+        "enable": true
+      },
+      "_225": {
+        "name": "Ivory Coast",
+        "original": "ivory",
+        "code": 225,
+        "pos": 43,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_233": {
+        "name": "Ghana",
+        "original": "ghana",
+        "code": 233,
+        "pos": 44,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_232": {
+        "name": "Sierre Lyone",
+        "original": "sierraleone",
+        "code": 232,
+        "pos": 45,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_509": {
+        "name": "Haiti",
+        "original": "haiti",
+        "code": 509,
+        "pos": 46,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_886": {
+        "name": "Taiwan",
+        "original": "taiwan",
+        "code": 886,
+        "pos": 47,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_216": {
+        "name": "Tunisia",
+        "original": "tunis",
+        "code": 216,
+        "pos": 48,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_964": {
+        "name": "Iraq",
+        "original": "iraq",
+        "code": 964,
+        "pos": 49,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_57": {
+        "name": "Colombia",
+        "original": "colombia",
+        "code": 57,
+        "pos": 50,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_60": {
+        "name": "Malaysia",
+        "original": "malaysia",
+        "code": 60,
+        "pos": 51,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_504": {
+        "name": "Honduras",
+        "original": "honduras",
+        "code": 504,
+        "pos": 52,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_235": {
+        "name": "Chad",
+        "original": "chad",
+        "code": 235,
+        "pos": 53,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_226": {
+        "name": "Burkina Faso",
+        "original": "burkinafaso",
+        "code": 226,
+        "pos": 54,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_92": {
+        "name": "Pakistan",
+        "original": "pakistan",
+        "code": 92,
+        "pos": 55,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_220": {
+        "name": "Gambia",
+        "original": "gambia",
+        "code": 220,
+        "pos": 56,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_992": {
+        "name": "Tajikistan",
+        "original": "tajikistan",
+        "code": 992,
+        "pos": 57,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_98": {
+        "name": "Iran",
+        "original": "iran",
+        "code": 98,
+        "pos": 58,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_994": {
+        "name": "Azerbaijan",
+        "original": "azerbaijan",
+        "code": 994,
+        "pos": 59,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_93": {
+        "name": "Afghanistan",
+        "original": "afghanistan",
+        "code": 93,
+        "pos": 60,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_591": {
+        "name": "Bolivia",
+        "original": "bolivia",
+        "code": 591,
+        "pos": 61,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_231": {
+        "name": "Liberia",
+        "original": "liberia",
+        "code": 231,
+        "pos": 62,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_976": {
+        "name": "Mongolia",
+        "original": "mongolia",
+        "code": 976,
+        "pos": 63,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_977": {
+        "name": "Nepal",
+        "original": "nepal",
+        "code": 977,
+        "pos": 64,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_223": {
+        "name": "Mali",
+        "original": "mali",
+        "code": 223,
+        "pos": 65,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_358": {
+        "name": "Finland",
+        "original": "finland",
+        "code": 358,
+        "pos": 66,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_224": {
+        "name": "Guinea",
+        "original": "guinea",
+        "code": 224,
+        "pos": 67,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_66": {
+        "name": "Thailand",
+        "original": "thailand",
+        "code": 66,
+        "pos": 68,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_30": {
+        "name": "Greece",
+        "original": "greece",
+        "code": 30,
+        "pos": 69,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_65": {
+        "name": "Singapore",
+        "original": "singapore",
+        "code": 65,
+        "pos": 70,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_375": {
+        "name": "Belarus",
+        "original": "belorussia",
+        "code": 375,
+        "pos": 71,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_32": {
+        "name": "Belgium",
+        "original": "belgium",
+        "code": 32,
+        "pos": 72,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_237": {
+        "name": "Cameroon",
+        "original": "cameroon",
+        "code": 237,
+        "pos": 73,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_39": {
+        "name": "Italy",
+        "original": "italy",
+        "code": 39,
+        "pos": 74,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_593": {
+        "name": "Ecuador",
+        "original": "ecuador",
+        "code": 593,
+        "pos": 75,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_966": {
+        "name": "Saudi Arabia",
+        "original": "saudiarabia",
+        "code": 966,
+        "pos": 76,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_41": {
+        "name": "Switzerland",
+        "original": "switzerland",
+        "code": 41,
+        "pos": 77,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_421": {
+        "name": "Slovakia",
+        "original": "slovakia",
+        "code": 421,
+        "pos": 78,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_36": {
+        "name": "Hungary",
+        "original": "hungary",
+        "code": 36,
+        "pos": 79,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_389": {
+        "name": "North Macedonia",
+        "original": "northmacedonia",
+        "code": 389,
+        "pos": 80,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_386": {
+        "name": "Slovenia",
+        "original": "slovenia",
+        "code": 386,
+        "pos": 81,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_51": {
+        "name": "Peru",
+        "original": "peru",
+        "code": 51,
+        "pos": 82,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_505": {
+        "name": "Nicaragua",
+        "original": "nicaragua",
+        "code": 505,
+        "pos": 83,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_249": {
+        "name": "Sudan",
+        "original": "sudan",
+        "code": 249,
+        "pos": 84,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_503": {
+        "name": "Salvador",
+        "original": "salvador",
+        "code": 503,
+        "pos": 85,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_256": {
+        "name": "Uganda",
+        "original": "uganda",
+        "code": 256,
+        "pos": 86,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_260": {
+        "name": "Zambia",
+        "original": "zambia",
+        "code": 260,
+        "pos": 87,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_265": {
+        "name": "Malawi",
+        "original": "malawi",
+        "code": 265,
+        "pos": 88,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_245": {
+        "name": "Guinea Bissau",
+        "original": "guinea bissau",
+        "code": 245,
+        "pos": 89,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_222": {
+        "name": "Mauritania",
+        "original": "mauritania",
+        "code": 222,
+        "pos": 90,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_221": {
+        "name": "Senegal",
+        "original": "senegal",
+        "code": 221,
+        "pos": 91,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_43": {
+        "name": "Austria",
+        "original": "austria",
+        "code": 43,
+        "pos": 92,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_385": {
+        "name": "Croatia",
+        "original": "croatia",
+        "code": 385,
+        "pos": 93,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_86": {
+        "name": "China",
+        "original": "china",
+        "code": 86,
+        "pos": 94,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_856": {
+        "name": "Laos",
+        "original": "laos",
+        "code": 856,
+        "pos": 95,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_95": {
+        "name": "Myanmar",
+        "original": "myanmar",
+        "code": 95,
+        "pos": 96,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_855": {
+        "name": "Cambodia",
+        "original": "cambodia",
+        "code": 855,
+        "pos": 97,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_56": {
+        "name": "Chile",
+        "original": "chile",
+        "code": 56,
+        "pos": 98,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_64": {
+        "name": "New Zealand",
+        "original": "new zealand",
+        "code": 64,
+        "pos": 99,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_507": {
+        "name": "Panama",
+        "original": "panama",
+        "code": 507,
+        "pos": 100,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_241": {
+        "name": "Gabon",
+        "original": "gabon",
+        "code": 241,
+        "pos": 101,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_251": {
+        "name": "Ethiopia",
+        "original": "ethiopia",
+        "code": 251,
+        "pos": 102,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_243": {
+        "name": "Congo",
+        "original": "congo",
+        "code": 243,
+        "pos": 103,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_257": {
+        "name": "Burundi",
+        "original": "burundi",
+        "code": 257,
+        "pos": 104,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_229": {
+        "name": "Benin",
+        "original": "benin",
+        "code": 229,
+        "pos": 105,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_27": {
+        "name": "South Africa",
+        "original": "republic of south africa",
+        "code": 27,
+        "pos": 106,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_244": {
+        "name": "Angola",
+        "original": "angola",
+        "code": 244,
+        "pos": 107,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_961": {
+        "name": "Liban",
+        "original": "lebanon",
+        "code": 961,
+        "pos": 108,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_258": {
+        "name": "Mozambique",
+        "original": "mozambique",
+        "code": 258,
+        "pos": 109,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_963": {
+        "name": "Syrie",
+        "original": "syria",
+        "code": 963,
+        "pos": 110,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_81": {
+        "name": "Japan",
+        "original": "japan",
+        "code": 81,
+        "pos": 111,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_94": {
+        "name": "Sri Lanka",
+        "original": "srilanka",
+        "code": 94,
+        "pos": 112,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_975": {
+        "name": "Bhutan",
+        "original": "bhutan",
+        "code": 975,
+        "pos": 113,
+        "other": false,
+        "new": false,
+        "enable": true
+      },
+      "_880": {
+        "name": "Bangladesh",
+        "original": "bangladesh",
+        "code": 880,
+        "pos": 114,
+        "other": false,
+        "new": false,
+        "enable": true
+      }
+    },
+    "services": {
+      "_vkcom": {
+        "id": 1,
+        "count": 2459,
+        "price": "1.00",
+        "service": "VKontakte + Mail.ru",
+        "slug": "vkcom"
+      },
+      "_3223": {
+        "id": 2,
+        "count": 9999,
+        "price": "0.29",
+        "service": "Facebook",
+        "slug": "3223"
+      },
+      "_odklru": {
+        "id": 3,
+        "count": 9999,
+        "price": "0.59",
+        "service": "Odnoklassniki",
+        "slug": "odklru"
+      },
+      "_yandex": {
+        "id": 4,
+        "count": 4245,
+        "price": "0.22",
+        "service": "Yandeks",
+        "slug": "yandex"
+      },
+      "_viber": {
+        "id": 5,
+        "count": 9999,
+        "price": "0.21",
+        "service": "Viber",
+        "slug": "viber"
+      },
+      "_whatsapp": {
+        "id": 6,
+        "count": 1536,
+        "price": "2.00",
+        "service": "WhatsApp",
+        "slug": "whatsapp"
+      },
+      "_telegram": {
+        "id": 7,
+        "count": 8294,
+        "price": "3.20",
+        "service": "Telegram",
+        "slug": "telegram"
+      },
+      "_fastfriend": {
+        "id": 8,
+        "count": 9999,
+        "price": "0.06",
+        "service": "DrugVokrug",
+        "slug": "fastfriend"
+      },
+      "_instagram": {
+        "id": 9,
+        "count": 9999,
+        "price": "0.22",
+        "service": "Instagram",
+        "slug": "instagram"
+      },
+      "_wechat": {
+        "id": 10,
+        "count": 9999,
+        "price": "0.33",
+        "service": "WeChat",
+        "slug": "wechat"
+      },
+      "_steam": {
+        "id": 11,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Steam",
+        "slug": "steam"
+      },
+      "_uber": {
+        "id": 12,
+        "count": 9999,
+        "price": "0.17",
+        "service": "Uber",
+        "slug": "uber"
+      },
+      "_microsoft": {
+        "id": 13,
+        "count": 9999,
+        "price": "0.13",
+        "service": "Microsoft",
+        "slug": "microsoft"
+      },
+      "_twitter": {
+        "id": 14,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Twitter|X",
+        "slug": "twitter"
+      },
+      "_gett": {
+        "id": 15,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Gett",
+        "slug": "gett"
+      },
+      "_meetme": {
+        "id": 16,
+        "count": 9920,
+        "price": "0.07",
+        "service": "MeetMe",
+        "slug": "meetme"
+      },
+      "_linemessenger": {
+        "id": 17,
+        "count": 9999,
+        "price": "0.07",
+        "service": "LINE",
+        "slug": "linemessenger"
+      },
+      "_yahoo": {
+        "id": 18,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Yahoo",
+        "slug": "yahoo"
+      },
+      "_tencentqq": {
+        "id": 19,
+        "count": 6466,
+        "price": "0.07",
+        "service": "QQ",
+        "slug": "tencentqq"
+      },
+      "_taximaxim": {
+        "id": 20,
+        "count": 9890,
+        "price": "0.07",
+        "service": "taxiMaxim",
+        "slug": "taximaxim"
+      },
+      "_tantan": {
+        "id": 21,
+        "count": 9999,
+        "price": "0.07",
+        "service": "TanTan",
+        "slug": "tantan"
+      },
+      "_tinder": {
+        "id": 22,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Tinder",
+        "slug": "tinder"
+      },
+      "_mamba": {
+        "id": 23,
+        "count": 9999,
+        "price": "0.43",
+        "service": "Mamba",
+        "slug": "mamba"
+      },
+      "_drom": {
+        "id": 24,
+        "count": 9999,
+        "price": "0.07",
+        "service": "Drom",
+        "slug": "drom"
+      },
+      "_kakaotalk": {
+        "id": 25,
+        "count": 9999,
+        "price": "0.28",
+        "service": "KakaoTalk",
+        "slug": "kakaotalk"
+      },
+      "_aol": {
+        "id": 26,
+        "count": 6026,
+        "price": "0.07",
+        "service": "AOL",
+        "slug": "aol"
+      },
+      "_linkedin": {
+        "id": 27,
+        "count": 9999,
+        "price": "0.07",
+        "service": "LinkedIn",
+        "slug": "linkedin"
+      },
+      "_bolt": {
+        "id": 28,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Bolt",
+        "slug": "bolt"
+      },
+      "_airbnb": {
+        "id": 29,
+        "count": 9999,
+        "price": "0.12",
+        "service": "Airbnb",
+        "slug": "airbnb"
+      },
+      "_livescore": {
+        "id": 30,
+        "count": 9999,
+        "price": "0.07",
+        "service": "LiveScore",
+        "slug": "livescore"
+      }
+    },
+    "favorite_countries": {},
+    "favorite_services": [],
+    "page": 1,
+    "country": 7,
+    "filter": "",
+    "end": false,
+    "favorites": {}
+  }
+}] but when test this my code [const fetchOnlineSimCountries = async (req, res) => {
+  try {
+    const result = await getTariffs();
+
+    console.log('📦 getTariffs raw result:', JSON.stringify(result, null, 2));
+
+    // Diagnostic logging if response fails structure checks
+    if (!result || result.response !== '1') {
+      console.log('❌ Invalid or failed response from OnlineSim.');
+      return res.status(502).json({
+        success: false,
+        message: 'Failed to fetch data from OnlineSim: invalid response code.',
+      });
+    }
+
+    if (typeof result.countries !== 'object') {
+      console.log('❌ `countries` not present or not an object.');
+      return res.status(502).json({
+        success: false,
+        message: 'Failed to fetch countries from OnlineSim.',
+      });
+    }
+
+    if (typeof result.services !== 'object') {
+      console.log('❌ `services` not present or not an object.');
+      return res.status(502).json({
+        success: false,
+        message: 'Failed to fetch services from OnlineSim.',
+      });
+    }
+
+    // Process countries
+    const countries = Object.entries(result.countries)
+      .filter(([code, entry]) => entry?.name)
+      .map(([code, entry]) => ({
+        name: entry.name,
+        code: code.replace(/^_/, ''), // remove underscore if present
+        original: entry.original,
+        pos: entry.pos,
+        new: entry.new,
+        enable: entry.enable,
+      }));
+
+    // Process services
+    const services = Object.entries(result.services).map(([code, name]) => ({
+      code,
+      name,
+    }));
+
+    return res.status(200).json({
+      success: true,
+      countries,
+      services,
+    });
+
+  } catch (error) {
+    console.error('❌ Error fetching OnlineSim data:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || 'Internal server error while fetching OnlineSim data.',
+    });
+  }
+};
+] it return this [  {
+    "success": false,
+    "message": "Failed to fetch data from OnlineSim: invalid response code."
+}  ] in postman please help me fix it perfectly 

@@ -1,22 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { TextInput, Button } from 'flowbite-react';
 import { AuthContext } from '../../../../components/control/authContext';
+import { createNordPurchase } from "../../../../components/backendApis/nordVpn/nordVpn";
 import Swal from 'sweetalert2';
 
 const Purchase = ({ plan, onClose }) => {
   const { webSettings } = useContext(AuthContext);
-
   const [email, setEmail] = useState('');
 
-  const planPrice = parseFloat(plan?.price) || 0;
+  const planPrice = parseFloat(plan?.amount) || 0;
   const vatPercentage = parseFloat(webSettings?.vat) || 0;
   const currency = webSettings?.currency || '$';
 
   const vatAmount = (vatPercentage / 100) * planPrice;
   const total = planPrice + vatAmount;
 
-  // Handle proceed action
-  const handleProceed = () => {
+  const handleProceed = async () => {
     if (!email || !email.includes('@')) {
       return Swal.fire({
         icon: 'error',
@@ -25,33 +24,60 @@ const Purchase = ({ plan, onClose }) => {
       });
     }
 
-    // Proceed logic goes here (e.g. API call, navigation, etc.)
-    Swal.fire({
-      icon: 'error',
-      title: 'Sorry',
-      text: 'Your order cannot be processed at this time. API not responding. Check your provider email for debugging.',
-    });
+    const payload = {
+      email: email,
+      plan: {
+        id: plan?.id,
+        package_name: plan?.package_name,
+        amount: planPrice,
+        duration: plan?.duration
+      },
+      total: total,
+    };
+
+    try {
+      const response = await createNordPurchase(payload);
+
+      if (response.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Purchase Successful',
+          text: response.message,
+        });
+        onClose();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Purchase Failed',
+          text: response.message,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong. Please try again later.',
+      });
+    }
   };
 
   return (
     <div>
-      {/* Email Input Section */}
-      <div>
-        <TextInput
-          className="rounded-md text-gray-300 py-5"
-          placeholder="Enter your email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <p className="text-gray-300 pc:text-base mobile:text-[13px] mt-4">
-          <strong>Note:</strong> The email you provide will be used to set up your Nord account and grant access to your VPN services.
-        </p>
-      </div>
+      {/* Email Input */}
+      <TextInput
+        className="rounded-md text-gray-300 py-5"
+        placeholder="Enter your email address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <p className="text-gray-300 pc:text-base mobile:text-[13px] mt-4">
+        <strong>Note:</strong> The email you provide will be used to set up your Nord account and grant access to your VPN services.
+      </p>
 
-      {/* Order Summary Section */}
+      {/* Order Summary */}
       <div className="text-gray-300 pc:text-sm mobile:text-xs mt-4">
         <h1 className="font-semibold pc:text-xl mobile:text-[15px]">Order summary</h1>
-        <p>{plan?.name} Plan</p>
+        <p>{plan?.package_name} Plan</p>
         <p>Amount: {currency}{planPrice.toFixed(2)}</p>
         <p>VAT ({vatPercentage}%): {currency}{vatAmount.toFixed(2)}</p>
         <p className="font-semibold">Total: {currency}{total.toFixed(2)}</p>
@@ -59,8 +85,12 @@ const Purchase = ({ plan, onClose }) => {
 
       {/* Action Buttons */}
       <div className="flex justify-end items-end w-full gap-4">
-        <Button onClick={onClose} className="mt-4 bg-red-500 text-white border-0 rounded">Close</Button>
-        <Button onClick={handleProceed} className="mt-4 bg-primary-600 text-white border-0 rounded">Proceed</Button>
+        <Button onClick={onClose} className="mt-4 bg-red-500 text-white border-0 rounded">
+          Close
+        </Button>
+        <Button onClick={handleProceed} className="mt-4 bg-primary-600 text-white border-0 rounded">
+          Proceed
+        </Button>
       </div>
     </div>
   );

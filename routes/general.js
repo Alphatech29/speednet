@@ -56,6 +56,8 @@ const { getAllReportsController,updateReportStatusController } = require("../con
 const transfer = require("../controller/admin/dashboard/transfer");
 const { createPage, getPages, deletePage, editPage } = require("../controller/admin/dashboard/page");
 const { getPagesBySlug } = require("../controller/user/page");
+const {fetchOnlineSimCountries, fetchOnlineSimServices, fetchOnlineSimServicesWithPricesByCountry} = require("../controller/user/sms-service");
+const { fetchAllPackages, NordPurchase } = require("../controller/user/nordVpn");
 
 
 // ------- General --------- //
@@ -122,6 +124,13 @@ generalRoute.post("/verify-bank-account", verifyAccount);
 generalRoute.post("/withdrawal", WithdrawalRequest);
 generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 generalRoute.get("/page/:slug", getPagesBySlug);
+// Existing routes
+generalRoute.get("/sms/country", fetchOnlineSimCountries);
+//generalRoute.get("/sms/services", fetchOnlineSimServices);
+//generalRoute.get("/sms/services-country", fetchSmsManServicesByCountry);
+//generalRoute.get("/sms/services-with-prices", fetchOnlineSimServicesWithPricesByCountry);
+generalRoute.get("/nord-plan", fetchAllPackages);
+generalRoute.post("/nord-purchase", verifyToken, NordPurchase);
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);

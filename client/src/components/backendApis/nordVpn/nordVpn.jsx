@@ -56,3 +56,31 @@ export const createNordPurchase = async (payload) => {
     };
   }
 };
+
+
+
+export const getNordHistory = async () => {
+  try {
+    const response = await axios.get("/general/nord-history", {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Optional: Log response for debugging
+    console.log("Nord History Response:", response);
+
+    return {
+      success: true,
+      message: "NordVPN history fetched successfully",
+      data: response.data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error?.response?.data?.message || "Failed to fetch NordVPN history",
+      error: error?.response?.data || error.message,
+    };
+  }
+};

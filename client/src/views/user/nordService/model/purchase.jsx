@@ -6,7 +6,11 @@ import Swal from 'sweetalert2';
 
 const Purchase = ({ plan, onClose }) => {
   const { webSettings } = useContext(AuthContext);
+
   const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [country, setCountry] = useState('');
+  const [zipCode, setZipCode] = useState('');
 
   const planPrice = parseFloat(plan?.amount) || 0;
   const vatPercentage = parseFloat(webSettings?.vat) || 0;
@@ -24,8 +28,19 @@ const Purchase = ({ plan, onClose }) => {
       });
     }
 
+    if (!fullName || !country || !zipCode) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Missing Fields',
+        text: 'Please fill in all required fields.',
+      });
+    }
+
     const payload = {
-      email: email,
+      email,
+      full_name: fullName,
+      country,
+      zip_code: zipCode,
       plan: {
         id: plan?.id,
         package_name: plan?.package_name,
@@ -63,15 +78,41 @@ const Purchase = ({ plan, onClose }) => {
 
   return (
     <div>
-      {/* Email Input */}
+      {/* Full Name Input */}
       <TextInput
-        className="rounded-md text-gray-300 py-5"
+        className="rounded-md text-gray-300 py-3 "
+        placeholder="Full Name"
+        value={fullName}
+        onChange={(e) => setFullName(e.target.value)}
+      />
+
+       {/* Email Input */}
+      <TextInput
+        className="rounded-md text-gray-300 py-3"
         placeholder="Enter your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <p className="text-gray-300 pc:text-base mobile:text-[13px] mt-4">
-        <strong>Note:</strong> The email you provide will be used to set up your Nord account and grant access to your VPN services.
+
+      {/* Country Input */}
+      <TextInput
+        className="rounded-md text-gray-300 py-3"
+        placeholder="Country"
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
+      />
+
+      {/* Zip Code Input */}
+      <TextInput
+        className="rounded-md text-gray-300 py-3"
+        placeholder="Zip Code"
+        value={zipCode}
+        onChange={(e) => setZipCode(e.target.value)}
+      />
+
+     
+      <p className="text-gray-300 pc:text-base mobile:text-[13px] mt-3">
+        <strong>Note:</strong> This information you provide will be used to set up your Nord account and grant access to your VPN services.
       </p>
 
       {/* Order Summary */}

@@ -1,16 +1,24 @@
-const { getAllNordVPNPackages } = require("../../utility/nordVpn");
-const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
+const { 
+  getAllNordVPNPackages, 
+  getAllNordHistory 
+} = require("../../utility/nordVpn");
+
+const {
+  getUserDetailsByUid,
+  updateUserBalance,
+} = require("../../utility/userInfo");
+
 const { createTransactionHistory } = require("../../utility/history");
+const { handleNordSubscription } = require("../../utility/nordLogic");
 
 const NordPurchase = async (req, res) => {
   const payload = req.body;
-  console.log("🛒 Received NordVPN purchase payload:", payload);
+  console.log("Received NordVPN purchase payload:", payload);
 
   const userId = req.user?.userId;
-  const { email, plan, total } = payload;
+  const { email, full_name, country, zip_code, plan, total } = payload;
 
-  // Basic input validation
-  if (!userId || !email || !plan || !plan.package_name || !total) {
+  if (!userId || !email || !plan || !plan.package_name || !total || !full_name || !country || !zip_code) {
     return res.status(400).json({
       success: false,
       message: "Please login and provide all required fields to make a purchase",
@@ -18,7 +26,6 @@ const NordPurchase = async (req, res) => {
   }
 
   try {
-    // Fetch user details
     const user = await getUserDetailsByUid(userId);
     if (!user) {
       return res.status(404).json({
@@ -37,18 +44,29 @@ const NordPurchase = async (req, res) => {
       });
     }
 
-    // Update user balance
+    try {
+      await handleNordSubscription(email, plan, userId, full_name, country, zip_code);
+      console.log("handleNordSubscription executed.");
+    } catch (subscriptionError) {
+      console.error("Error in handleNordSubscription:", subscriptionError);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to process NordVPN subscription.",
+        error: subscriptionError.message || "Unknown error",
+      });
+    }
+
     const newBalance = currentBalance - purchaseAmount;
     const updateResult = await updateUserBalance(userId, newBalance);
 
     if (!updateResult.success) {
+      console.error("Failed to update user balance");
       return res.status(500).json({
         success: false,
         message: "Failed to update account balance.",
       });
     }
 
-    // Create transaction history
     const txnResult = await createTransactionHistory(
       userId,
       purchaseAmount,
@@ -57,16 +75,19 @@ const NordPurchase = async (req, res) => {
     );
 
     if (!txnResult.success) {
-      console.warn(" Failed to log transaction history:", txnResult.message);
+      console.warn("Failed to log transaction history:", txnResult.message);
     } else {
-      console.log(" Transaction history logged successfully:", txnResult.transaction_no);
+      console.log("Transaction history logged:", txnResult.transaction_no);
     }
 
     return res.status(201).json({
       success: true,
-      message: "Purchase created successfully.",
+      message: `Nordvpn_${plan.package_name} purchase successful`,
       data: {
         email,
+        full_name,
+        country,
+        zip_code,
         plan,
         total,
         package: `Nordvpn_${plan.package_name}`,
@@ -74,12 +95,12 @@ const NordPurchase = async (req, res) => {
       balance: newBalance,
       transaction: txnResult.transaction_no ?? null,
     });
-
   } catch (error) {
-    console.error(" Error during NordVPN purchase:", error);
+    console.error("Unexpected error in NordPurchase:", error);
     return res.status(500).json({
       success: false,
-      message: "Failed to process NordVPN purchase.",
+      message: "An unexpected error occurred while processing your NordVPN purchase.",
+      error: error.message || "Unknown server error",
     });
   }
 };
@@ -92,7 +113,7 @@ const fetchAllPackages = async (req, res) => {
       data: packages,
     });
   } catch (error) {
-    console.error(" Error fetching NordVPN packages:", error);
+    console.error("Error fetching NordVPN packages:", error);
     return res.status(500).json({
       success: false,
       message: "Failed to retrieve NordVPN packages.",
@@ -100,7 +121,25 @@ const fetchAllPackages = async (req, res) => {
   }
 };
 
+// ✅ NEW: Controller to fetch all nord_history with user details
+const fetchAllNordHistory = async (req, res) => {
+  try {
+    const history = await getAllNordHistory();
+    return res.status(200).json({
+      success: true,
+      data: history,
+    });
+  } catch (error) {
+    console.error("Error fetching NordVPN history:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve NordVPN purchase history.",
+    });
+  }
+};
+
 module.exports = {
   fetchAllPackages,
   NordPurchase,
+  fetchAllNordHistory // ← make sure this is exported
 };

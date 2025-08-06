@@ -61,7 +61,7 @@
 
       <div class="info-block">
         <p><strong>Current Balance:</strong> <%= currencySymbol %><%= balance %></p>
-        <p><strong>Threshold:</strong> $200</p>
+        <p><strong>Threshold:</strong> <%= currencySymbol %><%= threshold %></p>
         <p><strong>Status:</strong> <span style="color: #e65733;"><strong>Low Balance</strong></span></p>
         <p><strong>Date:</strong> <%= new Date().toLocaleString('en-US', { timeZone: 'UTC' }) %> UTC</p>
       </div>

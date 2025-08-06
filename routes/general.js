@@ -57,7 +57,7 @@ const transfer = require("../controller/admin/dashboard/transfer");
 const { createPage, getPages, deletePage, editPage } = require("../controller/admin/dashboard/page");
 const { getPagesBySlug } = require("../controller/user/page");
 const {fetchOnlineSimCountries, fetchOnlineSimServices, fetchOnlineSimServicesWithPricesByCountry} = require("../controller/user/sms-service");
-const { fetchAllPackages, NordPurchase } = require("../controller/user/nordVpn");
+const { fetchAllPackages, NordPurchase, fetchAllNordHistory } = require("../controller/user/nordVpn");
 
 
 // ------- General --------- //
@@ -131,6 +131,7 @@ generalRoute.get("/sms/country", fetchOnlineSimCountries);
 //generalRoute.get("/sms/services-with-prices", fetchOnlineSimServicesWithPricesByCountry);
 generalRoute.get("/nord-plan", fetchAllPackages);
 generalRoute.post("/nord-purchase", verifyToken, NordPurchase);
+generalRoute.get("/nord-history", fetchAllNordHistory);
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);

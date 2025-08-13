@@ -1,8 +1,7 @@
-// utils/smsManApi.jsx
 import axios from "axios";
 
 /**
- * Fetch SMS-Man countries from API
+ * Fetch SMS-Man countries and services from the API
  */
 export const getSmsManCountries = async () => {
   try {
@@ -10,81 +9,112 @@ export const getSmsManCountries = async () => {
       headers: { "Content-Type": "application/json" },
     });
 
-    // Fix: Use correct structure
-    const countries = data?.countries || [];
+    //console.log("📡 SMS-Man API Raw Response:", data);
 
-    return {
-      success: true,
-      message: "SMS-Man countries fetched successfully",
-      data: countries,
-    };
+    // Optional: Validate structure to avoid returning junk
+    if (data?.response !== 1 || !data?.countries) {
+      throw new Error("Unexpected response structure");
+    }
+
+    // ✅ Return the raw backend response exactly
+    return data;
+
   } catch (error) {
+    // Still return the backend's error shape if possible
+    if (error?.response?.data) {
+      return error.response.data;
+    }
     return {
-      success: false,
-      message: error?.response?.data?.message || "Failed to fetch SMS-Man countries",
-      error: error?.response?.data || error.message,
+      response: 0,
+      error: error.message || "Failed to fetch SMS-Man data",
     };
   }
 };
 
 
-/**
- * Fetch SMS-Man services from API
- */
-export const getSmsManServices = async () => {
+
+
+
+export const getOnlineSimServicesByCountry = async (countryCode) => {
   try {
-    const { data } = await axios.get("/general/sms/services", {
+    if (!countryCode) {
+      throw new Error("Country code is required");
+    }
+
+    const { data } = await axios.get(`/general/sms/services/${countryCode}`, {
       headers: { "Content-Type": "application/json" },
     });
 
-    const services = data?.services || [];
+    
+    if (
+      data?.response !== 1 ||
+      !data?.services ||
+      typeof data.services !== "object"
+    ) {
+      throw new Error("Unexpected response structure");
+    }
 
-    return {
-      success: true,
-      message: "SMS-Man services fetched successfully",
-      data: services,
-    };
+    return data;
+
   } catch (error) {
+    if (error?.response?.data) {
+      return error.response.data;
+    }
     return {
-      success: false,
-      message: error?.response?.data?.message || "Failed to fetch SMS-Man services",
-      error: error?.response?.data || error.message,
+      response: 0,
+      error: error.message || "Failed to fetch OnlineSim services",
     };
   }
 };
 
-/**
- * Fetch SMS-Man services with prices from API
- */
-export const getSmsManServicesWithPrices = async (countryId) => {
-  try {
-    const { data } = await axios.get("/general/sms/services-with-prices", {
-      params: countryId ? { countryId } : {},
-      headers: { "Content-Type": "application/json" },
-    });
 
-    if (!data?.success) {
+export const buyOnlineSimNumber = async (payload) => {
+  try {
+    if (!payload || typeof payload !== "object") {
+      throw new Error("Request payload is required and must be an object");
+    }
+
+    console.log("buyOnlineSimNumber payload:", payload);
+
+    const { data } = await axios.post(
+      "/general/sms/buy-number",
+      payload,
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      }
+    );
+
+    // If API says success, just return it directly
+    if (data?.response === 1) {
+      return data;
+    }
+
+    // If not success, use message from API if available
+    return {
+      response: 0,
+      message: data?.message || "Failed to buy  number",
+    };
+
+  } catch (error) {
+    console.error(
+      "buyOnlineSimNumber error:",
+      error.response?.data || error.message
+    );
+
+    if (error?.response?.data) {
       return {
-        success: false,
-        message: "API returned success: false",
-        error: data,
+        response: 0,
+        message: error.response.data?.message || "Request failed",
       };
     }
 
-    const servicesWithPrices = data.services || [];
-
     return {
-      success: true,
-      message: "Fetched SMS-Man services with prices successfully",
-      data: servicesWithPrices,
-    };
-  } catch (error) {
-    console.error("Error fetching SMS-Man services with prices:", error);
-
-    return {
-      success: false,
-      message: error?.response?.data?.message || "Failed to fetch SMS-Man services with prices",
-      error: error?.response?.data || error.message,
+      response: 0,
+      message: error.message || "Failed to buy  number",
     };
   }
 };
+
+
+

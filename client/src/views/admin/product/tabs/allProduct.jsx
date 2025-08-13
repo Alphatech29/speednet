@@ -78,8 +78,8 @@ useEffect(() => {
                       </Table.Cell>
                       <Table.Cell>
                          <div className="flex flex-col gap-1">
-                          <span className='text-[16px] font-medium'>{product.username}</span>
-                          <span className="text-gray-600 text-xs">{product.email}</span>
+                          <span className='text-[16px] font-medium'>{product.user_username}</span>
+                          <span className="text-gray-600 text-xs">{product.user_email}</span>
                         </div>
                        </Table.Cell>
                       <Table.Cell>${Number(product.price).toLocaleString()}</Table.Cell>

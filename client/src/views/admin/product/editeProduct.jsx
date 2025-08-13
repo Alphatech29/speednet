@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, NavLink } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import { getProductById, updateProductById } from '../../../components/backendApis/admin/apis/products';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditProduct = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [form, setForm] = useState({});
   const [initialForm, setInitialForm] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-
-  const isSold = form.status === 'sold';
 
   useEffect(() => {
     (async () => {
@@ -92,8 +89,8 @@ const EditProduct = () => {
           {[
             { id: 'platform', label: 'Platform' },
             { id: 'title', label: 'Title' },
-            { id: 'email', label: 'Email' },
-            { id: 'username', label: 'Username' },
+            { id: 'email', label: 'Account Email' },
+            { id: 'username', label: 'Account Username' },
             { id: 'password', label: 'Password' },
             { id: 'recovery_email', label: 'Recovery Email' },
             { id: 'recoveryEmailpassword', label: 'Recovery Email Password' },
@@ -104,51 +101,36 @@ const EditProduct = () => {
             { id: 'description', label: 'Description' },
             { id: 'subscription_status', label: 'Subscription Status' },
             { id: 'expiry_date', label: 'Expiry Date' },
-            { id: 'two_factor_enable', label: '2AF Enable' },
-            { id: 'two_factor_description', label: '2AF Enable Instruction' },
-          ].map(({ id, label }) => {
-            if (id === 'two_factor_enable') {
-              const isEnabled = form[id] === '1' || form[id] === 1;
-              return (
-                <div key={id} className="flex flex-col">
-                  <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
-                    {label}
-                  </label>
-                  <input
-                    id={id}
-                    type="text"
-                    value={isEnabled ? 'Enabled' : 'Disabled'}
-                    readOnly
-                    className="px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
-                  />
-                </div>
-              );
-            }
+           { id: 'two_factor_enabled', label: '2AF Enable' },
+{ id: 'two_factor_description', label: '2AF Enable Instruction' },
 
-            if (id === 'description' || id === 'two_factor_description') {
-              return (
-                <div key={id} className="flex flex-col">
-                  <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
-                    {label}
-                  </label>
+          ].map(({ id, label }) => {
+            const isTwoFactor = id === 'two_factor_enabled';
+            const isTextarea = id === 'description' || id === 'two_factor_description';
+            const isPrice = id === 'price';
+            const isPlatform = id === 'platform';
+
+            let value = form[id] ?? '';
+            if (isTwoFactor) value = value === '1' || value === 1 ? 'Enabled' : 'Disabled';
+
+            return (
+              <div key={id} className="flex flex-col">
+                <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
+                  {label}
+                </label>
+
+                {isTextarea ? (
                   <textarea
                     id={id}
                     rows="3"
-                    value={form[id] ?? ''}
+                    value={value}
                     onChange={handleChange}
-                    readOnly
-                    className="px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed resize-none"
+                    readOnly={isPlatform || !isEditing}
+                    className={`px-4 py-2 border border-gray-300 rounded-lg ${
+                      isPlatform || !isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700'
+                    } resize-none`}
                   />
-                </div>
-              );
-            }
-
-            if (id === 'price') {
-              return (
-                <div key={id} className="flex flex-col">
-                  <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
-                    {label}
-                  </label>
+                ) : isPrice ? (
                   <div className="flex items-center">
                     <span className="px-3 py-2 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg text-gray-600">
                       $
@@ -156,34 +138,31 @@ const EditProduct = () => {
                     <input
                       id={id}
                       type="text"
-                      value={form[id] ?? ''}
+                      value={value}
                       onChange={handleChange}
-                      readOnly
-                      className="flex-1 py-2 px-4 border border-gray-300 rounded-r-lg bg-gray-100 text-gray-500 cursor-not-allowed"
+                      readOnly={isPlatform || !isEditing}
+                      className={`flex-1 py-2 px-4 border border-gray-300 rounded-r-lg ${
+                        isPlatform || !isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700'
+                      }`}
                     />
                   </div>
-                </div>
-              );
-            }
-
-            return (
-              <div key={id} className="flex flex-col">
-                <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
-                  {label}
-                </label>
-                <input
-                  id={id}
-                  type="text"
-                  value={form[id] ?? ''}
-                  onChange={handleChange}
-                  readOnly
-                  className="px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
-                />
+                ) : (
+                  <input
+                    id={id}
+                    type="text"
+                    value={value}
+                    onChange={handleChange}
+                    readOnly={isPlatform || !isEditing}
+                    className={`px-4 py-2 border border-gray-300 rounded-lg ${
+                      isPlatform || !isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700'
+                    }`}
+                  />
+                )}
               </div>
             );
           })}
 
-          {/* Status dropdown (only editable on edit) */}
+          {/* Status dropdown */}
           <div className="flex flex-col">
             <label htmlFor="status" className="mb-1 text-sm font-medium text-gray-700">
               Status

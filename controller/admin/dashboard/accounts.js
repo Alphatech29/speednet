@@ -6,9 +6,11 @@ const getAllAccount = async (req, res) => {
     const [accounts] = await db.execute(`
       SELECT 
         accounts.*,
+        accounts.username AS account_username,
+        accounts.email AS account_email,
         users.full_name,
-        users.username,
-        users.email,
+        users.username AS user_username,
+        users.email AS user_email,
         users.phone_number
       FROM accounts
       JOIN users ON accounts.user_id = users.uid
@@ -36,6 +38,7 @@ const getAllAccount = async (req, res) => {
   }
 };
 
+
 const getAccountById = async (req, res) => {
   const { id } = req.params;
 
@@ -45,8 +48,8 @@ const getAccountById = async (req, res) => {
       SELECT 
         accounts.*,
         users.full_name,
-        users.username,
-        users.email,
+        users.username AS user_username,
+        users.email AS user_email,
         users.phone_number
       FROM accounts
       JOIN users ON accounts.user_id = users.uid
@@ -75,6 +78,7 @@ const getAccountById = async (req, res) => {
     });
   }
 };
+
 
 
 const updateProductById = async (req, res) => {

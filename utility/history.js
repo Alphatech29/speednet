@@ -89,4 +89,97 @@ const getDepositTransactionsByUserUid = async (user_uid) => {
     }
 };
 
-module.exports = { createTransactionHistory, getDepositTransactionsByUserUid };
+
+const createSmsServiceRecord = async (
+  user_id,
+  country,
+  amount,
+  service,
+  number,
+  code = null,
+  tzid,
+  status = 0,
+  time
+) => {
+  try {
+    // Basic validation of required fields
+    if (
+      !user_id || !country || !amount || !service || !number || !tzid || time === undefined
+    ) {
+      logger.error('Missing required parameters in createSmsServiceRecord');
+      return { success: false, message: 'Missing required parameters' };
+    }
+
+    // Validate numeric fields
+    if (
+      isNaN(user_id) ||
+      isNaN(country) ||
+      isNaN(amount) ||
+      isNaN(tzid) ||
+      isNaN(status) ||
+      isNaN(time)
+    ) {
+      logger.error('Invalid numeric parameters in createSmsServiceRecord');
+      return { success: false, message: 'Invalid numeric parameters' };
+    }
+
+    const sql = `INSERT INTO sms_service 
+      (user_id, country, amount, service, number, code, tzid, status, time) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    const params = [
+      user_id,
+      country,
+      amount,
+      service,
+      number,
+      code,
+      tzid,
+      status,
+      time
+    ];
+
+    const [result] = await pool.execute(sql, params);
+
+    return {
+      success: true,
+      message: 'SMS service record created successfully',
+      insertId: result.insertId
+    };
+  } catch (error) {
+    logger.error('Database error in createSmsServiceRecord:', error);
+    return {
+      success: false,
+      message: 'Error: ' + error.message
+    };
+  }
+};
+
+const getSmsServicesByUserId = async (user_id) => {
+  try {
+    if (!user_id || isNaN(user_id)) {
+      logger.error('Invalid user_id provided to getSmsServicesByUserId:', user_id);
+      return { success: false, message: 'Invalid user ID' };
+    }
+
+    const sql = `SELECT * FROM sms_service WHERE user_id = ? ORDER BY created_at DESC`;
+
+    const [rows] = await pool.execute(sql, [user_id]);
+
+    return {
+      success: true,
+      message: 'SMS service records retrieved successfully',
+      data: rows
+    };
+  } catch (error) {
+    logger.error('Database error while fetching SMS service records:', error);
+    return {
+      success: false,
+      message: 'Error: ' + error.message
+    };
+  }
+};
+
+
+module.exports = { createTransactionHistory, getDepositTransactionsByUserUid, createSmsServiceRecord,
+  getSmsServicesByUserId };

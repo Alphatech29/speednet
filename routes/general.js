@@ -56,7 +56,7 @@ const { getAllReportsController,updateReportStatusController } = require("../con
 const transfer = require("../controller/admin/dashboard/transfer");
 const { createPage, getPages, deletePage, editPage } = require("../controller/admin/dashboard/page");
 const { getPagesBySlug } = require("../controller/user/page");
-const {fetchOnlineSimCountries, fetchOnlineSimServices, fetchOnlineSimServicesWithPricesByCountry} = require("../controller/user/sms-service");
+const {fetchOnlineSimCountries, buyOnlineSimNumber,   fetchOnlineSimServicesByCountry, fetchOnlineSimState} = require("../controller/user/sms-service");
 const { fetchAllPackages, NordPurchase, fetchAllNordHistory } = require("../controller/user/nordVpn");
 
 
@@ -126,8 +126,9 @@ generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 generalRoute.get("/page/:slug", getPagesBySlug);
 // Existing routes
 generalRoute.get("/sms/country", fetchOnlineSimCountries);
-//generalRoute.get("/sms/services", fetchOnlineSimServices);
-//generalRoute.get("/sms/services-country", fetchSmsManServicesByCountry);
+generalRoute.post("/sms/buy-number", verifyToken, buyOnlineSimNumber);
+generalRoute.get("/sms/services/:countryCode", fetchOnlineSimServicesByCountry);
+generalRoute.get("/sms/services/state/:tzid", fetchOnlineSimState);
 //generalRoute.get("/sms/services-with-prices", fetchOnlineSimServicesWithPricesByCountry);
 generalRoute.get("/nord-plan", fetchAllPackages);
 generalRoute.post("/nord-purchase", verifyToken, NordPurchase);

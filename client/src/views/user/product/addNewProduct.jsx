@@ -134,15 +134,16 @@ const useAddAccountLogic = (userUid, setCurrentStep) => {
 
     if (!password.trim()) errors.password = "Password is required";
 
-    if (!recoveryEmail.trim()) {
-      errors.recoveryEmail = "Recovery email is required";
-    } else if (!isValidEmail(recoveryEmail)) {
-      errors.recoveryEmail = "Invalid recovery email";
+    if (recoveryEmail.trim()) {
+      if (!isValidEmail(recoveryEmail)) {
+        errors.recoveryEmail = "Invalid recovery email";
+      }
     }
 
-    if (!recoveryEmailPassword.trim()) {
-      errors.recoveryEmailPassword = "Recovery password is required";
+    if (recoveryEmailPassword.trim() && recoveryEmail.trim() === '') {
+      errors.recoveryEmailPassword = "Provide recovery email before password";
     }
+
 
     if (two_factor_enabled && !two_factor_description.trim()) {
       errors.two_factor_description = "2FA description required when enabled";
@@ -301,52 +302,52 @@ const AddNewProduct = () => {
                   Select Platform
                 </label>
                 <div className="relative">
-                    <div 
-                      className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
-                      onClick={() => setIsPlatformDropdownOpen(!isPlatformDropdownOpen)}
-                    >
-                      {platform ? (
-                        <>
-                          {selectedPlatform?.image_path && (
-                            <img 
-                              src={selectedPlatform.image_path} 
-                              alt={selectedPlatform.name}
+                  <div
+                    className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
+                    onClick={() => setIsPlatformDropdownOpen(!isPlatformDropdownOpen)}
+                  >
+                    {platform ? (
+                      <>
+                        {selectedPlatform?.image_path && (
+                          <img
+                            src={selectedPlatform.image_path}
+                            alt={selectedPlatform.name}
+                            className="h-5 w-5 rounded-full object-contain mr-2"
+                          />
+                        )}
+                        {selectedPlatform?.name || 'Select a platform...'}
+                      </>
+                    ) : (
+                      'Select a platform...'
+                    )}
+                    {isPlatformDropdownOpen ? (
+                      <ChevronUpIcon className="h-4 w-4 absolute right-2" />
+                    ) : (
+                      <ChevronDownIcon className="h-4 w-4 absolute right-2" />
+                    )}
+                  </div>
+
+                  {isPlatformDropdownOpen && (
+                    <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
+                      {platformOptions.map((option) => (
+                        <div
+                          key={option.id}
+                          className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
+                          onClick={() => handlePlatformSelect(option.id)}
+                        >
+                          {option.image_path && (
+                            <img
+                              src={option.image_path}
+                              alt={option.name}
                               className="h-5 w-5 rounded-full object-contain mr-2"
                             />
                           )}
-                          {selectedPlatform?.name || 'Select a platform...'}
-                        </>
-                      ) : (
-                        'Select a platform...'
-                      )}
-                      {isPlatformDropdownOpen ? (
-                        <ChevronUpIcon className="h-4 w-4 absolute right-2" />
-                      ) : (
-                        <ChevronDownIcon className="h-4 w-4 absolute right-2" />
-                      )}
+                          {option.name}
+                        </div>
+                      ))}
                     </div>
-                    
-                    {isPlatformDropdownOpen && (
-                      <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
-                        {platformOptions.map((option) => (
-                          <div
-                            key={option.id}
-                            className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
-                            onClick={() => handlePlatformSelect(option.id)}
-                          >
-                            {option.image_path && (
-                              <img 
-                                src={option.image_path} 
-                                alt={option.name}
-                                className="h-5 w-5 rounded-full object-contain mr-2"
-                              />
-                            )}
-                            {option.name}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  )}
+                </div>
                 {errors.platform && <p className="text-xs text-red-500 mt-1">{errors.platform}</p>}
               </div>
 
@@ -430,7 +431,7 @@ const AddNewProduct = () => {
 
               <div className='flex flex-col'>
                 <div className='flex justify-center items-center'>
-                  <h1 className='text-[17px] font-semibold'>Recovery Details</h1>
+                  <h1 className='text-[17px] font-semibold'>Recovery Details (optional)</h1>
                 </div>
                 <InputField
                   id="recoveryEmail"
@@ -438,7 +439,7 @@ const AddNewProduct = () => {
                   type="email"
                   value={recoveryEmail}
                   onChange={handleChange}
-                  placeholder="Recovery email for the account"
+                  placeholder="Recovery email for the account (optional)"
                   error={errors.recoveryEmail}
                 />
                 <InputField
@@ -447,10 +448,11 @@ const AddNewProduct = () => {
                   type="password"
                   value={recoveryEmailPassword}
                   onChange={handleChange}
-                  placeholder="Password for recovery email"
+                  placeholder="Password for recovery email (optional)"
                   error={errors.recoveryEmailPassword}
                 />
               </div>
+
 
               <div className='flex flex-col'>
                 <div className='flex justify-center items-center'>

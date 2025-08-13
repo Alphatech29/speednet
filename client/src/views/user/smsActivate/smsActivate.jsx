@@ -7,9 +7,12 @@ import { HiOutlineRefresh } from "react-icons/hi";
 import { BsClockHistory } from "react-icons/bs";
 import { Button } from "flowbite-react";
 import { NavLink } from "react-router-dom";
+import { getSmsServiceByUserId } from "../../../components/backendApis/sms-service/sms-service";
 
 const getStatusBadge = (status) => {
-  switch (status.toLowerCase()) {
+  const normalizedStatus = String(status || "").toLowerCase();
+
+  switch (normalizedStatus) {
     case "received":
       return (
         <span className="bg-green-100 text-green-800 px-2 py-0.5 text-xs rounded">
@@ -38,6 +41,8 @@ const SmsActivate = () => {
   const [selectedService, setSelectedService] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [smsCode, setSmsCode] = useState(null);
+  const [smsMessages, setSmsMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setCountries([
@@ -50,14 +55,36 @@ const SmsActivate = () => {
       { code: "wa", name: "WhatsApp" },
       { code: "fb", name: "Facebook" },
     ]);
+
+    fetchSmsMessages();
   }, []);
 
   const notify = (msg) => toast.success(msg);
   const errorNotify = (msg) => toast.error(msg);
 
   const copyToClipboard = (text) => {
+    if (!text) return errorNotify("No code to copy");
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard");
+  };
+
+  const fetchSmsMessages = async () => {
+    setLoading(true);
+    try {
+      const res = await getSmsServiceByUserId();
+      if (res.success && Array.isArray(res.data)) {
+        setSmsMessages(res.data);
+      } else {
+        setSmsMessages([]);
+        errorNotify(res.message || "No records found");
+      }
+    } catch (err) {
+      console.error("Error fetching SMS messages:", err);
+      errorNotify(err.message || "Failed to fetch SMS messages");
+      setSmsMessages([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getPhoneNumber = async () => {
@@ -84,27 +111,6 @@ const SmsActivate = () => {
     }
   };
 
-  const smsMessages = [
-    {
-      id: 1,
-      country: "🇺🇸",
-      service: "Telegram",
-      number: "+1 (555) 123-4567",
-      time: "2 min ago",
-      status: "received",
-      code: "12344",
-      message: "Your SMS code for registration in the service is 12344.",
-    },
-    {
-      id: 2,
-      country: "🇳🇬",
-      service: "WhatsApp",
-      number: "+234 701 234 5678",
-      time: "1 min ago",
-      status: "pending",
-    },
-  ];
-
   return (
     <div className="text-gray-300">
       <ToastContainer />
@@ -117,7 +123,7 @@ const SmsActivate = () => {
             <FaPhone className="text-[20px]" />
           </span>
           <div>
-            <h2 className="font-semibold">2</h2>
+            <h2 className="font-semibold">{smsMessages.length}</h2>
             <p>Active Numbers</p>
           </div>
         </div>
@@ -127,7 +133,11 @@ const SmsActivate = () => {
             <AiFillMessage className="text-[20px]" />
           </span>
           <div>
-            <h2 className="font-semibold">2</h2>
+            <h2 className="font-semibold">
+              {smsMessages.filter(
+                (m) => String(m?.status || "").toLowerCase() === "received"
+              ).length}
+            </h2>
             <p>Messages Received</p>
           </div>
         </div>
@@ -137,7 +147,11 @@ const SmsActivate = () => {
             <FaRegClock className="text-[20px]" />
           </span>
           <div>
-            <h2 className="text-[20px] font-semibold">2</h2>
+            <h2 className="text-[20px] font-semibold">
+              {smsMessages.filter(
+                (m) => String(m?.status || "").toLowerCase() === "pending"
+              ).length}
+            </h2>
             <p>Pending</p>
           </div>
         </div>
@@ -152,57 +166,62 @@ const SmsActivate = () => {
         </NavLink>
       </div>
 
-      {/* Main Sections */}
-      <div>
-        {/* Recent Messages */}
-        <section className="w-full">
-          <div className="bg-gray-800 rounded-lg border border-gray-600 p-4 mb-6">
-            <div className="flex flex-col mobile:flex-row justify-between mb-4 gap-2">
-              <div className="flex items-center gap-2 text-lg font-semibold">
-                <span>Recent SMS Messages</span>
-              </div>
-              <button
-                className="flex items-center gap-2 px-3 py-1 border border-gray-500 text-sm rounded hover:bg-gray-700"
-                onClick={() => toast.info("Refreshed")}
-              >
-                <HiOutlineRefresh />
-                Refresh
-              </button>
+      {/* Recent Messages */}
+      <section className="w-full">
+        <div className="bg-gray-800 rounded-lg border border-gray-600 p-4 mb-6">
+          <div className="flex flex-col mobile:flex-row justify-between mb-4 gap-2">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <span>Recent SMS Messages</span>
             </div>
+            <button
+              className="flex items-center gap-2 px-3 py-1 border border-gray-500 text-sm rounded hover:bg-gray-700"
+              onClick={fetchSmsMessages}
+              disabled={loading}
+            >
+              <HiOutlineRefresh />
+              {loading ? "Loading..." : "Refresh"}
+            </button>
+          </div>
 
-            {smsMessages.map((sms) => (
+          {Array.isArray(smsMessages) && smsMessages.length > 0 ? (
+            smsMessages.map((sms, idx) => (
               <div
-                key={sms.id}
+                key={sms.id || idx}
                 className="mb-4 p-3 border border-gray-700 rounded hover:bg-gray-700/50"
               >
                 <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center mb-2 gap-2">
-                  <div className="flex gap-3 items-start">
-                    <span className="text-xl">{sms.country}</span>
-                    <div>
-                      <p className="font-medium">{sms.service}</p>
-                      <p className="text-sm text-gray-400">{sms.number}</p>
+                  <div className="flex gap-3 flex-col items-start">
+                   <div className="flex justify-start items-start gap-6">
+                     <span className="text-xl">{sms?.country_flag || "🌐"}</span>
+                     <p className="text-[16px] text-gray-400">
+                        {sms?.number || "No number"}
+                      </p>
+                   </div>
+                    <div>   
+                      <p className="font-medium">{sms?.service || "N/A"}</p>
+                      
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
-                    {getStatusBadge(sms.status)}
-                    <span>{sms.time}</span>
+                    {getStatusBadge(sms?.status)}
+                    <span>{sms?.time || ""}</span>
                   </div>
                 </div>
 
-                {sms.status === "received" ? (
+                {String(sms?.status || "").toLowerCase() === "received" ? (
                   <>
                     <div className="bg-gray-700 p-2 rounded mb-2 text-sm">
-                      {sms.message}
+                      {sms?.message || "No message"}
                     </div>
                     <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center gap-2">
                       <span className="text-sm">
                         <strong>Code:</strong>{" "}
                         <code className="bg-blue-900 text-blue-300 px-2 py-1 rounded">
-                          {sms.code}
+                          {sms?.code || "N/A"}
                         </code>
                       </span>
                       <button
-                        onClick={() => copyToClipboard(sms.code)}
+                        onClick={() => copyToClipboard(sms?.code)}
                         className="bg-blue-900 text-blue-300 py-2 px-3 rounded-md flex items-center text-[11px]"
                       >
                         <FaCopy className="mr-1 text-[11px]" />
@@ -217,10 +236,14 @@ const SmsActivate = () => {
                   </div>
                 )}
               </div>
-            ))}
-          </div>
-        </section>
-      </div>
+            ))
+          ) : (
+            <div className="text-center py-6 text-gray-400">
+              No messages found.
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 };

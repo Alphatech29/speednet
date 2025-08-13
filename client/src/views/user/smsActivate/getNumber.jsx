@@ -120,29 +120,39 @@ const GetNumber = () => {
     }
   }, [selectedCountry]);
 
-  const handleBuyNumber = async (service) => {
-    setBuyingServiceId(service.service);
+const handleBuyNumber = async (service) => {
+  setBuyingServiceId(service.service);
 
-    try {
-      const payload = {
-        service: service.service,
-        country: selectedCountry,
-        price: service.price,
-      };
+  try {
+    const payload = {
+      service: service.service,
+      country: selectedCountry,
+      price: service.price,
+    };
 
-      const response = await buyOnlineSimNumber(payload);
+    const response = await buyOnlineSimNumber(payload);
 
-      if (response.response === 1) {
-        toast.success(`Successfully bought number: ${response.data.number || "N/A"}`);
-      } else {
-        toast.error(response.error || "Failed to buy number");
+    if (response.response === 1) {
+      toast.success(response.message);
+
+      // Optionally, show the number if available
+      if (response.data?.number) {
+        console.log("Purchased number:", response.data.number);
       }
-    } catch (err) {
-      toast.error(err.message || "Unexpected error while buying number");
-    } finally {
-      setBuyingServiceId(null);
+    } else {
+      // Backend returned an error (including OnlineSim error mapping)
+      toast.error(response.message);
     }
-  };
+  } catch (err) {
+    // Unexpected network/server error
+    toast.error(err.message);
+  } finally {
+    setBuyingServiceId(null);
+  }
+};
+
+
+
 
   return (
     <div className="p-4 pc:p-4 mobile:p-1 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">

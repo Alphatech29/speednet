@@ -102,58 +102,37 @@ const createSmsServiceRecord = async (
   time
 ) => {
   try {
-    // Basic validation of required fields
-    if (
-      !user_id || !country || !amount || !service || !number || !tzid || time === undefined
-    ) {
-      logger.error('Missing required parameters in createSmsServiceRecord');
+    // Check required fields
+    if (!user_id || !country || !amount || !service || !number || !tzid || !time) {
       return { success: false, message: 'Missing required parameters' };
-    }
-
-    // Validate numeric fields
-    if (
-      isNaN(user_id) ||
-      isNaN(country) ||
-      isNaN(amount) ||
-      isNaN(tzid) ||
-      isNaN(status) ||
-      isNaN(time)
-    ) {
-      logger.error('Invalid numeric parameters in createSmsServiceRecord');
-      return { success: false, message: 'Invalid numeric parameters' };
     }
 
     const sql = `INSERT INTO sms_service 
       (user_id, country, amount, service, number, code, tzid, status, time) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
+    // Convert numeric values explicitly
     const params = [
-      user_id,
-      country,
-      amount,
+      Number(user_id),
+      Number(country),
+      Number(amount),
       service,
       number,
-      code,
-      tzid,
-      status,
-      time
+      code || '', // Avoid null if column is NOT NULL
+      Number(tzid),
+      Number(status),
+      Number(time),
     ];
 
     const [result] = await pool.execute(sql, params);
 
-    return {
-      success: true,
-      message: 'SMS service record created successfully',
-      insertId: result.insertId
-    };
+    return { success: true, insertId: result.insertId };
   } catch (error) {
-    logger.error('Database error in createSmsServiceRecord:', error);
-    return {
-      success: false,
-      message: 'Error: ' + error.message
-    };
+    return { success: false, message: 'Database error: ' + error.message };
   }
 };
+
+
 
 const getSmsServicesByUserId = async (user_id) => {
   try {

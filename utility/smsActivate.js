@@ -1,3 +1,5 @@
+const pool = require("../model/db");
+
 const axios = require('axios');
 
 const BASE_URL = 'https://onlinesim.io/api/';
@@ -58,8 +60,6 @@ async function buyNumber({ service, country, userId, lang = 'en', ...extraParams
     if (!service) throw new Error('Service name is required.');
     if (!userId) throw new Error('User ID is required.');
 
-    console.log("[buyNumber] User ID:", userId);
-
     // Check balance
     const balanceResp = await client.get('getBalance.php', { params: { lang } });
     if (!balanceResp.data || balanceResp.data.balance === undefined) {
@@ -73,10 +73,7 @@ async function buyNumber({ service, country, userId, lang = 'en', ...extraParams
     const params = { service, lang, userId, ...extraParams };
     if (country) params.country = country;
 
-    console.log("[buyNumber] Final Request Params:", params);
-
     const resp = await client.get('getNum.php', { params });
-    console.log("[buyNumber] Buy Response:", resp.data);
 
     // Handle error responses (strings like 'ERROR_NO_SERVICE', 'ERROR_NUM_WAIT', etc.)
     if (typeof resp.data.response === 'string' && resp.data.response.startsWith('ERROR')) {
@@ -99,8 +96,6 @@ async function buyNumber({ service, country, userId, lang = 'en', ...extraParams
 
     while (elapsed < timeoutMs) {
       const stateResp = await getState(tzid, lang);
-      console.log(`[buyNumber] State Response after ${elapsed}ms:`, stateResp);
-
       numberInfo = Array.isArray(stateResp) ? stateResp[0] : stateResp;
       if (numberInfo?.number) break;
 
@@ -115,19 +110,73 @@ async function buyNumber({ service, country, userId, lang = 'en', ...extraParams
     return {
       ...resp.data,
       number: numberInfo.number,
+      service: numberInfo.service,
+      country: numberInfo.country,
+      price: numberInfo.sum,
+      tzid: numberInfo.tzid,
+      time: numberInfo.time,
       userId,
     };
 
   } catch (err) {
-    console.error("[buyNumber] Failed:", err.response?.data || err.message);
     return err.response?.data || { error: err.message, userId };
   }
 }
+
+
+
+const getSmsServiceByUserId = async (req, res) => {
+  try {
+    const user_id = req.params.user_id || req.user?.userId;
+
+    // Validate input
+    if (!user_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required',
+      });
+    }
+
+    if (isNaN(user_id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid User ID format',
+      });
+    }
+
+    const [rows] = await pool.execute(
+      'SELECT * FROM sms_service WHERE user_id = ? ORDER BY created_at DESC',
+      [user_id]
+    );
+
+    if (!rows.length) {
+      return res.status(404).json({
+        success: false,
+        message: 'No records found for this user',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: rows,
+    });
+
+  } catch (error) {
+    console.error('Error fetching SMS service records:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Database error',
+      error: error.message,
+    });
+  }
+};
+
 
 
 module.exports = {
   getTariffs,
   getServicesByCountry,
   getState,
-  buyNumber
+  buyNumber,
+  getSmsServiceByUserId
 };

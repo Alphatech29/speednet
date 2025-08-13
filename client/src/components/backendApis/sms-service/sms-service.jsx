@@ -118,3 +118,20 @@ export const buyOnlineSimNumber = async (payload) => {
 
 
 
+export const getSmsServiceByUserId = async () => {
+  try {
+    const { data } = await axios.get("/general/sms-service", {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+
+    if (data?.success) return data;
+
+    return { success: false, message: data?.message || "Failed to fetch SMS service records" };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message || "Request failed",
+    };
+  }
+};

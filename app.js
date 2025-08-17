@@ -82,6 +82,24 @@ try {
   process.exit(1);
 }
 
+// 🔹 Start SMS Engine (cron job)
+let smsCron;
+try {
+  const { checkSmsStates } = require("./utility/smsEngine");
+
+  // Run once immediately
+  checkSmsStates();
+
+  logger.info("SMS Engine (cron) loaded successfully.");
+  console.log("SMS Engine (cron) loaded successfully.");
+} catch (err) {
+  console.error("SMS Engine load failed:", err);
+  logger.error("Failed to initialize SMS Engine", {
+    message: err.message,
+    stack: err.stack,
+  });
+  process.exit(1);
+}
 
 // Start HTTP Server
 const PORT = process.env.PORT || 8000;

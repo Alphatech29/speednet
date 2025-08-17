@@ -133,6 +133,75 @@ const createSmsServiceRecord = async (
 };
 
 
+const getSmsServiceRecord = async (tzid) => {
+  try {
+    const sql = `SELECT * FROM sms_service WHERE tzid = ? LIMIT 1`;
+    const [rows] = await pool.execute(sql, [Number(tzid)]);
+    if (rows.length === 0) {
+      return null;
+    }
+    return rows[0];
+  } catch (error) {
+    console.error("DB error in getSmsServiceRecord:", error.message);
+    return null;
+  }
+};
+
+
+const updateSmsServiceRecord = async (tzid, code, status) => {
+  try {
+    if (!tzid) {
+      return { success: false, message: "Missing required parameter: tzid" };
+    }
+
+    let sql, params;
+
+    if (status === 2 && !code) {
+      sql = `
+        UPDATE sms_service
+        SET status = ?
+        WHERE tzid = ? AND (code IS NULL OR code = '')
+      `;
+      params = [2, Number(tzid)];
+    } else {
+      // Normal update (code + status)
+      sql = `
+        UPDATE sms_service
+        SET code = ?, status = ?
+        WHERE tzid = ?
+      `;
+      params = [code || "", Number(status), Number(tzid)];
+    }
+
+    const [result] = await pool.execute(sql, params);
+
+    if (result.affectedRows === 0) {
+      return {
+        success: false,
+        message: "No record updated. Condition may not have matched.",
+      };
+    }
+
+    return { success: true, message: "Record updated successfully" };
+  } catch (error) {
+    return { success: false, message: "Database error: " + error.message };
+  }
+};
+
+
+const getPendingSmsServiceRecords = async () => {
+  try {
+    const sql = `SELECT * FROM sms_service WHERE status = 0`;
+    const [rows] = await pool.execute(sql);
+    return { success: true, data: rows };
+  } catch (error) {
+    return { success: false, message: 'Database error: ' + error.message };
+  }
+};
+
+
+
+
 
 const getSmsServicesByUserId = async (user_id) => {
   try {
@@ -161,4 +230,4 @@ const getSmsServicesByUserId = async (user_id) => {
 
 
 module.exports = { createTransactionHistory, getDepositTransactionsByUserUid, createSmsServiceRecord,
-  getSmsServicesByUserId };
+  getSmsServicesByUserId, updateSmsServiceRecord, getPendingSmsServiceRecords, getSmsServiceRecord };

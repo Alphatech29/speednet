@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Button, Spinner } from "flowbite-react";
 import Select from "react-select";
@@ -12,6 +12,7 @@ import {
 } from "../../../components/backendApis/sms-service/sms-service";
 
 const GetNumber = () => {
+  const navigate = useNavigate();
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [services, setServices] = useState([]);
@@ -23,10 +24,7 @@ const GetNumber = () => {
   const countryMap = useMemo(() => {
     const map = {};
     countries.forEach((c) => {
-      map[c.value] = {
-        name: c.name,
-        code: c.value, 
-      };
+      map[c.value] = { name: c.name, code: c.value };
     });
     return map;
   }, [countries]);
@@ -39,37 +37,27 @@ const GetNumber = () => {
       if (result?.countries && typeof result.countries === "object") {
         const countryList = Object.values(result.countries);
 
-        const options = countryList.map((country) => {
-          const numericCode = country.phone_code || country.code || "";
-          const alphaCode = String(country.code || "").toLowerCase();
+        // Map and sort alphabetically
+        const options = countryList
+          .map((country) => {
+            const numericCode = country.phone_code || country.code || "";
+            const alphaCode = String(country.code || "").toLowerCase();
 
-          return {
-            label: (
-              <div className="flex items-center gap-2">
-                {alphaCode && (
-                  <img
-                    src={`https://flagcdn.com/h40/${alphaCode}.png`}
-                    alt={country.name || "Country"}
-                    className="w-5 h-5 rounded-full object-cover"
-                  />
-                )}
-                <span>{country.name}</span>
-              </div>
-            ),
-            value: String(numericCode),
-            name: country.name,
-          };
-        });
+            return {
+              value: String(numericCode),
+              label: country.name, // plain string for search
+              name: country.name,
+              alphaCode, // for flag display
+            };
+          })
+          .sort((a, b) => a.label.localeCompare(b.label));
 
         setCountries(options);
 
-       if (options.length > 0) {
-  const countryOne = options.find((c) => c.value === "1");
-  if (countryOne) {
-    setSelectedCountry(countryOne.value);
-  }
-}
-
+        if (options.length > 0) {
+          const countryOne = options.find((c) => c.value === "1");
+          if (countryOne) setSelectedCountry(countryOne.value);
+        }
       } else {
         const errMsg = "No countries found in API response";
         setError(errMsg);
@@ -90,8 +78,7 @@ const GetNumber = () => {
     try {
       const result = await getOnlineSimServicesByCountry(countryCode);
       if (result?.response === 1 && result?.services) {
-        const serviceArray = Object.values(result.services);
-        setServices(serviceArray);
+        setServices(Object.values(result.services));
       } else {
         setServices([]);
         const errMsg = "No services found for this country.";
@@ -113,46 +100,39 @@ const GetNumber = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedCountry) {
-      fetchServices(selectedCountry);
-    } else {
-      setServices([]);
-    }
+    if (selectedCountry) fetchServices(selectedCountry);
+    else setServices([]);
   }, [selectedCountry]);
 
-const handleBuyNumber = async (service) => {
-  setBuyingServiceId(service.service);
+  const handleBuyNumber = async (service) => {
+    setBuyingServiceId(service.service);
 
-  try {
-    const payload = {
-      service: service.service,
-      country: selectedCountry,
-      price: service.price,
-    };
+    try {
+      const payload = {
+        service: service.service,
+        country: selectedCountry,
+        price: service.price,
+      };
 
-    const response = await buyOnlineSimNumber(payload);
+      const response = await buyOnlineSimNumber(payload);
 
-    if (response.response === 1) {
-      toast.success(response.message);
+      if (response.response === 1) {
+        toast.success(response.message);
+        console.log("Purchased number:", response.data?.number);
 
-      // Optionally, show the number if available
-      if (response.data?.number) {
-        console.log("Purchased number:", response.data.number);
+        // Redirect back after 1 second
+        setTimeout(() => {
+          navigate("/user/sms-service");
+        }, 1000);
+      } else {
+        toast.error(response.message);
       }
-    } else {
-      // Backend returned an error (including OnlineSim error mapping)
-      toast.error(response.message);
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setBuyingServiceId(null);
     }
-  } catch (err) {
-    // Unexpected network/server error
-    toast.error(err.message);
-  } finally {
-    setBuyingServiceId(null);
-  }
-};
-
-
-
+  };
 
   return (
     <div className="p-4 pc:p-4 mobile:p-1 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
@@ -162,7 +142,7 @@ const handleBuyNumber = async (service) => {
       </h2>
 
       <div className="bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 mobile:py-6 mobile:px-1 border border-gray-700">
-        <div className="pc:flex items-center justify-between mb-6  mobile:hidden">
+        <div className="pc:flex items-center justify-between mb-6 mobile:hidden">
           <NavLink
             to="/user/sms-service"
             className="flex items-center text-primary hover:text-primary/80 transition-colors"
@@ -199,14 +179,23 @@ const handleBuyNumber = async (service) => {
                 placeholder="Search country..."
                 className="w-full min-w-[250px] text-black"
                 styles={{
-                  control: (base) => ({
-                    ...base,
-                    borderRadius: "0.75rem",
-                    padding: "2px",
-                  }),
+                  control: (base) => ({ ...base, borderRadius: "0.75rem", padding: "2px" }),
                 }}
                 value={countries.find((c) => c.value === selectedCountry) || null}
                 onChange={(option) => setSelectedCountry(option?.value)}
+                isSearchable={true}
+                formatOptionLabel={(option) => (
+                  <div className="flex items-center gap-2">
+                    {option.alphaCode && (
+                      <img
+                        src={`https://flagcdn.com/h40/${option.alphaCode}.png`}
+                        alt={option.name}
+                        className="w-5 h-5 rounded-full object-cover"
+                      />
+                    )}
+                    <span>{option.name}</span>
+                  </div>
+                )}
               />
             </div>
 
@@ -257,9 +246,7 @@ const handleBuyNumber = async (service) => {
             ) : (
               selectedCountry && (
                 <div className="mt-4 bg-gray-700 p-4 rounded-lg text-center">
-                  <p className="text-gray-400">
-                    No services available for the selected country.
-                  </p>
+                  <p className="text-gray-400">No services available for the selected country.</p>
                 </div>
               )
             )}

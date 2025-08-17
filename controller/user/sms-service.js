@@ -5,24 +5,18 @@ const {
   buyNumber,
   getState,
 } = require("../../utility/smsActivate");
-const { getUserDetailsByUid } = require("../../utility/userInfo");
-const { createSmsServiceRecord } = require("../../utility/history");
 
+const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
+const { createSmsServiceRecord, createTransactionHistory } = require("../../utility/history");
+const { startSmsCountdown } = require("../../utility/smsTimeEngine");
 
-
+// Fetch OnlineSim Countries
 const fetchOnlineSimCountries = async (req, res) => {
   try {
     const apiResponse = await getTariffs();
 
-    if (
-      !apiResponse ||
-      typeof apiResponse !== "object" ||
-      !apiResponse.countries
-    ) {
-      console.warn(
-        "[fetchOnlineSimCountries] Invalid API response structure:",
-        apiResponse
-      );
+    if (!apiResponse || typeof apiResponse !== "object" || !apiResponse.countries) {
+      console.warn("[fetchOnlineSimCountries] Invalid API response structure:", apiResponse);
       return res.status(502).json({
         response: 0,
         error: "Invalid response structure from OnlineSim (countries)",
@@ -34,10 +28,7 @@ const fetchOnlineSimCountries = async (req, res) => {
       countries: apiResponse.countries,
     });
   } catch (error) {
-    console.error(
-      "[fetchOnlineSimCountries] Error fetching OnlineSim countries:",
-      error
-    );
+    console.error("[fetchOnlineSimCountries] Error fetching OnlineSim countries:", error);
     return res.status(500).json({
       response: 0,
       error: error.message || "Internal server error",
@@ -45,14 +36,12 @@ const fetchOnlineSimCountries = async (req, res) => {
   }
 };
 
+// Fetch OnlineSim Services by Country
 const fetchOnlineSimServicesByCountry = async (req, res) => {
   try {
     const { countryCode } = req.params;
 
     if (!countryCode) {
-      console.warn(
-        "[fetchOnlineSimServicesByCountry] Missing country code parameter"
-      );
       return res.status(400).json({
         response: 0,
         error: "Missing country code parameter",
@@ -61,30 +50,20 @@ const fetchOnlineSimServicesByCountry = async (req, res) => {
 
     const apiResponse = await getServicesByCountry(countryCode);
 
-    if (
-      !apiResponse ||
-      typeof apiResponse !== "object" ||
-      typeof apiResponse.services !== "object"
-    ) {
-      console.warn(
-        "[fetchOnlineSimServicesByCountry] Invalid API response structure:",
-        apiResponse
-      );
+    if (!apiResponse || typeof apiResponse !== "object" || typeof apiResponse.services !== "object") {
       return res.status(502).json({
         response: 0,
         error: "Invalid response structure from OnlineSim (services)",
       });
     }
+
     return res.status(200).json({
       response: 1,
       countryCode,
       services: apiResponse.services,
     });
   } catch (error) {
-    console.error(
-      "[fetchOnlineSimServicesByCountry] Error fetching OnlineSim services by country:",
-      error
-    );
+    console.error("[fetchOnlineSimServicesByCountry] Error:", error);
     return res.status(500).json({
       response: 0,
       error: error.message || "Internal server error",
@@ -92,6 +71,7 @@ const fetchOnlineSimServicesByCountry = async (req, res) => {
   }
 };
 
+// Buy OnlineSim Number
 const buyOnlineSimNumber = async (req, res) => {
   try {
     const userId = req.user?.userId;
@@ -105,6 +85,7 @@ const buyOnlineSimNumber = async (req, res) => {
     if (typeof price !== "number" || price <= 0) return res.status(400).json({ response: 0, message: "Invalid price." });
     if (currentUser.account_balance < price) return res.status(402).json({ response: 0, message: "Insufficient balance." });
 
+    // Call OnlineSim API
     let apiResponse;
     try {
       const result = await buyNumber({ service, country, userId });
@@ -116,19 +97,36 @@ const buyOnlineSimNumber = async (req, res) => {
     }
 
     if (typeof apiResponse.response === "string" && apiResponse.response.startsWith("ERROR")) {
-      let clientMessage = `OnlineSim error: ${apiResponse.response}`;
-      if (apiResponse.response === "ERROR_NO_SERVICE") clientMessage = "Requested service is not available.";
-      if (apiResponse.response === "ERROR_NO_NUMBERS") clientMessage = "No numbers available for the requested service and country.";
-      if (["ERROR_BALANCE_LOW", "ERROR_NO_BALANCE"].includes(apiResponse.response)) clientMessage = "Insufficient balance in OnlineSim account.";
-      if (apiResponse.response === "ERROR_WRONG_SERVICE") clientMessage = "Invalid service specified.";
-      return res.status(400).json({ response: 0, message: clientMessage, error: apiResponse.response });
+      const errorMap = {
+        ERROR_NO_SERVICE: "Requested service is not available.",
+        ERROR_NO_NUMBERS: "No numbers available for the requested service and country.",
+        ERROR_BALANCE_LOW: "Insufficient balance in OnlineSim account.",
+        ERROR_NO_BALANCE: "Insufficient balance in OnlineSim account.",
+        ERROR_WRONG_SERVICE: "Invalid service specified."
+      };
+      return res.status(400).json({
+        response: 0,
+        message: errorMap[apiResponse.response] || `OnlineSim error: ${apiResponse.response}`,
+        error: apiResponse.response
+      });
     }
 
+    // Deduct user balance and create records only on success
     if (apiResponse.response === 1 && apiResponse.tzid) {
+      const deductionAmount = apiResponse.sum || price;
+      const newBalance = currentUser.account_balance - deductionAmount;
+
+      // Update user balance
+      await updateUserBalance(userId, newBalance);
+
+      // Create transaction history
+      await createTransactionHistory(userId, deductionAmount, "Sms Service Purchase", "completed");
+
+      // Create SMS service record
       const historyRecord = await createSmsServiceRecord(
         userId,
         apiResponse.country,
-        apiResponse.sum || price,
+        deductionAmount,
         apiResponse.service,
         apiResponse.number,
         null,
@@ -137,71 +135,49 @@ const buyOnlineSimNumber = async (req, res) => {
         apiResponse.time
       );
 
+      // Start countdown timer
+      if (apiResponse.time && apiResponse.tzid) startSmsCountdown(apiResponse.time, apiResponse.tzid);
+
       return res.status(200).json({
         response: 1,
         message: "Number purchased successfully.",
         data: apiResponse,
-        historyRecordId: historyRecord?.insertId || null,
+        smsRecordId: historyRecord?.insertId || null,
       });
     }
 
-    return res.status(500).json({ response: 0, message: "Unexpected response from OnlineSim API.", error: apiResponse });
-
+    return res.status(500).json({ response: 0, message: "Unexpected response from OnlineSim.", error: apiResponse });
   } catch (error) {
+    console.error("[buyOnlineSimNumber] Internal error:", error);
     return res.status(500).json({
       response: 0,
       message: process.env.NODE_ENV === "production" ? "Internal server error" : error.message,
-      error: process.env.NODE_ENV === "production" ? "Internal server error" : error.message,
+      error: process.env.NODE_ENV === "production" ? "Internal server error" : error.stack,
     });
   }
 };
 
-
-// ✅ New controller to fetch OnlineSim state
+// Fetch OnlineSim State
 const fetchOnlineSimState = async (req, res) => {
   try {
-    const { tzid } = req.params; // only tzid now
+    const { tzid } = req.params;
+    if (!tzid) return res.status(400).json({ response: 0, error: "Missing required parameter: tzid" });
 
-    if (!tzid) {
-      return res.status(400).json({
-        response: 0,
-        error: "Missing required parameter: tzid",
-      });
-    }
-
-    // Pass tzid directly to getState
     const apiResponse = await getState(tzid);
-
-    if (
-      !apiResponse ||
-      (Array.isArray(apiResponse) && apiResponse.length === 0)
-    ) {
-      return res.status(502).json({
-        response: 0,
-        error: "Invalid or empty response from OnlineSim API.",
-      });
+    if (!apiResponse || (Array.isArray(apiResponse) && apiResponse.length === 0)) {
+      return res.status(502).json({ response: 0, error: "Invalid or empty response from Server." });
     }
 
-    return res.status(200).json({
-      response: 1,
-      data: apiResponse,
-    });
+    return res.status(200).json({ response: 1, data: apiResponse });
   } catch (error) {
     console.error("[fetchOnlineSimState] Error:", error);
-    return res.status(500).json({
-      response: 0,
-      error: error.message || "Internal server error",
-    });
+    return res.status(500).json({ response: 0, error: error.message || "Internal server error" });
   }
 };
-
-
-
 
 module.exports = {
   fetchOnlineSimCountries,
   fetchOnlineSimServicesByCountry,
   buyOnlineSimNumber,
   fetchOnlineSimState,
-
 };

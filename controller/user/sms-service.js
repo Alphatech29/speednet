@@ -9,6 +9,7 @@ const {
 const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
 const { createSmsServiceRecord, createTransactionHistory } = require("../../utility/history");
 const { startSmsCountdown } = require("../../utility/smsTimeEngine");
+const {getWebSettings} = require("../../utility/general");
 
 // Fetch OnlineSim Countries
 const fetchOnlineSimCountries = async (req, res) => {
@@ -36,6 +37,7 @@ const fetchOnlineSimCountries = async (req, res) => {
   }
 };
 
+
 // Fetch OnlineSim Services by Country
 const fetchOnlineSimServicesByCountry = async (req, res) => {
   try {
@@ -49,7 +51,6 @@ const fetchOnlineSimServicesByCountry = async (req, res) => {
     }
 
     const apiResponse = await getServicesByCountry(countryCode);
-
     if (!apiResponse || typeof apiResponse !== "object" || typeof apiResponse.services !== "object") {
       return res.status(502).json({
         response: 0,
@@ -57,10 +58,25 @@ const fetchOnlineSimServicesByCountry = async (req, res) => {
       });
     }
 
+    const webSettings = await getWebSettings();
+    const ratePercent = Number(webSettings?.onlinesim_rate || 0);
+
+    const adjustedServices = {};
+    for (const [serviceName, serviceData] of Object.entries(apiResponse.services)) {
+      const basePrice = Number(serviceData?.price || 0);
+      const newPrice = basePrice + (basePrice * (ratePercent / 100));
+
+      adjustedServices[serviceName] = {
+        ...serviceData,
+        price: Number(newPrice.toFixed(4)),
+      };
+    }
+
     return res.status(200).json({
       response: 1,
       countryCode,
-      services: apiResponse.services,
+      services: adjustedServices,
+      rateApplied: `${ratePercent}%`,
     });
   } catch (error) {
     console.error("[fetchOnlineSimServicesByCountry] Error:", error);
@@ -70,6 +86,7 @@ const fetchOnlineSimServicesByCountry = async (req, res) => {
     });
   }
 };
+
 
 // Buy OnlineSim Number
 const buyOnlineSimNumber = async (req, res) => {

@@ -7,6 +7,7 @@ const SmsTab = () => {
   const [settings, setSettings] = useState({
     onlinesim_api_url: '',
     onlinesim_api_key: '',
+    onlinesim_rate: '', 
   });
 
   const [initialSettings, setInitialSettings] = useState({});
@@ -21,6 +22,7 @@ const SmsTab = () => {
           const populated = {
             onlinesim_api_url: data.onlinesim_api_url || '',
             onlinesim_api_key: data.onlinesim_api_key || '',
+            onlinesim_rate: data.onlinesim_rate || '',
           };
           setSettings(populated);
           setInitialSettings(populated);
@@ -71,13 +73,14 @@ const SmsTab = () => {
   const fields = [
     { id: 'onlinesim_api_url', label: 'OnlineSim URL' },
     { id: 'onlinesim_api_key', label: 'OnlineSim API Key' },
+    { id: 'onlinesim_rate', label: 'OnlineSim Rate (%)' }, 
   ];
 
   return (
     <div className="flex max-w-md flex-col p-4 border rounded-lg">
       <ToastContainer />
       <h1 className="text-[20px] font-semibold">OnlineSim Settings</h1>
-      <p className="text-[16px] mb-4">Manage your OnlineSim API credentials for SMS integration.</p>
+      <p className="text-[16px] mb-4">Manage your OnlineSim API credentials and pricing rate.</p>
 
       <div className="flex flex-col gap-4 text-gray-700">
         {fields.map(({ id, label }) => (
@@ -85,7 +88,8 @@ const SmsTab = () => {
             <label htmlFor={id} className="mb-2 block text-sm font-medium text-gray-700">{label}</label>
             <input
               id={id}
-              type="text"
+              type={id === 'onlinesim_rate' ? 'number' : 'text'}
+              step="0.01"
               value={
                 !isEditing && id === 'onlinesim_api_key'
                   ? '*******'

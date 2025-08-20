@@ -34,7 +34,6 @@ const SmsActivate = () => {
         setSmsMessages(res.data);
       } else {
         setSmsMessages([]);
-        errorNotify(res.message || "No records found");
       }
     } catch (err) {
       console.error("Error fetching SMS messages:", err);

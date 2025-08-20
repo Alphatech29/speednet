@@ -59,9 +59,8 @@ const GetNumber = () => {
           if (countryOne) setSelectedCountry(countryOne.value);
         }
       } else {
-        const errMsg = "No countries found in API response";
+        const errMsg = "No countries found";
         setError(errMsg);
-        toast.error(errMsg);
       }
     } catch (err) {
       const errMsg = err.message || "Unexpected error fetching countries";
@@ -159,14 +158,15 @@ const GetNumber = () => {
         )}
 
         {!loading && error && (
-          <div className="text-center text-red-400 py-6">
-            <p className="mb-4">{error}</p>
-            <button
+          <div className=" flex flex-col justify-center items-center  py-6">
+            <p className="mb-4 text-red-400 text-center">{error}</p>
+            <Button
               onClick={fetchCountries}
-              className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90"
+              size="sm"
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-600/90"
             >
               Retry
-            </button>
+            </Button>
           </div>
         )}
 

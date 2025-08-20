@@ -4555,3 +4555,11 @@
 [2025-08-20T10:57:08.434Z] [INFO]: Server started on http://localhost:8000
 [2025-08-20T10:57:10.046Z] [INFO]: Transporter is ready to send emails
 [2025-08-20T11:33:28.308Z] [INFO]: Login notification email sent:
+[2025-08-20T12:22:37.670Z] [INFO]: Login notification email sent:
+[2025-08-20T13:06:26.843Z] [INFO]: Login notification email sent:
+[2025-08-20T14:19:19.891Z] [INFO]: Login notification email sent:
+[2025-08-20T14:19:23.173Z] [INFO]: Fetched 8 accounts
+[2025-08-20T15:12:41.341Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-20T15:12:41.427Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-20T15:12:41.441Z] [INFO]: Server started on http://localhost:8000
+[2025-08-20T15:12:42.971Z] [INFO]: Transporter is ready to send emails

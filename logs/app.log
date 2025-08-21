@@ -4563,3 +4563,31 @@
 [2025-08-20T15:12:41.427Z] [INFO]: SMS Engine (cron) loaded successfully.
 [2025-08-20T15:12:41.441Z] [INFO]: Server started on http://localhost:8000
 [2025-08-20T15:12:42.971Z] [INFO]: Transporter is ready to send emails
+[2025-08-20T15:13:57.952Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-20T15:13:58.014Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-20T15:13:58.026Z] [INFO]: Server started on http://localhost:8000
+[2025-08-20T15:13:59.294Z] [INFO]: Transporter is ready to send emails
+[2025-08-21T09:06:40.127Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-21T09:06:40.641Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-21T09:06:40.651Z] [INFO]: Server started on http://localhost:8000
+[2025-08-21T09:07:41.446Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-21T09:07:41.495Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-21T09:07:41.504Z] [INFO]: Server started on http://localhost:8000
+[2025-08-21T09:07:45.204Z] [INFO]: Transporter is ready to send emails
+[2025-08-21T09:14:39.122Z] [INFO]: Login notification email sent:
+[2025-08-21T09:34:46.436Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-21T09:34:46.488Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-21T09:34:46.498Z] [INFO]: Server started on http://localhost:8000
+[2025-08-21T09:34:54.091Z] [INFO]: Transporter is ready to send emails
+[2025-08-21T09:35:19.701Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-21T09:35:19.758Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-21T09:35:19.768Z] [INFO]: Server started on http://localhost:8000
+[2025-08-21T09:35:24.687Z] [INFO]: Transporter is ready to send emails
+[2025-08-21T09:45:44.928Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-21T09:45:45.018Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-21T09:45:45.034Z] [INFO]: Server started on http://localhost:8000
+[2025-08-21T09:45:53.569Z] [INFO]: Transporter is ready to send emails
+[2025-08-21T09:47:19.195Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-21T09:47:19.255Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-21T09:47:19.266Z] [INFO]: Server started on http://localhost:8000
+[2025-08-21T09:47:22.464Z] [INFO]: Transporter is ready to send emails

@@ -44,6 +44,6 @@ module.exports = {
     },
   },
   plugins: [
-    flowbite, 
+    flowbite,
   ],
 }

@@ -127,9 +127,10 @@ const Marketplace = () => {
                     alt={product.name}
                     className="w-full h-[120px] rounded-md object-cover bg-white"
                   />
-                  <div className="text-[15px] font-semibold text-white mt-2">
+                  <div className="text-[15px] font-semibold text-white mt-2 line-clamp-2">
                     {product.name}
                   </div>
+
                   <div className="flex justify-between items-center mt-1">
                     <div className="flex gap-2 items-center text-slate-200">
                       <img
@@ -158,9 +159,8 @@ const Marketplace = () => {
                     {/* Add to Cart Button */}
                     <button
                       onClick={() => handleAddToCart(product)}
-                      className={`flex gap-1 items-center rounded-sm py-1 px-2 text-white text-[12px] ${
-                        isAdded ? "bg-gray-500 cursor-not-allowed" : "bg-primary-600"
-                      }`}
+                      className={`flex gap-1 items-center rounded-sm py-1 px-2 text-white text-[12px] ${isAdded ? "bg-gray-500 cursor-not-allowed" : "bg-primary-600"
+                        }`}
                       disabled={isAdded}
                     >
                       <span className="pc:hidden">

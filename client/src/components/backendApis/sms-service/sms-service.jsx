@@ -1,32 +1,31 @@
 import axios from "axios";
 
 /**
- * Fetch SMS-Man countries and services from the API
+ * Fetch SMS pool countries from your backend API
  */
-export const getSmsManCountries = async () => {
+export const getSmsPoolCountries = async () => {
   try {
-    const { data } = await axios.get("/general/sms/country", {
+    const { data } = await axios.get("/general/pool/countries", {
       headers: { "Content-Type": "application/json" },
     });
 
-    //console.log("📡 SMS-Man API Raw Response:", data);
-
-    // Optional: Validate structure to avoid returning junk
-    if (data?.response !== 1 || !data?.countries) {
+    // Optional: Validate the structure
+    if (!data || !data.success || !data.data) {
       throw new Error("Unexpected response structure");
     }
 
-    // ✅ Return the raw backend response exactly
+    // Return exactly what your backend returns
     return data;
 
+
   } catch (error) {
-    // Still return the backend's error shape if possible
+    // Return backend's error if available, otherwise custom error
     if (error?.response?.data) {
       return error.response.data;
     }
     return {
-      response: 0,
-      error: error.message || "Failed to fetch SMS-Man data",
+      success: false,
+      error: error.message || "Failed to fetch pool countries",
     };
   }
 };
@@ -34,87 +33,80 @@ export const getSmsManCountries = async () => {
 
 
 
+export const getSmsPoolServicesByCountry = async (countryId) => {
+  if (!countryId) {
+    console.warn("Country ID is required");
+    return [];
+  }
 
-export const getOnlineSimServicesByCountry = async (countryCode) => {
   try {
-    if (!countryCode) {
-      throw new Error("Country code is required");
-    }
-
-    const { data } = await axios.get(`/general/sms/services/${countryCode}`, {
+    const response = await axios.get(`/general/pool/services/${countryId}`, {
       headers: { "Content-Type": "application/json" },
     });
 
-    
-    if (
-      data?.response !== 1 ||
-      !data?.services ||
-      typeof data.services !== "object"
-    ) {
-      throw new Error("Unexpected response structure");
+    const data = response.data;
+
+    // Validate the response structure
+    if (!data || typeof data !== "object" || !data.success || !Array.isArray(data.data)) {
+      console.error("Unexpected response structure:", data);
+      return [];
     }
 
-    return data;
-
+    return data.data;
   } catch (error) {
-    if (error?.response?.data) {
-      return error.response.data;
-    }
-    return {
-      response: 0,
-      error: error.message || "Failed to fetch OnlineSim services",
-    };
+    console.error("Error fetching SMS pool services:", error?.response?.data || error.message || error);
+    return [];
   }
 };
 
 
-export const buyOnlineSimNumber = async (payload) => {
+
+export const buySmsPoolNumber = async (payload) => {
   try {
     if (!payload || typeof payload !== "object") {
       throw new Error("Request payload is required and must be an object");
     }
 
-    console.log("buyOnlineSimNumber payload:", payload);
-
     const { data } = await axios.post(
-      "/general/sms/buy-number",
-      payload,
+      "/general/pool/order",
+      payload,       
       {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       }
     );
 
-    // If API says success, just return it directly
-    if (data?.response === 1) {
+    console.log("buySmsPoolNumber response:", data);
+
+    if (data?.success) {
       return data;
     }
 
-    // If not success, use message from API if available
     return {
-      response: 0,
-      message: data?.message || "Failed to buy  number",
+      success: false,
+      message: data?.message || "Failed to buy number",
     };
 
   } catch (error) {
     console.error(
-      "buyOnlineSimNumber error:",
+      "buySmsPoolNumber error:",
       error.response?.data || error.message
     );
 
     if (error?.response?.data) {
       return {
-        response: 0,
+        success: false,
         message: error.response.data?.message || "Request failed",
       };
     }
 
     return {
-      response: 0,
-      message: error.message || "Failed to buy  number",
+      success: false,
+      message: error.message || "Failed to buy number",
     };
   }
 };
+
 
 
 

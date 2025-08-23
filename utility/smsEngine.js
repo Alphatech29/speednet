@@ -40,6 +40,6 @@ async function checkSmsStates() {
 }
 
 // 🔹 Run every second (6 fields: second minute hour day month weekday)
-cron.schedule("* * * * * *", checkSmsStates);
+//cron.schedule("* * * * * *", checkSmsStates);
 
 module.exports = { checkSmsStates };

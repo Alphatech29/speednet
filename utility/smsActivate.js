@@ -24,30 +24,15 @@ async function getClient() {
 async function getTariffs(params = {}) {
   try {
     const client = await getClient();
-
-    // Make API request
     const resp = await client.get("getTariffs.php", {
       params: { lang: "en", ...params },
     });
-
-    // Check if data exists in response
-    if (!resp || !resp.data) {
-      console.warn("[getTariffs] No data returned from API");
-      return { error: "No data returned from API" };
-    }
-
-    // Optionally log the data for debugging
-    console.log("[getTariffs] Data fetched:", resp.data);
-
     return resp.data;
   } catch (err) {
-    // Log the error for debugging
     console.error("[getTariffs] Failed:", err.response?.data || err.message);
-
     return err.response?.data || { error: err.message };
   }
 }
-
 
 // Get services by country
 async function getServicesByCountry(countryCode, params = {}) {

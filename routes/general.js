@@ -59,6 +59,7 @@ const { getPagesBySlug } = require("../controller/user/page");
 const {fetchOnlineSimCountries, buyOnlineSimNumber,   fetchOnlineSimServicesByCountry, fetchOnlineSimState} = require("../controller/user/sms-service");
 const { fetchAllPackages, NordPurchase, fetchAllNordHistory } = require("../controller/user/nordVpn");
 const { getSmsServiceByUserId } = require("../utility/smsActivate");
+const { getCountriesController, getServicesByCountryController, orderSMSController } = require("../controller/user/smspool");
 //const { smsWebhook } = require("../utility/smsWebhook");
 
 
@@ -137,7 +138,9 @@ generalRoute.post("/nord-purchase", verifyToken, NordPurchase);
 generalRoute.get("/nord-history", fetchAllNordHistory);
 generalRoute.get("/sms-service", verifyToken, getSmsServiceByUserId
 );
-
+generalRoute.get("/pool/countries", getCountriesController);
+generalRoute.get("/pool/services/:countryId", getServicesByCountryController);
+generalRoute.post("/pool/order", verifyToken, orderSMSController);
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);

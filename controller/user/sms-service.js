@@ -16,48 +16,26 @@ const fetchOnlineSimCountries = async (req, res) => {
   try {
     const apiResponse = await getTariffs();
 
-    // Validate API response
-    if (
-      !apiResponse ||
-      typeof apiResponse !== "object" ||
-      !Array.isArray(apiResponse.countries)
-    ) {
-      console.warn(
-        "[fetchOnlineSimCountries] Invalid API response structure:",
-        apiResponse
-      );
+    if (!apiResponse || typeof apiResponse !== "object" || !apiResponse.countries) {
+      console.warn("[fetchOnlineSimCountries] Invalid API response structure:", apiResponse);
       return res.status(502).json({
         response: 0,
         error: "Invalid response structure from OnlineSim (countries)",
       });
     }
 
-    // Optional: check if array is empty
-    if (apiResponse.countries.length === 0) {
-      console.warn("[fetchOnlineSimCountries] No countries returned from API");
-      return res.status(204).json({
-        response: 0,
-        error: "No countries available from OnlineSim",
-      });
-    }
-
-    // Success
     return res.status(200).json({
       response: 1,
       countries: apiResponse.countries,
     });
   } catch (error) {
-    console.error(
-      "[fetchOnlineSimCountries] Error fetching OnlineSim countries:",
-      error
-    );
+    console.error("[fetchOnlineSimCountries] Error fetching OnlineSim countries:", error);
     return res.status(500).json({
       response: 0,
       error: error.message || "Internal server error",
     });
   }
 };
-
 
 
 // Fetch OnlineSim Services by Country

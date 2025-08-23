@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Button, Spinner } from "flowbite-react";
@@ -6,64 +6,48 @@ import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  getSmsManCountries,
-  getOnlineSimServicesByCountry,
-  buyOnlineSimNumber,
+  getSmsPoolCountries,
+  getSmsPoolServicesByCountry,
+  buySmsPoolNumber,
 } from "../../../components/backendApis/sms-service/sms-service";
 
 const GetNumber = () => {
   const navigate = useNavigate();
   const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [serviceLoading, setServiceLoading] = useState(false);
   const [buyingServiceId, setBuyingServiceId] = useState(null);
   const [error, setError] = useState("");
+  const [serviceSearch, setServiceSearch] = useState("");
 
-  const countryMap = useMemo(() => {
-    const map = {};
-    countries.forEach((c) => {
-      map[c.value] = { name: c.name, code: c.value };
-    });
-    return map;
-  }, [countries]);
-
+  // Fetch countries
   const fetchCountries = async () => {
     setLoading(true);
     setError("");
     try {
-      const result = await getSmsManCountries();
-      if (result?.countries && typeof result.countries === "object") {
-        const countryList = Object.values(result.countries);
-
-        // Map and sort alphabetically
-        const options = countryList
-          .map((country) => {
-            const numericCode = country.phone_code || country.code || "";
-            const alphaCode = String(country.code || "").toLowerCase();
-
-            return {
-              value: String(numericCode),
-              label: country.name, // plain string for search
-              name: country.name,
-              alphaCode, // for flag display
-            };
-          })
+      const result = await getSmsPoolCountries();
+      if (result?.success && Array.isArray(result.data)) {
+        const options = result.data
+          .map((c) => ({
+            value: String(c.ID),
+            label: c.name,
+            alphaCode: String(c.short_name).toLowerCase(),
+          }))
           .sort((a, b) => a.label.localeCompare(b.label));
 
         setCountries(options);
 
-        if (options.length > 0) {
-          const countryOne = options.find((c) => c.value === "1");
-          if (countryOne) setSelectedCountry(countryOne.value);
-        }
+        const defaultCountry = options.find((c) => c.value === "1") || options[0];
+        setSelectedCountry(defaultCountry);
+
+        if (defaultCountry) fetchServices(Number(defaultCountry.value));
       } else {
-        const errMsg = "No countries found";
-        setError(errMsg);
+        throw new Error("No countries found");
       }
     } catch (err) {
-      const errMsg = err.message || "Unexpected error fetching countries";
+      const errMsg = err.message || "Error fetching countries";
       setError(errMsg);
       toast.error(errMsg);
     } finally {
@@ -71,23 +55,21 @@ const GetNumber = () => {
     }
   };
 
-  const fetchServices = async (countryCode) => {
+  // Fetch services by country
+  const fetchServices = async (countryId) => {
     setServiceLoading(true);
     setError("");
     try {
-      const result = await getOnlineSimServicesByCountry(countryCode);
-      if (result?.response === 1 && result?.services) {
-        setServices(Object.values(result.services));
+      const result = await getSmsPoolServicesByCountry(Number(countryId));
+      if (Array.isArray(result) && result.length > 0) {
+        setServices(result);
       } else {
         setServices([]);
-        const errMsg = "No services found for this country.";
-        setError(errMsg);
-        toast.error(errMsg);
       }
     } catch (err) {
-      const errMsg = err.message || "Unexpected error fetching services";
-      setError(errMsg);
       setServices([]);
+      const errMsg = err.message || "Error fetching services";
+      setError(errMsg);
       toast.error(errMsg);
     } finally {
       setServiceLoading(false);
@@ -98,33 +80,29 @@ const GetNumber = () => {
     fetchCountries();
   }, []);
 
-  useEffect(() => {
-    if (selectedCountry) fetchServices(selectedCountry);
-    else setServices([]);
-  }, [selectedCountry]);
+  // Handle manual country selection
+  const handleCountryChange = (country) => {
+    setSelectedCountry(country);
+    fetchServices(Number(country.value));
+  };
 
+  // Handle buying service
   const handleBuyNumber = async (service) => {
-    setBuyingServiceId(service.service);
-
+    setBuyingServiceId(service.ID);
     try {
       const payload = {
-        service: service.service,
-        country: selectedCountry,
+        service: service.ID,
+        country: Number(selectedCountry.value),
         price: service.price,
       };
-
-      const response = await buyOnlineSimNumber(payload);
-
-      if (response.response === 1) {
-        toast.success(response.message);
-        console.log("Purchased number:", response.data?.number);
-
-        // Redirect back after 1 second
-        setTimeout(() => {
-          navigate("/user/sms-service");
-        }, 1000);
+      console.log("buySmsPoolNumber payload:", payload);
+      const response = await buySmsPoolNumber(payload);
+      console.log("buySmsPoolNumber response:", response);
+      if (response?.success) {
+        toast.success(response.message || "Number purchased successfully");
+        setTimeout(() => navigate("/user/sms-service"), 1000);
       } else {
-        toast.error(response.message);
+        toast.error(response.message || "Failed to buy number");
       }
     } catch (err) {
       toast.error(err.message);
@@ -133,124 +111,141 @@ const GetNumber = () => {
     }
   };
 
+  // Filter services based on search input
+  const filteredServices = services.filter((service) =>
+    service.name.toLowerCase().includes(serviceSearch.toLowerCase())
+  );
+
+  // Highlight matched text
+  const highlightText = (text, highlight) => {
+    if (!highlight) return text;
+    const regex = new RegExp(`(${highlight})`, "gi");
+    const parts = text.split(regex);
+    return parts.map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-400 text-black px-1 rounded">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
-    <div className="p-4 pc:p-4 mobile:p-1 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <div className="p-2 tab:p-4 pc:p-4 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <ToastContainer position="top-right" autoClose={4000} />
       <h2 className="text-2xl font-extrabold mb-6 text-center tracking-wide">
         Get Your SMS Number
       </h2>
 
-      <div className="bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 mobile:py-6 mobile:px-1 border border-gray-700">
-        <div className="pc:flex items-center justify-between mb-6 mobile:hidden">
+      <div className="bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 tab:p-6 p-2 border border-gray-700">
+        <div className="flex items-center mb-6">
           <NavLink
             to="/user/sms-service"
             className="flex items-center text-primary hover:text-primary/80 transition-colors"
           >
-            <IoIosArrowRoundBack className="w-5 h-5 mr-1" />
-            Back
+            <IoIosArrowRoundBack className="w-5 h-5 mr-1" /> Back
           </NavLink>
         </div>
 
-        {loading && (
-          <div className="flex justify-center items-center py-10">
+        {loading ? (
+          <div className="flex justify-center py-10">
             <Spinner size="xl" />
           </div>
-        )}
-
-        {!loading && error && (
-          <div className=" flex flex-col justify-center items-center  py-6">
-            <p className="mb-4 text-red-400 text-center">{error}</p>
-            <Button
-              onClick={fetchCountries}
-              size="sm"
-              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-600/90"
-            >
-              Retry
-            </Button>
+        ) : error ? (
+          <div className="flex flex-col items-center py-6">
+            <p className="mb-4 text-red-400">{error}</p>
+            <Button onClick={fetchCountries}>Retry</Button>
           </div>
-        )}
-
-        {!loading && !error && (
-          <div className="flex flex-col gap-6">
-            {/* Country Selector */}
-            <div>
-              <Select
-                options={countries}
-                placeholder="Search country..."
-                className="w-full min-w-[250px] text-black"
-                styles={{
-                  control: (base) => ({ ...base, borderRadius: "0.75rem", padding: "2px" }),
-                }}
-                value={countries.find((c) => c.value === selectedCountry) || null}
-                onChange={(option) => setSelectedCountry(option?.value)}
-                isSearchable={true}
-                formatOptionLabel={(option) => (
-                  <div className="flex items-center gap-2">
-                    {option.alphaCode && (
+        ) : (
+          <>
+            <div className="flex md:flex-row gap-4">
+              {/* Country selector */}
+              <div className="flex-1">
+                <Select
+                  options={countries}
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  placeholder="Select country..."
+                  isSearchable
+                  formatOptionLabel={(option) => (
+                    <div className="flex items-center gap-2">
                       <img
                         src={`https://flagcdn.com/h40/${option.alphaCode}.png`}
-                        alt={option.name}
-                        className="w-5 h-5 rounded-full object-cover"
+                        alt={option.label}
+                        className="w-5 h-5 rounded-full"
                       />
-                    )}
-                    <span>{option.name}</span>
-                  </div>
-                )}
-              />
+                      <span>{option.label}</span>
+                    </div>
+                  )}
+                  styles={{
+                    control: (provided) => ({ ...provided, backgroundColor: "#1F2937" }),
+                    singleValue: (provided) => ({ ...provided, color: "#FFFFFF" }),
+                    menu: (provided) => ({ ...provided, backgroundColor: "#111827" }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: state.isFocused ? "#F66B04" : "#111827",
+                      color: state.isFocused ? "#FFFFFF" : "#E5E7EB",
+                      cursor: "pointer",
+                    }),
+                    placeholder: (provided) => ({ ...provided, color: "#9CA3AF" }),
+                    dropdownIndicator: (provided) => ({ ...provided, color: "#F66B04" }),
+                    indicatorSeparator: (provided) => ({ ...provided, backgroundColor: "#374151" }),
+                  }}
+                />
+              </div>
+
+              {/* Service search input */}
+              <div className="flex-1">
+                <input
+                  type="text"
+                  placeholder="Search service..."
+                  value={serviceSearch}
+                  onChange={(e) => setServiceSearch(e.target.value)}
+                  className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
             </div>
 
-            {/* Services Grid */}
             {serviceLoading ? (
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-6">
                 <Spinner size="lg" />
               </div>
-            ) : services.length > 0 ? (
-              <div className="grid grid-cols-1 tab:grid-cols-2 pc:grid-cols-4 gap-3">
-                {services.map((service, index) => {
-                  const countryInfo = countryMap[service.code];
-                  return (
-                    <div
-                      key={index}
-                      className="rounded-xl bg-gray-900/60 border border-gray-700 p-5 hover:scale-105 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-                    >
-                      <div>
-                        <h2 className="font-bold text-[15px]">{service.service}</h2>
-                        <div className="flex items-center gap-2 text-[13px] text-gray-400 mt-1">
-                          <span>{countryInfo?.name}</span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center mt-4">
-                        <span className="text-sm">Available: {service.count || 0}</span>
-                        <span className="text-sm font-bold text-green-400">
-                          ${service.price?.toFixed(2) || "0.00"}
-                        </span>
-                      </div>
-                      <Button
-                        size="sm"
-                        className="mt-3 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-orange-500 py-1 rounded-lg text-white font-semibold hover:opacity-90 transition-opacity"
-                        onClick={() => handleBuyNumber(service)}
-                        disabled={buyingServiceId === service.service}
-                      >
-                        {buyingServiceId === service.service ? (
-                          <>
-                            <Spinner size="sm" /> Buying...
-                          </>
-                        ) : (
-                          "Buy Now"
-                        )}
-                      </Button>
+            ) : filteredServices.length > 0 ? (
+              <div className="grid grid-cols-1 tab:grid-cols-2 pc:grid-cols-4 gap-3 mt-6">
+                {filteredServices.map((service) => (
+                  <div
+                    key={service.ID}
+                    className="bg-gray-900/60 border border-gray-700 rounded-xl p-5 flex flex-col justify-between hover:scale-105 transition-all"
+                  >
+                    <h2 className="font-bold text-[15px]">
+                      {highlightText(service.name, serviceSearch)}
+                    </h2>
+                    <p className="text-[13px] text-gray-300">{selectedCountry?.label}</p>
+                    <div className="flex justify-between mt-4">
+                      <span>ID: {service.ID}</span>
+                      <span className="font-bold text-green-400">
+                        ${parseFloat(service.price).toFixed(2)}
+                      </span>
                     </div>
-                  );
-                })}
+                    <Button
+                      size="sm"
+                      className="mt-3 w-full bg-gradient-to-r from-primary to-orange-500 text-white"
+                      onClick={() => handleBuyNumber(service)}
+                      disabled={buyingServiceId === service.ID}
+                    >
+                      {buyingServiceId === service.ID ? "Buying..." : "Buy Now"}
+                    </Button>
+                  </div>
+                ))}
               </div>
             ) : (
-              selectedCountry && (
-                <div className="mt-4 bg-gray-700 p-4 rounded-lg text-center">
-                  <p className="text-gray-400">No services available for the selected country.</p>
-                </div>
-              )
+              <p className="mt-4 text-center text-gray-400">
+                No services match your search.
+              </p>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

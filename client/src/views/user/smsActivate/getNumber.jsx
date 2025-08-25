@@ -22,7 +22,6 @@ const GetNumber = () => {
   const [error, setError] = useState("");
   const [serviceSearch, setServiceSearch] = useState("");
 
-  // Fetch countries
   const fetchCountries = async () => {
     setLoading(true);
     setError("");
@@ -36,12 +35,10 @@ const GetNumber = () => {
             alphaCode: String(c.short_name).toLowerCase(),
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
-
         setCountries(options);
 
         const defaultCountry = options.find((c) => c.value === "1") || options[0];
         setSelectedCountry(defaultCountry);
-
         if (defaultCountry) fetchServices(Number(defaultCountry.value));
       } else {
         throw new Error("No countries found");
@@ -55,17 +52,12 @@ const GetNumber = () => {
     }
   };
 
-  // Fetch services by country
   const fetchServices = async (countryId) => {
     setServiceLoading(true);
     setError("");
     try {
       const result = await getSmsPoolServicesByCountry(Number(countryId));
-      if (Array.isArray(result) && result.length > 0) {
-        setServices(result);
-      } else {
-        setServices([]);
-      }
+      setServices(Array.isArray(result) ? result : []);
     } catch (err) {
       setServices([]);
       const errMsg = err.message || "Error fetching services";
@@ -80,65 +72,51 @@ const GetNumber = () => {
     fetchCountries();
   }, []);
 
-  // Handle manual country selection
   const handleCountryChange = (country) => {
     setSelectedCountry(country);
     fetchServices(Number(country.value));
   };
 
-  // Handle buying service
-  const handleBuyNumber = async (service) => {
-    setBuyingServiceId(service.ID);
-    try {
-      const payload = {
-        service: service.ID,
-        country: Number(selectedCountry.value),
-<<<<<<< HEAD
-        pool: service.pool,
-        price: service.price,
-      };
+ const handleBuyNumber = async (service) => {
+  setBuyingServiceId(service.ID);
+  try {
+    const payload = {
+      service: Number(service.ID),
+      country: Number(selectedCountry.value),
+      pool: service.pool,
+      price: Number(service.price),
+    };
 
-      console.log("buySmsPoolNumber payload:", payload);
+    console.log("buySmsPoolNumber payload:", payload);
 
-      const response = await buySmsPoolNumber(payload);
+    const response = await buySmsPoolNumber(payload);
 
-      console.log("buySmsPoolNumber response:", response);
+    console.log("buySmsPoolNumber response:", response);
 
-=======
-        price: service.price,
-      };
-      console.log("buySmsPoolNumber payload:", payload);
-      const response = await buySmsPoolNumber(payload);
-      console.log("buySmsPoolNumber response:", response);
->>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
-      if (response?.success) {
-        toast.success(response.message || "Number purchased successfully");
-        setTimeout(() => navigate("/user/sms-service"), 1000);
-      } else {
-        toast.error(response.message || "Failed to buy number");
-      }
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setBuyingServiceId(null);
+    if (response?.success) {
+      toast.success(response.message || "Number purchased successfully");
+      setTimeout(() => navigate("/user/sms-service"), 1000);
+    } else {
+      toast.error(response.message || "Failed to buy number");
     }
-  };
+  } catch (err) {
+    toast.error(err.message);
+  } finally {
+    setBuyingServiceId(null);
+  }
+};
 
-  // Filter services based on search input
+
   const filteredServices = services.filter((service) =>
     service.name.toLowerCase().includes(serviceSearch.toLowerCase())
   );
 
-  // Highlight matched text
   const highlightText = (text, highlight) => {
     if (!highlight) return text;
     const regex = new RegExp(`(${highlight})`, "gi");
-    const parts = text.split(regex);
-    return parts.map((part, index) =>
+    return text.split(regex).map((part, index) =>
       regex.test(part) ? (
-        <span key={index} className="bg-yellow-400 text-black px-1 rounded">
-          {part}
-        </span>
+        <span key={index} className="bg-yellow-400 text-black px-1 rounded">{part}</span>
       ) : (
         part
       )
@@ -149,11 +127,7 @@ const GetNumber = () => {
     <div className="p-2 tab:p-4 pc:p-4 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <ToastContainer position="top-right" autoClose={4000} />
       <h2 className="text-2xl font-extrabold mb-6 text-center tracking-wide">
-<<<<<<< HEAD
-        Get Your SMS Numbera
-=======
         Get Your SMS Number
->>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
       </h2>
 
       <div className="bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 tab:p-6 p-2 border border-gray-700">
@@ -178,7 +152,6 @@ const GetNumber = () => {
         ) : (
           <>
             <div className="flex md:flex-row gap-4">
-              {/* Country selector */}
               <div className="flex-1">
                 <Select
                   options={countries}
@@ -188,23 +161,12 @@ const GetNumber = () => {
                   isSearchable
                   formatOptionLabel={(option) => (
                     <div className="flex items-center gap-2">
-                      <img
-                        src={`https://flagcdn.com/h40/${option.alphaCode}.png`}
-                        alt={option.label}
-                        className="w-5 h-5 rounded-full"
-                      />
+                      <img src={`https://flagcdn.com/h40/${option.alphaCode}.png`} alt={option.label} className="w-5 h-5 rounded-full" />
                       <span>{option.label}</span>
                     </div>
                   )}
                   styles={{
-<<<<<<< HEAD
-                    control: (provided) => ({
-                      ...provided,
-                      backgroundColor: "#1F2937",
-                    }),
-=======
                     control: (provided) => ({ ...provided, backgroundColor: "#1F2937" }),
->>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
                     singleValue: (provided) => ({ ...provided, color: "#FFFFFF" }),
                     menu: (provided) => ({ ...provided, backgroundColor: "#111827" }),
                     option: (provided, state) => ({
@@ -215,19 +177,11 @@ const GetNumber = () => {
                     }),
                     placeholder: (provided) => ({ ...provided, color: "#9CA3AF" }),
                     dropdownIndicator: (provided) => ({ ...provided, color: "#F66B04" }),
-<<<<<<< HEAD
-                    indicatorSeparator: (provided) => ({
-                      ...provided,
-                      backgroundColor: "#374151",
-                    }),
-=======
                     indicatorSeparator: (provided) => ({ ...provided, backgroundColor: "#374151" }),
->>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
                   }}
                 />
               </div>
 
-              {/* Service search input */}
               <div className="flex-1">
                 <input
                   type="text"
@@ -256,9 +210,7 @@ const GetNumber = () => {
                     <p className="text-[13px] text-gray-300">{selectedCountry?.label}</p>
                     <div className="flex justify-between mt-4">
                       <span>ID: {service.ID}</span>
-                      <span className="font-bold text-green-400">
-                        ${parseFloat(service.price).toFixed(2)}
-                      </span>
+                      <span className="font-bold text-green-400">${parseFloat(service.price).toFixed(2)}</span>
                     </div>
                     <Button
                       size="sm"
@@ -272,9 +224,7 @@ const GetNumber = () => {
                 ))}
               </div>
             ) : (
-              <p className="mt-4 text-center text-gray-400">
-                No services match your search.
-              </p>
+              <p className="mt-4 text-center text-gray-400">No services match your search.</p>
             )}
           </>
         )}

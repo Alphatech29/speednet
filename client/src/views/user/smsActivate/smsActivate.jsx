@@ -52,11 +52,16 @@ const SmsActivate = () => {
 
   const copyToClipboard = (text) => {
     if (!text) return errorNotify("Nothing to copy");
-    navigator.clipboard.writeText(text);
-    toast.success("Copied to clipboard");
+    try {
+      navigator.clipboard.writeText(text);
+      toast.success("Copied to clipboard");
+    } catch (err) {
+      console.error("Clipboard error:", err);
+      errorNotify("Failed to copy text");
+    }
   };
 
-  const formatDate = (dateString) => new Date(dateString).toLocaleString();
+  const formatDate = (dateString) => dateString ? new Date(dateString).toLocaleString() : "N/A";
 
   return (
     <div className="text-gray-300">
@@ -114,7 +119,7 @@ const SmsActivate = () => {
       {/* Recent Messages */}
       <section className="w-full">
         <div className="bg-gray-800 rounded-lg border border-gray-600 p-4">
-          {smsMessages.length === 0 && (
+          {smsMessages.length === 0 && !loading && (
             <div className="text-center py-6 text-gray-400">No messages found.</div>
           )}
 
@@ -126,11 +131,7 @@ const SmsActivate = () => {
               <div className="flex flex-col justify-start items-start gap-1">
                 <div className="flex justify-between items-center w-full ">
                   <div className="flex items-center gap-2">
-<<<<<<< HEAD
-                    <p className="text-[16px] text-gray-400">+{sms?.number}</p>
-=======
-                    <p className="text-[16px] text-gray-400">{sms?.number}</p>
->>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
+                    <p className="text-[16px] text-gray-400">+{sms?.number || "N/A"}</p>
                     <button
                       onClick={() => copyToClipboard(sms?.number)}
                       className="bg-gray-700 text-gray-200 py-1 px-2 rounded flex items-center text-[11px] hover:bg-gray-600"
@@ -153,9 +154,8 @@ const SmsActivate = () => {
 
               {sms.status === 1 ? (
                 <>
-                  {/* Friendly Message for Used */}
                   <div className="bg-gray-700 p-2 rounded my-2 text-sm text-green-200">
-                     SMS received successfully! You can now use the code {sms?.code}.
+                     SMS received successfully! You can now use the code {sms?.code || "N/A"}.
                   </div>
 
                   <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center gap-2">
@@ -173,12 +173,10 @@ const SmsActivate = () => {
                   </div>
                 </>
               ) : sms.status === 2 ? (
-                // Expired Number
                 <div className="text-center py-6 text-red-400">
                    This number has expired and cannot receive SMS.
                 </div>
               ) : (
-                // Pending Number
                 <div className="text-center py-6 text-gray-400">
                   <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
                   Waiting for SMS...

@@ -93,6 +93,7 @@ const GetNumber = () => {
       const payload = {
         service: service.ID,
         country: Number(selectedCountry.value),
+<<<<<<< HEAD
         pool: service.pool,
         price: service.price,
       };
@@ -103,6 +104,13 @@ const GetNumber = () => {
 
       console.log("buySmsPoolNumber response:", response);
 
+=======
+        price: service.price,
+      };
+      console.log("buySmsPoolNumber payload:", payload);
+      const response = await buySmsPoolNumber(payload);
+      console.log("buySmsPoolNumber response:", response);
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
       if (response?.success) {
         toast.success(response.message || "Number purchased successfully");
         setTimeout(() => navigate("/user/sms-service"), 1000);
@@ -141,7 +149,11 @@ const GetNumber = () => {
     <div className="p-2 tab:p-4 pc:p-4 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <ToastContainer position="top-right" autoClose={4000} />
       <h2 className="text-2xl font-extrabold mb-6 text-center tracking-wide">
+<<<<<<< HEAD
         Get Your SMS Numbera
+=======
+        Get Your SMS Number
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
       </h2>
 
       <div className="bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 tab:p-6 p-2 border border-gray-700">
@@ -185,10 +197,14 @@ const GetNumber = () => {
                     </div>
                   )}
                   styles={{
+<<<<<<< HEAD
                     control: (provided) => ({
                       ...provided,
                       backgroundColor: "#1F2937",
                     }),
+=======
+                    control: (provided) => ({ ...provided, backgroundColor: "#1F2937" }),
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
                     singleValue: (provided) => ({ ...provided, color: "#FFFFFF" }),
                     menu: (provided) => ({ ...provided, backgroundColor: "#111827" }),
                     option: (provided, state) => ({
@@ -199,10 +215,14 @@ const GetNumber = () => {
                     }),
                     placeholder: (provided) => ({ ...provided, color: "#9CA3AF" }),
                     dropdownIndicator: (provided) => ({ ...provided, color: "#F66B04" }),
+<<<<<<< HEAD
                     indicatorSeparator: (provided) => ({
                       ...provided,
                       backgroundColor: "#374151",
                     }),
+=======
+                    indicatorSeparator: (provided) => ({ ...provided, backgroundColor: "#374151" }),
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
                   }}
                 />
               </div>

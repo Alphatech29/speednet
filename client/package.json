@@ -16,7 +16,10 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@vitejs/plugin-react": "^4.3.4",
     "axios": "^1.8.2",
+<<<<<<< HEAD
     "chokidar": "^4.0.3",
+=======
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
     "crypto-js": "^4.2.0",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.10.2",
@@ -40,7 +43,10 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "autoprefixer": "^10.4.20",
+<<<<<<< HEAD
     "chokidar-cli": "^3.0.0",
+=======
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",

@@ -126,7 +126,11 @@ const SmsActivate = () => {
               <div className="flex flex-col justify-start items-start gap-1">
                 <div className="flex justify-between items-center w-full ">
                   <div className="flex items-center gap-2">
+<<<<<<< HEAD
                     <p className="text-[16px] text-gray-400">+{sms?.number}</p>
+=======
+                    <p className="text-[16px] text-gray-400">{sms?.number}</p>
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
                     <button
                       onClick={() => copyToClipboard(sms?.number)}
                       className="bg-gray-700 text-gray-200 py-1 px-2 rounded flex items-center text-[11px] hover:bg-gray-600"

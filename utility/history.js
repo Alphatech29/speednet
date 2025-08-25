@@ -90,6 +90,7 @@ const getDepositTransactionsByUserUid = async (user_uid) => {
 };
 
 
+<<<<<<< HEAD
 const createSmsServiceRecord = async (record) => {
   try {
     const {
@@ -105,10 +106,27 @@ const createSmsServiceRecord = async (record) => {
     } = record;
 
     if (!user_id || !country || !amount || !service || !number || !orderid || !time) {
+=======
+const createSmsServiceRecord = async (
+  user_id,
+  country,
+  amount,
+  service,
+  number,
+  code = null,
+  tzid,
+  status = 0,
+  time
+) => {
+  try {
+    // Check required fields
+    if (!user_id || !country || !amount || !service || !number || !tzid || !time) {
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
       return { success: false, message: 'Missing required parameters' };
     }
 
     const sql = `INSERT INTO sms_service 
+<<<<<<< HEAD
       (user_id, country, amount, service, number, code, orderid, status, time) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
@@ -128,12 +146,37 @@ const createSmsServiceRecord = async (record) => {
     return { success: true, insertId: result.insertId };
   } catch (error) {
     console.error("DB insert error:", error);
+=======
+      (user_id, country, amount, service, number, code, tzid, status, time) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    // Convert numeric values explicitly
+    const params = [
+      Number(user_id),
+      Number(country),
+      Number(amount),
+      service,
+      number,
+      code || '', // Avoid null if column is NOT NULL
+      Number(tzid),
+      Number(status),
+      Number(time),
+    ];
+
+    const [result] = await pool.execute(sql, params);
+
+    return { success: true, insertId: result.insertId };
+  } catch (error) {
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
     return { success: false, message: 'Database error: ' + error.message };
   }
 };
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 const getSmsServiceRecord = async (tzid) => {
   try {
     const sql = `SELECT * FROM sms_service WHERE tzid = ? LIMIT 1`;
@@ -149,10 +192,17 @@ const getSmsServiceRecord = async (tzid) => {
 };
 
 
+<<<<<<< HEAD
 const updateSmsServiceRecord = async (orderid, code, status) => {
   try {
     if (!orderid) {
       return { success: false, message: "Missing required parameter: orderid" };
+=======
+const updateSmsServiceRecord = async (tzid, code, status) => {
+  try {
+    if (!tzid) {
+      return { success: false, message: "Missing required parameter: tzid" };
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
     }
 
     let sql, params;
@@ -161,6 +211,7 @@ const updateSmsServiceRecord = async (orderid, code, status) => {
       sql = `
         UPDATE sms_service
         SET status = ?
+<<<<<<< HEAD
         WHERE orderid = ? AND (code IS NULL OR code = '')
       `;
       params = [2, orderid];
@@ -171,6 +222,19 @@ const updateSmsServiceRecord = async (orderid, code, status) => {
         WHERE orderid = ?
       `;
       params = [code || "", status, orderid];
+=======
+        WHERE tzid = ? AND (code IS NULL OR code = '')
+      `;
+      params = [2, Number(tzid)];
+    } else {
+      // Normal update (code + status)
+      sql = `
+        UPDATE sms_service
+        SET code = ?, status = ?
+        WHERE tzid = ?
+      `;
+      params = [code || "", Number(status), Number(tzid)];
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
     }
 
     const [result] = await pool.execute(sql, params);
@@ -189,7 +253,10 @@ const updateSmsServiceRecord = async (orderid, code, status) => {
 };
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 const getPendingSmsServiceRecords = async () => {
   try {
     const sql = `SELECT * FROM sms_service WHERE status = 0`;

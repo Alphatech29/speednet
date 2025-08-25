@@ -3,10 +3,17 @@ require("dotenv").config();
 
 const dbConfig = {
   host:"localhost",
+<<<<<<< HEAD
   user:"root2",
   password:"",
   database:"speednet",
   port: 3306,
+=======
+  user:"root",
+  password:"",
+  database:"speednet",
+  port: 9030,
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

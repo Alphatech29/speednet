@@ -58,10 +58,16 @@ const { createPage, getPages, deletePage, editPage } = require("../controller/ad
 const { getPagesBySlug } = require("../controller/user/page");
 const {fetchOnlineSimCountries, buyOnlineSimNumber,   fetchOnlineSimServicesByCountry, fetchOnlineSimState} = require("../controller/user/sms-service");
 const { fetchAllPackages, NordPurchase, fetchAllNordHistory } = require("../controller/user/nordVpn");
+<<<<<<< HEAD
 const { getSmsServiceByUserId } = require("../utility/smspool");
 const { getCountriesController, getServicesByCountryController, orderSMSController } = require("../controller/user/smspool");
 const { smspoolWebhook } = require("../utility/smspoolWebhook");
 
+=======
+const { getSmsServiceByUserId } = require("../utility/smsActivate");
+const { getCountriesController, getServicesByCountryController, orderSMSController } = require("../controller/user/smspool");
+//const { smsWebhook } = require("../utility/smsWebhook");
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 
 
 // ------- General --------- //
@@ -133,11 +139,16 @@ generalRoute.get("/sms/country", fetchOnlineSimCountries);
 generalRoute.post("/sms/buy-number", verifyToken, buyOnlineSimNumber);
 generalRoute.get("/sms/services/:countryCode", fetchOnlineSimServicesByCountry);
 generalRoute.get("/sms/services/state/:tzid", fetchOnlineSimState);
+<<<<<<< HEAD
+=======
+//generalRoute.get("/sms/webhook", smsWebhook);
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 generalRoute.get("/nord-plan", fetchAllPackages);
 generalRoute.post("/nord-purchase", verifyToken, NordPurchase);
 generalRoute.get("/nord-history", fetchAllNordHistory);
 generalRoute.get("/sms-service", verifyToken, getSmsServiceByUserId
 );
+<<<<<<< HEAD
 // ------- SMS Pool --------- //
 generalRoute.get("/sms-service", verifyToken, getSmsServiceByUserId
 );
@@ -145,6 +156,11 @@ generalRoute.get("/pool/countries", getCountriesController);
 generalRoute.get("/pool/services/:countryId", getServicesByCountryController);
 generalRoute.post("/pool/order", verifyToken, orderSMSController);
 generalRoute.post("/pool/webhook", smspoolWebhook);
+=======
+generalRoute.get("/pool/countries", getCountriesController);
+generalRoute.get("/pool/services/:countryId", getServicesByCountryController);
+generalRoute.post("/pool/order", verifyToken, orderSMSController);
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 
 // ------- Admin --------- //
 generalRoute.get("/users", getAllUsers);

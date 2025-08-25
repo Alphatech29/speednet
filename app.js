@@ -83,7 +83,10 @@ try {
 }
 
 // 🔹 Start SMS Engine (cron job)
+<<<<<<< HEAD
 {/*
+=======
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 let smsCron;
 try {
   const { checkSmsStates } = require("./utility/smsEngine");
@@ -101,7 +104,10 @@ try {
   });
   process.exit(1);
 }
+<<<<<<< HEAD
   */}
+=======
+>>>>>>> 6f31b1fe6dc6fd2d8e97f7b8188c3595c2bcef95
 
 // Start HTTP Server
 const PORT = process.env.PORT || 8000;

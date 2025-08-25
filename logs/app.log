@@ -5880,3 +5880,17 @@
 [2025-08-25T01:57:35.570Z] [INFO]: Server started on http://localhost:8000
 [2025-08-25T01:57:36.795Z] [INFO]: Transporter is ready to send emails
 [2025-08-25T01:57:48.635Z] [INFO]: Login notification email sent:
+[2025-08-25T02:07:01.255Z] [INFO]: Fetched 8 accounts
+[2025-08-25T02:09:05.088Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-25T02:09:05.106Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-25T02:09:05.110Z] [INFO]: Server started on http://localhost:8000
+[2025-08-25T02:09:06.546Z] [INFO]: Transporter is ready to send emails
+[2025-08-25T02:09:51.196Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-25T02:09:51.214Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-25T02:09:51.217Z] [INFO]: Server started on http://localhost:8000
+[2025-08-25T02:09:52.626Z] [INFO]: Transporter is ready to send emails
+[2025-08-25T02:09:57.803Z] [INFO]: Escrow job queue loaded successfully.
+[2025-08-25T02:09:57.817Z] [INFO]: SMS Engine (cron) loaded successfully.
+[2025-08-25T02:09:57.822Z] [INFO]: Server started on http://localhost:8000
+[2025-08-25T02:09:59.284Z] [INFO]: Transporter is ready to send emails
+[2025-08-25T02:10:41.828Z] [INFO]: Fetched 8 accounts

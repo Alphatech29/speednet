@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Submission Notification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #171a241a;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border: 1px solid #000a185d;
+    }
+    .header {
+      background-color: #000a18;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .logo {
+      max-height: 50px;
+      margin-bottom: 10px;
+    }
+    .content {
+      padding: 30px;
+    }
+    .info-block {
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .footer {
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #d85600;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="<%= web_url %><%= logo %>" alt="<%= site_name %> Logo" class="logo" />
+    </div>
+    <div class="content">
+      <p>Hello Admin,</p>
+      
+      <p>A new product has just been submitted on <strong><%= site_name %></strong>. Please review the details below:</p>
+
+      <div class="info-block">
+        <p><strong>Product Name:</strong> <%= product.name %></p>
+        <p><strong>Title:</strong> <%= product.title %></p>
+        <p><strong>Price:</strong> <%= product.currencySymbol || '₦' %><%= product.price %></p>
+        <hr>
+        <h4><strong>Submitted By:</h4>
+        <p><strong>Merchant Name:</strong>  <%= merchant.full_name %></p>
+        <p><strong>Merchant Email:</strong> <%= merchant.email %></p>
+        <hr>
+        <p><strong>Submitted On:</strong> <%= date %> UTC</p>
+      </div>
+
+      <p>This product is pending review. You can take action from the admin dashboard.</p>
+
+      <a href="<%= web_url %>/admin/products" class="btn">Review Product</a>
+
+      <p>Thanks,<br />The <strong><%= site_name %></strong> System</p>
+    </div>
+    <div class="footer">
+      &copy; <%= year %> <%= site_name %>. All rights reserved. <br />
+      Need help? Contact us at <%= support_email %>.
+    </div>
+  </div>
+</body>
+</html>

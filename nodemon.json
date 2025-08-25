@@ -1,0 +1,4 @@
+{
+  "watch": ["."],
+  "ignore": ["queue-data-escrow.json", "logs/*", ".tmp"]
+}

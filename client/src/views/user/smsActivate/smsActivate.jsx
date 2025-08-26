@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaPhone, FaRegClock, FaCopy } from "react-icons/fa";
 import { FcExpired } from "react-icons/fc";
+import { ImCancelCircle } from "react-icons/im";
 import { AiFillMessage } from "react-icons/ai";
 import { BsClockHistory } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
@@ -147,7 +148,7 @@ const SmsActivate = () => {
           </div>
         </div>
 
-         <div className="bg-red-300/40 px-4 py-4 flex items-center gap-4 rounded-md border-b border-red-400">
+        <div className="bg-red-300/40 px-4 py-4 flex items-center gap-4 rounded-md border-b border-red-400">
           <span className="bg-red-300 rounded-full p-3">
             <FcExpired className="text-[20px]" />
           </span>
@@ -201,12 +202,18 @@ const SmsActivate = () => {
 
                   <div className="flex items-center gap-2 text-xs">
                     {getStatusBadge(sms?.status)}
+                    {/* Countdown next to status badge */}
+                    {sms.status === 0 && countdowns[sms.orderid] > 0 && (
+                      <span className="text-yellow-300 text-[16px]">
+                        {formatCountdown(countdowns[sms.orderid])}
+                      </span>
+                    )}
                   </div>
                 </div>
 
                 <div className="flex justify-between w-full mt-1 text-sm text-gray-400">
                   <p>{sms?.service || "N/A"}</p>
-                  <p>{formatDate(sms?.created_at)}</p>
+                  <p className="text-[10px]">{formatDate(sms?.created_at)}</p>
                 </div>
               </div>
 
@@ -234,17 +241,15 @@ const SmsActivate = () => {
                   </div>
                 </>
               ) : sms.status === 2 ? (
-                <div className="text-center py-6 text-red-400">
-                  This number has expired and cannot receive SMS.
+                 <div className="text-center py-6 text-gray-400">
+                  <ImCancelCircle className="mx-auto text-2xl animate-pulse mb-1" />
+                  <p>This number has expired and cannot receive SMS.</p>
                 </div>
+
               ) : (
                 <div className="text-center py-6 text-gray-400">
                   <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
-                  {countdowns[sms.orderid] && countdowns[sms.orderid] > 0 ? (
-                    <p>Expires in: {formatCountdown(countdowns[sms.orderid])}</p>
-                  ) : (
-                    <p className="text-red-400">Expired</p>
-                  )}
+                  <p>Waiting for SMS.....</p>
                 </div>
               )}
             </div>
@@ -254,5 +259,8 @@ const SmsActivate = () => {
     </div>
   );
 };
-
+{/* <div className="text-center py-6 text-gray-400">
+                  <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
+                  <p>Waiting for sms.....</p>
+                </div> */}
 export default SmsActivate;

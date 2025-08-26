@@ -7,6 +7,8 @@ const xssClean = require("xss-clean");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const logger = require("./utility/logger");
+const authRoute = require("./routes/auth");
+const generalRoute = require("./routes/general");
 
 dotenv.config();
 const app = express();
@@ -46,9 +48,6 @@ app.use(compression());
 app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 // Routes
-const authRoute = require("./routes/auth");
-const generalRoute = require("./routes/general");
-
 app.use("/auth", authRoute);
 app.use("/general", generalRoute);
 
@@ -76,24 +75,6 @@ try {
 } catch (err) {
   console.error("Escrow queue load failed:", err);
   logger.error("Failed to initialize escrow job queue", {
-    message: err.message,
-    stack: err.stack,
-  });
-  process.exit(1);
-}
-
-// 🔹 Start SMS Engine (cron job)
-try {
-  const { checkSmsStates } = require("./utility/smsEngine");
-
-  // Run once immediately
-  checkSmsStates();
-
-  logger.info("SMS Engine (cron) loaded successfully.");
-  console.log("SMS Engine (cron) loaded successfully.");
-} catch (err) {
-  console.error("SMS Engine load failed:", err);
-  logger.error("Failed to initialize SMS Engine", {
     message: err.message,
     stack: err.stack,
   });

@@ -85,7 +85,7 @@ const createSmsServiceRecord = async (record) => {
 
     const params = [
       Number(user_id),
-      Number(country),
+      country,
       Number(amount),
       service,
       number,

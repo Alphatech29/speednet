@@ -2,7 +2,7 @@
 const axios = require("axios");
 const { getWebSettings } = require("./general");
 const qs = require("qs");
-const pool = require("../model/db"); // Ensure this points to your DB connection
+const pool = require("../model/db");
 
 let smspool = null;
 
@@ -144,8 +144,9 @@ const postOrderSMS = async ({ country, service, pool, max_price, activation_type
   const response = await client.post("/purchase/sms", payload, {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
   });
-
+ console.log(response.data);
   return { order: response.data };
+
 };
 
 // Get SMS service records by user

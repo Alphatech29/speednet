@@ -3,22 +3,15 @@ require("dotenv").config();
 
 const dbConfig = {
   host: "localhost",
-  user: "root2",        // choose your user
-  password: "",        // set your password
+  user: "root2",
+  password: "",
   database: "speednet",
-  port: 3306,          // choose correct port
+  port: 3306,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
   connectTimeout: 10000,
 };
-
-console.log("Connecting to MySQL with config:", {
-  host: dbConfig.host,
-  user: dbConfig.user,
-  database: dbConfig.database,
-  port: dbConfig.port,
-});
 
 const pool = mysql.createPool(dbConfig).promise();
 

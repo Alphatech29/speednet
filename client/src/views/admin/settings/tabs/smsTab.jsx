@@ -27,7 +27,7 @@ const SmsTab = () => {
           setSettings(populated);
           setInitialSettings(populated);
         } else {
-          toast.error('OnlineSim settings not found');
+          toast.error('Smspool settings not found');
         }
       } catch (error) {
         console.error(" Error fetching settings:", error);
@@ -56,7 +56,7 @@ const SmsTab = () => {
 
     try {
       const res = await updateWebSettings(changedFields);
-      toast.success(res?.data?.message || 'OnlineSim settings updated successfully');
+      toast.success(res?.data?.message || 'Smspool settings updated successfully');
       setInitialSettings(settings);
       setIsEditing(false);
     } catch (error) {
@@ -71,16 +71,16 @@ const SmsTab = () => {
   };
 
   const fields = [
-    { id: 'onlinesim_api_url', label: 'OnlineSim URL' },
-    { id: 'onlinesim_api_key', label: 'OnlineSim API Key' },
-    { id: 'onlinesim_rate', label: 'OnlineSim Rate (%)' }, 
+    { id: 'onlinesim_api_url', label: 'Smspool URL' },
+    { id: 'onlinesim_api_key', label: 'Smspool API Key' },
+    { id: 'onlinesim_rate', label: 'Smspool Rate (%)' },
   ];
 
   return (
     <div className="flex max-w-md flex-col p-4 border rounded-lg">
       <ToastContainer />
-      <h1 className="text-[20px] font-semibold">OnlineSim Settings</h1>
-      <p className="text-[16px] mb-4">Manage your OnlineSim API credentials and pricing rate.</p>
+      <h1 className="text-[20px] font-semibold">Smspool Settings</h1>
+      <p className="text-[16px] mb-4">Manage your Smspool API credentials and pricing rate.</p>
 
       <div className="flex flex-col gap-4 text-gray-700">
         {fields.map(({ id, label }) => (

@@ -76,9 +76,18 @@ const Sidebar = ({ toggleSidebar }) => {
           <FaWallet /> <span>My Wallet</span>
         </NavLink>
 
-        <NavLink to="/user/sms-service" className={linkClasses}>
-          <GiVirtualMarker /> <span>Sms-Virtual-Phone</span>
-        </NavLink>
+         <Dropdown
+          label={<span className="flex items-center gap-2"><GiVirtualMarker />Sms-Virtual-Phone</span>}
+          inline
+          className="bg-gray-800 text-white border-none"
+        >
+          <Dropdown.Item as="div">
+            <NavLink className="text-gray-400" to="/user/sms-service">Portal</NavLink>
+          </Dropdown.Item>
+          <Dropdown.Item as="div">
+            <NavLink className="text-gray-400" to="/user/get-number">Get Number</NavLink>
+          </Dropdown.Item>
+        </Dropdown>
 
         {/* 
         <div

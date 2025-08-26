@@ -161,16 +161,6 @@ const SmsActivate = () => {
         </div>
       </div>
 
-      {/* Get Number Button */}
-      <div className="mb-4 flex gap-2">
-        <NavLink
-          to="/user/get-number"
-          className="flex items-center bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors"
-        >
-          Get Number
-        </NavLink>
-      </div>
-
       {/* Recent Messages */}
       <section className="w-full">
         <div className="bg-gray-800 rounded-lg border border-gray-600 p-4">

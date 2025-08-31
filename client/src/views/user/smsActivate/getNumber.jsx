@@ -77,35 +77,34 @@ const GetNumber = () => {
     fetchServices(Number(country.value));
   };
 
- const handleBuyNumber = async (service) => {
-  setBuyingServiceId(service.ID);
-  try {
-    const payload = {
-      service: Number(service.ID),
-      country: Number(selectedCountry.value),
-      pool: service.pool,
-      price: Number(service.price),
-    };
+  const handleBuyNumber = async (service) => {
+    setBuyingServiceId(service.ID);
+    try {
+      const payload = {
+        service: Number(service.ID),
+        country: Number(selectedCountry.value),
+        pool: service.pool,
+        price: Number(service.price),
+      };
 
-    console.log("buySmsPoolNumber payload:", payload);
+      console.log("buySmsPoolNumber payload:", payload);
 
-    const response = await buySmsPoolNumber(payload);
+      const response = await buySmsPoolNumber(payload);
 
-    console.log("buySmsPoolNumber response:", response);
+      console.log("buySmsPoolNumber response:", response);
 
-    if (response?.success) {
-      toast.success(response.message || "Number purchased successfully");
-      setTimeout(() => navigate("/user/sms-service"), 1000);
-    } else {
-      toast.error(response.message || "Failed to buy number");
+      if (response?.success) {
+        toast.success(response.message || "Number purchased successfully");
+        setTimeout(() => navigate("/user/sms-service"), 1000);
+      } else {
+        toast.error(response.message || "Failed to buy number");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setBuyingServiceId(null);
     }
-  } catch (err) {
-    toast.error(err.message);
-  } finally {
-    setBuyingServiceId(null);
-  }
-};
-
+  };
 
   const filteredServices = services.filter((service) =>
     service.name.toLowerCase().includes(serviceSearch.toLowerCase())
@@ -116,7 +115,9 @@ const GetNumber = () => {
     const regex = new RegExp(`(${highlight})`, "gi");
     return text.split(regex).map((part, index) =>
       regex.test(part) ? (
-        <span key={index} className="bg-yellow-400 text-black px-1 rounded">{part}</span>
+        <span key={index} className="bg-yellow-400 text-black px-1 rounded">
+          {part}
+        </span>
       ) : (
         part
       )
@@ -161,12 +162,19 @@ const GetNumber = () => {
                   isSearchable
                   formatOptionLabel={(option) => (
                     <div className="flex items-center gap-2">
-                      <img src={`https://flagcdn.com/h40/${option.alphaCode}.png`} alt={option.label} className="w-5 h-5 rounded-full" />
+                      <img
+                        src={`https://flagcdn.com/h40/${option.alphaCode}.png`}
+                        alt={option.label}
+                        className="w-5 h-5 rounded-full"
+                      />
                       <span>{option.label}</span>
                     </div>
                   )}
                   styles={{
-                    control: (provided) => ({ ...provided, backgroundColor: "#1F2937" }),
+                    control: (provided) => ({
+                      ...provided,
+                      backgroundColor: "#1F2937",
+                    }),
                     singleValue: (provided) => ({ ...provided, color: "#FFFFFF" }),
                     menu: (provided) => ({ ...provided, backgroundColor: "#111827" }),
                     option: (provided, state) => ({
@@ -177,7 +185,10 @@ const GetNumber = () => {
                     }),
                     placeholder: (provided) => ({ ...provided, color: "#9CA3AF" }),
                     dropdownIndicator: (provided) => ({ ...provided, color: "#F66B04" }),
-                    indicatorSeparator: (provided) => ({ ...provided, backgroundColor: "#374151" }),
+                    indicatorSeparator: (provided) => ({
+                      ...provided,
+                      backgroundColor: "#374151",
+                    }),
                   }}
                 />
               </div>
@@ -207,11 +218,26 @@ const GetNumber = () => {
                     <h2 className="font-bold text-[15px]">
                       {highlightText(service.name, serviceSearch)}
                     </h2>
-                    <p className="text-[13px] text-gray-300">{selectedCountry?.label}</p>
+
+                    {/* Country flag + name */}
+                    <div className="flex items-center gap-2 mt-1">
+                      <img
+                        src={`https://flagcdn.com/h20/${selectedCountry?.alphaCode}.png`}
+                        alt={selectedCountry?.label}
+                        className="w-5 h-5 rounded-full"
+                      />
+                      <span className="text-[13px] text-gray-300">
+                        {selectedCountry?.label}
+                      </span>
+                    </div>
+
                     <div className="flex justify-between mt-4">
                       <span>Pool: {service.pool}</span>
-                      <span className="font-bold text-green-400">${parseFloat(service.price).toFixed(2)}</span>
+                      <span className="font-bold text-green-400">
+                        ${parseFloat(service.price).toFixed(2)}
+                      </span>
                     </div>
+
                     <Button
                       size="sm"
                       className="mt-3 w-full bg-gradient-to-r from-primary to-orange-500 text-white"
@@ -224,7 +250,9 @@ const GetNumber = () => {
                 ))}
               </div>
             ) : (
-              <p className="mt-4 text-center text-gray-400">No services match your search.</p>
+              <p className="mt-4 text-center text-gray-400">
+                No services match your search.
+              </p>
             )}
           </>
         )}

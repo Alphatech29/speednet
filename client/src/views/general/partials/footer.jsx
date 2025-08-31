@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import { FaInstagram, FaXTwitter, FaTelegram, FaTiktok } from "react-icons/fa6";
 import { GlobalContext } from "../../../components/control/globalContext";
@@ -6,6 +6,44 @@ import { GlobalContext } from "../../../components/control/globalContext";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { webSettings } = useContext(GlobalContext);
+
+  // Add MyAlice Web Chat
+  useEffect(() => {
+    if (window.MyAliceWebChat) return; // avoid double init
+
+    // Create div for the widget
+    const chatDiv = document.createElement('div');
+    chatDiv.id = 'myAliceWebChat';
+    document.body.appendChild(chatDiv);
+
+    // Add script
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://widget.myalice.ai/index.js';
+    s.onload = () => {
+      window.MyAliceWebChat.init({
+        selector: '#myAliceWebChat', // the div ID
+        number: 'Blackprogrammer888',
+        message: '',
+        color: '#2AABEE',
+        channel: 'tg',
+        boxShadow: 'low',
+        text: 'Need help?',
+        theme: 'light',
+        position: 'right',
+        mb: '20px',
+        mx: '20px',
+        radius: '20px'
+      });
+    };
+    document.body.appendChild(s);
+
+    // Cleanup on unmount
+    return () => {
+      if (chatDiv) document.body.removeChild(chatDiv);
+      if (s) document.body.removeChild(s);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col bg-secondary text-white w-full">
@@ -19,7 +57,7 @@ const Footer = () => {
             alt="footer-logo"
             className="w-48 h-12 object-fill mobile:w-36"
           />
-          <p className="mt-4 text-[16px]  mobile:text-sm">
+          <p className="mt-4 text-[16px] mobile:text-sm">
             Unlock the power of digital freedom with Speednet. Buy verified accounts, access virtual numbers, secure VPNs, and more all with safety, speed, and transparency. Connect globally, thrive locally, and take control of your online experience today.
           </p>
         </div>
@@ -29,19 +67,17 @@ const Footer = () => {
           <h1 className="text-[20px] tab:text-[18px] mobile:text-[17px] font-semibold pb-2 text-primary-600">
             Links
           </h1>
-
           {[
             "/become-merchant",
             "/about",
             "/page/terms-of-use",
             "/page/privacy-policy",
           ].map((link, i) => {
-            // Remove leading `/` or `/page/`, then format remaining slug to readable title
             const label = link
-              .replace(/^\/(page\/)?/, '')               // remove leading / or /page/
-              .split('-')                                // split by dash
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // capitalize each word
-              .join(' ');                                // join with space
+              .replace(/^\/(page\/)?/, '')
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
 
             return (
               <NavLink
@@ -54,7 +90,6 @@ const Footer = () => {
             );
           })}
         </div>
-
 
         {/* Contact Info & Socials */}
         <div className="flex flex-col justify-start items-start gap-2 pc:w-[20%] tab:w-[25%] w-full">
@@ -91,20 +126,7 @@ const Footer = () => {
       {/* Bottom Section */}
       <div className="text-center py-4 text-sm text-white bg-secondary border-t border-primary-600">
         <p>&copy; {currentYear} {webSettings?.site_name}™. All rights reserved.</p>
-        {/*
-        <p className="text-center text-sm text-white/50 mt-1">
-          <a
-            href="https://wa.me/2349129079450"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative inline-block pb-1 before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-[1px] before:bg-primary-600 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 hover:before:scale-x-100"
-          >
-            Developed by Alphatech Multimedia Technologies
-          </a>
-        </p>
-         */}
       </div>
-
 
       {webSettings?.footer_code && (
         <div dangerouslySetInnerHTML={{ __html: webSettings.footer_code }} />

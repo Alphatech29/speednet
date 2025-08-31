@@ -161,7 +161,7 @@ const GetNumber = () => {
                   isSearchable
                   formatOptionLabel={(option) => (
                     <div className="flex items-center gap-2">
-                      <img src={`https://flagcdn.com/h40/${option.alpha}.png`} alt={option.label} className="w-5 h-5 rounded-full" />
+                      <img src={`https://flagcdn.com/h40/${option.alphaCode}.png`} alt={option.label} className="w-5 h-5 rounded-full" />
                       <span>{option.label}</span>
                     </div>
                   )}

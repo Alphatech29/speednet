@@ -7,7 +7,10 @@ import { ImCancelCircle } from "react-icons/im";
 import { AiFillMessage } from "react-icons/ai";
 import { BsClockHistory } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-import { getSmsServiceByUserId } from "../../../components/backendApis/sms-service/sms-service";
+import {
+  getSmsServiceByUserId,
+  getSmsPoolCountries,
+} from "../../../components/backendApis/sms-service/sms-service";
 
 const getStatusBadge = (status) => {
   switch (status) {
@@ -45,6 +48,7 @@ const SmsActivate = () => {
   const [smsMessages, setSmsMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countdowns, setCountdowns] = useState({});
+  const [countries, setCountries] = useState([]); // store countries
 
   const errorNotify = (msg) => toast.error(msg);
 
@@ -54,8 +58,10 @@ const SmsActivate = () => {
       const res = await getSmsServiceByUserId();
       if (res.success && Array.isArray(res.data)) {
         setSmsMessages(res.data);
+        localStorage.setItem("smsMessages", JSON.stringify(res.data)); // ✅ cache SMS
       } else {
         setSmsMessages([]);
+        localStorage.removeItem("smsMessages");
       }
     } catch (err) {
       console.error("Error fetching SMS messages:", err);
@@ -66,10 +72,42 @@ const SmsActivate = () => {
     }
   };
 
+  const fetchCountries = async () => {
+    try {
+      // ✅ load from cache if available
+      const cached = localStorage.getItem("smsCountries");
+      if (cached) {
+        setCountries(JSON.parse(cached));
+        return;
+      }
+
+      const res = await getSmsPoolCountries();
+      if (res.success && Array.isArray(res.data)) {
+        setCountries(res.data);
+        localStorage.setItem("smsCountries", JSON.stringify(res.data)); // ✅ cache
+      } else {
+        setCountries([]);
+      }
+    } catch (err) {
+      console.error("Error fetching countries:", err);
+      errorNotify(err.message || "Failed to fetch countries");
+      setCountries([]);
+    }
+  };
+
   useEffect(() => {
+    // ✅ load cached data first
+    const cachedSms = localStorage.getItem("smsMessages");
+    if (cachedSms) setSmsMessages(JSON.parse(cachedSms));
+
     fetchSmsMessages();
     const interval = setInterval(fetchSmsMessages, 3000);
     return () => clearInterval(interval);
+  }, []);
+
+  // fetch countries only once on mount
+  useEffect(() => {
+    fetchCountries();
   }, []);
 
   // countdown effect
@@ -104,6 +142,21 @@ const SmsActivate = () => {
 
   const formatDate = (dateString) =>
     dateString ? new Date(dateString).toLocaleString() : "N/A";
+
+  // ✅ Find short_name by country (from sms.country)
+  const getCountryShortName = (country) => {
+    if (!country || countries.length === 0) return null;
+    const match = countries.find(
+      (c) =>
+        c.name?.toLowerCase() === country?.toLowerCase() ||
+        String(c.id) === String(country)
+    );
+    return match ? match.short_name : null;
+  };
+
+  // ✅ Build flagcdn URL
+  const getFlagUrl = (shortName) =>
+    shortName ? `https://flagcdn.com/w20/${shortName.toLowerCase()}.png` : null;
 
   return (
     <div className="text-gray-300">
@@ -170,87 +223,97 @@ const SmsActivate = () => {
             </div>
           )}
 
-          {smsMessages.map((sms, idx) => (
-            <div
-              key={sms.id || idx}
-              className="mb-4 p-3 border border-gray-700 rounded hover:bg-gray-700/50"
-            >
-              <div className="flex flex-col justify-start items-start gap-1">
-                <div className="flex justify-between items-center w-full ">
-                  <div className="flex items-center gap-2">
-                    <p className="text-[16px] text-gray-400">
-                      +{sms?.number || "N/A"}
-                    </p>
-                    <button
-                      onClick={() => copyToClipboard(sms?.number)}
-                      className="bg-gray-700 text-gray-200 py-1 px-2 rounded flex items-center text-[11px] hover:bg-gray-600"
-                    >
-                      <FaCopy className="mr-1 text-[11px]" />
-                      Copy
-                    </button>
+          {smsMessages.map((sms, idx) => {
+            const shortName = getCountryShortName(sms?.country);
+            const flagUrl = getFlagUrl(shortName);
+
+            return (
+              <div
+                key={sms.id || idx}
+                className="mb-4 p-3 border border-gray-700 rounded hover:bg-gray-700/50"
+              >
+                <div className="flex flex-col justify-start items-start gap-1">
+                  <div className="flex justify-between items-center w-full ">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[16px] text-gray-400">
+                        +{sms?.number || "N/A"}
+                      </p>
+                      <button
+                        onClick={() => copyToClipboard(sms?.number)}
+                        className="bg-gray-700 text-gray-200 py-1 px-2 rounded flex items-center text-[11px] hover:bg-gray-600"
+                      >
+                        <FaCopy className="mr-1 text-[11px]" />
+                        Copy
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs">
+                      {getStatusBadge(sms?.status)}
+                      {sms.status === 0 && countdowns[sms.orderid] > 0 && (
+                        <span className="text-yellow-300 text-[16px]">
+                          {formatCountdown(countdowns[sms.orderid])}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs">
-                    {getStatusBadge(sms?.status)}
-                    {/* Countdown next to status badge */}
-                    {sms.status === 0 && countdowns[sms.orderid] > 0 && (
-                      <span className="text-yellow-300 text-[16px]">
-                        {formatCountdown(countdowns[sms.orderid])}
+                  <div className="flex justify-between w-full mt-1 text-sm text-gray-400">
+                    <div className="flex items-center gap-2">
+                      {/* ✅ Show flag if available */}
+                      {flagUrl && (
+                        <img
+                          src={flagUrl}
+                          alt={sms?.country}
+                          className="w-5 h-4 rounded-sm"
+                        />
+                      )}
+                      <p>{sms?.service || "N/A"}</p>
+                    </div>
+                    <p className="text-[10px]">{formatDate(sms?.created_at)}</p>
+                  </div>
+                </div>
+
+                {sms.status === 1 ? (
+                  <>
+                    <div className="bg-gray-700 p-2 rounded my-2 text-sm text-green-200">
+                      SMS received successfully! You can now use the code{" "}
+                      {sms?.code || "N/A"}.
+                    </div>
+
+                    <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center gap-2">
+                      <span className="text-sm">
+                        <strong>Code:</strong>{" "}
+                        <code className="bg-blue-900 text-blue-300 px-2 py-1 rounded">
+                          {sms?.code || "N/A"}
+                        </code>
                       </span>
-                    )}
+                      <button
+                        onClick={() => copyToClipboard(sms?.code)}
+                        className="bg-blue-900 text-blue-300 py-2 px-3 rounded-md flex items-center text-[11px]"
+                      >
+                        <FaCopy className="mr-1 text-[11px]" />
+                        Copy Code
+                      </button>
+                    </div>
+                  </>
+                ) : sms.status === 2 ? (
+                  <div className="text-center py-6 text-gray-400">
+                    <ImCancelCircle className="mx-auto text-2xl animate-pulse mb-1" />
+                    <p>This number has expired and cannot receive SMS.</p>
                   </div>
-                </div>
-
-                <div className="flex justify-between w-full mt-1 text-sm text-gray-400">
-                  <p>{sms?.service || "N/A"}</p>
-                  <p className="text-[10px]">{formatDate(sms?.created_at)}</p>
-                </div>
+                ) : (
+                  <div className="text-center py-6 text-gray-400">
+                    <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
+                    <p>Waiting for SMS.....</p>
+                  </div>
+                )}
               </div>
-
-              {sms.status === 1 ? (
-                <>
-                  <div className="bg-gray-700 p-2 rounded my-2 text-sm text-green-200">
-                    SMS received successfully! You can now use the code{" "}
-                    {sms?.code || "N/A"}.
-                  </div>
-
-                  <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center gap-2">
-                    <span className="text-sm">
-                      <strong>Code:</strong>{" "}
-                      <code className="bg-blue-900 text-blue-300 px-2 py-1 rounded">
-                        {sms?.code || "N/A"}
-                      </code>
-                    </span>
-                    <button
-                      onClick={() => copyToClipboard(sms?.code)}
-                      className="bg-blue-900 text-blue-300 py-2 px-3 rounded-md flex items-center text-[11px]"
-                    >
-                      <FaCopy className="mr-1 text-[11px]" />
-                      Copy Code
-                    </button>
-                  </div>
-                </>
-              ) : sms.status === 2 ? (
-                 <div className="text-center py-6 text-gray-400">
-                  <ImCancelCircle className="mx-auto text-2xl animate-pulse mb-1" />
-                  <p>This number has expired and cannot receive SMS.</p>
-                </div>
-
-              ) : (
-                <div className="text-center py-6 text-gray-400">
-                  <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
-                  <p>Waiting for SMS.....</p>
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </div>
   );
 };
-{/* <div className="text-center py-6 text-gray-400">
-                  <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
-                  <p>Waiting for sms.....</p>
-                </div> */}
+
 export default SmsActivate;

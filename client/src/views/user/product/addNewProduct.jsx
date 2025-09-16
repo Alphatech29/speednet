@@ -1,170 +1,58 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { createAccount, getAllPlatforms } from "../../../components/backendApis/accounts/accounts";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  createAccount,
+  getAllPlatforms,
+} from "../../../components/backendApis/accounts/accounts";
 import InputField from "../../../components/interFace/InputField";
-import SelectField2 from "../../../components/interFace/SelectField2";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../../components/control/authContext";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import Stepper from "../../../components/utils/stepper";
+import { FaEdit } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
 
-const useAddAccountLogic = (userUid, setCurrentStep) => {
+const useAddAccountLogic = () => {
   const [formData, setFormData] = useState({
-    platform: '',
-    title: '',
-    emailORusername: '',
-    password: '',
-    price: '',
-    previewLink: '',
-    description: '',
-    subscriptionStatus: '',
-    two_factor_enabled: false,
-    two_factor_description: '',
-    expiry_date: '',
-    recoveryEmail: '',
-    recoveryEmailPassword: '',
-    additionalEmail: '',
-    additionalPassword: ''
+    platform: "",
+    title: "",
+    price: "",
+    description: "",
+    credentials: [
+      {
+        emailORusername: "",
+        password: "",
+        recovery_info: "",
+        recovery_password: "",
+        previewLink: "",
+        factor_description: "",
+      },
+    ],
   });
 
-  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    const { id, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: type === 'checkbox' ? checked : value
-    }));
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const validationErrors = validateForm();
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      try {
-        const payLoad = {
-          ...formData,
-          price: parseFloat(formData.price),
-          userUid: userUid
-        };
-
-        const result = await createAccount(payLoad);
-
-        if (result?.success) {
-          toast.success(result.message, {
-            position: "top-right",
-            autoClose: 3000,
-          });
-          setFormData({
-            platform: '',
-            title: '',
-            emailORusername: '',
-            password: '',
-            price: '',
-            previewLink: '',
-            description: '',
-            subscriptionStatus: '',
-            two_factor_enabled: false,
-            two_factor_description: '',
-            expiry_date: '',
-            recoveryEmail: '',
-            recoveryEmailPassword: '',
-            additionalEmail: '',
-            additionalPassword: ''
-          });
-          if (setCurrentStep) {
-            setCurrentStep(1);
-          }
-        } else {
-          const errorMessage = result?.message ||
-            result?.error ||
-            'Failed to add account';
-          toast.error(errorMessage, {
-            position: "top-right",
-          });
-        }
-      } catch (err) {
-        console.error("Error creating account:", err);
-        const errorMessage = err.response?.data?.message ||
-          err.message ||
-          'Network error occurred';
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
-    } else {
-      setIsSubmitting(false);
-      toast.warn('Please fix the form errors', {
-        position: "top-right",
-      });
-    }
-  };
-
-  const isValidEmail = (email) => {
-    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return re.test(email);
-  };
-
-  const validateForm = () => {
-    const errors = {};
-    const {
-      title, price, description, emailORusername, password,
-      recoveryEmail, recoveryEmailPassword, two_factor_enabled,
-      two_factor_description, subscriptionStatus, expiry_date
-    } = formData;
-
-    if (!formData.platform) errors.platform = "Platform selection is required";
-    if (!title.trim()) errors.title = "Account Title is required";
-    if (!price || isNaN(price)) errors.price = "Valid price is required";
-    if (parseFloat(price) <= 0) errors.price = "Price must be positive";
-    if (!description.trim()) errors.description = "Description is required";
-
-    if (!emailORusername.trim()) {
-      errors.emailORusername = "Email/Username is required";
-    } else if (emailORusername.includes('@') && !isValidEmail(emailORusername)) {
-      errors.emailORusername = "Invalid email format";
-    }
-
-    if (!password.trim()) errors.password = "Password is required";
-
-    if (recoveryEmail.trim()) {
-      if (!isValidEmail(recoveryEmail)) {
-        errors.recoveryEmail = "Invalid recovery email";
-      }
-    }
-
-    if (recoveryEmailPassword.trim() && recoveryEmail.trim() === '') {
-      errors.recoveryEmailPassword = "Provide recovery email before password";
-    }
-
-
-    if (two_factor_enabled && !two_factor_description.trim()) {
-      errors.two_factor_description = "2FA description required when enabled";
-    }
-
-    if (!subscriptionStatus) {
-      errors.subscriptionStatus = "Subscription status is required";
-    } else if (subscriptionStatus === 'active' && !expiry_date) {
-      errors.expiry_date = "Expiry date required for active subscription";
-    }
-
-    return errors;
+  const handleCredentialChange = (index, e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => {
+      const updatedCredentials = [...prev.credentials];
+      updatedCredentials[index][id] = value;
+      return { ...prev, credentials: updatedCredentials };
+    });
   };
 
   return {
-    ...formData,
-    errors,
+    formData,
+    setFormData,
     isSubmitting,
+    setIsSubmitting,
     handleChange,
-    handleSubmit,
-    setFormData
+    handleCredentialChange,
   };
 };
 
@@ -172,427 +60,449 @@ const AddNewProduct = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [platformOptions, setPlatformOptions] = useState([]);
   const [loadingPlatforms, setLoadingPlatforms] = useState(true);
-  const [platformError, setPlatformError] = useState(null);
   const [isPlatformDropdownOpen, setIsPlatformDropdownOpen] = useState(false);
+  const [savedAccounts, setSavedAccounts] = useState([]);
 
   const { user } = useContext(AuthContext);
   const userUid = user?.uid || null;
+
+  const {
+    formData,
+    setFormData,
+    isSubmitting,
+    setIsSubmitting,
+    handleChange,
+    handleCredentialChange,
+  } = useAddAccountLogic();
+  const { platform, title, price, description, credentials } = formData;
 
   useEffect(() => {
     const fetchPlatforms = async () => {
       try {
         setLoadingPlatforms(true);
         const response = await getAllPlatforms();
-        if (response?.success && Array.isArray(response.data)) {
+        if (response?.success && Array.isArray(response.data))
           setPlatformOptions(response.data);
-        } else {
-          throw new Error('Invalid platforms data format');
-        }
-      } catch (error) {
-        setPlatformError(error.message || 'Failed to load platforms');
-        console.error("Error fetching platforms:", error);
-        setPlatformOptions([]);
       } finally {
         setLoadingPlatforms(false);
       }
     };
-
     fetchPlatforms();
   }, []);
 
-  const {
-    platform,
-    title,
-    emailORusername,
-    password,
-    price,
-    previewLink,
-    description,
-    subscriptionStatus,
-    two_factor_enabled,
-    two_factor_description,
-    expiry_date,
-    recoveryEmail,
-    recoveryEmailPassword,
-    additionalEmail,
-    additionalPassword,
-    errors,
-    isSubmitting,
-    handleChange,
-    handleSubmit,
-    setFormData
-  } = useAddAccountLogic(userUid, setCurrentStep);
-
   const handlePlatformSelect = (platformId) => {
-    setFormData(prev => ({
-      ...prev,
-      platform: platformId
-    }));
+    handleChange({ target: { id: "platform", value: platformId } });
     setIsPlatformDropdownOpen(false);
   };
 
+  // ✅ Validation for Step 1
+  const validateStep1 = () => {
+    if (!platform) {
+      toast.error("Platform is required");
+      return false;
+    }
+    if (!title.trim()) {
+      toast.error("Account Title is required");
+      return false;
+    }
+    if (!price || isNaN(price)) {
+      toast.error("Valid Price is required");
+      return false;
+    }
+    if (!description.trim()) {
+      toast.error("Description is required");
+      return false;
+    }
+    return true;
+  };
+
+  // ✅ Validation for Step 2
+  const validateStep2 = () => {
+    for (const cred of credentials) {
+      if (!cred.emailORusername.trim()) {
+        toast.error("Email/Username is required");
+        return false;
+      }
+      if (!cred.password.trim()) {
+        toast.error("Password is required");
+        return false;
+      }
+      if (!cred.factor_description.trim()) {
+        toast.error("Factor description is required");
+        return false;
+      }
+
+    }
+    return true;
+  };
+
+  const handleAddAnotherAccount = () => {
+    if (!validateStep2()) return;
+    setSavedAccounts((prev) => [...prev, JSON.parse(JSON.stringify(formData))]);
+
+    // ✅ Reset credentials (Step 2 fields)
+    setFormData((prev) => ({
+      ...prev,
+      credentials: [
+        {
+          emailORusername: "",
+          password: "",
+          recovery_info: "",
+          recovery_password: "",
+          previewLink: "",
+          factor_description: "",
+        },
+      ],
+    }));
+
+    // ✅ Stay on Step 2
+    setCurrentStep(2);
+
+    toast.success("Account added to summary. You can add another.");
+  };
+
+  const handleSubmitAll = async () => {
+    setIsSubmitting(true);
+    try {
+      for (const account of savedAccounts) {
+        for (const cred of account.credentials) {
+          const payload = {
+            ...account,
+            ...cred,
+            price: parseFloat(account.price),
+            userUid,
+          };
+          delete payload.credentials;
+          await createAccount(payload);
+        }
+      }
+      toast.success("All accounts submitted successfully!");
+      setSavedAccounts([]);
+      setFormData({
+        platform: "",
+        title: "",
+        price: "",
+        description: "",
+        credentials: [
+          {
+            emailORusername: "",
+            password: "",
+            recovery_info: "",
+            recovery_password: "",
+            previewLink: "",
+            factor_description: "",
+          },
+        ],
+      });
+      setCurrentStep(1);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message || "Network error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const steps = [
-    { number: 1, title: 'Account Details' },
-    { number: 2, title: 'Credentials' },
-    { number: 3, title: 'Security' }
+    { number: 1, title: "Account Details" },
+    { number: 2, title: "Credentials" },
+    { number: 3, title: "Summary & Security" },
   ];
 
-  const handleNext = () => setCurrentStep(prev => Math.min(prev + 1, steps.length));
-  const handleBack = () => setCurrentStep(prev => Math.max(prev - 1, 1));
+  const handleNext = () => {
+    if (currentStep === 1 && !validateStep1()) return;
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length));
+  };
 
-  const selectedPlatform = platformOptions.find(p => p.id === platform);
+  const handleBack = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
-  const renderLoadingSpinner = () => (
-    <div className="flex items-center justify-center">
-      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      Processing...
-    </div>
+  const selectedPlatform = platformOptions.find(
+    (p) => p.id.toString() === platform.toString()
   );
 
   return (
-    <div className='text-gray-200 flex flex-col'>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-      />
-
-      <h1 className='text-lg font-semibold'>Add New Product</h1>
-      <p className='mb-4 pc:text-sm mobile:text-xs'>
-        Easily add new products to your store! Fill in the details, set the price,
-        upload images, and manage availability.
+    <div className="text-gray-200 flex flex-col">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <h1 className="text-lg font-semibold">Add New Product</h1>
+      <p className="mb-4 text-sm">
+        Fill in the details and add multiple accounts. Step 3 will summarize all
+        added accounts.
       </p>
 
-      <div className='rounded-md px-3 py-2 bg-gray-800 justify-center items-center'>
-        <div className="flex justify-center mb-6">
-          <div className="flex items-center">
-            {steps.map((step, index) => (
-              <React.Fragment key={step.number}>
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center 
-                      ${currentStep >= step.number ? 'bg-primary-600' : 'bg-gray-600'}
-                      ${currentStep === step.number ? 'ring-2 ring-primary-400' : ''}`}
-                  >
-                    <span className="text-white text-sm">{step.number}</span>
-                  </div>
-                  <span className={`text-xs mt-1 ${currentStep === step.number ? 'text-primary-400 font-medium' : 'text-gray-400'}`}>
-                    {step.title}
-                  </span>
+      <Stepper steps={steps} currentStep={currentStep} />
+
+      <div className="w-full max-w-lg mx-auto p-3 border border-gray-400/70 rounded-md space-y-4">
+        {/* Step 1 */}
+        {currentStep === 1 && (
+          <>
+            <div>
+              <label className="block text-sm font-medium text-white mb-1">
+                Select Platform <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <div
+                  className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
+                  onClick={() =>
+                    setIsPlatformDropdownOpen(!isPlatformDropdownOpen)
+                  }
+                >
+                  {platform ? (
+                    <>
+                      {selectedPlatform?.image_path && (
+                        <img
+                          src={selectedPlatform.image_path}
+                          alt={selectedPlatform.name}
+                          className="h-5 w-5 rounded-full object-contain mr-2"
+                        />
+                      )}
+                      {selectedPlatform?.name || "Select a platform..."}
+                    </>
+                  ) : (
+                    "Select a platform..."
+                  )}
+                  {isPlatformDropdownOpen ? (
+                    <ChevronUpIcon className="h-4 w-4 absolute right-2" />
+                  ) : (
+                    <ChevronDownIcon className="h-4 w-4 absolute right-2" />
+                  )}
                 </div>
-                {index < steps.length - 1 && (
-                  <div className={`w-16 h-1 mx-2 ${currentStep > step.number ? 'bg-primary-600' : 'bg-gray-600'}`}></div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-
-        {platformError && (
-          <div className="text-red-500 text-center mb-4">{platformError}</div>
-        )}
-
-        <div className='pc:w-[50%] mx-auto p-3 border border-gray-400/70 rounded-md space-y-4'>
-          {currentStep === 1 && (
-            <>
-              <div>
-                <label htmlFor="platform" className="block text-sm font-medium text-white mb-1">
-                  Select Platform
-                </label>
-                <div className="relative">
-                  <div
-                    className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
-                    onClick={() => setIsPlatformDropdownOpen(!isPlatformDropdownOpen)}
-                  >
-                    {platform ? (
-                      <>
-                        {selectedPlatform?.image_path && (
+                {isPlatformDropdownOpen && (
+                  <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
+                    {platformOptions.map((option) => (
+                      <div
+                        key={option.id}
+                        className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
+                        onClick={() => handlePlatformSelect(option.id)}
+                      >
+                        {option.image_path && (
                           <img
-                            src={selectedPlatform.image_path}
-                            alt={selectedPlatform.name}
+                            src={option.image_path}
+                            alt={option.name}
                             className="h-5 w-5 rounded-full object-contain mr-2"
                           />
                         )}
-                        {selectedPlatform?.name || 'Select a platform...'}
-                      </>
-                    ) : (
-                      'Select a platform...'
-                    )}
-                    {isPlatformDropdownOpen ? (
-                      <ChevronUpIcon className="h-4 w-4 absolute right-2" />
-                    ) : (
-                      <ChevronDownIcon className="h-4 w-4 absolute right-2" />
-                    )}
+                        {option.name}
+                      </div>
+                    ))}
                   </div>
-
-                  {isPlatformDropdownOpen && (
-                    <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
-                      {platformOptions.map((option) => (
-                        <div
-                          key={option.id}
-                          className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
-                          onClick={() => handlePlatformSelect(option.id)}
-                        >
-                          {option.image_path && (
-                            <img
-                              src={option.image_path}
-                              alt={option.name}
-                              className="h-5 w-5 rounded-full object-contain mr-2"
-                            />
-                          )}
-                          {option.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {errors.platform && <p className="text-xs text-red-500 mt-1">{errors.platform}</p>}
+                )}
               </div>
+            </div>
 
-              <InputField
-                id="title"
-                label="Account Title"
-                type="text"
-                value={title}
+            <InputField
+              id="title"
+              label="Account Title *"
+              type="text"
+              value={title}
+              onChange={handleChange}
+              placeholder="e.g. 1 year old Facebook Account"
+            />
+            <InputField
+              id="price"
+              label="Account Price *"
+              type="number"
+              value={price}
+              onChange={handleChange}
+              placeholder="e.g. $10"
+            />
+            <div>
+              <label className="block text-sm font-medium">
+                Account Description <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="description"
+                value={description}
                 onChange={handleChange}
-                placeholder="e.g. 1 year old Facebook Account"
-                error={errors.title}
+                placeholder="Describe the account"
+                rows={6}
+                className="w-full bg-transparent borde rounded-md p-2 placeholder:text-gray-600 text-sm"
               />
-              <InputField
-                id="previewLink"
-                label="Preview Link"
-                type="text"
-                value={previewLink}
-                onChange={handleChange}
-                placeholder="Preview link to the account (optional)"
-                error={errors.previewLink}
-              />
-              <InputField
-                id="price"
-                label="Account Price"
-                type="number"
-                value={price}
-                onChange={handleChange}
-                placeholder="e.g. $10"
-                error={errors.price}
-              />
-              <div>
-                <label htmlFor="description" className='block text-sm font-medium'>Account Description</label>
-                <textarea
-                  id="description"
-                  value={description}
-                  onChange={handleChange}
-                  placeholder="Describe the account"
-                  rows={6}
-                  className='w-full bg-transparent border border-gray-600 rounded-md p-2 placeholder:text-gray-600 text-sm'
-                />
-                {errors.description && <p className="text-xs text-red-500">{errors.description}</p>}
-              </div>
-              <div className="mt-6 flex justify-end items-end gap-3">
-                <button
-                  onClick={handleNext}
-                  disabled={!platform || !title || !price || !description || isSubmitting}
-                  className={`px-6 py-2 rounded-md shadow-md transition 
-                    ${(!platform || !title || !price || !description || isSubmitting) ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'}`}
-                >
-                  {isSubmitting ? renderLoadingSpinner() : 'Next'}
-                </button>
-              </div>
-            </>
-          )}
+            </div>
+          </>
+        )}
 
-          {currentStep === 2 && (
-            <>
-              <div className='flex flex-col'>
-                <div className='flex justify-center items-center'>
-                  <h1 className='text-[17px] font-semibold'>Account Credentials</h1>
-                </div>
+        {/* Step 2 */}
+        {currentStep === 2 && (
+          <>
+            {credentials.map((cred, index) => (
+              <div key={index} className="border p-2 rounded mb-2">
                 <InputField
                   id="emailORusername"
-                  label="Account Email/Username"
+                  label="Email/Username *"
                   type="text"
-                  value={emailORusername}
-                  onChange={handleChange}
-                  placeholder="Email or Username"
-                  error={errors.emailORusername}
+                  value={cred.emailORusername}
+                  onChange={(e) => handleCredentialChange(index, e)}
                 />
                 <InputField
                   id="password"
-                  label="Account Password"
+                  label="Password *"
                   type="password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Password to the account"
-                  error={errors.password}
-                />
-              </div>
-
-              <div className='flex flex-col'>
-                <div className='flex justify-center items-center'>
-                  <h1 className='text-[17px] font-semibold'>Recovery Details (optional)</h1>
-                </div>
-                <InputField
-                  id="recoveryEmail"
-                  label="Recovery Email"
-                  type="email"
-                  value={recoveryEmail}
-                  onChange={handleChange}
-                  placeholder="Recovery email for the account (optional)"
-                  error={errors.recoveryEmail}
+                  value={cred.password}
+                  onChange={(e) => handleCredentialChange(index, e)}
                 />
                 <InputField
-                  id="recoveryEmailPassword"
-                  label="Recovery Email Password"
+                  id="previewLink"
+                  label="Preview Link (optional)"
+                  type="text"
+                  value={cred.previewLink}
+                  onChange={(e) => handleCredentialChange(index, e)}
+                />
+                <InputField
+                  id="recovery_info"
+                  label="Recovery Info (optional)"
+                  type="text"
+                  value={cred.recovery_info}
+                  onChange={(e) => handleCredentialChange(index, e)}
+                />
+                <InputField
+                  id="recovery_password"
+                  label="Recovery Password (optional)"
                   type="password"
-                  value={recoveryEmailPassword}
-                  onChange={handleChange}
-                  placeholder="Password for recovery email (optional)"
-                  error={errors.recoveryEmailPassword}
+                  value={cred.recovery_password}
+                  onChange={(e) => handleCredentialChange(index, e)}
                 />
-              </div>
-
-
-              <div className='flex flex-col'>
-                <div className='flex justify-center items-center'>
-                  <h1 className='text-[17px] font-semibold'>Additional Information (optional)</h1>
-                </div>
-                <InputField
-                  id="additionalEmail"
-                  label="Additional Email"
-                  type="email"
-                  value={additionalEmail}
-                  onChange={handleChange}
-                  placeholder="Optional - Email attached to the account"
-                  error={errors.additionalEmail}
-                />
-                <InputField
-                  id="additionalPassword"
-                  label="Additional Password"
-                  type="password"
-                  value={additionalPassword}
-                  onChange={handleChange}
-                  placeholder="Optional - Password to the additional email"
-                  error={errors.additionalPassword}
-                />
-              </div>
-
-              <div className="flex justify-end mt-6 gap-3">
-                <button
-                  onClick={handleBack}
-                  disabled={isSubmitting}
-                  className={`px-6 py-2 ${isSubmitting ? 'bg-gray-500' : 'bg-gray-600 hover:bg-gray-700'} text-white rounded-md shadow-md transition`}
-                >
-                  Back
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={!emailORusername || !password || isSubmitting}
-                  className={`px-6 py-2 rounded-md shadow-md transition 
-                    ${(!emailORusername || !password || isSubmitting) ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'}`}
-                >
-                  {isSubmitting ? renderLoadingSpinner() : 'Next'}
-                </button>
-              </div>
-            </>
-          )}
-
-          {currentStep === 3 && (
-            <>
-              <SelectField2
-                id="subscriptionStatus"
-                label="Subscription Status"
-                value={subscriptionStatus}
-                onChange={handleChange}
-                options={[
-                  { value: '', label: 'Select Status' },
-                  { value: 'active', label: 'Active' },
-                  { value: 'expired', label: 'Expired' },
-                  { value: 'none', label: 'None' },
-                ]}
-                error={errors.subscriptionStatus}
-              />
-
-              {subscriptionStatus === 'active' && (
-                <InputField
-                  id="expiry_date"
-                  label="Expiry Date"
-                  type="date"
-                  value={expiry_date}
-                  onChange={handleChange}
-                  error={errors.expiry_date}
-                />
-              )}
-
-              <div className="flex items-center justify-between">
-                <label htmlFor="two_factor_enabled" className="text-sm font-medium text-white">
-                  2-Factor Authentication
-                </label>
-                <button
-                  id="two_factor_enabled"
-                  type="button"
-                  role="switch"
-                  aria-checked={two_factor_enabled}
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      two_factor_enabled: !prev.two_factor_enabled,
-                    }))
-                  }
-                  className={`relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${two_factor_enabled ? 'bg-green-700' : 'bg-gray-500'
-                    }`}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`inline-block h-[18px] w-[18px] transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${two_factor_enabled ? 'translate-x-5' : 'translate-x-0.5'
-                      }`}
-                  />
-                </button>
-              </div>
-              {errors.two_factor_enabled && (
-                <p className="text-xs text-red-500 mt-1">{errors.two_factor_enabled}</p>
-              )}
-
-              {two_factor_enabled && (
-                <div className={`transition-all duration-300 ${two_factor_enabled ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0 overflow-hidden'}`}>
-                  <label htmlFor="two_factor_description" className='block text-sm font-medium'>
-                    2-Factor Authentication Description
+                <div>
+                  <label className="block text-sm font-medium">
+                    Factor Description <span className="text-red-500">*</span>
                   </label>
                   <textarea
-                    id="two_factor_description"
-                    value={two_factor_description}
-                    onChange={handleChange}
-                    placeholder="Explain the 2FA procedure"
-                    rows={6}
-                    className='w-full bg-transparent border border-gray-600 rounded-md p-2 placeholder:text-gray-600 text-sm'
+                    id="factor_description"
+                    value={cred.factor_description}
+                    onChange={(e) => handleCredentialChange(index, e)}
+                    placeholder="description"
+                    rows={4}
+                    className="w-full bg-transparent border  rounded-md p-2 text-sm"
                   />
-                  {errors.two_factor_description && (
-                    <p className="text-xs text-red-500">{errors.two_factor_description}</p>
-                  )}
                 </div>
-              )}
-
-              <div className="flex justify-end mt-6 gap-3">
-                <button
-                  onClick={handleBack}
-                  disabled={isSubmitting}
-                  className={`px-6 py-2 ${isSubmitting ? 'bg-gray-500' : 'bg-gray-600 hover:bg-gray-700'} text-white rounded-md shadow-md transition`}
-                >
-                  Back
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  disabled={!subscriptionStatus || isSubmitting}
-                  className={`px-6 py-2 rounded-md shadow-md transition 
-                    ${(!subscriptionStatus || isSubmitting) ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'}`}
-                >
-                  {isSubmitting ? renderLoadingSpinner() : 'Submit'}
-                </button>
               </div>
-            </>
-          )}
-        </div>
+            ))}
+           <div className="flex justify-start">
+             <button
+              type="button"
+              onClick={handleAddAnotherAccount}
+              disabled={
+                !credentials[0].emailORusername.trim() ||
+                !credentials[0].password.trim() ||
+                !credentials[0].factor_description.trim()
+              }
+              className="mt-2 bg-primary-600 text-white px-3 py-1 rounded disabled:opacity-50"
+            >
+              Add Account
+            </button>
+           </div>
+          </>
+        )}
+
+        {/* Step 3 */}
+        {currentStep === 3 && (
+          <>
+            <h2 className="text-lg font-semibold mb-3">Summary of Accounts</h2>
+            {savedAccounts.length === 0 && <p>No accounts added yet.</p>}
+            {savedAccounts.map((account, index) => (
+              <div
+                key={index}
+                className="border p-3 rounded mb-2 bg-gray-800 flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-semibold text-white">
+                    Account {index + 1}: {account.title || "N/A"}
+                  </p>
+                  <p>
+                    Platform:{" "}
+                    {platformOptions.find(
+                      (p) => p.id.toString() === account.platform.toString()
+                    )?.name || "N/A"}
+                  </p>
+                  {account.credentials.map((cred, i) => (
+                    <div key={i}>
+                      <p>Email/Username: {cred.emailORusername || "N/A"}</p>
+                      <p>Password: {cred.password ? "••••••••" : "N/A"}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setFormData(JSON.parse(JSON.stringify(account)));
+                      setCurrentStep(2);
+                    }}
+                    className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    <FaEdit />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setSavedAccounts((prev) =>
+                        prev.filter((_, i) => i !== index)
+                      );
+                      toast.info(`Account ${index + 1} removed`);
+                    }}
+                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    <ImCancelCircle />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+
+         {/* Navigation Buttons */}
+      <div className="flex items-end  justify-end mt-4 gap-3 w-full">
+        {currentStep > 1 && (
+          <button
+            onClick={handleBack}
+            disabled={isSubmitting}
+            className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md shadow-md transition"
+          >
+            Back
+          </button>
+        )}
+        {currentStep < steps.length && (
+          <button
+            onClick={handleNext}
+            disabled={isSubmitting}
+            className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md shadow-md transition"
+          >
+            Next
+          </button>
+        )}
+        {currentStep === steps.length && (
+          <button
+            onClick={handleSubmitAll}
+            disabled={isSubmitting || savedAccounts.length === 0}
+            className={`px-6 py-2 rounded-md shadow-md flex items-center justify-center gap-2 transition ${
+              savedAccounts.length === 0
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700 text-white"
+            }`}
+          >
+            {isSubmitting && (
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+            )}
+            Submit All
+          </button>
+        )}
+      </div>
       </div>
     </div>
   );

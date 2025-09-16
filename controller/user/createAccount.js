@@ -6,31 +6,32 @@ const accountCreation = async (req, res) => {
   try {
     const {
       userUid,
-      platform = 'N/A',
+      platform,
       title = 'N/A',
+      price = 0,
+      description = 'N/A',
       emailORusername = 'N/A',
       password = 'N/A',
-      price = 'N/A',
       previewLink = 'N/A',
-      description = 'N/A',
-      subscriptionStatus = 'N/A',
-      two_factor_enabled = false,
-      two_factor_description = 'N/A',
-      expiry_date = 'N/A',
-      recoveryEmail = 'N/A',
-      recoveryEmailPassword = 'N/A',
-      additionalEmail = 'N/A',
-      additionalPassword = 'N/A'
+      recovery_info = 'N/A',
+      recovery_password = 'N/A',
+      factor_description
     } = req.body;
 
+    if (!platform) {
+      return res.status(400).json({ status: 'error', message: 'Platform ID is required.' });
+    }
+
+    if (!factor_description) {
+      return res.status(400).json({ status: 'error', message: 'Factor description is required.' });
+    }
+
+    // Check if input is an email or username
     const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     const username = isEmail(emailORusername) ? 'N/A' : emailORusername;
     const email = isEmail(emailORusername) ? emailORusername : 'N/A';
 
-    if (platform === 'N/A') {
-      return res.status(400).json({ status: 'error', message: 'Platform ID is missing or invalid.' });
-    }
-
+    // Fetch platform info
     const platformData = await getPlatformsData(platform);
     const platformDetails = platformData?.data?.[0];
 
@@ -40,6 +41,7 @@ const accountCreation = async (req, res) => {
 
     const { name, image_path, category } = platformDetails;
 
+    // Build account payload
     const accountData = {
       user_id: userUid,
       title,
@@ -47,24 +49,21 @@ const accountCreation = async (req, res) => {
       logo_url: image_path,
       email,
       username,
-      recovery_email: recoveryEmail,
-      recoveryEmailpassword: recoveryEmailPassword,
-      additionalEmail,
-      additionalPassword,
-      previewLink,
       password,
+      previewLink,
+      recovery_info,
+      recovery_password,
+      factor_description,
       description,
       price,
       category: category || 'Other',
-      subscription_status: subscriptionStatus,
-      expiry_date,
-      two_factor_enabled,
-      two_factor_description,
       status: 'under reviewing'
     };
 
+    // Save account
     const creationResult = await createAccount(accountData);
 
+    // Send notification to admin
     try {
       const merchant = await getUserDetailsByUid(userUid);
 
@@ -81,13 +80,13 @@ const accountCreation = async (req, res) => {
         }
       );
     } catch (merchantErr) {
-      console.warn(' Failed to fetch merchant details. Admin email not sent.');
+      console.warn('⚠️ Failed to fetch merchant details. Admin email not sent.');
     }
 
     return res.status(200).json({ status: 'success', data: creationResult });
 
   } catch (error) {
-    console.error('Account creation error:', error);
+    console.error('❌ Account creation error:', error);
     return res.status(500).json({ status: 'error', message: 'Internal server error. Please try again.' });
   }
 };

@@ -33,6 +33,7 @@ const Marketplace = () => {
               seller: account.username,
               image: account.logo_url,
               description: account.description,
+              previewLink: account.previewLink,
               avatar: account.avatar,
             }));
           setProducts(formattedProducts);

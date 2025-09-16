@@ -37,19 +37,12 @@ const OrderDetails = ({ order, onClose }) => {
         <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
           <p className="text-[15px] font-medium pb-2">Recovery Details:</p>
           <div className="text-sm text-gray-400 space-y-1">
-            <p>Email: {order?.recovery_email || "N/A"}</p>
-            <p>Password: {order?.recovery_email_password || "N/A"}</p>
+            <p>Email/Username/Phone: {order?.recovery_info || "N/A"}</p>
+            <p>Password: {order?.recovery_password || "N/A"}</p>
           </div>
         </div>
 
-        {/* Additional Details */}
-        <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
-          <p className="text-[15px] font-medium pb-2">Additional Details:</p>
-          <div className="text-sm text-gray-400 space-y-1">
-            <p>Email: {order?.additional_email || "N/A"}</p>
-            <p>Password: {order?.additional_password || "N/A"}</p>
-          </div>
-        </div>
+
 
         {/* Account Description */}
         <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
@@ -59,29 +52,13 @@ const OrderDetails = ({ order, onClose }) => {
           </div>
         </div>
 
-        {/* 2FA Details */}
-        {order?.two_factor_enabled !== undefined && (
-          <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
-            <p className="text-[15px] font-medium pb-2">2FA Details:</p>
-            <div className="text-sm text-gray-400">
-              <p>
-                2FA:{" "}
-                <span
-                  className={`px-2 py-1 rounded text-white text-xs ${
-                    order.two_factor_enabled ? "bg-green-600" : "bg-red-600"
-                  }`}
-                >
-                  {order.two_factor_enabled ? "Enabled" : "Disabled"}
-                </span>
-              </p>
-              {order.two_factor_enabled === 1 && (
-                <p className="mt-2">
-                  {order?.two_factor_description || "No additional info"}
-                </p>
-              )}
-            </div>
+         {/* 2FA Details */}
+        <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
+          <p className="text-[15px] font-medium pb-2">2AF Description:</p>
+          <div className="text-sm text-gray-400">
+            <p>{order?.factor_description || "No description available"}</p>
           </div>
-        )}
+        </div>
       </Modal.Body>
 
       <Modal.Footer className="justify-end bg-gray-800 px-4 pb-4">

@@ -15,7 +15,9 @@ const ViewDetails = ({ product, onClose }) => {
       <Modal.Body className="bg-gray-800 text-gray-300">
         <div className="flex flex-col gap-4">
           {/* Description */}
-          <p className="text-sm">{product?.description || "No description available."}</p>
+          <p className="text-sm">
+            {product?.description || "No description available."}
+          </p>
 
           {/* Seller Info */}
           {product?.seller && (
@@ -29,6 +31,18 @@ const ViewDetails = ({ product, onClose }) => {
               )}
               <span className="text-sm font-medium">{product.seller}</span>
             </div>
+          )}
+
+          {/* Preview Link */}
+          {product?.previewLink && (
+            <a
+              href={product.previewLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline text-sm"
+            >
+              🔗 Preview Product
+            </a>
           )}
         </div>
       </Modal.Body>

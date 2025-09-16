@@ -59,14 +59,12 @@ const createAccount = async (accountData) => {
     const query = `
       INSERT INTO accounts (
         user_id, title, platform, logo_url, email, 
-        username, recovery_email, recoveryEmailpassword, additionalEmail, 
-        additionalPassword, previewLink, password, description, price, 
-        category, subscription_status, expiry_date, two_factor_enabled, two_factor_description,
-        status
+        username, password, previewLink, recovery_info, 
+        recovery_password, factor_description, description, price, 
+        category, status
       ) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)`;
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    
     const values = [
       accountData.user_id || null,
       accountData.title || 'N/A',
@@ -74,31 +72,25 @@ const createAccount = async (accountData) => {
       accountData.logo_url || 'N/A',
       accountData.email || 'N/A',
       accountData.username || 'N/A',
-      accountData.recovery_email || 'N/A',
-      accountData.recoveryEmailpassword || 'N/A',
-      accountData.additionalEmail || 'N/A',
-      accountData.additionalPassword || 'N/A',
-      accountData.previewLink || 'N/A',
       accountData.password || 'N/A',
+      accountData.previewLink || 'N/A',
+      accountData.recovery_info || 'N/A',
+      accountData.recovery_password || 'N/A',
+      accountData.factor_description || 'N/A',
       accountData.description || 'N/A',
-      accountData.price || 0.00,
+      accountData.price || 0.0,
       accountData.category || 'Other',
-      accountData.subscription_status || 'none',
-      accountData.expiry_date || null,
-      accountData.two_factor_enabled ? 1 : 0,
-      accountData.two_factor_description || 'N/A',
-      accountData.status
+      accountData.status || 'under reviewing'
     ];
 
-    // Execute the query
     const [result] = await pool.execute(query, values);
-
     return result.insertId;
   } catch (error) {
-    console.error("Error creating account:", error);
+    console.error(" Error creating account:", error);
     return null;
   }
 };
+
 
 
 

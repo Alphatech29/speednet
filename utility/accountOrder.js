@@ -5,13 +5,12 @@ const logger = require("../utility/logger");
 const storeOrder = async (orderData) => {
   try {
     const query = `
-    INSERT INTO account_order 
-    (account_id, seller_id, buyer_id, order_no, title, platform, email, recovery_email,
-     recovery_email_password, additional_email, additional_password,
-     username, password, description, two_factor_enabled, two_factor_description, price, 
-     payment_status, escrow_expires_at) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-`;
+      INSERT INTO account_order 
+        (account_id, seller_id, buyer_id, order_no, title, platform, email, recovery_info,
+         recovery_password, username, password, description, factor_description, price,
+         payment_status, escrow_expires_at) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
     const values = [
       orderData.account_id || null,
@@ -21,15 +20,12 @@ const storeOrder = async (orderData) => {
       orderData.title || null,
       orderData.platform || null,
       orderData.email || null,
-      orderData.recovery_email || null,
-      orderData.recovery_email_password || null,
-      orderData.additional_email || null,
-      orderData.additional_password || null,
+      orderData.recovery_info || null,
+      orderData.recovery_password || null,
       orderData.username || null,
       orderData.password || null,
       orderData.description || null,
-      orderData.two_factor_enabled || false,
-      orderData.two_factor_description || null,
+      orderData.factor_description || null,
       orderData.price || 0,
       orderData.payment_status || "Pending",
       orderData.escrow_expires_at || null,

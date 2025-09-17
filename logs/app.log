@@ -34,3 +34,9 @@
 [2025-09-17T11:38:20.783Z] [INFO]: Escrow job queue loaded successfully.
 [2025-09-17T11:38:20.788Z] [INFO]: Server started on http://localhost:8000
 [2025-09-17T11:38:21.806Z] [INFO]: Transporter is ready to send emails
+[2025-09-17T11:41:08.276Z] [INFO]: Escrow job queue loaded successfully.
+[2025-09-17T11:41:08.283Z] [INFO]: Server started on http://localhost:8000
+[2025-09-17T11:41:09.227Z] [INFO]: Transporter is ready to send emails
+[2025-09-17T11:41:12.709Z] [INFO]: Escrow job queue loaded successfully.
+[2025-09-17T11:41:12.715Z] [INFO]: Server started on http://localhost:8000
+[2025-09-17T11:41:13.716Z] [INFO]: Transporter is ready to send emails

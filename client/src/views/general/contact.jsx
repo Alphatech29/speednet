@@ -90,7 +90,7 @@ const ContactUs = () => {
     <>
       {/* Hero Section */}
       <div className="mobile:px-5 pc:px-20 bg-yellow-50">
-        <div className="flex flex-col justify-center items-center text-center py-20">
+        <div className="flex flex-col justify-center items-center text-center pt-28 py-20">
           <motion.div
             className="mobile:w-full pc:w-2/3"
             variants={fadeInUp}

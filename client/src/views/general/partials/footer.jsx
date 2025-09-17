@@ -70,6 +70,7 @@ const Footer = () => {
           {[
             "/become-merchant",
             "/about",
+            "/contact",
             "/page/terms-of-use",
             "/page/privacy-policy",
           ].map((link, i) => {

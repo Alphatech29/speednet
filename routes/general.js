@@ -39,6 +39,7 @@ const { fetchAllPackages, NordPurchase, fetchAllNordHistory } = require("../cont
 const { getSmsServiceByUserId } = require("../utility/smspool");
 const { getCountriesController, getServicesByCountryController, orderSMSController } = require("../controller/user/smspool");
 const { smspoolWebhook } = require("../utility/smspoolWebhook");
+const { contact } = require("../controller/user/contect");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -53,6 +54,7 @@ generalRoute.put(
   ]),
   updateWebSettings
 );
+generalRoute.post("/contact", contact );
 
 // --------- User route --------- //
 generalRoute.get("/user", verifyToken, getCurrentUser);

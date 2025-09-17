@@ -15,6 +15,7 @@ import ForgetPassword from "./views/general/ForgetPassword";
 import ResetPassword from "./views/general/resetPaword";
 import SeoManager from "./components/utils/seoManager";
 import Page from "./views/user/page/page";
+import ContactUs from "./views/general/contact";
 
 function App() {
   return (
@@ -30,6 +31,15 @@ function App() {
               element={
                 <Layout>
                   <Home />
+                </Layout>
+              }
+            />
+
+              <Route
+              path="/contact"
+              element={
+                <Layout>
+                  <ContactUs />
                 </Layout>
               }
             />

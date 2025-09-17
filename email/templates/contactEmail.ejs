@@ -8,7 +8,9 @@
 
   <!-- Message -->
   <div style="margin-bottom:20px;">
-    <%= message.replace(/\n/g, '<br/><br/>') %>
+    <% message.split(/\n\s*\n/).forEach(function(paragraph) { %>
+      <p style="margin: 0 0 15px 0;"><%- paragraph.replace(/\n/g, '<br/>') %></p>
+    <% }); %>
   </div>
 
   <!-- Footer -->

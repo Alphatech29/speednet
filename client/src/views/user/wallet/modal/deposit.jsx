@@ -3,6 +3,7 @@ import { BsBank2 } from "react-icons/bs";
 import { RiBtcFill } from "react-icons/ri";
 import { SiStarlingbank } from "react-icons/si";
 import { BiSolidMobileVibration } from "react-icons/bi";
+import { FiCopy } from "react-icons/fi";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from '../../../../components/control/authContext';
@@ -15,13 +16,17 @@ const Deposit = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [showOnlinePopup, setShowOnlinePopup] = useState(false);
 
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Account number copied!");
+  };
+
   const handleContinue = async () => {
     if (!amount || !selected) {
       toast.error("Please enter an amount and select a payment method.");
       return;
     }
 
-    // If Online Transfer, show popup instead
     if (selected === "online") {
       setShowOnlinePopup(true);
       return;
@@ -185,51 +190,60 @@ const Deposit = ({ onClose }) => {
         </div>
       </div>
 
-{/* Online Transfer Popup */}
-{showOnlinePopup && (
-  <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-    <div className="bg-gray-800 p-6 rounded-lg w-full max-w-[400px] text-gray-200">
-      <h2 className="text-xl font-semibold mb-3">Online Transfer Instructions</h2>
-      <p className="text-sm text-gray-400 mb-2">
-        To deposit via online transfer, please use your banking app to transfer the desired amount:
-      </p>
-      <p className="text-base font-semibold mb-4">Amount in Naira: ₦{nairaAmount}</p>
-      <ul className="text-gray-200 text-b mb-4">
-        <li>Bank: Jaiz Bank</li>
-        <li>Account Name: GABRIEL EJEH ITODO</li>
-        <li>Account Number: 0020538891</li>
-        <li>SWIFT Code: JAIZNGLA</li>
-      </ul>
+      {/* Online Transfer Popup */}
+      {showOnlinePopup && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <div className="bg-gray-800 p-6 rounded-lg w-full max-w-[400px] text-gray-200">
+            <h2 className="text-xl font-semibold mb-3">Bank Transfer Instructions</h2>
+            <p className="text-sm text-gray-400 mb-2">
+              To deposit via bank transfer, please use your banking app to transfer the desired amount:
+            </p>
+            <p className="text-base font-semibold mb-4">Amount in Naira: ₦{nairaAmount}</p>
 
-      {/* Note Section */}
-      <p className="text-sm text-red-400 mb-4">
-        <strong>Important:</strong> When making the transfer, please include your 
-        <span className="text-yellow-400 font-semibold"> Speednet username or email </span> 
-        in the remark/description of your payment. This helps us confirm your transaction faster.
-      </p>
+            <ul className="text-gray-200 text-b mb-4 space-y-1">
+              <li>Bank: Jaiz Bank</li>
+              <li>Account Name: GABRIEL EJEH ITODO</li>
+              <li className="flex items-center gap-2">
+                Account Number: <span className="font-semibold">0020538891</span>
+                <button
+                  onClick={() => handleCopy("0020538891")}
+                  className="text-primary-600 hover:text-primary-500 "
+                  title="Copy account number"
+                >
+                  <FiCopy className="text-lg" />
+                </button>
+              </li>
+              <li>SWIFT Code: JAIZNGLA</li>
+            </ul>
 
-      <p className="text-sm text-yellow-400 mb-4">
-        Once you complete the payment,{" "}
-        <a
-          href="https://t.me/bobcarly888" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="underline text-primary-600"
-        >
-          click here
-        </a>{" "}
-        to submit your receipt for confirmation. Your account will be credited immediately once your payment is confirmed.
-      </p>
+            <p className="text-sm text-red-400 mb-4">
+              <strong>Important:</strong> When making the transfer, please include your 
+              <span className="text-yellow-400 font-semibold"> Speednet username or email </span> 
+              in the remark/description of your payment. This helps us confirm your transaction faster.
+            </p>
 
-      <button
-        className="bg-primary-600 text-white px-4 py-2 rounded-md"
-        onClick={() => setShowOnlinePopup(false)}
-      >
-        Close
-      </button>
-    </div>
-  </div>
-)}
+            <p className="text-sm text-yellow-400 mb-4">
+              Once you complete the payment,{" "}
+              <a
+                href="https://t.me/bobcarly888" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="underline text-primary-600"
+              >
+                click here
+              </a>{" "}
+              to submit your receipt for confirmation. Your account will be credited immediately once your payment is confirmed.
+            </p>
+
+            <button
+              className="bg-primary-600 text-white px-4 py-2 rounded-md"
+              onClick={() => setShowOnlinePopup(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

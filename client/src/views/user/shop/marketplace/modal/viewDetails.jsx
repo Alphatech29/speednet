@@ -4,6 +4,19 @@ import { Modal, Button } from "flowbite-react";
 const ViewDetails = ({ product, onClose }) => {
   const show = !!product;
 
+  // Format description with paragraphs and spacing
+  const formattedDescription = (product?.description || "No description available.")
+    .split("\n\n")
+    .map(paragraph => `<p style="margin-bottom: 1rem;">${paragraph}</p>`)
+    .join("");
+
+  // Ensure previewLink starts with https://
+  const normalizedPreviewLink =
+    product?.previewLink &&
+    (product.previewLink.startsWith("http://") || product.previewLink.startsWith("https://")
+      ? product.previewLink
+      : `https://${product.previewLink}`);
+
   return (
     <Modal show={show} onClose={onClose} popup>
       <Modal.Header className="bg-gray-800">
@@ -14,10 +27,11 @@ const ViewDetails = ({ product, onClose }) => {
 
       <Modal.Body className="bg-gray-800 text-gray-300">
         <div className="flex flex-col gap-4">
-          {/* Description */}
-          <p className="text-sm">
-            {product?.description || "No description available."}
-          </p>
+          {/* Description with spacing */}
+          <div
+            className="text-sm"
+            dangerouslySetInnerHTML={{ __html: formattedDescription }}
+          />
 
           {/* Seller Info */}
           {product?.seller && (
@@ -34,9 +48,9 @@ const ViewDetails = ({ product, onClose }) => {
           )}
 
           {/* Preview Link */}
-          {product?.previewLink && (
+          {normalizedPreviewLink && (
             <a
-              href={product.previewLink}
+              href={normalizedPreviewLink}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline text-sm"

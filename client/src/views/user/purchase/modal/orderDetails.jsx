@@ -4,6 +4,12 @@ import { formatDateTime } from "../../../../components/utils/formatTimeDate";
 const OrderDetails = ({ order, onClose }) => {
   const show = !!order;
 
+  const formatText = (text) =>
+    (text || "No description available")
+      .split(/\n+/)
+      .map((p) => `<p style="margin-bottom: 1rem;">${p}</p>`)
+      .join("");
+
   return (
     <Modal show={show} onClose={onClose} popup size="lg">
       <Modal.Header className="bg-gray-800">
@@ -42,27 +48,27 @@ const OrderDetails = ({ order, onClose }) => {
           </div>
         </div>
 
-
-
         {/* Account Description */}
         <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
           <p className="text-[15px] font-medium pb-2">Account Description:</p>
-          <div className="text-sm text-gray-400">
-            <p>{order?.description || "No description available"}</p>
-          </div>
+          <div
+            className="text-sm text-gray-400"
+            dangerouslySetInnerHTML={{ __html: formatText(order?.description) }}
+          />
         </div>
 
-         {/* 2FA Details */}
+        {/* 2FA Description */}
         <div className="mt-4 shadow-md shadow-gray-600 rounded-md px-3 py-2">
-          <p className="text-[15px] font-medium pb-2">2AF Description:</p>
-          <div className="text-sm text-gray-400">
-            <p>{order?.factor_description || "No description available"}</p>
-          </div>
+          <p className="text-[15px] font-medium pb-2">2FA Description:</p>
+          <div
+            className="text-sm text-gray-400"
+            dangerouslySetInnerHTML={{ __html: formatText(order?.factor_description) }}
+          />
         </div>
       </Modal.Body>
 
       <Modal.Footer className="justify-end bg-gray-800 px-4 pb-4">
-        <Button  size="sm" color="failure" onClick={onClose}>
+        <Button size="sm" color="failure" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

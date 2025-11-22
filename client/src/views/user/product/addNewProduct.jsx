@@ -15,6 +15,7 @@ import { ImCancelCircle } from "react-icons/im";
 const useAddAccountLogic = () => {
   const [formData, setFormData] = useState({
     platform: "",
+    category: "",
     title: "",
     price: "",
     description: "",
@@ -74,7 +75,7 @@ const AddNewProduct = () => {
     handleChange,
     handleCredentialChange,
   } = useAddAccountLogic();
-  const { platform, title, price, description, credentials } = formData;
+  const { platform, category, title, price, description, credentials } = formData;
 
   useEffect(() => {
     const fetchPlatforms = async () => {
@@ -95,10 +96,13 @@ const AddNewProduct = () => {
     setIsPlatformDropdownOpen(false);
   };
 
-  // ✅ Validation for Step 1
   const validateStep1 = () => {
     if (!platform) {
       toast.error("Platform is required");
+      return false;
+    }
+    if (!category) {
+      toast.error("Category is required");
       return false;
     }
     if (!title.trim()) {
@@ -116,7 +120,6 @@ const AddNewProduct = () => {
     return true;
   };
 
-  // ✅ Validation for Step 2
   const validateStep2 = () => {
     for (const cred of credentials) {
       if (!cred.emailORusername.trim()) {
@@ -131,7 +134,6 @@ const AddNewProduct = () => {
         toast.error("Factor description is required");
         return false;
       }
-
     }
     return true;
   };
@@ -139,8 +141,6 @@ const AddNewProduct = () => {
   const handleAddAnotherAccount = () => {
     if (!validateStep2()) return;
     setSavedAccounts((prev) => [...prev, JSON.parse(JSON.stringify(formData))]);
-
-    // ✅ Reset credentials (Step 2 fields)
     setFormData((prev) => ({
       ...prev,
       credentials: [
@@ -154,10 +154,7 @@ const AddNewProduct = () => {
         },
       ],
     }));
-
-    // ✅ Stay on Step 2
     setCurrentStep(2);
-
     toast.success("Account added to summary. You can add another.");
   };
 
@@ -180,6 +177,7 @@ const AddNewProduct = () => {
       setSavedAccounts([]);
       setFormData({
         platform: "",
+        category: "",
         title: "",
         price: "",
         description: "",
@@ -220,6 +218,17 @@ const AddNewProduct = () => {
     (p) => p.id.toString() === platform.toString()
   );
 
+  const categories = [
+    "Social Media",
+    "Email & Messaging Services",
+    "VPN & Proxys",
+    "Website",
+    "E-Commerce Platform",
+    "Gaming",
+    "Account & Subscription",
+    "Other",
+  ];
+
   return (
     <div className="text-gray-200 flex flex-col">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -235,6 +244,7 @@ const AddNewProduct = () => {
         {/* Step 1 */}
         {currentStep === 1 && (
           <>
+            {/* Platform */}
             <div>
               <label className="block text-sm font-medium text-white mb-1">
                 Select Platform <span className="text-red-500">*</span>
@@ -289,6 +299,27 @@ const AddNewProduct = () => {
               </div>
             </div>
 
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-medium text-white mb-1">
+                Category <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="category"
+                value={category}
+                onChange={handleChange}
+                className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2"
+              >
+                <option value="">Select a category...</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Title */}
             <InputField
               id="title"
               label="Account Title *"
@@ -297,6 +328,8 @@ const AddNewProduct = () => {
               onChange={handleChange}
               placeholder="e.g. 1 year old Facebook Account"
             />
+
+            {/* Price */}
             <InputField
               id="price"
               label="Account Price *"
@@ -305,6 +338,8 @@ const AddNewProduct = () => {
               onChange={handleChange}
               placeholder="e.g. $10"
             />
+
+            {/* Description */}
             <div>
               <label className="block text-sm font-medium">
                 Account Description <span className="text-red-500">*</span>
@@ -315,7 +350,7 @@ const AddNewProduct = () => {
                 onChange={handleChange}
                 placeholder="Describe the account"
                 rows={6}
-                className="w-full bg-transparent borde rounded-md p-2 placeholder:text-gray-600 text-sm"
+                className="w-full bg-transparent border rounded-md p-2 placeholder:text-gray-600 text-sm"
               />
             </div>
           </>
@@ -371,25 +406,25 @@ const AddNewProduct = () => {
                     onChange={(e) => handleCredentialChange(index, e)}
                     placeholder="description"
                     rows={4}
-                    className="w-full bg-transparent border  rounded-md p-2 text-sm"
+                    className="w-full bg-transparent border rounded-md p-2 text-sm"
                   />
                 </div>
               </div>
             ))}
-           <div className="flex justify-start">
-             <button
-              type="button"
-              onClick={handleAddAnotherAccount}
-              disabled={
-                !credentials[0].emailORusername.trim() ||
-                !credentials[0].password.trim() ||
-                !credentials[0].factor_description.trim()
-              }
-              className="mt-2 bg-primary-600 text-white px-3 py-1 rounded disabled:opacity-50"
-            >
-              Add Account
-            </button>
-           </div>
+            <div className="flex justify-start">
+              <button
+                type="button"
+                onClick={handleAddAnotherAccount}
+                disabled={
+                  !credentials[0].emailORusername.trim() ||
+                  !credentials[0].password.trim() ||
+                  !credentials[0].factor_description.trim()
+                }
+                className="mt-2 bg-primary-600 text-white px-3 py-1 rounded disabled:opacity-50"
+              >
+                Add Account
+              </button>
+            </div>
           </>
         )}
 
@@ -413,6 +448,7 @@ const AddNewProduct = () => {
                       (p) => p.id.toString() === account.platform.toString()
                     )?.name || "N/A"}
                   </p>
+                  <p>Category: {account.category || "N/A"}</p>
                   {account.credentials.map((cred, i) => (
                     <div key={i}>
                       <p>Email/Username: {cred.emailORusername || "N/A"}</p>
@@ -449,60 +485,60 @@ const AddNewProduct = () => {
           </>
         )}
 
-         {/* Navigation Buttons */}
-      <div className="flex items-end  justify-end mt-4 gap-3 w-full">
-        {currentStep > 1 && (
-          <button
-            onClick={handleBack}
-            disabled={isSubmitting}
-            className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md shadow-md transition"
-          >
-            Back
-          </button>
-        )}
-        {currentStep < steps.length && (
-          <button
-            onClick={handleNext}
-            disabled={isSubmitting}
-            className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md shadow-md transition"
-          >
-            Next
-          </button>
-        )}
-        {currentStep === steps.length && (
-          <button
-            onClick={handleSubmitAll}
-            disabled={isSubmitting || savedAccounts.length === 0}
-            className={`px-6 py-2 rounded-md shadow-md flex items-center justify-center gap-2 transition ${
-              savedAccounts.length === 0
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700 text-white"
-            }`}
-          >
-            {isSubmitting && (
-              <svg
-                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-            )}
-            Submit All
-          </button>
-        )}
-      </div>
+        {/* Navigation Buttons */}
+        <div className="flex items-end justify-end mt-4 gap-3 w-full">
+          {currentStep > 1 && (
+            <button
+              onClick={handleBack}
+              disabled={isSubmitting}
+              className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md shadow-md transition"
+            >
+              Back
+            </button>
+          )}
+          {currentStep < steps.length && (
+            <button
+              onClick={handleNext}
+              disabled={isSubmitting}
+              className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md shadow-md transition"
+            >
+              Next
+            </button>
+          )}
+          {currentStep === steps.length && (
+            <button
+              onClick={handleSubmitAll}
+              disabled={isSubmitting || savedAccounts.length === 0}
+              className={`px-6 py-2 rounded-md shadow-md flex items-center justify-center gap-2 transition ${
+                savedAccounts.length === 0
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700 text-white"
+              }`}
+            >
+              {isSubmitting && (
+                <svg
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              )}
+              Submit All
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

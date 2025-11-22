@@ -7,6 +7,7 @@ const accountCreation = async (req, res) => {
     const {
       userUid,
       platform,
+      category,
       title = 'N/A',
       price = 0,
       description = 'N/A',
@@ -39,7 +40,7 @@ const accountCreation = async (req, res) => {
       return res.status(502).json({ status: 'error', message: 'Invalid platform data received.' });
     }
 
-    const { name, image_path, category } = platformDetails;
+    const { name, image_path } = platformDetails;
 
     // Build account payload
     const accountData = {
@@ -56,7 +57,7 @@ const accountCreation = async (req, res) => {
       factor_description,
       description,
       price,
-      category: category || 'Other',
+      category, // <-- use category from request body
       status: 'under reviewing'
     };
 

@@ -6,7 +6,7 @@ const getAllAccounts = async (req, res) => {
     const query = `
       SELECT 
         a.*, 
-        u.username, 
+        u.username,
         u.avatar 
       FROM accounts AS a
       LEFT JOIN users AS u ON a.user_id = u.uid
@@ -58,10 +58,21 @@ const createAccount = async (accountData) => {
   try {
     const query = `
       INSERT INTO accounts (
-        user_id, title, platform, logo_url, email, 
-        username, password, previewLink, recovery_info, 
-        recovery_password, factor_description, description, price, 
-        category, status
+        user_id,
+        title,
+        platform,
+        logo_url,
+        email,
+        username,
+        password,
+        previewLink,
+        recovery_info,
+        recovery_password,
+        factor_description,
+        description,
+        price,
+        category,
+        status
       ) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
@@ -78,7 +89,7 @@ const createAccount = async (accountData) => {
       accountData.recovery_password || 'N/A',
       accountData.factor_description || 'N/A',
       accountData.description || 'N/A',
-      accountData.price || 0.0,
+      parseFloat(accountData.price) || 0.0,
       accountData.category || 'Other',
       accountData.status || 'under reviewing'
     ];
@@ -86,10 +97,11 @@ const createAccount = async (accountData) => {
     const [result] = await pool.execute(query, values);
     return result.insertId;
   } catch (error) {
-    console.error(" Error creating account:", error);
+    console.error("Error creating account:", error);
     return null;
   }
 };
+
 
 
 

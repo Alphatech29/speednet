@@ -16,10 +16,16 @@ const UnderReviewingTab = () => {
         const res = await getAllProducts();
 
         if (res?.success && Array.isArray(res.data)) {
+          // Filter products under reviewing
           const filtered = res.data.filter(
             (product) => product.status?.toLowerCase() === 'under reviewing'
           );
-          setProducts(filtered);
+
+          const sorted = filtered.sort(
+            (a, b) => new Date(b.create_at) - new Date(a.create_at)
+          );
+
+          setProducts(sorted);
         } else {
           toast.error('Failed to fetch products');
         }
@@ -58,7 +64,6 @@ const UnderReviewingTab = () => {
                 products.map((product, index) => (
                   <Table.Row key={product.id} className="text-sm">
                     <Table.Cell>{index + 1}</Table.Cell>
-
                     <Table.Cell>
                       <img
                         src={product.logo_url}
@@ -66,40 +71,34 @@ const UnderReviewingTab = () => {
                         className="h-10 w-10 rounded-full bg-white object-cover"
                       />
                     </Table.Cell>
-
                     <Table.Cell>
                       <div className="flex flex-col gap-1">
                         <span className="text-[16px] font-medium">{product.platform}</span>
                         <span className="text-gray-600 text-xs">{product.title}</span>
                       </div>
                     </Table.Cell>
-
                     <Table.Cell>
                       <div className="flex flex-col gap-1">
                         <span className="text-[16px] font-medium">{product.user_username}</span>
                         <span className="text-gray-600 text-xs">{product.user_email}</span>
                       </div>
                     </Table.Cell>
-
                     <Table.Cell>
                       {Number(product.price).toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
                       })}
                     </Table.Cell>
-
                     <Table.Cell>
                       <span className="text-xs text-gray-700">
                         {formatDateTime(product.create_at)}
                       </span>
                     </Table.Cell>
-
                     <Table.Cell>
                       <span className="px-2 py-1 rounded-full text-white text-xs bg-yellow-400">
                         {product.status}
                       </span>
                     </Table.Cell>
-
                     <Table.Cell>
                       <div className="flex gap-2">
                         <NavLink to={`/admin/products/${product.id}`}>

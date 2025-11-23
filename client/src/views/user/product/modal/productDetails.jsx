@@ -7,14 +7,14 @@ const ProductDetails = ({ account = null, onClose }) => {
   // Helper function to format text with paragraphs
   const formatText = (text) =>
     (text || "No description available")
-      .split(/\n+/) // split by one or more line breaks
+      .split(/\n+/)
       .map((p) => `<p style="margin-bottom: 1rem;">${p}</p>`)
       .join("");
 
   return (
     <Modal show={show} onClose={onClose} popup>
       <Modal.Header className="bg-gray-800">
-        <h2 className="text-lg font-semibold text-white">
+        <h2 className="text-lg font-semibold text-white uppercase">
           {account?.title || "N/A"} Details
         </h2>
       </Modal.Header>
@@ -119,6 +119,19 @@ const ProductDetails = ({ account = null, onClose }) => {
                 />
               )}
             </div>
+          </div>
+        )}
+
+        {/* Rejection Remark (FIXED) */}
+        {account?.status === "rejected" && (
+          <div className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+            <p className="text-[16px] pb-2 font-medium text-red-500">Rejection Reason:</p>
+            <div
+              className="text-[13px] text-red-300"
+              dangerouslySetInnerHTML={{
+                __html: formatText(account?.remark) || "No remark provided",
+              }}
+            />
           </div>
         )}
       </Modal.Body>

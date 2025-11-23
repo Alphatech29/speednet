@@ -56,7 +56,7 @@ async function handleNordSubscription(
       user_id,
       plan_id: plan.id,
       amount,
-      status: "pending",
+      status: "completed",
       email,
       full_name,
       country,

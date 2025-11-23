@@ -9,34 +9,38 @@ const AllproductTab = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      const res = await getAllProducts();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await getAllProducts();
 
-      if (res?.success && Array.isArray(res.data)) {
-        // Filter products with status 'approved' or 'sold'
-        const filtered = res.data.filter(
-          (product) =>
-            product.status?.toLowerCase() === 'approved' ||
-            product.status?.toLowerCase() === 'sold'
-        );
+        if (res?.success && Array.isArray(res.data)) {
+          // Filter products with status 'approved' or 'sold'
+          const filtered = res.data.filter(
+            (product) =>
+              product.status?.toLowerCase() === 'approved' ||
+              product.status?.toLowerCase() === 'sold'
+          );
 
-        setProducts(filtered);
-      } else {
-        toast.error('Failed to fetch products');
+          // Sort by newest first (created_at descending)
+          const sorted = filtered.sort(
+            (a, b) => new Date(b.create_at) - new Date(a.create_at)
+          );
+
+          setProducts(sorted);
+        } else {
+          toast.error('Failed to fetch products');
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        toast.error('An error occurred while fetching products');
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Fetch error:', error);
-      toast.error('An error occurred while fetching products');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchProducts();
-}, []);
-
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -72,16 +76,16 @@ useEffect(() => {
                       </Table.Cell>
                       <Table.Cell>
                         <div className="flex flex-col gap-1">
-                          <span className='text-[16px] font-medium'>{product.platform}</span>
+                          <span className="text-[16px] font-medium">{product.platform}</span>
                           <span className="text-gray-600 text-xs">{product.title}</span>
                         </div>
                       </Table.Cell>
                       <Table.Cell>
-                         <div className="flex flex-col gap-1">
-                          <span className='text-[16px] font-medium'>{product.user_username}</span>
+                        <div className="flex flex-col gap-1">
+                          <span className="text-[16px] font-medium">{product.user_username}</span>
                           <span className="text-gray-600 text-xs">{product.user_email}</span>
                         </div>
-                       </Table.Cell>
+                      </Table.Cell>
                       <Table.Cell>${Number(product.price).toLocaleString()}</Table.Cell>
                       <Table.Cell>
                         <span className="px-2 py-1 rounded-full text-white text-xs bg-green-500">
@@ -90,12 +94,11 @@ useEffect(() => {
                       </Table.Cell>
                       <Table.Cell>
                         <div className="flex gap-2">
-                          <NavLink to={`/admin/products/${product.id}`}> 
-                          <Button size="sm" className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
-                            View
-                          </Button>
+                          <NavLink to={`/admin/products/${product.id}`}>
+                            <Button size="sm" className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
+                              View
+                            </Button>
                           </NavLink>
-                         
                         </div>
                       </Table.Cell>
                     </Table.Row>

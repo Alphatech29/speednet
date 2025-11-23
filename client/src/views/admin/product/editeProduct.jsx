@@ -43,6 +43,12 @@ const EditProduct = () => {
   };
 
   const handleSave = async () => {
+    // Require remark if rejected
+    if (form.status === 'rejected' && !form.remark?.trim()) {
+      toast.error('Remark is required when status is Rejected');
+      return;
+    }
+
     const changedFields = {};
     Object.keys(form).forEach((key) => {
       if (form[key] !== initialForm[key]) {
@@ -101,9 +107,8 @@ const EditProduct = () => {
             { id: 'description', label: 'Description' },
             { id: 'subscription_status', label: 'Subscription Status' },
             { id: 'expiry_date', label: 'Expiry Date' },
-           { id: 'two_factor_enabled', label: '2AF Enable' },
-{ id: 'two_factor_description', label: '2AF Enable Instruction' },
-
+            { id: 'two_factor_enabled', label: '2AF Enable' },
+            { id: 'two_factor_description', label: '2AF Enable Instruction' },
           ].map(({ id, label }) => {
             const isTwoFactor = id === 'two_factor_enabled';
             const isTextarea = id === 'description' || id === 'two_factor_description';
@@ -127,7 +132,9 @@ const EditProduct = () => {
                     onChange={handleChange}
                     readOnly={isPlatform || !isEditing}
                     className={`px-4 py-2 border border-gray-300 rounded-lg ${
-                      isPlatform || !isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700'
+                      isPlatform || !isEditing
+                        ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                        : 'bg-white text-gray-700'
                     } resize-none`}
                   />
                 ) : isPrice ? (
@@ -142,7 +149,9 @@ const EditProduct = () => {
                       onChange={handleChange}
                       readOnly={isPlatform || !isEditing}
                       className={`flex-1 py-2 px-4 border border-gray-300 rounded-r-lg ${
-                        isPlatform || !isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700'
+                        isPlatform || !isEditing
+                          ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                          : 'bg-white text-gray-700'
                       }`}
                     />
                   </div>
@@ -154,7 +163,9 @@ const EditProduct = () => {
                     onChange={handleChange}
                     readOnly={isPlatform || !isEditing}
                     className={`px-4 py-2 border border-gray-300 rounded-lg ${
-                      isPlatform || !isEditing ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700'
+                      isPlatform || !isEditing
+                        ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                        : 'bg-white text-gray-700'
                     }`}
                   />
                 )}
@@ -181,6 +192,27 @@ const EditProduct = () => {
               <option value="rejected">Rejected</option>
             </select>
           </div>
+
+          {/* Remark field appears ONLY when rejected */}
+          {form.status === 'rejected' && (
+            <div className="flex flex-col col-span-1 mobile:col-span-2 pc:col-span-3">
+              <label htmlFor="remark" className="mb-1 text-sm font-medium text-gray-700">
+                Remark (Reason for Rejection)
+              </label>
+              <textarea
+                id="remark"
+                rows="3"
+                value={form.remark || ''}
+                onChange={handleChange}
+                readOnly={!isEditing}
+                className={`px-4 py-2 border border-gray-300 rounded-lg resize-none ${
+                  !isEditing
+                    ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                    : 'bg-white text-gray-700'
+                }`}
+              />
+            </div>
+          )}
         </div>
 
         <div className="mt-8 flex gap-4 justify-end">

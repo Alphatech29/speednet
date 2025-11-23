@@ -1,15 +1,8 @@
-const { 
-  getAllNordVPNPackages, 
-  getAllNordHistory 
-} = require("../../utility/nordVpn");
-
-const {
-  getUserDetailsByUid,
-  updateUserBalance,
-} = require("../../utility/userInfo");
-
+const { getAllNordVPNPackages, getAllNordHistory } = require("../../utility/nordVpn");
+const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userInfo");
 const { createTransactionHistory } = require("../../utility/history");
 const { handleNordSubscription } = require("../../utility/nordLogic");
+const {sendVpnOrderPendingEmail} = require("../../email/mails/vpnOrder");
 
 const NordPurchase = async (req, res) => {
   const payload = req.body;
@@ -44,6 +37,7 @@ const NordPurchase = async (req, res) => {
       });
     }
 
+    // Handle subscription logic
     try {
       await handleNordSubscription(email, plan, userId, full_name, country, zip_code);
       console.log("handleNordSubscription executed.");
@@ -56,6 +50,7 @@ const NordPurchase = async (req, res) => {
       });
     }
 
+    // Deduct user balance
     const newBalance = currentBalance - purchaseAmount;
     const updateResult = await updateUserBalance(userId, newBalance);
 
@@ -67,6 +62,7 @@ const NordPurchase = async (req, res) => {
       });
     }
 
+    // Create transaction history
     const txnResult = await createTransactionHistory(
       userId,
       purchaseAmount,
@@ -74,12 +70,34 @@ const NordPurchase = async (req, res) => {
       "completed"
     );
 
+    let reference = txnResult.transaction_no;
+
     if (!txnResult.success) {
       console.warn("Failed to log transaction history:", txnResult.message);
     } else {
-      console.log("Transaction history logged:", txnResult.transaction_no);
+      console.log("Transaction history logged:", reference);
     }
 
+    try {
+      await sendVpnOrderPendingEmail(
+        {
+          email: user.email,
+          full_name: user.full_name,
+        },
+        {
+          amount: purchaseAmount,
+          currencySymbol: "$",
+          vpn_plan: plan.package_name,
+          reference,
+        }
+      );
+
+      console.log("Pending VPN activation email sent successfully.");
+    } catch (emailError) {
+      console.error("Error sending pending VPN email:", emailError);
+    }
+
+    // Return response
     return res.status(201).json({
       success: true,
       message: `Nordvpn_${plan.package_name} purchase successful`,
@@ -93,8 +111,9 @@ const NordPurchase = async (req, res) => {
         package: `Nordvpn_${plan.package_name}`,
       },
       balance: newBalance,
-      transaction: txnResult.transaction_no ?? null,
+      transaction: reference,
     });
+
   } catch (error) {
     console.error("Unexpected error in NordPurchase:", error);
     return res.status(500).json({
@@ -121,7 +140,7 @@ const fetchAllPackages = async (req, res) => {
   }
 };
 
-// ✅ NEW: Controller to fetch all nord_history with user details
+
 const fetchAllNordHistory = async (req, res) => {
   try {
     const history = await getAllNordHistory();
@@ -141,5 +160,5 @@ const fetchAllNordHistory = async (req, res) => {
 module.exports = {
   fetchAllPackages,
   NordPurchase,
-  fetchAllNordHistory // ← make sure this is exported
+  fetchAllNordHistory
 };

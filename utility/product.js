@@ -39,7 +39,6 @@ const updateAccountStatusById = async (productId, status) => {
 
 const getAccountsByUserUid = async (userUid) => {
     try {
-        // Validate userUid (ensure it's a non-empty string)
         if (typeof userUid !== 'string' || !userUid.trim()) {
             console.error(`❌ Invalid userUid: ${userUid}`);
             return [];
@@ -48,7 +47,7 @@ const getAccountsByUserUid = async (userUid) => {
         const query = "SELECT * FROM accounts WHERE user_id = ?";
         const [rows] = await pool.execute(query, [userUid]);
 
-        return rows; // Return all accounts belonging to the user
+        return rows;
     } catch (error) {
         console.error("Database error:", error);
         return [];

@@ -221,7 +221,7 @@ const Marketplace = () => {
                       alt={product.name}
                       className="w-full h-[120px] rounded-md object-cover bg-white"
                     />
-                    <div className="text-[15px] font-semibold text-white mt-2 line-clamp-2">
+                    <div className="text-[15px] font-semibold uppercase text-white mt-2 line-clamp-2">
                       {product.name}
                     </div>
                     <div className="flex justify-between items-center mt-1">

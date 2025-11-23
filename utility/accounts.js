@@ -5,9 +5,9 @@ const getAllAccounts = async (req, res) => {
   try {
     const query = `
       SELECT 
-        a.*, 
+        a.*,
         u.username,
-        u.avatar 
+        u.avatar
       FROM accounts AS a
       LEFT JOIN users AS u ON a.user_id = u.uid
     `;

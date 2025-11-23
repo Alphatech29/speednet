@@ -15,11 +15,17 @@ const RejectedTab = () => {
         const res = await getAllProducts();
 
         if (res?.success && Array.isArray(res.data)) {
-   
+          // Filter rejected products
           const filtered = res.data.filter(
             (product) => product.status?.toLowerCase() === 'rejected'
           );
-          setProducts(filtered);
+
+          // Sort by newest first (created_at descending)
+          const sorted = filtered.sort(
+            (a, b) => new Date(b.create_at) - new Date(a.create_at)
+          );
+
+          setProducts(sorted);
         } else {
           toast.error('Failed to fetch products');
         }
@@ -87,7 +93,6 @@ const RejectedTab = () => {
                         {product.updated_at ? formatDateTime(product.updated_at) : 'N/A'}
                       </span>
                     </Table.Cell>
-                   
                   </Table.Row>
                 ))
               ) : (

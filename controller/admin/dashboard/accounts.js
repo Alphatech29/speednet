@@ -1,10 +1,9 @@
 const db = require("../../../model/db");
 
-// This function retrieves all accounts from the database, including user details.
 const getAllAccount = async (req, res) => {
   try {
     const [accounts] = await db.execute(`
-      SELECT 
+      SELECT
         accounts.*,
         accounts.username AS account_username,
         accounts.email AS account_email,
@@ -67,7 +66,7 @@ const getAccountById = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      data: accounts[0], // Return the single account object
+      data: accounts[0],
     });
 
   } catch (error) {
@@ -116,8 +115,6 @@ const updateProductById = async (req, res) => {
     return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
-
-
 
 // This function retrieves all orders from the database, including seller and buyer details.
 const getAllOrders = async (req, res) => {

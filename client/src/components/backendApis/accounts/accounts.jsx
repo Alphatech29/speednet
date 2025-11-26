@@ -28,8 +28,6 @@ export const createAccount = async (data) => {
 
 
 
-
-
 export const getAllAccounts = async () => {
   try {
     const response = await axios.get(`/general/accounts`, {
@@ -62,14 +60,14 @@ export const getAllPlatforms = async () => {
       },
     });
 
-  
-    let platforms = response.data.success && Array.isArray(response.data.data) 
-      ? response.data.data  
+
+    let platforms = response.data.success && Array.isArray(response.data.data)
+      ? response.data.data
       : [];
     return {
       success: true,
       message: "Platforms retrieved successfully!",
-      data: platforms,  
+      data: platforms,
     };
   } catch (error) {
     console.error("Fetching platforms failed:", error.response?.data || error.message);
@@ -81,6 +79,38 @@ export const getAllPlatforms = async () => {
     };
   }
 };
+
+
+export const getAllPlatformCate = async () => {
+  try {
+    const response = await axios.get(`/general/platform`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Log the raw backend response
+    console.log("Backend response:", response.data);
+
+    // Ensure we always return the platforms array inside data.platforms
+    const platforms = Array.isArray(response.data?.platforms) ? response.data.platforms : [];
+
+    return {
+      success: true,
+      message: response.data?.message || "Platforms retrieved successfully!",
+      data: { platforms },
+    };
+  } catch (error) {
+    console.error("Fetching platforms failed:", error.response?.data || error.message);
+
+    return {
+      success: false,
+      message: error.response?.data?.message || "An error occurred while fetching platforms.",
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
 
 
 

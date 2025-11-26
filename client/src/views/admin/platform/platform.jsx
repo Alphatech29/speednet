@@ -60,12 +60,12 @@ const Platform = () => {
   };
 
   const handleEdit = (platform) => {
-    setEditingPlatform(platform); // Trigger edit modal
+    setEditingPlatform(platform);
     setModalOpen(true);
   };
 
   const handleAdd = () => {
-    setEditingPlatform(null); // Trigger add modal
+    setEditingPlatform(null);
     setModalOpen(true);
   };
 
@@ -98,6 +98,7 @@ const Platform = () => {
           <Table.HeadCell>S/N</Table.HeadCell>
           <Table.HeadCell>Avatar</Table.HeadCell>
           <Table.HeadCell>Platform Name</Table.HeadCell>
+           <Table.HeadCell>Platform categories</Table.HeadCell>
           <Table.HeadCell>Action</Table.HeadCell>
         </Table.Head>
 
@@ -120,6 +121,7 @@ const Platform = () => {
                   />
                 </Table.Cell>
                 <Table.Cell className="font-medium">{platform.name}</Table.Cell>
+                 <Table.Cell className="font-medium"> {platform.type || "N/A"}</Table.Cell>
                 <Table.Cell className="flex gap-2">
                   <Button
                     size="sm"

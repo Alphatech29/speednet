@@ -7,11 +7,24 @@ const Edit = ({ onClose, existingData }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [platformName, setPlatformName] = useState('');
+  const [platformType, setPlatformType] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const platformTypes = [
+    "Social Media",
+    "Email & Messaging",
+    "VPN & Proxys",
+    "Website",
+    "E-Commerce Platform",
+    "Gaming",
+    "Account & Subscription",
+    "Other",
+  ];
 
   useEffect(() => {
     if (existingData) {
       setPlatformName(existingData.name || '');
+      setPlatformType(existingData.type || '');
       setImagePreview(existingData.imageUrl || null);
     }
   }, [existingData]);
@@ -40,8 +53,8 @@ const Edit = ({ onClose, existingData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!platformName) {
-      toast.error('Platform name is required');
+    if (!platformName || !platformType) {
+      toast.error('Please fill all fields');
       return;
     }
 
@@ -50,6 +63,7 @@ const Edit = ({ onClose, existingData }) => {
     try {
       const formData = new FormData();
       formData.append('name', platformName);
+      formData.append('type', platformType);
       if (imageFile) formData.append('image', imageFile);
 
       const response = await updatePlatformById(existingData.id, formData);
@@ -72,6 +86,8 @@ const Edit = ({ onClose, existingData }) => {
       <ToastContainer position="top-right" autoClose={3000} />
       
       <form onSubmit={handleSubmit} className="space-y-4">
+        
+        {/* Platform Name */}
         <div>
           <label htmlFor="platformName" className="block text-sm font-medium text-gray-700">
             Platform Name
@@ -86,6 +102,26 @@ const Edit = ({ onClose, existingData }) => {
           />
         </div>
 
+        {/* Platform Type */}
+        <div>
+          <label htmlFor="platformType" className="block text-sm font-medium text-gray-700">
+            Platform Type
+          </label>
+          <select
+            id="platformType"
+            value={platformType}
+            onChange={(e) => setPlatformType(e.target.value)}
+            required
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          >
+            <option value="">Select Type</option>
+            {platformTypes.map((type, idx) => (
+              <option key={idx} value={type}>{type}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Image Upload */}
         <div>
           <label htmlFor="platformImage" className="block text-sm font-medium text-gray-700">
             Platform Image (.png, .jpeg | Max: 2MB)
@@ -106,6 +142,7 @@ const Edit = ({ onClose, existingData }) => {
           )}
         </div>
 
+        {/* Buttons */}
         <div className="flex justify-end gap-2">
           <button
             type="button"
@@ -114,6 +151,7 @@ const Edit = ({ onClose, existingData }) => {
           >
             Cancel
           </button>
+          
           <button
             type="submit"
             disabled={isSubmitting}
@@ -124,6 +162,7 @@ const Edit = ({ onClose, existingData }) => {
             {isSubmitting ? 'Updating...' : 'Update'}
           </button>
         </div>
+
       </form>
     </div>
   );

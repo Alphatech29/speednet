@@ -12,11 +12,23 @@ import { logoutUser } from "../backendApis/auth/auth";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
+
+  // Load cart from localStorage on first render
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("speednet_cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
   const [webSettings, setWebSettings] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+
+  // Save cart to localStorage whenever cart changes
+  useEffect(() => {
+    localStorage.setItem("speednet_cart", JSON.stringify(cart));
+  }, [cart]);
+
 
   // Fetch global site settings
   const fetchWebSettings = async () => {
@@ -32,18 +44,16 @@ const AuthProvider = ({ children }) => {
     return null;
   };
 
-  // Fetch currently authenticated user
+  // Fetch authenticated user
   const fetchUser = async () => {
     try {
       const result = await getCurrentUser();
-      console.log("Fetched user:", result);
       if (result?.success && result.data) {
         setUser(result.data);
         return result.data;
-      } else {
-        setUser(null);
-        return null;
       }
+      setUser(null);
+      return null;
     } catch (error) {
       console.error("Error fetching current user:", error);
       setUser(null);
@@ -51,13 +61,13 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Manual sign-in or auto-navigate after refresh
+  // Manual sign-in or auto login after refresh
   const signIn = async () => {
     try {
       const currentUser = await fetchUser();
       if (currentUser) {
         await fetchWebSettings();
-        if (currentUser?.role === "merchant") {
+        if (currentUser.role === "merchant") {
           navigate("/user/dashboard");
         } else {
           navigate("/user/marketplace");
@@ -69,7 +79,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Run on mount (page load/refresh)
+  // Run on page load / refresh
   useEffect(() => {
     const initialize = async () => {
       setLoading(true);
@@ -79,28 +89,31 @@ const AuthProvider = ({ children }) => {
     initialize();
   }, []);
 
-  // Handle logout
+  // Logout
   const logout = async () => {
     try {
       await logoutUser();
     } catch (error) {
       console.error("Logout failed:", error);
     }
+
     setUser(null);
     setCart([]);
+    localStorage.removeItem("paysparq_cart");
     setWebSettings(null);
+
     navigate("/auth/login");
   };
 
-  // Update cart state manually
+  // Update cart
   const updateCartState = (newCart) => setCart(newCart);
 
-  // Remove an item from cart
+  // Remove item from cart
   const removeFromCart = (itemId) => {
     setCart((prev) => prev.filter((item) => item.id !== itemId));
   };
 
-  // Provide global auth context
+  // Memoized context value
   const contextValue = useMemo(
     () => ({
       user,
@@ -114,7 +127,7 @@ const AuthProvider = ({ children }) => {
     [user, cart, webSettings]
   );
 
-  // Show loader while initializing
+  // Loading screen
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-white">

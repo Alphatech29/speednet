@@ -7,15 +7,15 @@ const {
 
 const addPlatform = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, type } = req.body;
     const file = req.file;
 
-    if (!name || !file) {
-      return res.status(400).json({ message: 'Both name and image file are required.' });
+    if (!name || !type || !file) {
+      return res.status(400).json({ message: 'All input are required.' });
     }
 
     const image_path = `/uploads/${file.filename}`;
-    const newId = await insertPlatform({ name, image_path });
+    const newId = await insertPlatform({ name, type, image_path });
 
     return res.status(201).json({
       message: 'Platform successfully added',
@@ -55,11 +55,12 @@ const deletePlatformByIdHandler = async (req, res) => {
 
 const editPlatformById = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name, type } = req.body;
   const file = req.file;
 
   const updatedData = {};
   if (name) updatedData.name = name;
+  if (type) updatedData.type = type;
   if (file) updatedData.image_path = `/uploads/${file.filename}`;
 
   if (Object.keys(updatedData).length === 0) {

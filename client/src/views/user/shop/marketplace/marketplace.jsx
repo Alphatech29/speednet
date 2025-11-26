@@ -1,346 +1,280 @@
-import React, { useContext, useState, useEffect } from "react";
-import { BsEyeFill } from "react-icons/bs";
-import { FaCartPlus } from "react-icons/fa6";
-import { AuthContext } from "../../../../components/control/authContext";
-import { getAllAccounts } from "../../../../components/backendApis/accounts/accounts";
+import React, { useState, useEffect, useContext } from "react";
+import { IoGridOutline, IoShareSocialOutline } from "react-icons/io5";
+import { PiTextColumns } from "react-icons/pi";
+import { FaEnvelope, FaGlobe, FaShopify, FaGamepad, FaUser } from "react-icons/fa";
+import { IoFilter } from "react-icons/io5";
+import { SiNordvpn } from "react-icons/si";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../../../components/control/authContext";
+import { getAllAccounts, getAllPlatformCate } from "../../../../components/backendApis/accounts/accounts";
 import ViewDetails from "./modal/viewDetails";
 import CustomPagination from "../../partials/CustomPagination";
-import { IoGridOutline } from "react-icons/io5";
-import { PiTextColumns } from "react-icons/pi";
+import GridView from "./views/gridView";
+import ColumnView from "./views/columnView";
+import Sidebar from "../../../user/partials/sidebar";
+
+const accountTypes = [
+  { name: "Social Media", icon: IoShareSocialOutline },
+  { name: "Email & Messaging", icon: FaEnvelope },
+  { name: "VPN & Proxys", icon: SiNordvpn },
+  { name: "Website", icon: FaGlobe },
+  { name: "E-Commerce Platform", icon: FaShopify },
+  { name: "Gaming", icon: FaGamepad },
+  { name: "Account & Subscription", icon: FaUser },
+  { name: "Other", icon: FaGlobe },
+];
 
 const Marketplace = () => {
   const { updateCartState, cart } = useContext(AuthContext);
+
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState("column");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [modalProduct, setModalProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [platforms, setPlatforms] = useState({});
+  const [platformFilter, setPlatformFilter] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [openCategory, setOpenCategory] = useState({});
 
-  const itemsPerPage = 15;
+  const ITEMS_PER_PAGE = 15;
 
-  // Fixed categories
-  const categories = [
-    "All",
-    "Social Media",
-    "Email & Messaging Services",
-    "VPN & Proxys",
-    "Website",
-    "E-Commerce Platform",
-    "Gaming",
-    "Account & Subscription",
-    "Other",
-  ];
-
+  // Fetch products and platforms
   useEffect(() => {
-    const fetchAccounts = async () => {
+    const fetchProducts = async () => {
       try {
-        const response = await getAllAccounts();
-        if (response?.success && Array.isArray(response.data.data)) {
-          const formattedProducts = response.data.data
-            .filter((account) => account.status === "approved")
+        const res = await getAllAccounts();
+        if (res?.success) {
+          const items = (res.data?.data || [])
+            .filter((x) => x.status === "approved")
             .sort((a, b) => new Date(b.create_at) - new Date(a.create_at))
-            .map((account) => ({
-              id: account.id,
-              name: account.title,
-              price: account.price,
-              seller: account.username,
-              image: account.logo_url,
-              description: account.description,
-              previewLink: account.previewLink,
-              avatar: account.avatar,
-              category: account.category || "Uncategorized",
+            .map((acc) => ({
+              id: acc.id,
+              name: acc.title,
+              price: Number(acc.price),
+              platform: acc.platform,
+              seller: acc.username,
+              image: acc.logo_url,
+              description: acc.description,
+              avatar: acc.avatar,
             }));
-
-          setProducts(formattedProducts);
-          setFilteredProducts(formattedProducts);
-        } else {
-          setError("Invalid response format.");
+          setProducts(items);
+          setFilteredProducts(items);
         }
-      } catch (err) {
-        console.error("Fetch Error:", err);
-        setError("Failed to fetch marketplace data.");
+      } catch (error) {
+        console.error("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAccounts();
+    const fetchPlatforms = async () => {
+      try {
+        const res = await getAllPlatformCate();
+        if (res?.success) {
+          const grouped = (res.data?.platforms || []).reduce((acc, platform) => {
+            const { type, name, image_path, price } = platform;
+            if (!acc[type]) acc[type] = [];
+            acc[type].push({ name, image_path, price });
+            return acc;
+          }, {});
+          setPlatforms(grouped);
+        }
+      } catch (error) {
+        console.error("Error fetching platforms:", error);
+      }
+    };
+
+    fetchProducts();
+    fetchPlatforms();
   }, []);
 
+  // Filter products
   useEffect(() => {
-    let filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    let result = [...products];
 
-    if (selectedCategory !== "All") {
-      filtered = filtered.filter((product) => product.category === selectedCategory);
+    if (platformFilter) {
+      result = result.filter((p) => p.platform?.toLowerCase() === platformFilter.toLowerCase());
     }
 
-    filtered = filtered.filter(
-      (product) => product.price >= priceRange[0] && product.price <= priceRange[1]
-    );
+    const [minPrice, maxPrice] = priceRange;
+    result = result.filter((p) => p.price >= minPrice && p.price <= maxPrice);
 
-    setFilteredProducts(filtered);
+    if (searchQuery.trim()) {
+      result = result.filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
+    setFilteredProducts(result);
     setCurrentPage(1);
-  }, [searchQuery, selectedCategory, priceRange, products]);
+  }, [products, platformFilter, priceRange, searchQuery]);
 
-  const handleAddToCart = (product) => {
-    const updatedCart = [...cart, product];
-    updateCartState(updatedCart);
-    toast.success("Product added successfully", {
-      position: "top-right",
-      autoClose: 2000,
-    });
+  const addToCart = (item) => {
+    if (!cart.some((c) => c.id === item.id)) {
+      updateCartState([...cart, item]);
+      toast.success("Product added to cart");
+    }
   };
 
-  const openDetailsModal = (product) => {
-    setSelectedProduct(product);
-    setShowModal(true);
-  };
-
-  const closeDetailsModal = () => {
-    setSelectedProduct(null);
-    setShowModal(false);
-  };
-
-  const handlePriceChange = (e, index) => {
-    const newRange = [...priceRange];
-    newRange[index] = Number(e.target.value);
-    if (index === 0 && newRange[0] > newRange[1]) newRange[0] = newRange[1];
-    if (index === 1 && newRange[1] < newRange[0]) newRange[1] = newRange[0];
-    setPriceRange(newRange);
-  };
-
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   );
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
   return (
-    <div className="bg-gray-800 mobile:px-2 px-6 rounded-md pb-5">
-      <ToastContainer className="text-sm" />
+    <div className="flex bg-gray-800 min-h-screen">
+      <ToastContainer />
 
-      <div className="flex flex-col gap-4">
-        {/* Header */}
-        <div className="pc:flex mobile:gap-2 justify-between items-center">
-          <div>
-            <h1 className="text-2xl text-white font-medium mobile:text-[16px]">
-              Marketplace
-            </h1>
-            <p className="text-sm text-gray-300">
-              Browse a wide range of products from our verified marketplace sellers.
-            </p>
+      {/* Desktop Sidebar */}
+      <div className="hidden pc:block">
+        <Sidebar
+          platforms={platforms}
+          platformFilter={platformFilter}
+          setPlatformFilter={setPlatformFilter}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+        />
+      </div>
+
+      {/* Mobile Categories */}
+      {categoriesOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
+          <div className="bg-gray-900 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-base font-semibold">Account Categories</h2>
+              <button onClick={() => setCategoriesOpen(false)} className="text-white text-xl font-bold">×</button>
+            </div>
+
+            {accountTypes.map(({ name: typeName, icon: TypeIcon }) => (
+              <div key={typeName} className="mb-2">
+                <button
+                  className="flex justify-between w-full items-center py-2 px-2 bg-gray-800 rounded"
+                  onClick={() => setOpenCategory((prev) => ({ ...prev, [typeName]: !prev[typeName] }))}
+                >
+                  <div className="flex items-center gap-2">
+                    <TypeIcon className="text-[12px]" />
+                    <span className="capitalize text-sm">{typeName}</span>
+                  </div>
+                  <span className="text-sm">{openCategory[typeName] ? "▲" : "▼"}</span>
+                </button>
+
+                {openCategory[typeName] && (
+                  <div className="pl-6 mt-1 flex flex-col gap-1">
+                    {(platforms[typeName] || []).map((platform) => (
+                      <button
+                        key={platform.name}
+                        className={`flex items-center gap-2 w-full py-1 text-sm ${platformFilter === platform.name ? "text-orange-500" : "text-gray-400"}`}
+                        onClick={() => setPlatformFilter(platform.name)}
+                      >
+                        {platform.image_path && (
+                          <img src={platform.image_path} alt={platform.name} className="h-4 w-4 rounded-full object-contain" />
+                        )}
+                        <span>{platform.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            <div className="mt-4 ">
+              <h3 className="text-sm mb-1">Price Range</h3>
+              <div className="flex justify-between text-sm mt-1 mb-2">
+                <span className="text-sm">${priceRange[0]}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  value={priceRange[0]}
+                  onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
+                  className="w-full accent-orange-500"
+                />
+                <span className="text-sm">${priceRange[1]}</span>
+              </div>
+              <button
+                className="mt-2 w-full py-2 bg-orange-500 text-white rounded"
+                onClick={() => setCategoriesOpen(false)}
+              >
+                Show Accounts
+              </button>
+            </div>
           </div>
-
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by name (e.g Facebook)"
-            className="px-2 pc:w-56 mobile:w-full border mobile:py-1 shadow-md border-slate-50 rounded-md bg-transparent text-white placeholder-gray-400 mobile:placeholder:text-sm"
-          />
         </div>
+      )}
 
-        {/* Filters */}
-        <div className="flex flex-wrap justify-between gap-4 items-center mt-2">
-          {/* Category Dropdown */}
-          <div className="flex items-center gap-2">
-            <label className="text-white text-sm">Category:</label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-2 py-1 rounded-md bg-gray-600 text-white text-sm"
-            >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+      {/* Main Content */}
+      <div className="flex-1 p-3 tab:p-6">
+        <div className="flex flex-col pc:flex-row justify-between items-center gap-3 w-full">
+          <div className="mobile:w-full w-full">
+            <h1 className="text-2xl text-white font-semibold">Marketplace</h1>
+            <p className="text-sm text-gray-400">Browse verified product listings</p>
           </div>
 
-          {/* Price Range Slider */}
-          <div className="flex gap-2 items-center text-white text-sm">
-            <span>${priceRange[0]}</span>
+          <div className="mobile:w-full tab:w-80 flex justify-around items-center gap-2">
             <input
-              type="range"
-              min="0"
-              max="1000"
-              value={priceRange[0]}
-              onChange={(e) => handlePriceChange(e, 0)}
-              className="accent-primary-600"
+              type="text"
+              placeholder="Search by name..."
+              className="w-full px-3 py-1 rounded border bg-transparent text-white placeholder-gray-400"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-
-            <span>${priceRange[1]}</span>
+            <button
+              className="bg-primary-600 text-gray-200 p-2 rounded-md mobile:flex pc:hidden"
+              onClick={() => setCategoriesOpen(!categoriesOpen)}
+            >
+              <IoFilter  className="text-[19px]" />
+            </button>
           </div>
         </div>
 
-        {/* View Toggle Buttons */}
-        <div className="flex justify-end gap-2">
-          <button
-            className={`px-4 py-1 text-sm rounded-md ${
-              viewMode === "grid" ? "bg-primary-600" : "bg-gray-600"
-            }`}
-            onClick={() => setViewMode("grid")}
-          >
-            <IoGridOutline className="text-white text-[20px]" />
-          </button>
-
-          <button
-            className={`px-4 py-1 text-sm rounded-md ${
-              viewMode === "column" ? "bg-primary-600" : "bg-gray-600"
-            }`}
-            onClick={() => setViewMode("column")}
-          >
-            <PiTextColumns className="text-white text-[20px]" />
-          </button>
+        {/* View Mode Switch */}
+        <div className="flex justify-end mt-3 gap-2">
+          {["grid", "column"].map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setViewMode(mode)}
+              className={`px-4 py-1 rounded-md ${viewMode === mode ? "bg-primary-600" : "bg-gray-600"}`}
+            >
+              {mode === "grid" ? <IoGridOutline className="text-white text-xl" /> : <PiTextColumns className="text-white text-xl" />}
+            </button>
+          ))}
         </div>
 
-        {/* GRID VIEW */}
-        {viewMode === "grid" && (
-          <div className="w-full grid pc:grid-cols-5 mobile:grid-cols-2 tab:grid-cols-3 gap-3 mt-3">
-            {paginatedProducts.length > 0 ? (
-              paginatedProducts.map((product) => {
-                const isAdded = cart.some((item) => item.id === product.id);
-                return (
-                  <div
-                    key={product.id}
-                    className="flex flex-col justify-between shadow-lg shadow-slate-950 p-2 rounded-lg bg-gray-700"
-                  >
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-[120px] rounded-md object-cover bg-white"
-                    />
-                    <div className="text-[15px] font-semibold uppercase text-white mt-2 line-clamp-2">
-                      {product.name}
-                    </div>
-                    <div className="flex justify-between items-center mt-1">
-                      <div className="flex gap-2 items-center text-slate-200">
-                        <img
-                          src={product.avatar}
-                          alt="Seller"
-                          className="size-7 rounded-full border border-white"
-                        />
-                        <span className="text-sm">{product.seller}</span>
-                      </div>
-                      <span className="text-slate-200 text-sm font-medium">
-                        ${product.price}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center mt-2">
-                      <button
-                        className="flex gap-1 bg-orange-900 items-center rounded-sm py-1 px-2 text-[12px] text-white"
-                        onClick={() => openDetailsModal(product)}
-                      >
-                        <BsEyeFill className="mobile:text-[20px]" />
-                        <span className="hidden pc:inline">Details</span>
-                      </button>
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        className={`flex gap-1 items-center rounded-sm py-1 px-2 text-white text-[12px] ${
-                          isAdded ? "bg-gray-500 cursor-not-allowed" : "bg-primary-600"
-                        }`}
-                        disabled={isAdded}
-                      >
-                        <span className="pc:hidden">
-                          <FaCartPlus className="text-[18px]" />
-                        </span>
-                        <span className="hidden pc:inline">
-                          {isAdded ? "Added" : "Add to cart"}
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="py-24 text-gray-500 text-center">No products found</div>
-            )}
-          </div>
-        )}
-
-        {/* COLUMN VIEW */}
-        {viewMode === "column" && (
-          <div className="flex flex-col gap-3 mt-3">
-            {paginatedProducts.length > 0 ? (
-              paginatedProducts.map((product) => {
-                const isAdded = cart.some((item) => item.id === product.id);
-                return (
-                  <div
-                    key={product.id}
-                    className="flex gap-3 bg-gray-700 p-3 rounded-md shadow-lg"
-                  >
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-16 h-16 rounded-md object-cover bg-white"
-                    />
-                    <div className="flex-1">
-                      <div className="font-semibold uppercase text-lg text-white">{product.name}</div>
-                      <p className="text-gray-300 min-w-[65%] text-sm line-clamp-1 mt-1">
-                        {product.description}
-                      </p>
-                      <div className="flex justify-between items-center mt-2">
-                        <div className="flex items-center gap-2 text-gray-300">
-                          <img
-                            src={product.avatar}
-                            className="size-7 rounded-full border border-white"
-                          />
-                          <span className="text-sm">{product.seller}</span>
-                        </div>
-                        <span className="text-sm text-white">${product.price}</span>
-                      </div>
-                      <div className="flex flex-row justify-end items-end w-full gap-3 mt-3">
-                        <button
-                          className="bg-orange-900 text-xs px-3 py-1 rounded-sm text-white"
-                          onClick={() => openDetailsModal(product)}
-                        >
-                          Details
-                        </button>
-                        <button
-                          onClick={() => handleAddToCart(product)}
-                          className={`text-xs px-3 py-1 rounded-sm text-white ${
-                            isAdded ? "bg-gray-500 cursor-not-allowed" : "bg-primary-600"
-                          }`}
-                          disabled={isAdded}
-                        >
-                          {isAdded ? "Added" : "Add to cart"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="py-24 text-gray-500 text-center">No products found</div>
-            )}
-          </div>
-        )}
+        {/* Product Listing */}
+        <div className="mt-4">
+          {loading ? (
+            <div className="text-gray-400 py-20 text-center">Loading...</div>
+          ) : filteredProducts.length === 0 ? (
+            <div className="text-gray-500 py-20 text-center">No products found</div>
+          ) : viewMode === "column" ? (
+            <ColumnView
+              products={paginatedProducts}
+              cart={cart}
+              handleAddToCart={addToCart}
+              openDetailsModal={setModalProduct}
+            />
+          ) : (
+            <GridView
+              products={paginatedProducts}
+              cart={cart}
+              handleAddToCart={addToCart}
+              openDetailsModal={setModalProduct}
+            />
+          )}
+        </div>
 
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-4 flex justify-center">
-            <CustomPagination
-              totalPages={totalPages}
-              onPageChange={(page) => setCurrentPage(page)}
-            />
+            <CustomPagination totalPages={totalPages} onPageChange={setCurrentPage} />
           </div>
         )}
 
-        {/* View Details Modal */}
-        {showModal && selectedProduct && (
-          <ViewDetails product={selectedProduct} onClose={closeDetailsModal} />
-        )}
+        {/* Product Details Modal */}
+        {modalProduct && <ViewDetails product={modalProduct} onClose={() => setModalProduct(null)} />}
       </div>
     </div>
   );

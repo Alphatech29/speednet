@@ -15,7 +15,6 @@ import { ImCancelCircle } from "react-icons/im";
 const useAddAccountLogic = () => {
   const [formData, setFormData] = useState({
     platform: "",
-    category: "",
     title: "",
     price: "",
     description: "",
@@ -75,7 +74,7 @@ const AddNewProduct = () => {
     handleChange,
     handleCredentialChange,
   } = useAddAccountLogic();
-  const { platform, category, title, price, description, credentials } = formData;
+  const { platform, title, price, description, credentials } = formData;
 
   useEffect(() => {
     const fetchPlatforms = async () => {
@@ -99,10 +98,6 @@ const AddNewProduct = () => {
   const validateStep1 = () => {
     if (!platform) {
       toast.error("Platform is required");
-      return false;
-    }
-    if (!category) {
-      toast.error("Category is required");
       return false;
     }
     if (!title.trim()) {
@@ -177,7 +172,6 @@ const AddNewProduct = () => {
       setSavedAccounts([]);
       setFormData({
         platform: "",
-        category: "",
         title: "",
         price: "",
         description: "",
@@ -217,17 +211,6 @@ const AddNewProduct = () => {
   const selectedPlatform = platformOptions.find(
     (p) => p.id.toString() === platform.toString()
   );
-
-  const categories = [
-    "Social Media",
-    "Email & Messaging Services",
-    "VPN & Proxys",
-    "Website",
-    "E-Commerce Platform",
-    "Gaming",
-    "Account & Subscription",
-    "Other",
-  ];
 
   return (
     <div className="text-gray-200 flex flex-col">
@@ -297,26 +280,6 @@ const AddNewProduct = () => {
                   </div>
                 )}
               </div>
-            </div>
-
-            {/* Category */}
-            <div>
-              <label className="block text-sm font-medium text-white mb-1">
-                Category <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="category"
-                value={category}
-                onChange={handleChange}
-                className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2"
-              >
-                <option value="">Select a category...</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
             </div>
 
             {/* Title */}
@@ -448,7 +411,6 @@ const AddNewProduct = () => {
                       (p) => p.id.toString() === account.platform.toString()
                     )?.name || "N/A"}
                   </p>
-                  <p>Category: {account.category || "N/A"}</p>
                   {account.credentials.map((cred, i) => (
                     <div key={i}>
                       <p>Email/Username: {cred.emailORusername || "N/A"}</p>

@@ -7,7 +7,19 @@ const Add = ({ onClose }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [platformName, setPlatformName] = useState('');
+  const [platformType, setPlatformType] = useState('');   // NEW STATE
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const platformTypes = [
+    "Social Media",
+    "Email & Messaging",
+    "VPN & Proxys",
+    "Website",
+    "E-Commerce Platform",
+    "Gaming",
+    "Account & Subscription",
+    "Other",
+  ];
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,7 +45,7 @@ const Add = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!platformName || !imageFile) {
+    if (!platformName || !platformType || !imageFile) {
       toast.error('Please fill all fields');
       return;
     }
@@ -43,6 +55,7 @@ const Add = ({ onClose }) => {
     try {
       const formData = new FormData();
       formData.append('name', platformName);
+      formData.append('type', platformType);
       formData.append('image', imageFile);
 
       const response = await addPlatform(formData);
@@ -50,6 +63,7 @@ const Add = ({ onClose }) => {
       if (response.success || response.platformId) {
         toast.success(response.message || 'Platform added successfully');
         setPlatformName('');
+        setPlatformType('');
         setImageFile(null);
         setImagePreview(null);
         if (onClose) onClose();
@@ -68,6 +82,8 @@ const Add = ({ onClose }) => {
       <ToastContainer position="top-right" autoClose={3000} />
       
       <form onSubmit={handleSubmit} className="space-y-4">
+        
+        {/* Platform Name */}
         <div>
           <label htmlFor="platformName" className="block text-sm font-medium text-gray-700">
             Platform Name
@@ -75,13 +91,33 @@ const Add = ({ onClose }) => {
           <input
             type="text"
             id="platformName"
-            name="platformName"
             value={platformName}
             onChange={(e) => setPlatformName(e.target.value)}
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
+
+        {/* Platform Type */}
+        <div>
+          <label htmlFor="platformType" className="block text-sm font-medium text-gray-700">
+            Platform Type
+          </label>
+          <select
+            id="platformType"
+            value={platformType}
+            onChange={(e) => setPlatformType(e.target.value)}
+            required
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          >
+            <option value="">Select Type</option>
+            {platformTypes.map((type, idx) => (
+              <option key={idx} value={type}>{type}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Platform Image */}
         <div>
           <label htmlFor="platformImage" className="block text-sm font-medium text-gray-700">
             Platform Image (.png, .jpeg | Max: 2MB)
@@ -89,7 +125,6 @@ const Add = ({ onClose }) => {
           <input
             type="file"
             id="platformImage"
-            name="image"
             accept=".png, .jpeg, .jpg"
             onChange={handleImageChange}
             required
@@ -103,6 +138,8 @@ const Add = ({ onClose }) => {
             />
           )}
         </div>
+
+        {/* Buttons */}
         <div className="flex justify-end gap-2">
           <button
             type="button"
@@ -111,6 +148,7 @@ const Add = ({ onClose }) => {
           >
             Cancel
           </button>
+
           <button
             type="submit"
             disabled={isSubmitting}

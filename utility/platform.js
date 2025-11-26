@@ -1,4 +1,4 @@
-const pool = require('../model/db'); // This is correct
+const pool = require('../model/db');
 
 async function insertPlatform(platformData) {
   const fields = [];
@@ -44,7 +44,7 @@ async function updatePlatformById(id, platformData) {
     throw new Error('No data provided to update');
   }
 
-  values.push(id); // For WHERE clause
+  values.push(id);
 
   const sql = `
     UPDATE platforms

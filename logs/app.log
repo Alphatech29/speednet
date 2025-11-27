@@ -2912,3 +2912,15 @@
 [2025-11-27T14:32:21.157Z] [INFO]: Transporter is ready to send emails
 [2025-11-27T14:32:21.581Z] [INFO]: Fetched 4 accounts
 [2025-11-27T14:32:23.287Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:33:41.537Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:33:44.374Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:36:16.838Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:36:16.846Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:36:19.879Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:36:19.893Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:36:21.066Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:36:31.999Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:36:35.688Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:39:46.185Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:39:57.986Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:39:58.838Z] [INFO]: Fetched 4 accounts

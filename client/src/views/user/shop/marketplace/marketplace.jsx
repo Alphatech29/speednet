@@ -43,13 +43,12 @@ const Marketplace = () => {
 
   const ITEMS_PER_PAGE = 15;
 
-  // Fetch products and platforms
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await getAllAccounts();
         if (res?.success) {
-          const sorted = sortProducts(res.data?.data || [], "newest")
+          const sorted = sortProducts(res.data?.data || [], true)
             .filter((x) => x.status === "approved")
             .map((acc) => ({
               id: acc.id,
@@ -93,7 +92,6 @@ const Marketplace = () => {
     fetchPlatforms();
   }, []);
 
-  // Filter products
   useEffect(() => {
     let result = [...products];
 
@@ -105,7 +103,9 @@ const Marketplace = () => {
     result = result.filter((p) => p.price >= minPrice && p.price <= maxPrice);
 
     if (searchQuery.trim()) {
-      result = result.filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      result = result.filter((p) =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
 
     setFilteredProducts(result);
@@ -123,13 +123,13 @@ const Marketplace = () => {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
   return (
     <div className="flex bg-gray-800 min-h-screen">
       <ToastContainer />
 
-      {/* Desktop Sidebar */}
       <div className="hidden pc:block">
         <Sidebar
           platforms={platforms}
@@ -140,7 +140,6 @@ const Marketplace = () => {
         />
       </div>
 
-      {/* Mobile Categories */}
       {categoriesOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
           <div className="bg-gray-900 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
@@ -153,7 +152,10 @@ const Marketplace = () => {
               <div key={typeName} className="mb-2">
                 <button
                   className="flex justify-between w-full items-center py-2 px-2 bg-gray-800 rounded"
-                  onClick={() => setOpenCategory((prev) => ({ ...prev, [typeName]: !prev[typeName] }))}
+                  onClick={() => setOpenCategory((prev) => ({
+                    ...prev,
+                    [typeName]: !prev[typeName],
+                  }))}
                 >
                   <div className="flex items-center gap-2">
                     <TypeIcon className="text-[12px]" />
@@ -167,11 +169,19 @@ const Marketplace = () => {
                     {(platforms[typeName] || []).map((platform) => (
                       <button
                         key={platform.name}
-                        className={`flex items-center gap-2 w-full py-1 text-sm ${platformFilter === platform.name ? "text-orange-500" : "text-gray-400"}`}
+                        className={`flex items-center gap-2 w-full py-1 text-sm ${
+                          platformFilter === platform.name
+                            ? "text-orange-500"
+                            : "text-gray-400"
+                        }`}
                         onClick={() => setPlatformFilter(platform.name)}
                       >
                         {platform.image_path && (
-                          <img src={platform.image_path} alt={platform.name} className="h-4 w-4 rounded-full object-contain" />
+                          <img
+                            src={platform.image_path}
+                            alt={platform.name}
+                            className="h-4 w-4 rounded-full object-contain"
+                          />
                         )}
                         <span>{platform.name}</span>
                       </button>
@@ -181,7 +191,7 @@ const Marketplace = () => {
               </div>
             ))}
 
-            <div className="mt-4 ">
+            <div className="mt-4">
               <h3 className="text-sm mb-1">Price Range</h3>
               <div className="flex justify-between text-sm mt-1 mb-2">
                 <span className="text-sm">${priceRange[0]}</span>
@@ -190,7 +200,9 @@ const Marketplace = () => {
                   min="0"
                   max="1000"
                   value={priceRange[0]}
-                  onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
+                  onChange={(e) =>
+                    setPriceRange([Number(e.target.value), priceRange[1]])
+                  }
                   className="w-full accent-orange-500"
                 />
                 <span className="text-sm">${priceRange[1]}</span>
@@ -206,7 +218,6 @@ const Marketplace = () => {
         </div>
       )}
 
-      {/* Main Content */}
       <div className="flex-1 p-3 tab:p-6">
         <div className="flex flex-col pc:flex-row justify-between items-center gap-3 w-full">
           <div className="mobile:w-full w-full">
@@ -231,25 +242,31 @@ const Marketplace = () => {
           </div>
         </div>
 
-        {/* View Mode Switch */}
         <div className="flex justify-end mt-3 gap-2">
           {["grid", "column"].map((mode) => (
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
-              className={`px-4 py-1 rounded-md ${viewMode === mode ? "bg-primary-600" : "bg-gray-600"}`}
+              className={`px-4 py-1 rounded-md ${
+                viewMode === mode ? "bg-primary-600" : "bg-gray-600"
+              }`}
             >
-              {mode === "grid" ? <IoGridOutline className="text-white text-xl" /> : <PiTextColumns className="text-white text-xl" />}
+              {mode === "grid" ? (
+                <IoGridOutline className="text-white text-xl" />
+              ) : (
+                <PiTextColumns className="text-white text-xl" />
+              )}
             </button>
           ))}
         </div>
 
-        {/* Product Listing */}
         <div className="mt-4">
           {loading ? (
             <div className="text-gray-400 py-20 text-center">Loading...</div>
           ) : filteredProducts.length === 0 ? (
-            <div className="text-gray-500 py-20 text-center">No products found</div>
+            <div className="text-gray-500 py-20 text-center">
+              No products found
+            </div>
           ) : viewMode === "column" ? (
             <ColumnView
               products={paginatedProducts}
@@ -267,15 +284,21 @@ const Marketplace = () => {
           )}
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-4 flex justify-center">
-            <CustomPagination totalPages={totalPages} onPageChange={setCurrentPage} />
+            <CustomPagination
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           </div>
         )}
 
-        {/* Product Details Modal */}
-        {modalProduct && <ViewDetails product={modalProduct} onClose={() => setModalProduct(null)} />}
+        {modalProduct && (
+          <ViewDetails
+            product={modalProduct}
+            onClose={() => setModalProduct(null)}
+          />
+        )}
       </div>
     </div>
   );

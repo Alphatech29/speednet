@@ -3404,3 +3404,5 @@
 [2025-11-27T17:18:15.930Z] [INFO]: Transporter is ready to send emails
 [2025-11-27T17:18:18.742Z] [INFO]: API expiry alert sent to admin:
 [2025-11-27T17:18:21.588Z] [INFO]: API expiry alert sent to admin:
+[2025-11-27T17:20:41.776Z] [INFO]: Login notification email sent:
+[2025-11-27T17:20:56.484Z] [INFO]: Fetched 4 accounts

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>API Expired Alert</title>
+  <title>API Expiry Notice</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
       border: 1px solid #d1d5db;
     }
     .header {
-      background-color: #8b0000;
+      background-color: #1a1a2e;
       color: #fff;
       padding: 20px;
       text-align: center;
@@ -48,13 +48,13 @@
 <body>
   <div class="container">
     <div class="header">
-      <h2>API Expired</h2>
+      <h2>API Expiry Warning</h2>
     </div>
 
     <div class="content">
       <p>Hello Admin,</p>
 
-      <p>This is an urgent notice that one of your API subscriptions has <strong>expired</strong>.</p>
+      <p>This is to notify you that one of your active API subscriptions is <strong>about to expire</strong>.</p>
 
       <div class="info-block">
         <p><strong>API Name:</strong> <%= api.name %></p>
@@ -62,11 +62,12 @@
         <p><strong>Billing Cycle:</strong> <%= api.premium_plan.billing_cycle %></p>
         <p><strong>Price:</strong> $<%= api.premium_plan.price_usd %></p>
         <p><strong>Start Date:</strong> <%= api.start_on %></p>
-        <p><strong>Expired On:</strong> <%= api.expires_on %></p>
-        <p><strong>Status:</strong> <span style="color:#b30000;">Expired</span></p>
+        <p><strong>Expires On:</strong> <%= api.expires_on %></p>
+        <p><strong>Days Remaining:</strong> <%= api.days_remaining %></p>
+        <p><strong>Status:</strong> <span style="color:#d85600;">Expiring Soon</span></p>
       </div>
 
-      <p>Please renew this API immediately to restore functionality.</p>
+      <p>Please take action to renew the subscription to avoid service interruption.</p>
 
       <p>Regards,<br />
       <strong><%= site_name %></strong> System</p>

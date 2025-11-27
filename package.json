@@ -27,12 +27,14 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.2",
     "moment-timezone": "^0.6.0",
     "multer": "^2.0.1",
     "mysql2": "^3.13.0",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.10.1",
+    "npm": "^11.6.4",
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {

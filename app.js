@@ -7,6 +7,7 @@ const xssClean = require("xss-clean");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const logger = require("./utility/logger");
+
 const authRoute = require("./routes/auth");
 const generalRoute = require("./routes/general");
 
@@ -15,7 +16,6 @@ const app = express();
 
 // Middleware Setup
 app.use(helmet());
-
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -66,6 +66,19 @@ app.get("*", (req, res) => {
     }
   });
 });
+
+// Start API Expiry Cron Job
+try {
+  require("./utility/apiAlert.js"); // Automatically runs cron and immediate check
+  logger.info("API expiry cron job loaded successfully.");
+  console.log("API expiry cron job loaded successfully.");
+} catch (err) {
+  console.error("Failed to load API expiry cron job:", err);
+  logger.error("Failed to initialize API expiry cron job", {
+    message: err.message,
+    stack: err.stack,
+  });
+}
 
 // Start Queue Worker (JobQueue or escrow logic)
 try {

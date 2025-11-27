@@ -41,7 +41,7 @@ const Marketplace = () => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [openCategory, setOpenCategory] = useState({});
 
-  const ITEMS_PER_PAGE = 15;
+  const ITEMS_PER_PAGE = 20;
 
   useEffect(() => {
     const fetchProducts = async () => {

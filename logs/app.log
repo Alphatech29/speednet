@@ -2811,3 +2811,104 @@
 [2025-11-26T00:42:17.271Z] [INFO]: Fetched 4 accounts
 [2025-11-26T00:46:23.803Z] [INFO]: Fetched 4 accounts
 [2025-11-26T00:46:24.160Z] [INFO]: Fetched 4 accounts
+[2025-11-26T22:52:24.706Z] [INFO]: Login notification email sent:
+[2025-11-26T22:52:29.899Z] [INFO]: Fetched 4 accounts
+[2025-11-26T22:52:46.579Z] [INFO]: Fetched 4 accounts
+[2025-11-26T22:53:05.071Z] [INFO]: Fetched 4 accounts
+[2025-11-26T22:53:54.240Z] [INFO]: Fetched 4 accounts
+[2025-11-26T22:53:57.795Z] [INFO]: Fetched 6 platforms
+[2025-11-27T01:16:41.694Z] [INFO]: Fetched 4 accounts
+[2025-11-27T01:16:52.411Z] [INFO]: Login notification email sent:
+[2025-11-27T01:16:56.802Z] [INFO]: Fetched 4 accounts
+[2025-11-27T11:07:32.447Z] [INFO]: Login notification email sent:
+[2025-11-27T11:07:36.743Z] [INFO]: Fetched 4 accounts
+[2025-11-27T13:12:53.688Z] [INFO]: Login notification email sent:
+[2025-11-27T13:12:56.100Z] [INFO]: Fetched 4 accounts
+[2025-11-27T13:53:13.668Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T13:53:13.679Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T13:53:15.562Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T13:53:16.155Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T13:53:16.164Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T13:53:17.413Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T13:53:44.837Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T13:53:44.846Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T13:53:46.361Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T13:53:48.308Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T13:53:48.315Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T13:53:49.895Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:02:03.792Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:02:03.800Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:02:04.050Z] [ERROR]: Failed to setup transporter: connect ENETUNREACH 2a00:1450:400c:c0b::6c:465
+[2025-11-27T14:02:04.051Z] [ERROR]: Unhandled Rejection
+[2025-11-27T14:02:07.019Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:02:07.030Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:02:08.351Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:02:15.523Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:02:15.529Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:02:17.470Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:02:18.769Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:02:18.778Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:02:19.891Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:03:02.624Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:03:02.633Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:03:03.941Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:03:05.791Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:03:05.799Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:03:06.899Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:09:14.618Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:09:14.629Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:09:15.803Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:09:17.559Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:09:17.566Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:09:18.606Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:09:33.493Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:09:33.504Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:09:34.691Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:09:36.530Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:09:36.539Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:09:38.169Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:09:52.291Z] [INFO]: Login notification email sent:
+[2025-11-27T14:10:02.968Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:10:04.859Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:10:05.711Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:10:05.979Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:10:06.302Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:10:06.550Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:10:47.473Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:10:47.484Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:10:48.948Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:10:50.454Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:10:50.462Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:10:51.649Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:20:38.747Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:20:38.760Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:20:41.346Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:20:41.941Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:20:41.951Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:20:43.304Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:21:44.455Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:21:44.464Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:21:46.537Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:21:47.725Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:21:47.734Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:21:49.160Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:22:07.420Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:22:07.431Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:22:08.832Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:22:10.472Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:22:10.483Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:22:11.627Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:31:30.216Z] [INFO]: Login notification email sent:
+[2025-11-27T14:31:33.623Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:31:36.316Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:31:37.323Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:31:38.250Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:31:41.424Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:32:17.126Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:32:17.137Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:32:18.264Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:32:20.028Z] [INFO]: Escrow job queue loaded successfully.
+[2025-11-27T14:32:20.039Z] [INFO]: Server started on http://localhost:8000
+[2025-11-27T14:32:21.157Z] [INFO]: Transporter is ready to send emails
+[2025-11-27T14:32:21.581Z] [INFO]: Fetched 4 accounts
+[2025-11-27T14:32:23.287Z] [INFO]: Fetched 4 accounts

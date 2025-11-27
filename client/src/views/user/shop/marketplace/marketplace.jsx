@@ -12,6 +12,7 @@ import CustomPagination from "../../partials/CustomPagination";
 import GridView from "./views/gridView";
 import ColumnView from "./views/columnView";
 import Sidebar from "../../../user/partials/sidebar";
+import { sortProducts } from "../../../../components/utils/sortProducts";
 
 const accountTypes = [
   { name: "Social Media", icon: IoShareSocialOutline },
@@ -48,9 +49,8 @@ const Marketplace = () => {
       try {
         const res = await getAllAccounts();
         if (res?.success) {
-          const items = (res.data?.data || [])
+          const sorted = sortProducts(res.data?.data || [], "newest")
             .filter((x) => x.status === "approved")
-            .sort((a, b) => new Date(b.create_at) - new Date(a.create_at))
             .map((acc) => ({
               id: acc.id,
               name: acc.title,
@@ -61,8 +61,9 @@ const Marketplace = () => {
               description: acc.description,
               avatar: acc.avatar,
             }));
-          setProducts(items);
-          setFilteredProducts(items);
+
+          setProducts(sorted);
+          setFilteredProducts(sorted);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -225,7 +226,7 @@ const Marketplace = () => {
               className="bg-primary-600 text-gray-200 p-2 rounded-md mobile:flex pc:hidden"
               onClick={() => setCategoriesOpen(!categoriesOpen)}
             >
-              <IoFilter  className="text-[19px]" />
+              <IoFilter className="text-[19px]" />
             </button>
           </div>
         </div>

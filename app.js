@@ -69,7 +69,7 @@ app.get("*", (req, res) => {
 
 // Start API Expiry Cron Job
 try {
-  require("./utility/apiAlert.js"); // Automatically runs cron and immediate check
+  require("./utility/apiAlert.js");
   logger.info("API expiry cron job loaded successfully.");
   console.log("API expiry cron job loaded successfully.");
 } catch (err) {

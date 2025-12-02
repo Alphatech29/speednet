@@ -4,18 +4,20 @@ import { Modal, Button } from "flowbite-react";
 const ViewDetails = ({ product, onClose }) => {
   const show = !!product;
 
-  // Format description with paragraphs and spacing
+  // Format description with paragraphs
   const formattedDescription = (product?.description || "No description available.")
     .split("\n\n")
     .map(paragraph => `<p style="margin-bottom: 1rem;">${paragraph}</p>`)
     .join("");
 
-  // Ensure previewLink starts with https://
+  // --- FIXED PREVIEW LINK LOGIC ---
+  const rawLink = product?.previewLink?.trim(); // remove spaces
+
   const normalizedPreviewLink =
-    product?.previewLink &&
-    (product.previewLink.startsWith("http://") || product.previewLink.startsWith("https://")
-      ? product.previewLink
-      : `https://${product.previewLink}`);
+    rawLink && rawLink !== "" &&
+    (rawLink.startsWith("http://") || rawLink.startsWith("https://")
+      ? rawLink
+      : `https://${rawLink}`);
 
   return (
     <Modal show={show} onClose={onClose} popup>
@@ -27,13 +29,30 @@ const ViewDetails = ({ product, onClose }) => {
 
       <Modal.Body className="bg-gray-800 text-gray-300">
         <div className="flex flex-col gap-4">
-          {/* Description with spacing */}
+
+          {/* Description */}
           <div
             className="text-sm"
             dangerouslySetInnerHTML={{ __html: formattedDescription }}
           />
 
-          {/* Seller Info */}
+          {/* Preview Link */}
+          {normalizedPreviewLink ? (
+            <a
+              href={normalizedPreviewLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline text-sm"
+            >
+              🔗 Preview Product
+            </a>
+          ) : (
+            <p className="text-xs text-gray-500">
+              No preview link available.
+            </p>
+          )}
+
+           {/* Seller Info */}
           {product?.seller && (
             <div className="flex items-center gap-3 mt-2">
               {product?.avatar && (
@@ -47,17 +66,6 @@ const ViewDetails = ({ product, onClose }) => {
             </div>
           )}
 
-          {/* Preview Link */}
-          {normalizedPreviewLink && (
-            <a
-              href={normalizedPreviewLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline text-sm"
-            >
-              🔗 Preview Product
-            </a>
-          )}
         </div>
       </Modal.Body>
 

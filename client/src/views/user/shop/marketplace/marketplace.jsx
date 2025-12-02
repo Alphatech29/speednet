@@ -59,6 +59,7 @@ const Marketplace = () => {
               image: acc.logo_url,
               description: acc.description,
               avatar: acc.avatar,
+              previewLink: acc.previewLink,
             }));
 
           setProducts(sorted);

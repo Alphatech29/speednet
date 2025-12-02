@@ -3554,3 +3554,52 @@
 [2025-12-02T12:14:10.143Z] [INFO]: API expiry alert sent to admin:
 [2025-12-02T12:14:13.113Z] [INFO]: API expiry alert sent to admin:
 [2025-12-02T12:14:18.026Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:25:57.323Z] [INFO]: Login notification email sent:
+[2025-12-02T16:25:59.166Z] [INFO]: Fetched 4 accounts
+[2025-12-02T16:38:33.008Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:38:33.013Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:38:33.019Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:38:34.213Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:38:36.412Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:38:36.414Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:38:36.418Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:38:37.456Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:38:40.933Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:38:43.707Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:38:46.187Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:40:32.033Z] [INFO]: Fetched 4 accounts
+[2025-12-02T16:41:13.301Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:41:13.302Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:41:13.307Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:41:14.931Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:41:16.307Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:41:16.309Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:41:16.312Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:41:17.483Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:41:20.801Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:41:25.924Z] [INFO]: Login notification email sent:
+[2025-12-02T16:41:28.044Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:41:28.239Z] [INFO]: Fetched 4 accounts
+[2025-12-02T16:41:30.495Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:42:19.800Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:42:19.802Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:42:19.806Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:42:20.913Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:42:22.932Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:42:22.934Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:42:22.940Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:42:24.054Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:42:27.247Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:42:29.829Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:42:32.243Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:43:01.694Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:43:01.696Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:43:01.700Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:43:02.853Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:43:04.702Z] [INFO]: API expiry cron job loaded successfully.
+[2025-12-02T16:43:04.703Z] [INFO]: Escrow job queue loaded successfully.
+[2025-12-02T16:43:04.710Z] [INFO]: Server started on http://localhost:8000
+[2025-12-02T16:43:05.882Z] [INFO]: Transporter is ready to send emails
+[2025-12-02T16:43:08.332Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:43:10.805Z] [INFO]: API expiry alert sent to admin:
+[2025-12-02T16:43:13.943Z] [INFO]: API expiry alert sent to admin:

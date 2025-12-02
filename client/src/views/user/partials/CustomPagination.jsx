@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-const CustomPagination = ({ totalPages, initialPage = 1, onPageChange }) => {
+const CustomPagination = ({ totalPages = 1, initialPage = 1, onPageChange }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   useEffect(() => {
-    onPageChange(currentPage);
-  }, [currentPage, onPageChange]);
+    if (typeof onPageChange === "function") {
+      onPageChange(currentPage);
+    }
+  }, [currentPage]);
 
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -16,27 +18,30 @@ const CustomPagination = ({ totalPages, initialPage = 1, onPageChange }) => {
   };
 
   const renderPageNumbers = () => {
-    const pageNumbers = [];
+    if (totalPages <= 1) return null;
 
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
+    return Array.from({ length: totalPages }, (_, idx) => {
+      const page = idx + 1;
+
+      return (
         <button
-          key={i}
-          onClick={() => goToPage(i)}
-          aria-label={`Go to page ${i}`}
-          className={`px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200 
-            ${i === currentPage
+          key={page}
+          onClick={() => goToPage(page)}
+          aria-label={`Go to page ${page}`}
+          className={`px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200
+            ${page === currentPage
               ? "bg-primary-600 text-white"
               : "bg-gray-600 text-gray-300 hover:bg-gray-500"}
-            mobile:px-2 mobile:py-[6px] mobile:text-xs tab:px-2 tab:text-sm`}
+            mobile:px-2 mobile:py-[6px] mobile:text-xs tab:px-2 tab:text-sm
+          `}
         >
-          {i}
+          {page}
         </button>
       );
-    }
-
-    return pageNumbers;
+    });
   };
+
+  if (totalPages <= 1) return null; 
 
   return (
     <div className="flex justify-center items-center mt-4 flex-wrap gap-2 w-full">

@@ -283,6 +283,7 @@ const Sidebar = ({
                       (platform.price >= localPriceRange[0] &&
                         platform.price <= localPriceRange[1])
                   )
+                  .sort((a, b) => a.name.localeCompare(b.name)) // <-- Sorted alphabetically
                   .map((platform) => (
                     <Dropdown.Item
                       key={platform.id}
@@ -305,19 +306,20 @@ const Sidebar = ({
                     </Dropdown.Item>
                   ))}
 
-                {(platforms[name] || []).filter(
-                  (platform) =>
-                    platform.price === undefined ||
-                    (platform.price >= localPriceRange[0] &&
-                      platform.price <= localPriceRange[1])
-                ).length === 0 && (
+                {(platforms[name] || [])
+                  .filter(
+                    (platform) =>
+                      platform.price === undefined ||
+                      (platform.price >= localPriceRange[0] &&
+                        platform.price <= localPriceRange[1])
+                  ).length === 0 && (
                   <Dropdown.Item as="div">
                     <span className="text-gray-400 text-sm">No platforms category</span>
                   </Dropdown.Item>
                 )}
               </Dropdown>
             ))}
-             {/* PRICE FILTER */}
+            {/* PRICE FILTER */}
             <div className="flex flex-col gap-2 mt-2 px-2">
               <p>Price Filter</p>
               <div className="flex justify-between text-white text-sm">

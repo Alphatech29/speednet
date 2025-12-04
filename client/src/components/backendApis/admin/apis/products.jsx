@@ -126,3 +126,30 @@ export const getAllOrders = async () => {
   }
 };
 
+
+export const bulkUpdateProductStatus = async (updates) => {
+  try {
+    const response = await axios.put(`/general/bulk-approval`, updates, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const responseData = Array.isArray(response.data) ? response.data[0] : response.data;
+
+    return {
+      success: true,
+      message: responseData?.message || 'Bulk status update successful!',
+      results: responseData?.results || responseData,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error.response?.data?.message || 'An error occurred during bulk status update.',
+      error: error.response?.data || error.message,
+    };
+  }
+};
+
+

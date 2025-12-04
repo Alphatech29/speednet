@@ -264,26 +264,6 @@ const Sidebar = ({
               <h1>Filter</h1>
               <p>Account Categories</p>
             </div>
-
-            {/* PRICE FILTER */}
-            <div className="flex flex-col gap-2 mt-2 px-2">
-              <div className="flex justify-between text-white text-sm">
-                <span>${localPriceRange[0]}</span>
-                <span>${localPriceRange[1]}</span>
-              </div>
-
-              <div className="flex gap-2">
-                <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  value={localPriceRange[0]}
-                  onChange={(e) => handlePriceChange(e, 0)}
-                  className="accent-primary-600 flex-1"
-                />
-              </div>
-            </div>
-
             {/* PLATFORM FILTER */}
             {types.map(({ name, icon: Icon }) => (
               <Dropdown
@@ -337,6 +317,25 @@ const Sidebar = ({
                 )}
               </Dropdown>
             ))}
+             {/* PRICE FILTER */}
+            <div className="flex flex-col gap-2 mt-2 px-2">
+              <p>Price Filter</p>
+              <div className="flex justify-between text-white text-sm">
+                <span>${localPriceRange[0]}</span>
+                <span>${localPriceRange[1]}</span>
+              </div>
+
+              <div className="flex gap-2">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  value={localPriceRange[0]}
+                  onChange={(e) => handlePriceChange(e, 0)}
+                  className="accent-primary-600 flex-1"
+                />
+              </div>
+            </div>
           </>
         )}
       </div>

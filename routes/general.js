@@ -40,6 +40,8 @@ const { getSmsServiceByUserId } = require("../utility/smspool");
 const { getCountriesController, getServicesByCountryController, orderSMSController } = require("../controller/user/smspool");
 const { smspoolWebhook } = require("../utility/smspoolWebhook");
 const { contact } = require("../controller/user/contect");
+const { bulkUpdateStatusController } = require("../controller/admin/dashboard/bulkApproval");
+const { createShortNoticeController, getAllShortNoticesController, updateShortNoticeController, deleteShortNoticeController } = require("../controller/admin/dashboard/shortNotice");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -118,6 +120,11 @@ generalRoute.put("/users/:uid", updateUserById);
 generalRoute.get("/product", getAllAccount);
 generalRoute.get("/product/:id", getAccountById);
 generalRoute.put("/product/:id", updateProductById);
+generalRoute.put("/bulk-approval", bulkUpdateStatusController);
+generalRoute.post("/create-notice", createShortNoticeController);
+generalRoute.get("/get-notice", getAllShortNoticesController);
+generalRoute.put("/update-notice/:id", updateShortNoticeController);
+generalRoute.delete("/delete-notice/:id", deleteShortNoticeController);
 generalRoute.get("/order", getAllOrders);
 generalRoute.post("/platform", upload.single("image"), addPlatform);
 generalRoute.get("/platform", fetchPlatforms);

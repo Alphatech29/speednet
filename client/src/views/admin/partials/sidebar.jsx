@@ -47,6 +47,10 @@ const Sidebar = () => {
           <TfiAnnouncement /> <span>Announcement</span>
         </NavLink>
 
+        <NavLink to="/admin/short-notice" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
+          <TfiAnnouncement /> <span>Short Notice</span>
+        </NavLink>
+
         <NavLink to="/admin/transfer" className="w-full flex items-center gap-2 text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay">
           <BiTransfer /> <span>Transfer</span>
         </NavLink>

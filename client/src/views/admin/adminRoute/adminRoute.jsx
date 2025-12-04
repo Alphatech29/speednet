@@ -22,6 +22,7 @@ import Transfer from '../transfer/transfer';
 import CreatePage from '../page/create';
 import Pages from '../page/pages';
 import Edit from '../page/edit';
+import ShortNotice from '../shortNotice/shortNotice';
 
 
 
@@ -50,6 +51,7 @@ const AdminRoute = () => {
         <Route path="report" element={<Report />} />
         <Route path="transfer" element={<Transfer />} />
         <Route path="page/create" element={<CreatePage />} />
+        <Route path="short-notice" element={<ShortNotice />} />
          <Route path="page" element={<Pages />} />
          <Route path="page/edit" element={<Edit />} />
 

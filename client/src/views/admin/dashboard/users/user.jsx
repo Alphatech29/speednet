@@ -118,7 +118,7 @@ const User = () => {
                 <Table.Body className="divide-y">
                   {currentUsers.length > 0 ? (
                     currentUsers.map((user, index) => (
-                      <Table.Row key={user.uid}>
+                      <Table.Row key={user.uid} className="cursor-pointer z-20 relative">
                         <Table.Cell className="mobile:text-[12px] pc:text-sm">
                           {indexOfFirstUser + index + 1}
                         </Table.Cell>

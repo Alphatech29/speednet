@@ -105,7 +105,7 @@ const Merchant = () => {
               <Table.Body className="divide-y">
                 {filteredTransactions.length > 0 ? (
                   filteredTransactions.map((txn, index) => (
-                    <Table.Row key={txn.id} className="text-sm">
+                    <Table.Row key={txn.id} className="text-sm cursor-pointer z-20 relative">
                       <Table.Cell>{index + 1}</Table.Cell>
                       <Table.Cell>{txn.transaction_id}</Table.Cell>
                       <Table.Cell>

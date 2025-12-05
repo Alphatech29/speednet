@@ -39,8 +39,7 @@ const Transaction = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
-        (txn) =>
-          txn.transaction_no?.toLowerCase().includes(term) 
+        (txn) => txn.transaction_no?.toLowerCase().includes(term)
       );
     }
 
@@ -98,36 +97,39 @@ const Transaction = () => {
           ) : (
             <Table hoverable className="bg-transparent">
               <Table.Head className="bg-transparent text-gray-600 mobile:text-[13px]">
-                <Table.HeadCell>S/N</Table.HeadCell>
-                <Table.HeadCell>Transaction No</Table.HeadCell>
-                <Table.HeadCell>User</Table.HeadCell>
-                <Table.HeadCell>Type</Table.HeadCell>
-                <Table.HeadCell>Amount</Table.HeadCell>
-                <Table.HeadCell>Status</Table.HeadCell>
-                <Table.HeadCell>Date</Table.HeadCell>
+                <Table.HeadCell className="select-text">S/N</Table.HeadCell>
+                <Table.HeadCell className="select-text">Transaction No</Table.HeadCell>
+                <Table.HeadCell className="select-text">User</Table.HeadCell>
+                <Table.HeadCell className="select-text">Type</Table.HeadCell>
+                <Table.HeadCell className="select-text">Amount</Table.HeadCell>
+                <Table.HeadCell className="select-text">Status</Table.HeadCell>
+                <Table.HeadCell className="select-text">Date</Table.HeadCell>
               </Table.Head>
 
               <Table.Body className="divide-y">
                 {filteredTransactions.length > 0 ? (
                   filteredTransactions.map((txn, index) => (
-                    <Table.Row key={txn.id} className="text-sm">
-                      <Table.Cell>{index + 1}</Table.Cell>
-                      <Table.Cell>{txn.transaction_no}</Table.Cell>
-                      <Table.Cell>
+                    <Table.Row
+                      key={txn.id}
+                      className="text-sm hover:bg-gray-100 cursor-pointer z-20 relative transition-colors duration-200"
+                    >
+                      <Table.Cell className="select-text">{index + 1}</Table.Cell>
+                      <Table.Cell className="select-text ">{txn.transaction_no}</Table.Cell>
+                      <Table.Cell className="select-text">
                         <div className="flex flex-col">
                           <span className="font-medium">{txn.full_name || "N/A"}</span>
                           <span className="text-xs text-gray-500">{txn.email}</span>
                           <span className="text-xs text-gray-500">{txn.phone_number}</span>
                         </div>
                       </Table.Cell>
-                      <Table.Cell>{txn.transaction_type}</Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell className="select-text">{txn.transaction_type}</Table.Cell>
+                      <Table.Cell className="select-text">
                         {Number(txn.amount).toLocaleString("en-US", {
                           style: "currency",
                           currency: "USD",
                         })}
                       </Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell className="select-text">
                         <span
                           className={`px-2 py-1 text-xs rounded-full ${
                             ["completed", "successful"].includes(txn.status?.toLowerCase())
@@ -142,7 +144,7 @@ const Transaction = () => {
                           {capitalize(txn.status)}
                         </span>
                       </Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell className="select-text">
                         {txn.created_at
                           ? new Date(txn.created_at).toLocaleString("en-US", {
                               dateStyle: "medium",
@@ -153,8 +155,8 @@ const Transaction = () => {
                     </Table.Row>
                   ))
                 ) : (
-                  <Table.Row>
-                    <Table.Cell colSpan={6} className="text-center py-4">
+                  <Table.Row className="text-sm hover:bg-gray-100 cursor-pointer transition-colors duration-200">
+                    <Table.Cell colSpan={7} className="text-center py-4 select-text">
                       No transactions found.
                     </Table.Cell>
                   </Table.Row>

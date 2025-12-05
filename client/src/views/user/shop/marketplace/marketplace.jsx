@@ -53,41 +53,37 @@ const Marketplace = () => {
 
   const ITEMS_PER_PAGE = 100;
 
-  // ---- Sort & Mix Products ----
-  const sortAndMixProducts = (products, shuffle = false) => {
-    let sorted = [...products].sort((a, b) => {
-      const createdA = new Date(a.create_at);
-      const createdB = new Date(b.create_at);
+  // PRIORITY LIST FOR SORTING
+  const priorityOrder = ["Facebook", "Twitter-X", "Instagram", "Snapchat", "LinkedIn"];
 
-      if (createdA < createdB) return 1;
-      if (createdA > createdB) return -1;
+  const sortPlatforms = (list) => {
+    return [...list].sort((a, b) => {
+      const aP = priorityOrder.indexOf(a.name);
+      const bP = priorityOrder.indexOf(b.name);
 
-      const updatedA = new Date(a.updated_at);
-      const updatedB = new Date(b.updated_at);
+      if (aP !== -1 && bP !== -1) return aP - bP;
+      if (aP !== -1) return -1;
+      if (bP !== -1) return 1;
 
-      if (updatedA < updatedB) return 1;
-      if (updatedA > updatedB) return -1;
-
-      return a.platform.localeCompare(b.platform);
+      return a.name.localeCompare(b.name);
     });
-
-    if (shuffle) {
-      for (let i = sorted.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [sorted[i], sorted[j]] = [sorted[j], sorted[i]];
-      }
-    }
-
-    return sorted;
   };
 
-  // ---- Fetch Products, Platforms, Notices ----
+  const sortAndMixProducts = (products) => {
+    const shuffled = [...products];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await getAllAccounts();
         if (res?.success) {
-          const sorted = sortAndMixProducts(res.data?.data || [], false)
+          const mixed = sortAndMixProducts(res.data?.data || [])
             .filter((x) => x.status === "approved")
             .map((acc) => ({
               id: acc.id,
@@ -103,8 +99,8 @@ const Marketplace = () => {
               updated_at: acc.updated_at,
             }));
 
-          setProducts(sorted);
-          setFilteredProducts(sorted);
+          setProducts(mixed);
+          setFilteredProducts(mixed);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -151,16 +147,14 @@ const Marketplace = () => {
     fetchNotices();
   }, []);
 
-  // ---- Auto Mixer: reshuffle every 3 sec ----
   useEffect(() => {
     const interval = setInterval(() => {
-      setFilteredProducts((prev) => sortAndMixProducts(prev, true));
-    }, 60000);
+      setFilteredProducts((prev) => sortAndMixProducts(prev));
+    }, 180000);
 
     return () => clearInterval(interval);
   }, []);
 
-  // ---- Filtering & Search ----
   useEffect(() => {
     let result = [...products];
 
@@ -200,10 +194,10 @@ const Marketplace = () => {
   return (
     <>
       {notices.length > 0 && (
-        <div className="w-full bg-primary-600/30 text-white border-primary-600 border-l-4 mb-3 px-3 py-3 rounded-lg">
+        <div className="w-full bg-primary-600/30 text-white border-primary-600 border-l-4 mb-3 px-2 py-3 rounded-lg">
           {notices.map((notice) => (
             <p key={notice.id} className="flex justify-start items-start">
-              <span className="text-primary-600 text-[30px] mr-3">
+              <span className="text-primary-600 text-[25px] mr-3">
                 <MdCelebration />
               </span>
               {notice.content}
@@ -225,6 +219,7 @@ const Marketplace = () => {
           />
         </div>
 
+        {/* ---- UPDATED MOBILE FILTER ---- */}
         {categoriesOpen && (
           <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
             <div className="bg-gray-900 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
@@ -258,28 +253,31 @@ const Marketplace = () => {
                     </span>
                   </button>
 
+                  {/* Updated Sorting Applied Here */}
                   {openCategory[typeName] && (
                     <div className="pl-6 mt-1 flex flex-col gap-1">
-                      {(platforms[typeName] || []).map((platform) => (
-                        <button
-                          key={platform.name}
-                          className={`flex items-center gap-2 w-full py-1 text-sm ${
-                            platformFilter === platform.name
-                              ? "text-orange-500"
-                              : "text-gray-400"
-                          }`}
-                          onClick={() => setPlatformFilter(platform.name)}
-                        >
-                          {platform.image_path && (
-                            <img
-                              src={platform.image_path}
-                              alt={platform.name}
-                              className="h-4 w-4 rounded-full object-contain"
-                            />
-                          )}
-                          <span>{platform.name}</span>
-                        </button>
-                      ))}
+                      {sortPlatforms(platforms[typeName] || []).map(
+                        (platform) => (
+                          <button
+                            key={platform.name}
+                            className={`flex items-center gap-2 w-full py-1 text-sm ${
+                              platformFilter === platform.name
+                                ? "text-orange-500"
+                                : "text-gray-400"
+                            }`}
+                            onClick={() => setPlatformFilter(platform.name)}
+                          >
+                            {platform.image_path && (
+                              <img
+                                src={platform.image_path}
+                                alt={platform.name}
+                                className="h-4 w-4 rounded-full object-contain"
+                              />
+                            )}
+                            <span className="text-[17px]">{platform.name}</span>
+                          </button>
+                        )
+                      )}
                     </div>
                   )}
                 </div>

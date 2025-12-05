@@ -33,6 +33,14 @@ const types = [
   { name: "Other", icon: FaGlobe },
 ];
 
+const PRIORITY_PLATFORMS = [
+  "Facebook",
+  "Twitter-X",
+  "Instagram",
+  "Snapchat",
+  "LinkedIn",
+];
+
 const linkClasses =
   "flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay";
 
@@ -264,6 +272,7 @@ const Sidebar = ({
               <h1>Filter</h1>
               <p>Account Categories</p>
             </div>
+
             {/* PLATFORM FILTER */}
             {types.map(({ name, icon: Icon }) => (
               <Dropdown
@@ -283,7 +292,18 @@ const Sidebar = ({
                       (platform.price >= localPriceRange[0] &&
                         platform.price <= localPriceRange[1])
                   )
-                  .sort((a, b) => a.name.localeCompare(b.name)) // <-- Sorted alphabetically
+                  .sort((a, b) => {
+                    const aPriority = PRIORITY_PLATFORMS.indexOf(a.name);
+                    const bPriority = PRIORITY_PLATFORMS.indexOf(b.name);
+
+                    if (aPriority !== -1 && bPriority !== -1)
+                      return aPriority - bPriority;
+
+                    if (aPriority !== -1) return -1;
+                    if (bPriority !== -1) return 1;
+
+                    return a.name.localeCompare(b.name);
+                  })
                   .map((platform) => (
                     <Dropdown.Item
                       key={platform.id}
@@ -302,23 +322,23 @@ const Sidebar = ({
                           className="h-5 w-5 rounded-full object-contain"
                         />
                       )}
-                      <span>{platform.name}</span>
+                      <span className="text-[16px]">{platform.name}</span>
                     </Dropdown.Item>
                   ))}
 
-                {(platforms[name] || [])
-                  .filter(
-                    (platform) =>
-                      platform.price === undefined ||
-                      (platform.price >= localPriceRange[0] &&
-                        platform.price <= localPriceRange[1])
-                  ).length === 0 && (
+                {(platforms[name] || []).filter(
+                  (platform) =>
+                    platform.price === undefined ||
+                    (platform.price >= localPriceRange[0] &&
+                      platform.price <= localPriceRange[1])
+                ).length === 0 && (
                   <Dropdown.Item as="div">
                     <span className="text-gray-400 text-sm">No platforms category</span>
                   </Dropdown.Item>
                 )}
               </Dropdown>
             ))}
+
             {/* PRICE FILTER */}
             <div className="flex flex-col gap-2 mt-2 px-2">
               <p>Price Filter</p>

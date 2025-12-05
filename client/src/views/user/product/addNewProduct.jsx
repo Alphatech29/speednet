@@ -61,6 +61,7 @@ const AddNewProduct = () => {
   const [platformOptions, setPlatformOptions] = useState([]);
   const [loadingPlatforms, setLoadingPlatforms] = useState(true);
   const [isPlatformDropdownOpen, setIsPlatformDropdownOpen] = useState(false);
+  const [platformSearch, setPlatformSearch] = useState(""); // NEW
   const [savedAccounts, setSavedAccounts] = useState([]);
 
   const { user } = useContext(AuthContext);
@@ -74,6 +75,7 @@ const AddNewProduct = () => {
     handleChange,
     handleCredentialChange,
   } = useAddAccountLogic();
+
   const { platform, title, price, description, credentials } = formData;
 
   useEffect(() => {
@@ -93,7 +95,13 @@ const AddNewProduct = () => {
   const handlePlatformSelect = (platformId) => {
     handleChange({ target: { id: "platform", value: platformId } });
     setIsPlatformDropdownOpen(false);
+    setPlatformSearch(""); // reset search
   };
+
+  // 🔍 FILTER LOGIC
+  const filteredPlatforms = platformOptions.filter((option) =>
+    option.name.toLowerCase().includes(platformSearch.toLowerCase())
+  );
 
   const validateStep1 = () => {
     if (!platform) {
@@ -135,7 +143,9 @@ const AddNewProduct = () => {
 
   const handleAddAnotherAccount = () => {
     if (!validateStep2()) return;
+
     setSavedAccounts((prev) => [...prev, JSON.parse(JSON.stringify(formData))]);
+
     setFormData((prev) => ({
       ...prev,
       credentials: [
@@ -149,6 +159,7 @@ const AddNewProduct = () => {
         },
       ],
     }));
+
     setCurrentStep(2);
     toast.success("Account added to summary. You can add another.");
   };
@@ -168,8 +179,10 @@ const AddNewProduct = () => {
           await createAccount(payload);
         }
       }
+
       toast.success("All accounts submitted successfully!");
       setSavedAccounts([]);
+
       setFormData({
         platform: "",
         title: "",
@@ -186,6 +199,7 @@ const AddNewProduct = () => {
           },
         ],
       });
+
       setCurrentStep(1);
     } catch (err) {
       console.error(err);
@@ -217,14 +231,14 @@ const AddNewProduct = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="text-lg font-semibold">Add New Product</h1>
       <p className="mb-4 text-sm">
-        Fill in the details and add multiple accounts. Step 3 will summarize all
-        added accounts.
+        Fill in the details and add multiple accounts. Step 3 will summarize all added accounts.
       </p>
 
       <Stepper steps={steps} currentStep={currentStep} />
 
       <div className="w-full max-w-lg mx-auto p-3 border border-gray-400/70 rounded-md space-y-4">
-        {/* Step 1 */}
+
+        {/* STEP 1 */}
         {currentStep === 1 && (
           <>
             {/* Platform */}
@@ -232,57 +246,73 @@ const AddNewProduct = () => {
               <label className="block text-sm font-medium text-white mb-1">
                 Select Platform <span className="text-red-500">*</span>
               </label>
+
               <div className="relative">
                 <div
                   className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
-                  onClick={() =>
-                    setIsPlatformDropdownOpen(!isPlatformDropdownOpen)
-                  }
+                  onClick={() => setIsPlatformDropdownOpen(!isPlatformDropdownOpen)}
                 >
                   {platform ? (
                     <>
                       {selectedPlatform?.image_path && (
                         <img
                           src={selectedPlatform.image_path}
-                          alt={selectedPlatform.name}
+                          alt={selectedPlatform?.name}
                           className="h-5 w-5 rounded-full object-contain mr-2"
                         />
                       )}
-                      {selectedPlatform?.name || "Select a platform..."}
+                      {selectedPlatform?.name}
                     </>
                   ) : (
                     "Select a platform..."
                   )}
+
                   {isPlatformDropdownOpen ? (
                     <ChevronUpIcon className="h-4 w-4 absolute right-2" />
                   ) : (
                     <ChevronDownIcon className="h-4 w-4 absolute right-2" />
                   )}
                 </div>
+
+                {/* Dropdown */}
                 {isPlatformDropdownOpen && (
                   <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
-                    {platformOptions.map((option) => (
-                      <div
-                        key={option.id}
-                        className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
-                        onClick={() => handlePlatformSelect(option.id)}
-                      >
-                        {option.image_path && (
-                          <img
-                            src={option.image_path}
-                            alt={option.name}
-                            className="h-5 w-5 rounded-full object-contain mr-2"
-                          />
-                        )}
-                        {option.name}
-                      </div>
-                    ))}
+
+                    {/* 🔍 Search Box */}
+                    <input
+                      type="text"
+                      value={platformSearch}
+                      onChange={(e) => setPlatformSearch(e.target.value)}
+                      placeholder="Search platform..."
+                      className="w-full bg-gray-600 text-white p-2 border-b border-gray-500 text-sm outline-none"
+                    />
+
+                    {/* Filtered items */}
+                    {filteredPlatforms.length === 0 ? (
+                      <p className="p-3 text-gray-400 text-sm">No platform found</p>
+                    ) : (
+                      filteredPlatforms.map((option) => (
+                        <div
+                          key={option.id}
+                          className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
+                          onClick={() => handlePlatformSelect(option.id)}
+                        >
+                          {option.image_path && (
+                            <img
+                              src={option.image_path}
+                              alt={option.name}
+                              className="h-5 w-5 rounded-full object-contain mr-2"
+                            />
+                          )}
+                          {option.name}
+                        </div>
+                      ))
+                    )}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Title */}
             <InputField
               id="title"
               label="Account Title *"
@@ -292,7 +322,6 @@ const AddNewProduct = () => {
               placeholder="e.g. 1 year old Facebook Account"
             />
 
-            {/* Price */}
             <InputField
               id="price"
               label="Account Price *"
@@ -302,7 +331,6 @@ const AddNewProduct = () => {
               placeholder="e.g. $10"
             />
 
-            {/* Description */}
             <div>
               <label className="block text-sm font-medium">
                 Account Description <span className="text-red-500">*</span>
@@ -311,15 +339,15 @@ const AddNewProduct = () => {
                 id="description"
                 value={description}
                 onChange={handleChange}
-                placeholder="Describe the account"
                 rows={6}
+                placeholder="Describe the account"
                 className="w-full bg-transparent border rounded-md p-2 placeholder:text-gray-600 text-sm"
               />
             </div>
           </>
         )}
 
-        {/* Step 2 */}
+        {/* STEP 2 */}
         {currentStep === 2 && (
           <>
             {credentials.map((cred, index) => (
@@ -331,6 +359,7 @@ const AddNewProduct = () => {
                   value={cred.emailORusername}
                   onChange={(e) => handleCredentialChange(index, e)}
                 />
+
                 <InputField
                   id="password"
                   label="Password *"
@@ -338,6 +367,7 @@ const AddNewProduct = () => {
                   value={cred.password}
                   onChange={(e) => handleCredentialChange(index, e)}
                 />
+
                 <InputField
                   id="previewLink"
                   label="Preview Link (optional)"
@@ -345,6 +375,7 @@ const AddNewProduct = () => {
                   value={cred.previewLink}
                   onChange={(e) => handleCredentialChange(index, e)}
                 />
+
                 <InputField
                   id="recovery_info"
                   label="Recovery Info (optional)"
@@ -352,6 +383,7 @@ const AddNewProduct = () => {
                   value={cred.recovery_info}
                   onChange={(e) => handleCredentialChange(index, e)}
                 />
+
                 <InputField
                   id="recovery_password"
                   label="Recovery Password (optional)"
@@ -359,6 +391,7 @@ const AddNewProduct = () => {
                   value={cred.recovery_password}
                   onChange={(e) => handleCredentialChange(index, e)}
                 />
+
                 <div>
                   <label className="block text-sm font-medium">
                     Factor Description <span className="text-red-500">*</span>
@@ -367,35 +400,35 @@ const AddNewProduct = () => {
                     id="factor_description"
                     value={cred.factor_description}
                     onChange={(e) => handleCredentialChange(index, e)}
-                    placeholder="description"
                     rows={4}
+                    placeholder="description"
                     className="w-full bg-transparent border rounded-md p-2 text-sm"
                   />
                 </div>
               </div>
             ))}
-            <div className="flex justify-start">
-              <button
-                type="button"
-                onClick={handleAddAnotherAccount}
-                disabled={
-                  !credentials[0].emailORusername.trim() ||
-                  !credentials[0].password.trim() ||
-                  !credentials[0].factor_description.trim()
-                }
-                className="mt-2 bg-primary-600 text-white px-3 py-1 rounded disabled:opacity-50"
-              >
-                Add Account
-              </button>
-            </div>
+
+            <button
+              type="button"
+              onClick={handleAddAnotherAccount}
+              disabled={
+                !credentials[0].emailORusername.trim() ||
+                !credentials[0].password.trim() ||
+                !credentials[0].factor_description.trim()
+              }
+              className="mt-2 bg-primary-600 text-white px-3 py-1 rounded disabled:opacity-50"
+            >
+              Add Account
+            </button>
           </>
         )}
 
-        {/* Step 3 */}
+        {/* STEP 3 */}
         {currentStep === 3 && (
           <>
             <h2 className="text-lg font-semibold mb-3">Summary of Accounts</h2>
             {savedAccounts.length === 0 && <p>No accounts added yet.</p>}
+
             {savedAccounts.map((account, index) => (
               <div
                 key={index}
@@ -403,17 +436,18 @@ const AddNewProduct = () => {
               >
                 <div>
                   <p className="font-semibold text-white">
-                    Account {index + 1}: {account.title || "N/A"}
+                    Account {index + 1}: {account.title}
                   </p>
                   <p>
                     Platform:{" "}
                     {platformOptions.find(
                       (p) => p.id.toString() === account.platform.toString()
-                    )?.name || "N/A"}
+                    )?.name}
                   </p>
+
                   {account.credentials.map((cred, i) => (
                     <div key={i}>
-                      <p>Email/Username: {cred.emailORusername || "N/A"}</p>
+                      <p>Email/Username: {cred.emailORusername}</p>
                       <p>Password: {cred.password ? "••••••••" : "N/A"}</p>
                     </div>
                   ))}
@@ -447,7 +481,7 @@ const AddNewProduct = () => {
           </>
         )}
 
-        {/* Navigation Buttons */}
+        {/* Navigation */}
         <div className="flex items-end justify-end mt-4 gap-3 w-full">
           {currentStep > 1 && (
             <button
@@ -458,6 +492,7 @@ const AddNewProduct = () => {
               Back
             </button>
           )}
+
           {currentStep < steps.length && (
             <button
               onClick={handleNext}
@@ -467,6 +502,7 @@ const AddNewProduct = () => {
               Next
             </button>
           )}
+
           {currentStep === steps.length && (
             <button
               onClick={handleSubmitAll}

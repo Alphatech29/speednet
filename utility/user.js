@@ -29,11 +29,11 @@ const getCurrentUser = async (req, res) => {
 
 
 
-const insertUser = async ({ full_name, username, email, password, phone_number, country }) => {
+const insertUser = async ({ full_name, username, email, password, phone_number, country, role }) => {
   try {
     const sql = `
-      INSERT INTO users (full_name, username, email, password, phone_number, country)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO users (full_name, username, email, password, phone_number, country, role)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     const [result] = await db.execute(sql, [
@@ -43,6 +43,7 @@ const insertUser = async ({ full_name, username, email, password, phone_number, 
       password,
       phone_number,
       country,
+      role,
     ]);
 
     return result.insertId;

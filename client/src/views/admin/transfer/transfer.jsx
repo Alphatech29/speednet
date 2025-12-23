@@ -63,7 +63,7 @@ const Transfer = () => {
           created_at: formatDateTime(txn.created_at),
         }));
 
-        setTransferHistory(history.slice(0, 10)); // ✅ Limit to top 10
+        setTransferHistory(history.slice(0, 10));
       } else {
         toast.warn('Unexpected response for transactions.');
       }

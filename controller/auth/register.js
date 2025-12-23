@@ -18,7 +18,10 @@ const register = async (req, res) => {
       password,
       country,
       referral_code,
+      role,
     } = req.body;
+
+    console.log("Registration request received:", {reqBody: req.body});
 
 
     // Trim inputs
@@ -28,6 +31,7 @@ const register = async (req, res) => {
     phone_number = phone_number?.trim();
     password = password?.trim();
     country = country?.trim();
+    role = role?.trim();
     referral_code = referral_code?.trim();
 
     if (!full_name || !username || !email || !phone_number || !password || !country) {
@@ -93,6 +97,7 @@ const register = async (req, res) => {
         phone_number,
         password: hashedPassword,
         country,
+        role: role || "user",
       });
     } catch (err) {
       logger.error("Error inserting user", {

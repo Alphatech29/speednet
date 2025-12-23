@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
-import { getUserById, updateUser } from "../../../../components/backendApis/admin/apis/users";
+import { getUserById, updateUser } from "../../../components/backendApis/admin/apis/users";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditUser = () => {
+const EditVerdor = () => {
   const { uid } = useParams();
   const [user, setUser] = useState(null);
   const [form, setForm] = useState({});
@@ -19,7 +19,7 @@ const EditUser = () => {
         setForm(res.data);
         setInitialForm(res.data);
       } else {
-        toast.error("Failed to fetch user");
+        toast.error("Failed to fetch vendor");
       }
     })();
   }, [uid]);
@@ -53,19 +53,19 @@ const EditUser = () => {
     try {
       const res = await updateUser(uid, changedFields);
       if (res?.success) {
-        toast.success(res.data.message || "User updated successfully");
+        toast.success(res.data.message || "Vendor updated successfully");
         setInitialForm(form);
         setIsEditing(false);
       } else {
-        toast.error(res.message || "Failed to update user");
+        toast.error(res.message || "Failed to update vendor");
       }
     } catch (error) {
-      toast.error("Unexpected error occurred while updating user");
+      toast.error("Unexpected error occurred while updating vendor");
       console.error(error);
     }
   };
 
-  if (!user) return <div className="p-4">Loading user...</div>;
+  if (!user) return <div className="p-4">Loading vendor...</div>;
 
   return (
     <div className="w-full">
@@ -73,12 +73,12 @@ const EditUser = () => {
 
       <div className="mx-auto bg-white rounded-xl shadow-lg p-6 tab:p-10 border">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold text-gray-800">Edit User</h1>
+          <h1 className="text-2xl font-semibold text-gray-800">Edit Vendor</h1>
           <NavLink
-            to="/admin/users"
+            to="/admin/vendor"
             className="text-sm text-gray-700 hover:text-blue-600 underline"
           >
-            ← Back to Users
+            ← Back to Vendor's
           </NavLink>
         </div>
 
@@ -177,4 +177,4 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default EditVerdor;

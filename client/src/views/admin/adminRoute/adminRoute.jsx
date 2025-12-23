@@ -23,6 +23,9 @@ import CreatePage from '../page/create';
 import Pages from '../page/pages';
 import Edit from '../page/edit';
 import ShortNotice from '../shortNotice/shortNotice';
+import CreateVendor from '../vendor/createVendor';
+import MerchantPage from '../vendor/vendor';
+import EditVerdor from '../vendor/editeVendor';
 
 
 
@@ -52,8 +55,11 @@ const AdminRoute = () => {
         <Route path="transfer" element={<Transfer />} />
         <Route path="page/create" element={<CreatePage />} />
         <Route path="short-notice" element={<ShortNotice />} />
-         <Route path="page" element={<Pages />} />
-         <Route path="page/edit" element={<Edit />} />
+        <Route path="page" element={<Pages />} />
+        <Route path="page/edit" element={<Edit />} />
+        <Route path="vendor/create" element={<CreateVendor/>} />
+         <Route path="vendor" element={<MerchantPage/>} />
+         <Route path="vendor/edit/:uid" element={<EditVerdor/>} />
 
       </Route>
     </Routes>

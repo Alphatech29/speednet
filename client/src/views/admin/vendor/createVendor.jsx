@@ -299,9 +299,7 @@ function CreateVendor() {
   );
 }
 
-/* ----------------------------------
- * Reusable Input Component
- * ---------------------------------- */
+
 function FormInput({ label, name, type = "text", value, onChange, placeholder, required = false, error }) {
   return (
     <div>

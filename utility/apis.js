@@ -20,12 +20,12 @@ const apis = [
     },
   },
   {
-    name: "Stripe Terminal",
-    start_on: "2024-01-01",
-    expires_on: "2026-01-01",
+    name: "jquery.payment Terminal",
+    start_on: "2025-12-27",
+    expires_on: "2026-12-26",
     premium_plan: {
-      plan: "Enterprise",
-      price_usd: 890,
+      plan: "Business",
+      price_usd: 330,
       billing_cycle: "yearly",
     },
   },

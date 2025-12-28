@@ -23,6 +23,7 @@ import { GiBookPile } from "react-icons/gi";
 const Sidebar = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [showVendor, setShowVendor] = useState(false);
+   const [showProduct, setShowProduct] = useState(false);
 
   return (
     <div className='side-wrapper flex flex-col justify-start items-start px-5 py-4'>
@@ -76,6 +77,31 @@ const Sidebar = () => {
               </NavLink>
               <NavLink to="/admin/vendor/create" className="text-[14px] text-pay hover:bg-white/40 p-2 hover:p-2 hover:rounded-md">
                 Create Merchant
+              </NavLink>
+            </div>
+          )}
+        </div>
+        {/* History Dropdown End */}
+          {/* History Dropdown Start */}
+        <div className="w-full">
+          <div
+            onClick={() => setShowProduct(!showProduct)}
+            className="w-full flex items-center justify-between text-[15px] hover:bg-white/40 p-2 hover:p-2 hover:rounded-md text-pay cursor-pointer"
+          >
+            <div className="flex items-center gap-2">
+              <FaCartShopping />
+              <span>Shopping Product's</span>
+            </div>
+            {showProduct ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+          </div>
+
+          {showProduct && (
+            <div className="ml-6 mt-1 flex flex-col gap-1">
+               <NavLink to="/admin/shopping/product" className="text-[14px] text-pay hover:bg-white/40 p-2 hover:p-2 hover:rounded-md">
+                Product
+              </NavLink>
+              <NavLink to="/admin/shopping/assign-product" className="text-[14px] text-pay hover:bg-white/40 p-2 hover:p-2 hover:rounded-md">
+                Assign Product
               </NavLink>
             </div>
           )}

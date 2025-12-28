@@ -26,6 +26,8 @@ import ShortNotice from '../shortNotice/shortNotice';
 import CreateVendor from '../vendor/createVendor';
 import MerchantPage from '../vendor/vendor';
 import EditVerdor from '../vendor/editeVendor';
+import AssignProduct from '../shoppingProduct/assignProduct';
+import ShoppingProduct from '../shoppingProduct/product';
 
 
 
@@ -60,6 +62,8 @@ const AdminRoute = () => {
         <Route path="vendor/create" element={<CreateVendor/>} />
          <Route path="vendor" element={<MerchantPage/>} />
          <Route path="vendor/edit/:uid" element={<EditVerdor/>} />
+         <Route path="shopping/assign-product" element={<AssignProduct/>} />
+         <Route path="shopping/product" element={<ShoppingProduct/>} />
 
       </Route>
     </Routes>

@@ -10,6 +10,7 @@ import { SiWebmoney } from "react-icons/si";
 import { FaCode } from "react-icons/fa";
 import { FaNode } from "react-icons/fa";
 import { FaCommentSms } from "react-icons/fa6";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import PaymentTab from './tabs/paymentTab';
 import WebSettingsTab from './tabs/webSettingsTab';
 import VtuTab from './tabs/vtuTab';
@@ -18,6 +19,7 @@ import ExternalCode from './tabs/externalCode';
 import WebLogoTab from './tabs/webLogoTab';
 import SmtpserverTab from './tabs/smtpserverTab';
 import SmsTab from './tabs/smsTab';
+import DarkShopTab from './tabs/darkShopTab';
 
 const Settings = () => {
   return (
@@ -41,6 +43,9 @@ const Settings = () => {
       </TabItem>
       <TabItem  title="Sms Service" icon={FaCommentSms}>
         <SmsTab/>
+      </TabItem>
+       <TabItem  title="Dark Shop Service" icon={MdOutlineProductionQuantityLimits}>
+        <DarkShopTab/>
       </TabItem>
        <TabItem  title="SMTP Server" icon={FaNode}>
         <SmtpserverTab/>

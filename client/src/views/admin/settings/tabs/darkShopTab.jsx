@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const DarkShopTab = () => {
   const [settings, setSettings] = useState({
     dark_base_url: '',
-    dark_access_key: '',
     dark_api_key: '',
   });
 
@@ -21,13 +20,12 @@ const DarkShopTab = () => {
           const data = res.data;
           const populated = {
             dark_base_url: data.dark_base_url || '',
-            dark_access_key: data.dark_access_key || '',
             dark_api_key: data.dark_api_key || '',
           };
           setSettings(populated);
           setInitialSettings(populated);
         } else {
-          toast.error('VTpass settings not found');
+          toast.error('Darkshop settings not found');
         }
       } catch (error) {
         console.error("❌ Error fetching settings:", error);
@@ -62,7 +60,7 @@ const DarkShopTab = () => {
 
     try {
       const res = await updateWebSettings(changedFields);
-      toast.success(res?.data?.message || 'VTpass settings updated successfully');
+      toast.success(res?.data?.message || 'Darkshop settings updated successfully');
       setInitialSettings(settings);
       setIsEditing(false);
     } catch (error) {
@@ -88,7 +86,6 @@ const DarkShopTab = () => {
       <div className="flex flex-col gap-4 text-gray-700">
         {[
           { id: 'dark_base_url', label: 'Dark Shop Base URL' },
-          { id: 'dark_access_key', label: 'Dark Shop Access Key' },
           { id: 'dark_api_key', label: 'Dark Shop API Key' },
         ].map(({ id, label }) => (
           <div key={id}>

@@ -42,6 +42,7 @@ const { smspoolWebhook } = require("../utility/smspoolWebhook");
 const { contact } = require("../controller/user/contect");
 const { bulkUpdateStatusController } = require("../controller/admin/dashboard/bulkApproval");
 const { createShortNoticeController, getAllShortNoticesController, updateShortNoticeController, deleteShortNoticeController } = require("../controller/admin/dashboard/shortNotice");
+const { getCategoriesController, getGroupsController, getProductsController } = require("../controller/admin/dashboard/daskshop");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -145,5 +146,7 @@ generalRoute.post("/create-page", createPage);
 generalRoute.get("/get-pages", getPages);
 generalRoute.delete('/delete-page/:id', deletePage);
 generalRoute.put("/page/:id", editPage);
+generalRoute.get("/dark-categories", getCategoriesController)
+generalRoute.get("/dark-products", getProductsController)
 
 module.exports = generalRoute;

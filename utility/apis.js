@@ -20,7 +20,7 @@ const apis = [
     },
   },
   {
-    name: "jquery.payment Terminal",
+    name: "jquery.payment Terminal/Docker Server",
     start_on: "2025-12-27",
     expires_on: "2026-12-26",
     premium_plan: {
@@ -30,9 +30,9 @@ const apis = [
     },
   },
   {
-    name: "IPinfo Api",
-    start_on: "2024-01-01",
-    expires_on: "2026-01-01",
+    name: "IPinfo Api/Docker Server",
+    start_on: "2025-12-30",
+    expires_on: "2026-12-29",
     premium_plan: {
       plan: "Standard",
       price_usd: 790,
@@ -40,9 +40,9 @@ const apis = [
     },
   },
   {
-    name: "Escrow IPv4 API",
-    start_on: "2024-01-01",
-    expires_on: "2026-01-01",
+    name: "Escrow IPv4 API/Docker Server",
+  start_on: "2025-12-30",
+    expires_on: "2026-12-29",
     premium_plan: {
       plan: "Pro",
       price_usd: 500.99,
@@ -70,9 +70,9 @@ const apis = [
     },
   },
   {
-    name: "Ngrok",
-    start_on: "2024-01-01",
-    expires_on: "2026-01-01",
+    name: "Ngrok/Docker Server",
+   start_on: "2025-12-30",
+    expires_on: "2026-12-29",
     premium_plan: {
       plan: "Pro",
       price_usd: 180,

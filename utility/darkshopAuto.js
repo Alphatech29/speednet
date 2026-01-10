@@ -71,6 +71,9 @@ async function getProducts(params = {}) {
         {
           key: dark_api_key,
           quantity_from: 1,
+          price_from: 1.00,
+          only_in_stock: 1,
+          delivery_type: "auto",
           language: "en",
           ...params,
           "per-page": perPage,
@@ -209,13 +212,13 @@ async function productJob() {
 // IMMEDIATE EXECUTION
 // ==============================
 
-(async () => {
+ (async () => {
   try {
     await productJob();
   } catch (err) {
     console.error("Startup job failed:", err);
   }
-})();
+ })();
 
 
 // ==============================

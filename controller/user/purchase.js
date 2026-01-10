@@ -26,11 +26,21 @@ const {
   createDarkshopOrder,
 } = require("../../utility/daskshopCreateOrder");
 
-const SYSTEM_SELLER_ID = 4; // ONLY FOR DARKSHOP LOGIC
+// Darkshop system sellers only
+const DARKSHOP_SYSTEM_SELLER_IDS = [4, 1313, 1309, 1311];
+
+const getRandomDarkshopSellerId = () => {
+  const index = Math.floor(Math.random() * DARKSHOP_SYSTEM_SELLER_IDS.length);
+  return DARKSHOP_SYSTEM_SELLER_IDS[index];
+};
+
 
 const collectOrder = async (req, res) => {
   let originalBalance = null;
   let safeUserId = null;
+
+   // One random system seller for all darkshop actions in this order
+  const darkshopSystemSellerId = getRandomDarkshopSellerId();
 
   const pendingOrders = [];
   const pendingEscrow = [];
@@ -106,7 +116,7 @@ if (darkProductIds.length > 0) {
       await updateUserBalance(safeUserId, originalBalance.toFixed(2));
       await createTransactionHistory(safeUserId, amountToDeduct, "Refund for failed order", "Refunded");
       await storeOrderHistory({
-        seller_id: SYSTEM_SELLER_ID,
+        seller_id: darkshopSystemSellerId,
         buyer_id: safeUserId,
         order_no: orderNo,
         order_type: "Refund due to order failure",

@@ -13920,3 +13920,108 @@
 [2026-01-10T20:46:30.985Z] [INFO]: Darkshop product maintenance job started.
 [2026-01-10T20:46:30.989Z] [INFO]: Server started on http://localhost:8000
 [2026-01-10T20:46:32.042Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T20:47:53.879Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T20:47:53.885Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T20:47:53.888Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T20:47:58.771Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T21:18:38.829Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T21:18:38.837Z] [ERROR]: Failed to load Darkshop product job
+[2026-01-10T21:18:38.844Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T21:18:46.473Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T21:19:10.438Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T21:19:10.444Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T21:19:10.448Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T21:19:11.559Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T21:41:14.386Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T21:41:14.392Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T21:41:14.395Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T21:41:15.583Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T21:51:41.144Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T21:51:41.156Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T21:51:41.162Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T21:51:43.242Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:00:24.208Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:00:24.213Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:00:24.217Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:00:26.878Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:02:28.027Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:02:28.035Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:02:28.039Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:02:32.289Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:02:51.854Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:02:51.859Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:02:51.862Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:02:58.896Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:03:24.855Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:03:24.862Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:03:24.866Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:03:26.758Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:03:54.761Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:03:54.768Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:03:54.773Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:03:57.207Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:04:19.743Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:04:19.750Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:04:19.753Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:04:21.911Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:04:32.755Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:04:32.763Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:04:32.767Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:04:39.120Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:28:24.979Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:28:24.985Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:28:24.989Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:28:34.605Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:28:43.360Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:28:43.365Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:28:43.370Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:28:46.791Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:29:06.451Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:29:06.456Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:29:06.461Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:29:10.287Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:29:25.265Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:29:25.272Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:29:25.276Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:29:56.426Z] [ERROR]: Failed to setup transporter: Greeting never received
+[2026-01-10T22:29:56.436Z] [ERROR]: Unhandled Rejection
+[2026-01-10T22:30:12.456Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:30:12.464Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:30:12.470Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:30:18.510Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:30:18.519Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:30:18.524Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:30:21.455Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:30:26.731Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:30:26.739Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:30:26.742Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:30:28.658Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:43:15.984Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:43:15.990Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:43:15.996Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:43:17.096Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:47:18.682Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:47:18.688Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:47:18.692Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:47:20.762Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:49:17.592Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:49:17.599Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:49:17.604Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:49:19.805Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:53:35.405Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:53:35.416Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:53:35.425Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:53:36.518Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:53:59.180Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:53:59.192Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:53:59.201Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:54:00.354Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:54:19.977Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:54:19.986Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:54:19.993Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:54:21.170Z] [INFO]: Transporter is ready to send emails
+[2026-01-10T22:54:48.233Z] [INFO]: Login notification email sent:
+[2026-01-10T22:55:39.563Z] [INFO]: Escrow job queue loaded successfully.
+[2026-01-10T22:55:39.572Z] [INFO]: Darkshop product maintenance job started.
+[2026-01-10T22:55:39.576Z] [INFO]: Server started on http://localhost:8000
+[2026-01-10T22:55:40.694Z] [INFO]: Transporter is ready to send emails

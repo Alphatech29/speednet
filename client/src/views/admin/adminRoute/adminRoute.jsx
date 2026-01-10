@@ -1,35 +1,35 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Dashboard from '../../admin/dashboard/dashboard/dashboard';
-import DefaultDashboard from '../../admin/dashboard/dashboard/defaultDashboard';
-import NordAdmin from '../nordAdmin/nordAdmin';
-import Settings from '../settings/settings';
-import User from '../dashboard/users/user';
-import Products from '../product/products';
-import Withdrawal from '../withdrawal/withdrawal';
-import Platform from '../platform/platform';
-import EditeUser from '../dashboard/users/editeUser';
-import EditeProduct from '../product/editeProduct';
-import Notice from '../notice/notice';
-import Create from '../notice/create';
-import EditNotice from '../notice/edit';
-import Transaction from '../histroy/transaction';
-import Merchant from '../histroy/merchant';
-import AccountOrder from '../histroy/accountOrder';
-import Password from '../password/password';
-import Report from '../report/report';
-import Transfer from '../transfer/transfer';
-import CreatePage from '../page/create';
-import Pages from '../page/pages';
-import Edit from '../page/edit';
-import ShortNotice from '../shortNotice/shortNotice';
-import CreateVendor from '../vendor/createVendor';
-import MerchantPage from '../vendor/vendor';
-import EditVerdor from '../vendor/editeVendor';
-import AssignProduct from '../shoppingProduct/assignProduct';
-import ShoppingProduct from '../shoppingProduct/product';
-
-
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "../../admin/dashboard/dashboard/dashboard";
+import DefaultDashboard from "../../admin/dashboard/dashboard/defaultDashboard";
+import NordAdmin from "../nordAdmin/nordAdmin";
+import Settings from "../settings/settings";
+import User from "../dashboard/users/user";
+import Products from "../product/products";
+import Withdrawal from "../withdrawal/withdrawal";
+import Platform from "../platform/platform";
+import EditeUser from "../dashboard/users/editeUser";
+import EditeProduct from "../product/editeProduct";
+import Notice from "../notice/notice";
+import Create from "../notice/create";
+import EditNotice from "../notice/edit";
+import Transaction from "../histroy/transaction";
+import Merchant from "../histroy/merchant";
+import AccountOrder from "../histroy/accountOrder";
+import Password from "../password/password";
+import Report from "../report/report";
+import Transfer from "../transfer/transfer";
+import CreatePage from "../page/create";
+import Pages from "../page/pages";
+import Edit from "../page/edit";
+import ShortNotice from "../shortNotice/shortNotice";
+import CreateVendor from "../vendor/createVendor";
+import MerchantPage from "../vendor/vendor";
+import EditVerdor from "../vendor/editeVendor";
+import AssignProduct from "../shoppingProduct/assignProduct";
+import ShoppingProduct from "../shoppingProduct/product";
+import CategoryCommission from "../darkshopCommission/darkshop-commission";
+import EditProduct from "../shoppingProduct/editProduct";
 
 const AdminRoute = () => {
   return (
@@ -59,12 +59,13 @@ const AdminRoute = () => {
         <Route path="short-notice" element={<ShortNotice />} />
         <Route path="page" element={<Pages />} />
         <Route path="page/edit" element={<Edit />} />
-        <Route path="vendor/create" element={<CreateVendor/>} />
-         <Route path="vendor" element={<MerchantPage/>} />
-         <Route path="vendor/edit/:uid" element={<EditVerdor/>} />
-         <Route path="shopping/assign-product" element={<AssignProduct/>} />
-         <Route path="shopping/product" element={<ShoppingProduct/>} />
-
+        <Route path="vendor/create" element={<CreateVendor />} />
+        <Route path="vendor" element={<MerchantPage />} />
+        <Route path="vendor/edit/:uid" element={<EditVerdor />} />
+        <Route path="shopping/assign-product" element={<AssignProduct />} />
+        <Route path="shopping/product" element={<ShoppingProduct />} />
+        <Route path="darkshop-commission" element={<CategoryCommission />} />
+        <Route path="shopping/product/edit/:id" element={<EditProduct />} />
       </Route>
     </Routes>
   );

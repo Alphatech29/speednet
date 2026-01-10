@@ -42,7 +42,11 @@ const { smspoolWebhook } = require("../utility/smspoolWebhook");
 const { contact } = require("../controller/user/contect");
 const { bulkUpdateStatusController } = require("../controller/admin/dashboard/bulkApproval");
 const { createShortNoticeController, getAllShortNoticesController, updateShortNoticeController, deleteShortNoticeController } = require("../controller/admin/dashboard/shortNotice");
-const { getCategoriesController, getGroupsController, getProductsController } = require("../controller/admin/dashboard/daskshop");
+const { getCategoriesController, getCategoriesWithGroupsController, fetchProducts, fetchAllDarkShopProducts, fetchDarkShopProductById, updateDarkShopProductController } = require("../controller/admin/dashboard/daskshop");
+const { getCategoryCommissionsController, addCategoryCommissionController, updateCategoryCommissionController } = require("../controller/admin/dashboard/darkshopCommission");
+const { fetchAllDarkShopProducts234 } = require("../controller/admin/dashboard/darktest");
+const { createDarkshopOrderController } = require("../controller/user/daskshopCreateOrder");
+const { fetchDarkshopBuyerOrders } = require("../controller/user/darkshop");
 
 // ------- General --------- //
 generalRoute.get("/accounts", getAllAccounts);
@@ -65,6 +69,7 @@ generalRoute.put("/user/update", verifyToken, upload.single("image"), updateUser
 generalRoute.get("/transaction/:userUid", getUserTransactions);
 generalRoute.get("/orderhistory/:userUid", getUserOrderHistory);
 generalRoute.get("/orders/:userUid", fetchUserOrders);
+generalRoute.get("/darkshop-orders/:userUid", fetchDarkshopBuyerOrders);
 generalRoute.post("/create-account", accountCreation);
 generalRoute.post("/activate", activateAccount);
 generalRoute.post("/airtime/Purchase", verifyToken, airtimePurchase);
@@ -95,6 +100,7 @@ generalRoute.post("/verify-bank-account", verifyAccount);
 generalRoute.post("/withdrawal", WithdrawalRequest);
 generalRoute.get("/referrals/:userId", fetchReferralsByReferrer);
 generalRoute.get("/page/:slug", getPagesBySlug);
+generalRoute.post("/darkshop-create-order", verifyToken, createDarkshopOrderController);
 
 // SMS Service routes
 generalRoute.get("/sms/country", fetchOnlineSimCountries);
@@ -146,7 +152,17 @@ generalRoute.post("/create-page", createPage);
 generalRoute.get("/get-pages", getPages);
 generalRoute.delete('/delete-page/:id', deletePage);
 generalRoute.put("/page/:id", editPage);
-generalRoute.get("/dark-categories", getCategoriesController)
-generalRoute.get("/dark-products", getProductsController)
+//generalRoute.get("/dark-categories", getCategoriesController);
+generalRoute.get("/categories-with-groups", getCategoriesWithGroupsController);
+//generalRoute.get("/dark-products", fetchProducts);
+generalRoute.get("/darkshop-all-products", fetchAllDarkShopProducts);
+generalRoute.get("/category-commission", getCategoryCommissionsController);
+generalRoute.post("/category-commission", addCategoryCommissionController);
+generalRoute.put("/category-commission/:category_id", updateCategoryCommissionController);
+generalRoute.get("/darkshop-products/:id", fetchDarkShopProductById);
+generalRoute.put("/darkshop-products/:id", updateDarkShopProductController);
+
+
+generalRoute.get("/darkshop-products-test", fetchAllDarkShopProducts234);
 
 module.exports = generalRoute;

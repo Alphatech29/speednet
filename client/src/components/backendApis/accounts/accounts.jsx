@@ -89,9 +89,6 @@ export const getAllPlatformCate = async () => {
       },
     });
 
-    // Log the raw backend response
-    console.log("Backend response:", response.data);
-
     // Ensure we always return the platforms array inside data.platforms
     const platforms = Array.isArray(response.data?.platforms) ? response.data.platforms : [];
 

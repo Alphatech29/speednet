@@ -2,10 +2,12 @@ const {
   getUserDetailsByUid,
   updateUserBalance,
 } = require("../../utility/userInfo");
+
 const {
   getProductDetailsById,
   updateAccountStatusById,
 } = require("../../utility/product");
+
 const { storeOrder, storeOrderHistory } = require("../../utility/accountOrder");
 const { generateUniqueRandomNumber } = require("../../utility/random");
 const { createTransactionHistory } = require("../../utility/history");
@@ -13,202 +15,253 @@ const { creditEscrow } = require("../../utility/escrow");
 const { getEscrowExpiry } = require("../../utility/countDown");
 const { taskVerification } = require("../../utility/referralVerification");
 
+const {
+  getDarkShopProductPricesbyid,
+  getDarkShopProductById,
+  insertDarkShopOrder,
+} = require("../../utility/darkshopProduct");
+
+const {
+  getDarkshopBalance,
+  createDarkshopOrder,
+} = require("../../utility/daskshopCreateOrder");
+
+const SYSTEM_SELLER_ID = 4; // ONLY FOR DARKSHOP LOGIC
+
 const collectOrder = async (req, res) => {
+  let originalBalance = null;
+  let safeUserId = null;
+
+  const pendingOrders = [];
+  const pendingEscrow = [];
+  const darkProductsResponse = [];
+
   try {
-    const { userId, products, totalAmount } = req.body;
-    const userUid = String(userId).trim();
+    console.log("[REQUEST BODY]:", JSON.stringify(req.body, null, 2));
 
-    if (
-      !userUid ||
-      !Array.isArray(products) ||
-      products.length === 0 ||
-      totalAmount === undefined
-    ) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "Invalid request: Ensure userId, products array, and totalAmount are provided correctly.",
-      });
+    const { userId, products, totalAmount } = req.body || {};
+    if (!userId || !Array.isArray(products) || products.length === 0 || !totalAmount) {
+      return res.status(400).json({ success: false, message: "Invalid request data" });
     }
 
-    const amountToDeduct = parseFloat(totalAmount);
+    safeUserId = String(userId).trim();
+    const amountToDeduct = Number(totalAmount);
     if (isNaN(amountToDeduct) || amountToDeduct <= 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid amount: totalAmount must be a positive number.",
-      });
+      return res.status(400).json({ success: false, message: "Invalid total amount" });
     }
 
-    const userDetails = await getUserDetailsByUid(userUid);
-    if (!userDetails) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found. Please check the user ID.",
-      });
+    // USER CHECK
+    const user = await getUserDetailsByUid(safeUserId);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    originalBalance = Number(user.account_balance);
+    if (originalBalance < amountToDeduct) {
+      return res.status(400).json({ success: false, message: "Insufficient balance" });
     }
 
-    const accountBalance = parseFloat(userDetails.account_balance);
-    if (isNaN(accountBalance) || accountBalance < amountToDeduct) {
-      return res.status(400).json({
-        success: false,
-        message: "Insufficient balance. Please add funds to your wallet.",
-      });
+    // SPLIT PRODUCTS
+    const darkProductIds = [];
+    const normalProducts = [];
+    for (const p of products) {
+      if (!p?.id) continue;
+      const productId = String(p.id).trim();
+      if (productId.startsWith("dark-")) darkProductIds.push(productId.replace("dark-", ""));
+      else normalProducts.push({ ...p, id: productId });
     }
-
-    let productDetailsArray = [];
-    try {
-      productDetailsArray = await Promise.all(
-        products.map(async (productId) => {
-          const productDetails = await getProductDetailsById(productId);
-          if (!productDetails)
-            throw new Error(`Product with ID ${productId} not found`);
-          return productDetails;
-        })
-      );
-    } catch (error) {
-      return res.status(400).json({ success: false, message: error.message });
+    if (darkProductIds.length === 0 && normalProducts.length === 0) {
+      return res.status(400).json({ success: false, message: "No valid products found" });
     }
-
-    let totalProductAmount = 0;
-    productDetailsArray.forEach((product) => {
-      totalProductAmount += parseFloat(product.price) || 0;
-    });
-
-    const newBalance = (accountBalance - amountToDeduct).toFixed(2);
-    const updateSuccess = await updateUserBalance(userUid, newBalance);
-    if (!updateSuccess || updateSuccess.affectedRows === 0) {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to update user balance. Please try again later.",
-      });
-    }
-
-    await createTransactionHistory(
-      userUid,
-      amountToDeduct,
-      "Account Purchased",
-      "Completed"
-    );
 
     const orderNo = generateUniqueRandomNumber(6);
-    let failedOrders = [];
-    let successfulOrders = [];
-    let escrowData = [];
     const escrowExpiresAt = await getEscrowExpiry();
 
-    await Promise.all(
-      productDetailsArray.map(async (productDetails) => {
-        try {
-          const orderData = {
-            account_id: productDetails.id ?? null,
-            seller_id: productDetails.user_id ?? null,
-            buyer_id: userUid,
-            order_no: orderNo,
-            title: productDetails.title ?? null,
-            platform: productDetails.platform ?? null,
-            email: productDetails.email ?? null,
-            recovery_info: productDetails.recovery_info ?? null,
-            recovery_password: productDetails.recovery_password ?? null,
-            username: productDetails.username ?? null,
-            password: productDetails.password ?? null,
-            description: productDetails.description ?? null,
-            factor_description: productDetails.factor_description ?? null,
-            price: productDetails.price ?? 0,
-            payment_status: "Completed",
-            escrow_expires_at: escrowExpiresAt,
-          };
+    // DEDUCT BALANCE
+    const newBalance = (originalBalance - amountToDeduct).toFixed(2);
+    await updateUserBalance(safeUserId, newBalance);
+    await createTransactionHistory(safeUserId, amountToDeduct, "Account Purchased", "Completed");
 
-          Object.keys(orderData).forEach((key) => {
-            if (orderData[key] === undefined) orderData[key] = null;
-          });
+    // ======================
+// PROCESS DARKSHOP PRODUCTS
+// ======================
+if (darkProductIds.length > 0) {
+  // 1️ Get DB prices to check darkBalance
+  const dbPrices = await getDarkShopProductPricesbyid(darkProductIds);
+  const darkBalanceRes = await getDarkshopBalance(safeUserId);
+  const darkBalance = Number(darkBalanceRes?.balance || 0);
 
-          const orderId = await storeOrder(orderData);
-          if (!orderId) {
-            failedOrders.push(productDetails.id);
-          } else {
-            successfulOrders.push(productDetails.id);
+  const totalDarkPrice = Object.values(dbPrices).reduce((sum, price) => sum + Number(price), 0);
+  if (darkBalance < totalDarkPrice) throw new Error("System error: Insufficient darkshop balance");
 
-            // Group escrow by seller
-            const existing = escrowData.find(
-              (e) => e.seller_id === productDetails.user_id
-            );
-            if (existing) {
-              existing.amount += parseFloat(productDetails.price) || 0;
-              existing.product_ids.push(productDetails.id);
-            } else {
-              escrowData.push({
-                seller_id: productDetails.user_id,
-                amount: parseFloat(productDetails.price) || 0,
-                product_ids: [productDetails.id],
-                order_no: orderNo,
-              });
-            }
+  // 2️ Loop through dark products
+  for (const productId of darkProductIds) {
+    const darkProductInfo = await getDarkShopProductById(productId);
 
-            await updateAccountStatusById(String(productDetails.id), "sold");
-          }
-        } catch (err) {
-          failedOrders.push(productDetails.id);
-        }
-      })
-    );
+    // Use price from request body for insertion and response
+    const productFromBody = products.find(p => p.id.toString() === `dark-${productId}`);
+    const priceFromBody = Number(productFromBody?.price || dbPrices[productId]);
 
-    if (successfulOrders.length > 0) {
-      const orderHistoryData = {
-        seller_id: productDetailsArray[0].user_id,
+    const darkOrder = await createDarkshopOrder({ product: "dark-" + productId, orderNo });
+
+    if (!darkOrder?.success) {
+      // REFUND USER
+      await updateUserBalance(safeUserId, originalBalance.toFixed(2));
+      await createTransactionHistory(safeUserId, amountToDeduct, "Refund for failed order", "Refunded");
+      await storeOrderHistory({
+        seller_id: SYSTEM_SELLER_ID,
+        buyer_id: safeUserId,
         order_no: orderNo,
-        order_type: "Account Relinquished",
-        amount: totalProductAmount,
+        order_type: "Refund due to order failure",
+        amount: amountToDeduct,
         status: "Completed",
-      };
+      });
 
-      const orderHistoryId = await storeOrderHistory(orderHistoryData);
-      if (!orderHistoryId) {
-        console.error("Failed to store order history for order:", orderNo);
-      }
-
-      setTimeout(async () => {
-        await creditEscrow(escrowData);
-      }, 2000);
-
-      const userId = userUid;
-
-      taskVerification(userId).catch((err) => {
-        console.error(
-          `Referral verification failed for user ${userId}:`,
-          err.message
-        );
+      return res.status(500).json({
+        success: false,
+        message: `Order failed: ${darkOrder.data?.message || "Unknown error"}. Amount refunded.`,
       });
     }
 
-    if (failedOrders.length > 0) {
+    // INSERT DARKSHOP ORDER USING PRICE FROM BODY
+    await insertDarkShopOrder({
+      account_id: productId,
+      buyer_id: safeUserId,
+      order_no: orderNo,
+      title: darkProductInfo?.name || `Darkshop Product #${productId}`,
+      platform: darkProductInfo?.category_name || "Darkshop",
+      price: priceFromBody, // <-- price from request body
+      payment_status: darkOrder.status === "pending" ? "Pending" : "Completed",
+      darkshop_order_id: darkOrder.id,
+      darkshop_link: darkOrder.link || null,
+      darkshop_content: darkOrder.content || null,
+    });
+
+    darkProductsResponse.push({
+      id: productId,
+      title: darkProductInfo?.name,
+      platform: darkProductInfo?.category_name,
+      price: priceFromBody,
+      darkshop_order_id: darkOrder.id,
+      darkshop_link: darkOrder.link || null,
+      darkshop_content: darkOrder.content || null,
+      payment_status: darkOrder.status
+    });
+  }
+}
+console.log("Darkshop products processed." , darkProductsResponse);
+
+    // ======================
+    // PROCESS NORMAL PRODUCTS
+    // ======================
+    try {
+      for (const p of normalProducts) {
+        const product = await getProductDetailsById(p.id);
+        if (!product) throw new Error(`Product ${p.id} not found`);
+
+        pendingOrders.push({
+          type: "normal",
+          data: {
+            account_id: product.id,
+            seller_id: product.user_id,
+            buyer_id: safeUserId,
+            order_no: orderNo,
+            title: product.title,
+            platform: product.platform,
+            price: product.price,
+            payment_status: "Completed",
+            escrow_expires_at: escrowExpiresAt,
+            email: product.email || null,
+            username: product.username || null,
+            password: product.password || null,
+            recovery_info: product.recovery_info || null,
+            recovery_password: product.recovery_password || null,
+            description: product.description || null,
+            factor_description: product.factor_description || null,
+          },
+        });
+
+        pendingEscrow.push({
+          seller_id: product.user_id,
+          amount: Number(product.price) || 0,
+          product_ids: [product.id],
+          order_no: orderNo,
+        });
+      }
+
+      // COMMIT NORMAL ORDERS
+      for (const order of pendingOrders) {
+        await storeOrder(order.data);
+        if (order.type === "normal") await updateAccountStatusById(String(order.data.account_id), "sold");
+      }
+
+      // STORE ORDER HISTORY FOR NORMAL PRODUCTS
+      for (const p of normalProducts) {
+        const product = await getProductDetailsById(p.id);
+        if (!product) continue;
+
+        await storeOrderHistory({
+          seller_id: product.user_id,
+          buyer_id: safeUserId,
+          order_no: orderNo,
+          order_type: "Account Purchase",
+          amount: Number(product.price) || 0,
+          status: "Completed",
+        });
+      }
+
+    } catch (normalError) {
+      // REFUND USER if normal product processing fails
+      await updateUserBalance(safeUserId, originalBalance.toFixed(2));
+      await createTransactionHistory(safeUserId, amountToDeduct, "Refund for failed order", "Refunded");
+      await storeOrderHistory({
+        seller_id: null,
+        buyer_id: safeUserId,
+        order_no: generateUniqueRandomNumber(6),
+        order_type: "Refund due failure",
+        amount: amountToDeduct,
+        status: "Completed",
+      });
+
       return res.status(500).json({
         success: false,
-        message: `Failed to process orders for some products: ${failedOrders.join(
-          ", "
-        )}.`,
-        failedOrders,
-        successfulOrders,
+        message: normalError.message || " Order failed. Amount refunded.",
       });
+    }
+
+    // NON-BLOCKING TASKS
+    if (pendingEscrow.length > 0) {
+      setTimeout(() => creditEscrow(pendingEscrow).catch(() => {}), 2000);
+      taskVerification(safeUserId).catch(() => {});
     }
 
     return res.status(200).json({
       success: true,
-      message: `Order Completed Successfully - Order No: ${orderNo}`,
-      order: {
-        userUid,
-        products: productDetailsArray,
-        totalAmount: totalProductAmount,
-        newBalance,
-        order_no: orderNo,
-        escrow_expires_at: escrowExpiresAt,
-      },
+      message: "Order completed successfully",
+      order_no: orderNo,
+      totalAmount: amountToDeduct,
+      newBalance,
+      darkshop_products: darkProductsResponse,
+      escrow_expires_at: escrowExpiresAt,
     });
+
   } catch (error) {
-    console.error("Error processing order:", error);
+    console.error("ORDER ERROR:", error);
+
+    // REFUND USER IF ANY OTHER ERROR OCCURS
+    if (safeUserId && originalBalance !== null) {
+      await updateUserBalance(safeUserId, originalBalance.toFixed(2));
+      await createTransactionHistory(safeUserId, Number(totalAmount), "Refund due to order failure", "Refunded");
+      await storeOrderHistory({
+        seller_id: null,
+        buyer_id: safeUserId,
+        order_no: generateUniqueRandomNumber(6),
+        order_type: "Refund due to order failure",
+        amount: Number(totalAmount),
+        status: "Completed",
+      });
+    }
+
     return res.status(500).json({
       success: false,
-      message: "Internal server error. Please try again later.",
-      error: error.message || "Unknown error occurred.",
+      message: error.message || "Order failed",
     });
   }
 };

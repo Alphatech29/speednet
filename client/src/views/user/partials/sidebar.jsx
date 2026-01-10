@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
 import { AuthContext } from "../../../components/control/authContext";
 import { getAllPlatformCate } from "../../../components/backendApis/accounts/accounts";
+import { getDarkCategories } from "../../../components/backendApis/admin/apis/darkshop";
+
 import { HiViewGrid } from "react-icons/hi";
 import {
   FaShop,
@@ -13,6 +14,8 @@ import {
   FaGamepad,
   FaUser,
   FaGlobe,
+  FaChevronDown,
+  FaChevronUp,
 } from "react-icons/fa6";
 import { BiSolidPurchaseTag, BiWorld } from "react-icons/bi";
 import { MdAddBusiness } from "react-icons/md";
@@ -22,7 +25,9 @@ import { SiNordvpn } from "react-icons/si";
 import { TiFlashOutline } from "react-icons/ti";
 import { IoListCircle, IoShareSocialOutline } from "react-icons/io5";
 
+// -------- PLATFORM TYPES --------
 const types = [
+  { name: "Advanced", icon: FaGlobe },
   { name: "Social Media", icon: IoShareSocialOutline },
   { name: "Email & Messaging", icon: FaEnvelope },
   { name: "VPN & Proxys", icon: SiNordvpn },
@@ -31,19 +36,32 @@ const types = [
   { name: "Gaming", icon: FaGamepad },
   { name: "Account & Subscription", icon: FaUser },
   { name: "Other", icon: FaGlobe },
+
 ];
 
-const PRIORITY_PLATFORMS = [
-  "Facebook",
-  "Twitter-X",
-  "Instagram",
-  "Snapchat",
-  "LinkedIn",
-];
+const PRIORITY_PLATFORMS = ["Facebook", "Twitter-X", "Instagram", "Snapchat", "LinkedIn"];
 
 const linkClasses =
-  "flex items-center gap-2 text-base hover:bg-primary-600 hover:p-2 hover:rounded-lg hover:text-pay";
+  "flex items-center gap-2 text-base hover:bg-primary-600 p-2 hover:p-2 hover:rounded-lg hover:text-pay";
 
+// --------- SIDEBAR DROPDOWN COMPONENT ---------
+const SidebarDropdown = ({ label, children }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="w-full">
+      <div
+        onClick={() => setOpen(!open)}
+        className="flex items-center justify-between cursor-pointer p-2  hover:p-2 bg-gray-800 text-white hover:bg-primary-600 rounded-lg"
+      >
+        <div className="flex items-center gap-2">{label}</div>
+        {open ? <FaChevronUp size={11} /> : <FaChevronDown size={11} />}
+      </div>
+      {open && <div className="ml-4 mt-1 flex flex-col gap-1">{children}</div>}
+    </div>
+  );
+};
+
+// ---------- SIDEBAR COMPONENT ----------
 const Sidebar = ({
   platformFilter,
   setPlatformFilter = () => {},
@@ -56,64 +74,138 @@ const Sidebar = ({
 
   const [activeTab, setActiveTab] = useState("menu");
   const [platforms, setPlatforms] = useState({});
+  const [darkCategories, setDarkCategories] = useState([]);
   const [localPriceRange, setLocalPriceRange] = useState(priceRange);
 
   const handlePriceChange = (e, index) => {
     const value = Number(e.target.value);
     const newRange = [...localPriceRange];
-
-    if (index === 0) {
-      newRange[0] = Math.min(value, newRange[1]);
-    } else {
-      newRange[1] = Math.max(value, newRange[0]);
-    }
-
+    if (index === 0) newRange[0] = Math.min(value, newRange[1]);
+    else newRange[1] = Math.max(value, newRange[0]);
     setLocalPriceRange(newRange);
     setPriceRange(newRange);
   };
 
+  // Set initial active tab
   useEffect(() => {
     const width = window.innerWidth;
-    if (width < 768) {
-      setActiveTab("menu");
-    } else {
-      setActiveTab(role === "merchant" ? "menu" : "categories");
-    }
+    setActiveTab(width < 768 ? "menu" : role === "merchant" ? "menu" : "categories");
   }, [role]);
 
+  // Fetch normal platforms
   useEffect(() => {
     const fetchPlatforms = async () => {
       try {
         const response = await getAllPlatformCate();
         if (response.success) {
-          const data = response.data?.platforms || [];
-          const grouped = data.reduce((acc, platform) => {
-            const { type, name, id, image_path, price } = platform;
+          const grouped = (response.data?.platforms || []).reduce((acc, p) => {
+            const { type, name, id, image_path, price } = p;
             if (!acc[type]) acc[type] = [];
             acc[type].push({ name, id, image_path, price });
             return acc;
           }, {});
           setPlatforms(grouped);
-        } else {
-          console.error("Failed to fetch platforms:", response.message);
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error(error);
       }
     };
     fetchPlatforms();
   }, []);
 
+  // Fetch dark categories
+  useEffect(() => {
+    const fetchDarkCategories = async () => {
+      try {
+        const response = await getDarkCategories();
+        if (response.success) setDarkCategories(response.data || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchDarkCategories();
+  }, []);
+
+  // ---------- RENDER NORMAL PLATFORM ITEMS ----------
+  const renderGroupItems = (items) =>
+    items
+      .filter(
+        (platform) =>
+          !platform.price ||
+          (platform.price >= localPriceRange[0] && platform.price <= localPriceRange[1])
+      )
+      .sort((a, b) => {
+        const aPriority = PRIORITY_PLATFORMS.indexOf(a.name);
+        const bPriority = PRIORITY_PLATFORMS.indexOf(b.name);
+        if (aPriority !== -1 && bPriority !== -1) return aPriority - bPriority;
+        if (aPriority !== -1) return -1;
+        if (bPriority !== -1) return 1;
+        return a.name.localeCompare(b.name);
+      })
+      .map((platform) => (
+        <button
+          key={platform.id || platform.name}
+          onClick={() => setPlatformFilter({ name: platform.name })}
+          className={`flex items-center gap-2 text-left w-full p-1 rounded ${
+            platformFilter?.name === platform.name
+              ? "bg-primary-600 text-white"
+              : "text-gray-400 hover:bg-gray-700"
+          }`}
+        >
+          {platform.image_path && (
+            <img
+              src={platform.image_path}
+              alt={platform.name}
+              className="h-5 w-5 rounded-full object-contain"
+            />
+          )}
+          <span>{platform.name}</span>
+        </button>
+      ));
+
+  // ---------- RENDER DARK CATEGORY ITEMS WITH NESTED GROUPS ----------
+  const renderDarkCategoryItems = (categories) =>
+    categories.map((category) => (
+      <SidebarDropdown
+        key={category.id}
+        label={
+          <div className="flex items-center gap-2">
+            {category.icon && (
+              <img src={category.icon} alt={category.name} className="h-5 w-5 rounded-full" />
+            )}
+            {category.name}
+          </div>
+        }
+      >
+        {category.groups.map((group) => (
+          <button
+            key={group.id}
+            onClick={() =>
+              setPlatformFilter({ categoryId: category.id, groupId: group.id })
+            }
+            className={`flex items-center gap-2 text-left w-full p-1 rounded ${
+              platformFilter?.groupId === group.id
+                ? "bg-primary-600 text-white"
+                : "text-gray-400 hover:bg-gray-700"
+            }`}
+          >
+            <span>{group.name}</span>
+          </button>
+        ))}
+      </SidebarDropdown>
+    ));
+
   return (
-    <div className="overflow-auto text-left bottom-0 w-[265px] h-full bg-gray-800 text-slate-200 px-4 pb-4 pt-3 z-50 fixed top-0 left-0 mobile:overflow-y-auto">
-      
-      <div className="mb-4 w-full border-b border-gray-700 flex justify-center pc:block">
+    <div className="text-left w-[265px] h-screen bg-gray-800 text-slate-200 fixed top-0 left-0 z-50 flex flex-col">
+      {/* LOGO */}
+      <div className="mb-4 w-full border-b border-gray-700 flex justify-center items-center p-3">
         <NavLink to="/">
           <img src="/image/user-logo.png" alt="Logo" className="h-10" />
         </NavLink>
       </div>
 
-      <div className="mobile:hidden tab:flex justify-between mb-4 gap-2">
+      {/* MOBILE TABS */}
+      <div className="flex md:hidden justify-between mb-4 gap-2 px-2">
         <button
           onClick={() => setActiveTab("menu")}
           className={`flex-1 p-2 rounded-lg ${
@@ -124,7 +216,6 @@ const Sidebar = ({
         >
           Menu
         </button>
-
         <button
           onClick={() => setActiveTab("categories")}
           className={`flex-1 p-2 rounded-lg ${
@@ -137,108 +228,69 @@ const Sidebar = ({
         </button>
       </div>
 
-      <div className="flex flex-col gap-4">
-        {/* MENU */}
+      {/* SCROLLABLE CONTENT */}
+      <div className="flex-1 overflow-y-auto px-2 mb-5">
+        {/* ----- MENU ----- */}
         {activeTab === "menu" && (
-          <>
+          <div className="flex flex-col gap-2">
             {role !== "merchant" && (
               <NavLink
                 to="/user/become-a-marchant"
-                className="flex items-center p-2 gap-2 text-base bg-primary-600 rounded-lg hover:text-pay"
+                className={`${linkClasses} bg-primary-600 rounded-lg`}
               >
-                <MdAddBusiness /> <span>Become a Merchant</span>
+                <MdAddBusiness /> Become a Merchant
               </NavLink>
             )}
-
             {role !== "user" && (
               <NavLink to="/user/dashboard" className={linkClasses}>
-                <HiViewGrid /> <span>Dashboard</span>
+                <HiViewGrid /> Dashboard
               </NavLink>
             )}
-
             <NavLink to="/user/marketplace" className={linkClasses}>
-              <FaShop /> <span>Marketplace</span>
+              <FaShop /> Marketplace
             </NavLink>
 
             {role !== "user" && (
-              <Dropdown
-                label={
-                  <span className="flex items-center gap-2">
-                    <FaShopify /> Products
-                  </span>
-                }
-                inline
-                className="bg-gray-800 text-white border-none"
-              >
-                <Dropdown.Item as="div">
-                  <NavLink className="text-gray-400" to="/user/add-product">
-                    Add Product
-                  </NavLink>
-                </Dropdown.Item>
-                <Dropdown.Item as="div">
-                  <NavLink className="text-gray-400" to="/user/my-products">
-                    My Products
-                  </NavLink>
-                </Dropdown.Item>
-              </Dropdown>
+              <SidebarDropdown label={<><FaShopify /> Products</>}>
+                <NavLink to="/user/add-product" className="text-gray-400 hover:text-white p-1">
+                  Add Product
+                </NavLink>
+                <NavLink to="/user/my-products" className="text-gray-400 hover:text-white p-1">
+                  My Products
+                </NavLink>
+              </SidebarDropdown>
             )}
 
             <NavLink to="/user/wallet" className={linkClasses}>
-              <FaWallet /> <span>My Wallet</span>
+              <FaWallet /> My Wallet
             </NavLink>
 
-            <Dropdown
-              label={
-                <span className="flex items-center gap-2">
-                  <GiVirtualMarker /> Sms-Virtual-Phone
-                </span>
-              }
-              inline
-              className="bg-gray-800 text-white border-none"
-            >
-              <Dropdown.Item as="div">
-                <NavLink className="text-gray-400" to="/user/sms-service">
-                  Portal
-                </NavLink>
-              </Dropdown.Item>
-              <Dropdown.Item as="div">
-                <NavLink className="text-gray-400" to="/user/get-number">
-                  Get Number
-                </NavLink>
-              </Dropdown.Item>
-            </Dropdown>
+            <SidebarDropdown label={<><GiVirtualMarker /> Sms-Virtual-Phone</>}>
+              <NavLink to="/user/sms-service" className="text-gray-400 hover:text-white p-1">
+                Portal
+              </NavLink>
+              <NavLink to="/user/get-number" className="text-gray-400 hover:text-white p-1">
+                Get Number
+              </NavLink>
+            </SidebarDropdown>
 
-            <Dropdown
-              label={
-                <span className="flex items-center gap-2">
-                  <SiNordvpn /> Nord Services
-                </span>
-              }
-              inline
-              className="bg-gray-800 text-white border-none"
-            >
-              <Dropdown.Item as="div">
-                <NavLink className="text-gray-400" to="/user/nord-services/vpn">
-                  NordVPN
-                </NavLink>
-              </Dropdown.Item>
-
-              <Dropdown.Item as="div">
-                <NavLink className="text-gray-400" to="/user/nord-services/locker">
-                  NordLocker
-                </NavLink>
-              </Dropdown.Item>
-            </Dropdown>
+            <SidebarDropdown label={<><SiNordvpn /> Nord Services</>}>
+              <NavLink to="/user/nord-services/vpn" className="text-gray-400 hover:text-white p-1">
+                NordVPN
+              </NavLink>
+              <NavLink to="/user/nord-services/locker" className="text-gray-400 hover:text-white p-1">
+                NordLocker
+              </NavLink>
+            </SidebarDropdown>
 
             {role !== "user" && (
               <NavLink to="/user/withdraw" className={linkClasses}>
-                <BsBank2 /> <span>Withdraw</span>
+                <BsBank2 /> Withdraw
               </NavLink>
             )}
-
             {country === "Nigeria" && (
               <NavLink to="/user/vtu" className={linkClasses}>
-                <FaMobile /> <span>VTU Service</span>
+                <FaMobile /> VTU Service
               </NavLink>
             )}
 
@@ -248,95 +300,34 @@ const Sidebar = ({
               rel="noopener noreferrer"
               className={linkClasses}
             >
-              <TiFlashOutline /> <span>Boost Accounts</span>
+              <TiFlashOutline /> Boost Accounts
             </a>
-
             <NavLink to="/user/order" className={linkClasses}>
-              <BiSolidPurchaseTag /> <span>My Purchase</span>
+              <BiSolidPurchaseTag /> My Purchase
             </NavLink>
-
             <NavLink to="/user/report-list" className={linkClasses}>
-              <IoListCircle /> <span>My Report</span>
+              <IoListCircle /> My Report
             </NavLink>
-
             <NavLink to="/user/international-airtime" className={linkClasses}>
-              <BiWorld /> <span>International Airtime</span>
+              <BiWorld /> International Airtime
             </NavLink>
-          </>
+          </div>
         )}
 
-        {/* CATEGORIES */}
+        {/* ----- CATEGORIES ----- */}
         {activeTab === "categories" && (
-          <>
+          <div className="flex flex-col gap-2">
             <div className="border-b-2 text-gray-200 py-2">
               <h1>Filter</h1>
               <p>Account Categories</p>
             </div>
 
-            {/* PLATFORM FILTER */}
             {types.map(({ name, icon: Icon }) => (
-              <Dropdown
-                key={name}
-                label={
-                  <span className="flex items-center gap-2">
-                    <Icon /> {name}
-                  </span>
-                }
-                inline
-                className="bg-gray-800 text-white border-none mb-2"
-              >
-                {(platforms[name] || [])
-                  .filter(
-                    (platform) =>
-                      platform.price === undefined ||
-                      (platform.price >= localPriceRange[0] &&
-                        platform.price <= localPriceRange[1])
-                  )
-                  .sort((a, b) => {
-                    const aPriority = PRIORITY_PLATFORMS.indexOf(a.name);
-                    const bPriority = PRIORITY_PLATFORMS.indexOf(b.name);
-
-                    if (aPriority !== -1 && bPriority !== -1)
-                      return aPriority - bPriority;
-
-                    if (aPriority !== -1) return -1;
-                    if (bPriority !== -1) return 1;
-
-                    return a.name.localeCompare(b.name);
-                  })
-                  .map((platform) => (
-                    <Dropdown.Item
-                      key={platform.id}
-                      as="button"
-                      onClick={() => setPlatformFilter(platform.name)}
-                      className={`flex items-center gap-2 text-left w-full ${
-                        platformFilter === platform.name
-                          ? "bg-primary-600 text-white rounded"
-                          : "text-gray-400"
-                      }`}
-                    >
-                      {platform.image_path && (
-                        <img
-                          src={platform.image_path}
-                          alt={platform.name}
-                          className="h-5 w-5 rounded-full object-contain"
-                        />
-                      )}
-                      <span className="text-[16px]">{platform.name}</span>
-                    </Dropdown.Item>
-                  ))}
-
-                {(platforms[name] || []).filter(
-                  (platform) =>
-                    platform.price === undefined ||
-                    (platform.price >= localPriceRange[0] &&
-                      platform.price <= localPriceRange[1])
-                ).length === 0 && (
-                  <Dropdown.Item as="div">
-                    <span className="text-gray-400 text-sm">No platforms category</span>
-                  </Dropdown.Item>
-                )}
-              </Dropdown>
+              <SidebarDropdown key={name} label={<><Icon /> {name}</>}>
+                {name === "Advanced"
+                  ? renderDarkCategoryItems(darkCategories)
+                  : renderGroupItems(platforms[name] || [])}
+              </SidebarDropdown>
             ))}
 
             {/* PRICE FILTER */}
@@ -346,19 +337,16 @@ const Sidebar = ({
                 <span>${localPriceRange[0]}</span>
                 <span>${localPriceRange[1]}</span>
               </div>
-
-              <div className="flex gap-2">
-                <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  value={localPriceRange[0]}
-                  onChange={(e) => handlePriceChange(e, 0)}
-                  className="accent-primary-600 flex-1"
-                />
-              </div>
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                value={localPriceRange[0]}
+                onChange={(e) => handlePriceChange(e, 0)}
+                className="accent-primary-600 w-full"
+              />
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

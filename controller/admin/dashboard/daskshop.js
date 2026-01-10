@@ -1,112 +1,227 @@
-// controllers/categoriesController.js
-const { safeGet, safeSet } = require("../../../model/redis");
-const {
-  getCategoriesWithGroups,
-  getProducts,
-  autoFetchProducts,
-} = require("../../../utility/daskshop");
-const axios = require("axios");
+const { getCategoriesWithGroups } = require("../../../utility/darkshopCategories");
+const { 
+  getDarkShopProducts, 
+  getDarkShopProductById,
+  updateDarkShopProductById,
+  assignProductToVendor
+} = require("../../../utility/darkshopProduct");
+const { getWebSettings } = require("../../../utility/general");
+const { getCategoryCommissions } = require("../../../utility/darkshopCommission");
 
-const CACHE_KEY_CATEGORIES = "categories_with_groups";
-const CACHE_TTL = 60 * 60 * 24; // 24 hours
-const LANG_CACHE_PREFIX = "langcache:";
 
-/* =========================
-   LANGUAGE CACHE HELPERS
-========================= */
-async function getLangCache(key) {
-  return safeGet(`${LANG_CACHE_PREFIX}${key}`);
-}
-
-async function setLangCache(key, value) {
-  return safeSet(`${LANG_CACHE_PREFIX}${key}`, value, CACHE_TTL);
-}
-
-async function translateText(text) {
-  const cached = await getLangCache(text);
-  if (cached) return cached;
-
+/**
+ * GET /api/categories-with-groups
+ */
+async function getCategoriesWithGroupsController(req, res) {
   try {
-    const res = await axios.get(
-      "https://translate.googleapis.com/translate_a/single",
-      {
-        params: { client: "gtx", sl: "auto", tl: "en", dt: "t", q: text },
-      }
-    );
+    const result = await getCategoriesWithGroups();
 
-    const translated = res.data[0][0][0];
-    await setLangCache(text, translated);
-    return translated;
-  } catch {
-    return text;
-  }
-}
-
-/* =========================
-   CATEGORIES CONTROLLER
-========================= */
-async function getCategoriesController(req, res) {
-  try {
-    let categories = await safeGet(CACHE_KEY_CATEGORIES);
-
-    if (!categories) {
-      const response = await getCategoriesWithGroups();
-      categories = response.data.items;
-
-      for (const category of categories) {
-        category.name = await translateText(category.name);
-        for (const group of category.groups) {
-          group.name = await translateText(group.name);
-        }
-      }
-
-      await safeSet(CACHE_KEY_CATEGORIES, categories, CACHE_TTL);
+    if (!result.success) {
+      return res.status(500).json({
+        success: false,
+        message: result.message || "Unable to fetch categories"
+      });
     }
 
     return res.status(200).json({
       success: true,
-      data: categories,
+      data: result.data
     });
+
   } catch (error) {
-    console.error("Get categories error:", error.message);
+    console.error("Controller error:", error);
     return res.status(500).json({
       success: false,
-      message: "Failed to fetch categories",
+      message: "Internal server error"
     });
   }
 }
 
-/* =========================
-   PRODUCTS CONTROLLER
-========================= */
-async function getProductsController(req, res) {
-  try {
-    const filters = req.query || {};
+/**
+ * Fetch all products from dark_shop_products table
+ */
+async function fetchAllDarkShopProducts(req, res) {
+ try {
+    const products = await getDarkShopProducts();
 
-    // Attempt to get products from Redis first
-    const response = await getProducts(filters);
+    if (!products.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+      });
+    }
+
+    const webSettings = await getWebSettings();
+    const RUB_TO_USD = parseFloat(webSettings?.usd_rub) || 0;
+
+    // Fetch category commissions
+    const commissions = await getCategoryCommissions();
+
+    // Convert commissions array to a lookup object
+    const commissionLookup = {};
+    commissions.forEach(c => {
+      commissionLookup[c.category_id] = parseFloat(c.commission) || 0;
+    });
+
+    const productsWithCommission = products.map(product => {
+      const price_rub = parseFloat(product.price) || 0;
+
+      // USD price before commission
+      const priceUSD = price_rub * RUB_TO_USD;
+
+      // Get commission for this product's category
+      const commissionPercent = commissionLookup[product.category_id] || 0;
+
+      // USD price after commission
+      const priceWithCommissionUSD = priceUSD + (priceUSD * commissionPercent / 100);
+
+      return {
+        ...product,
+        price_rub, // original RUB price
+        price: priceWithCommissionUSD.toFixed(2),
+      };
+    });
 
     return res.status(200).json({
       success: true,
-      data: response.data.items,
-      totalCount: response.data.totalCount,
-      loading: response.data.loading,
-      cached: true, // Always from cache
+      data: productsWithCommission,
     });
   } catch (error) {
-    console.error("Get products error:", error.message);
-
-    // Trigger background fetch in case of failure
-    autoFetchProducts().catch(err => console.error("Background fetch failed:", err.message));
-
+    console.error("Controller error:", error.message || error);
     return res.status(500).json({
       success: false,
-      message: "Failed to fetch products",
+      message: "Internal server error",
     });
   }
 }
 
+/**
+ * Fetch single product by ID
+ * GET /api/darkshop-products/:id
+ */
+async function fetchDarkShopProductById(req, res) {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Product ID is required",
+      });
+    }
+
+    const product = await getDarkShopProductById(id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    const webSettings = await getWebSettings();
+    const RUB_TO_USD = parseFloat(webSettings?.usd_rub) || 0;
+
+    const price = parseFloat(product.price) || 0;
+
+    const productWithUSD = {
+      ...product,
+      price: (price * RUB_TO_USD).toFixed(2),
+    };
+
+    return res.status(200).json({
+      success: true,
+      data: productWithUSD,
+    });
+
+  } catch (error) {
+    console.error("Controller error:", error.message || error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
+
+
+async function updateDarkShopProductController(req, res) {
+  try {
+    const { id } = req.params;
+    const { name, description } = req.body;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Product ID is required",
+      });
+    }
+
+    if (!name || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and description are required",
+      });
+    }
+
+    const updated = await updateDarkShopProductById(
+      id,
+      name.trim(),
+      description.trim()
+    );
+
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found or no changes made",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+    });
+
+  } catch (error) {
+    console.error("Controller error:", error.message || error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
+
+async function assignProductToVendorController(req, res) {
+  try {
+    const { productId, vendorId } = req.body;
+
+    if (!productId || !vendorId) {
+      return res.status(400).json({
+        success: false,
+        message: "Product ID and Vendor ID are required",
+      });
+    }
+
+    await assignProductToVendor(productId, vendorId);
+
+    return res.status(200).json({
+      success: true,
+      message: `Product ID ${productId} assigned to Vendor ID ${vendorId} successfully`,
+    });
+
+  } catch (error) {
+    console.error("Controller error:", error.message || error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
+
+
 module.exports = {
-  getCategoriesController,
-  getProductsController,
+  getCategoriesWithGroupsController,
+  fetchAllDarkShopProducts,
+  fetchDarkShopProductById,
+  updateDarkShopProductController,
+  assignProductToVendorController
 };

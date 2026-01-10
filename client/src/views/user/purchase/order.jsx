@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaFile } from "react-icons/fa";
 import { AuthContext } from "../../../components/control/authContext";
-import { getUserOrders } from "../../../components/backendApis/history/orderHistory";
+import { getUserOrders, getUserDarkshopOrders } from "../../../components/backendApis/history/orderHistory";
 import { formatDateTime } from "../../../components/utils/formatTimeDate";
 import { Table, Button } from "flowbite-react";
 import OrderDetails from "./modal/orderDetails";
@@ -9,79 +9,91 @@ import Report from "./modal/report";
 
 const Order = () => {
   const { user, webSettings } = useContext(AuthContext);
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showReportModal, setShowReportModal] = useState(false);
-  const [reportData, setReportData] = useState({
-    defendantId: null,
-    orderId: null,
-  });
-
+  const [reportData, setReportData] = useState({ defendantId: null, orderId: null });
   const [timers, setTimers] = useState({});
 
-  // Convert expiry time to countdown
+  // Countdown logic
   const getCountdown = (expiresAt) => {
+    if (!expiresAt) return "—";
     const distance = new Date(expiresAt) - new Date();
-    if (distance <= 0) return "Expired";
-
-    const hours = String(Math.floor(distance / (1000 * 60 * 60))).padStart(
-      2,
-      "0"
-    );
-    const minutes = String(
-      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-    ).padStart(2, "0");
-    const seconds = String(
-      Math.floor((distance % (1000 * 60)) / 1000)
-    ).padStart(2, "0");
-
+    if (distance <= 0) return "Escrow Completed";
+    const hours = String(Math.floor(distance / (1000 * 60 * 60))).padStart(2, "0");
+    const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
+    const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, "0");
     return `${hours}:${minutes}:${seconds}`;
   };
 
-  // Load orders
+  // Fetch orders
   useEffect(() => {
     if (!user?.uid) return;
 
-    getUserOrders(String(user.uid))
-      .then((response) => {
-        const grouped = response.reduce((acc, order) => {
-          const key = `${order.order_no}_${new Date(
-            order.create_at
-          ).toISOString()}`;
-          acc[key] = acc[key] || [];
+    const fetchOrders = async () => {
+      try {
+        setIsLoading(true);
+
+        const [normalOrders, darkshopOrders] = await Promise.all([
+          getUserOrders(String(user.uid)),
+          getUserDarkshopOrders(String(user.uid)),
+        ]);
+
+        // Normalize orders
+        const normalizedNormalOrders = normalOrders.map(o => ({
+          ...o,
+          isDarkshop: false,
+          create_at: o.create_at || o.created_at,
+        }));
+
+        const normalizedDarkshopOrders = darkshopOrders.map(o => ({
+          ...o,
+          isDarkshop: true,
+          create_at: o.create_at || o.created_at,
+          escrow_expires_at: null // Darkshop orders have no escrow
+        }));
+
+        const combinedOrders = [...normalizedNormalOrders, ...normalizedDarkshopOrders];
+
+        // Group by order_no
+        const grouped = combinedOrders.reduce((acc, order) => {
+          const key = `${order.order_no}`;
+          if (!acc[key]) acc[key] = [];
           acc[key].push(order);
           return acc;
         }, {});
 
-        const sorted = Object.keys(grouped)
-          .sort(
-            (a, b) =>
-              new Date(grouped[b][0].create_at) -
-              new Date(grouped[a][0].create_at)
-          )
-          .reduce((acc, key) => {
-            acc[key] = grouped[key];
-            return acc;
-          }, {});
+        // Sort orders within each group (newest first)
+        Object.keys(grouped).forEach(key => {
+          grouped[key].sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
+        });
 
-        setOrders(sorted);
-      })
-      .catch((err) => console.error("Order fetch error:", err))
-      .finally(() => setIsLoading(false));
+        // Sort groups by latest order date (newest first)
+        const sortedGroups = Object.keys(grouped)
+          .sort((a, b) => new Date(grouped[b][0].create_at) - new Date(grouped[a][0].create_at))
+          .reduce((acc, key) => ({ ...acc, [key]: grouped[key] }), {});
+
+        setOrders(sortedGroups);
+      } catch (err) {
+        console.error("Order fetch error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
   }, [user]);
 
-  // Countdown updater
+  // Timer update
   useEffect(() => {
     const interval = setInterval(() => {
       const newTimers = {};
-
-      Object.keys(orders).forEach((groupKey) => {
-        const order = orders[groupKey][0];
-        newTimers[groupKey] = getCountdown(order.escrow_expires_at);
+      Object.keys(orders).forEach(key => {
+        const order = orders[key][0];
+        newTimers[key] = order.isDarkshop ? "—" : getCountdown(order.escrow_expires_at);
       });
-
       setTimers(newTimers);
     }, 1000);
 
@@ -90,7 +102,7 @@ const Order = () => {
 
   const handleViewDetails = (orderId) => {
     const allOrders = Object.values(orders).flat();
-    const order = allOrders.find((o) => o.id === orderId);
+    const order = allOrders.find(o => o.id === orderId);
     if (order) {
       setSelectedOrder(order);
       setIsModalOpen(true);
@@ -108,118 +120,76 @@ const Order = () => {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div>
-        <span className="text-lg font-medium text-gray-300">My Purchase</span>
+        <span className="text-lg font-medium text-gray-300">My Purchases</span>
       </div>
 
-      <div className="bg-yellow-100 w-full text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm mobile:text-[13px] pc:text-base">
-        <span className="font-medium">Important!</span> Customers are not
-        eligible for a refund on any social media product unless it is reported
-        as defective and returned within 24 hours of purchase.
+      <div className="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm">
+        <span className="font-medium">Important!</span> Refunds only within 24 hours for defective social media products.
       </div>
 
-      <div className="bg-slate-700 border border-gray-400 rounded-lg px-3 py-4">
+      {/* MOBILE UI */}
+      <div className="block lg:hidden bg-slate-700 border border-gray-400 rounded-lg px-3 py-4">
         {Object.keys(orders).length > 0 ? (
-          <div className="text-gray-300">
-            {Object.keys(orders).map((groupKey) => {
-              const [orderNo] = groupKey.split("_");
-              const orderData = orders[groupKey][0];
-              const countdown = timers[groupKey] || "Loading...";
+          <div className="flex flex-col gap-4 text-gray-300">
+            {Object.keys(orders)
+              .sort((a, b) => new Date(orders[b][0].create_at) - new Date(orders[a][0].create_at))
+              .map(groupKey => {
+                const orderData = orders[groupKey][0];
+                const countdown = timers[groupKey] || "—";
 
-              return (
-                <div
-                  key={groupKey}
-                  className="mb-4 bg-gray-800 p-4 rounded-md shadow-md"
-                >
-                  <div className="flex justify-between items-center border-b">
-                    <div>
-                      <div className="flex flex-col pb-2">
-                        <h1 className="font-medium text-white pc:text-lg mobile:text-[14px]">
-                          Order No: {orderNo}
-                        </h1>
-                        <h2 className="text-white pc:text-sm mobile:text-[12px]">
-                          Status: {orderData.payment_status || "Pending"}
-                        </h2>
-                        <span className="pc:text-sm mobile:text-[12px]">
-                          {formatDateTime(orderData.create_at)}
-                        </span>
+                return (
+                  <div key={groupKey} className="mb-4 bg-gray-800 p-4 rounded-md shadow-md">
+                    <div className="flex justify-between items-start border-b pb-2">
+                      <div>
+                        <h2 className="font-semibold text-white text-base">Order No: {groupKey}</h2>
+                        <p className="text-sm">Status: {orderData.payment_status || "Pending"}</p>
+                        <p className="text-xs text-gray-400">{formatDateTime(orderData.create_at)}</p>
                       </div>
-                    </div>
-                    <div>
-                      <div className="flex flex-col pb-2">
-                        <h1 className="font-medium text-white text-end pc:text-lg mobile:text-[14px]">
-                          {countdown}
-                        </h1>
-                        <div className="flex gap-2 items-center">
+                      <div className="text-right">
+                        <p className="font-semibold text-white">{orderData.isDarkshop ? "" : countdown}</p>
+                        <div className="flex gap-2 mt-2 justify-end">
                           <Button
                             size="sm"
                             className="bg-primary-600/20 py-1"
                             onClick={() => {
-                              setReportData({
-                                defendantId: orderData.seller_id,
-                                orderId: orderData.order_no,
-                              });
+                              setReportData({ defendantId: orderData.seller_id, orderId: orderData.order_no });
                               setShowReportModal(true);
                             }}
                           >
                             Report
                           </Button>
-                          <a
-                            href="https://t.me/bobcarly888"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Button
-                              size="sm"
-                              className="text-gray-300 bg-slate-700 shadow-md py-1"
-                            >
-                              Live Report
-                            </Button>
+                          <a href="https://t.me/bobcarly888" target="_blank" rel="noopener noreferrer">
+                            <Button size="sm" className="bg-slate-700 text-gray-300 py-1">Live Report</Button>
                           </a>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="overflow-x-auto">
-                    <Table
-                      hoverable
-                      className="bg-transparent min-w-[600px] text-xs tab:text-sm pc:text-base"
-                    >
-                      <Table.Head className="bg-transparent text-white">
-                        <Table.HeadCell>S/N</Table.HeadCell>
-                        <Table.HeadCell>Platform</Table.HeadCell>
-                        <Table.HeadCell>Title</Table.HeadCell>
-                        <Table.HeadCell>Price</Table.HeadCell>
-                        <Table.HeadCell>Details</Table.HeadCell>
-                      </Table.Head>
-
-                      <Table.Body className="divide-y">
-                        {orders[groupKey].map((order, index) => (
-                          <Table.Row key={order.id} className="text-gray-300">
-                            <Table.Cell>{index + 1}</Table.Cell>
-                            <Table.Cell>{order.platform}</Table.Cell>
-                            <Table.Cell>{order.title}</Table.Cell>
-                            <Table.Cell>
-                              {webSettings?.currency}
-                              {order.price}
-                            </Table.Cell>
-                            <Table.Cell>
+                    <div className="flex flex-col gap-3 mt-2">
+                      {orders[groupKey]
+                        .sort((a, b) => new Date(b.create_at) - new Date(a.create_at))
+                        .map((order, index) => (
+                          <div key={order.id} className="bg-gray-700 p-3 rounded-md flex flex-col gap-1">
+                            <div className="flex justify-between">
+                              <span className="font-medium">{index + 1}. {order.title}</span>
+                              <span className="font-semibold">{webSettings?.currency}{order.price}</span>
+                            </div>
+                            <div className="flex justify-between items-center mt-1 text-xs text-gray-300">
+                              <span>Platform: {order.platform}</span>
                               <Button
-                                size="sm"
-                                className="bg-primary-600 border-0 text-gray-200 text-sm px-3 py-1 rounded-md hover:bg-primary-700 transition"
+                                size="xs"
+                                className="bg-primary-600 border-0 text-gray-200 px-2 py-1 rounded-md hover:bg-primary-700"
                                 onClick={() => handleViewDetails(order.id)}
                               >
                                 View Details
                               </Button>
-                            </Table.Cell>
-                          </Table.Row>
+                            </div>
+                          </div>
                         ))}
-                      </Table.Body>
-                    </Table>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         ) : (
           <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-gray-300">
@@ -229,20 +199,13 @@ const Order = () => {
         )}
       </div>
 
-      {isModalOpen && selectedOrder && (
-        <OrderDetails
-          order={selectedOrder}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
+      {/* PC & Tablet UI */}
+      <div className="hidden lg:block bg-slate-700 border border-gray-400 rounded-lg px-3 py-4">
+        {/* Your previous table-based UI goes here */}
+      </div>
 
-      {showReportModal && (
-        <Report
-          defendantId={reportData.defendantId}
-          orderId={reportData.orderId}
-          onClose={() => setShowReportModal(false)}
-        />
-      )}
+      {isModalOpen && selectedOrder && <OrderDetails order={selectedOrder} onClose={() => setIsModalOpen(false)} />}
+      {showReportModal && <Report defendantId={reportData.defendantId} orderId={reportData.orderId} onClose={() => setShowReportModal(false)} />}
     </div>
   );
 };

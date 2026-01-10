@@ -24,3 +24,28 @@
         width: 100%;
     }
  
+.sidebar-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 6px;
+  color: var(--pay-color);
+}
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.sidebar-sub-link {
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 6px;
+  color: var(--pay-color);
+}
+
+.sidebar-sub-link:hover {
+  background: rgba(255, 255, 255, 0.4);
+}

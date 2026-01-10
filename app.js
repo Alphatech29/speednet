@@ -94,6 +94,20 @@ try {
   process.exit(1);
 }
 
+// Darkshop Product Job (NON-CRITICAL)
+try {
+  require("./utility/darkshopAuto");
+  logger.info("Darkshop product maintenance job started.");
+  console.log("Darkshop product maintenance job started.");
+} catch (err) {
+  logger.error("Failed to load Darkshop product job", {
+    message: err.message,
+    stack: err.stack,
+  });
+  console.error("Darkshop job load failed:", err);
+  // ❗ DO NOT EXIT — server should still run
+}
+
 // Start HTTP Server
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {

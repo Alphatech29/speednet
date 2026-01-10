@@ -37,7 +37,7 @@
     "multer": "^2.0.1",
     "mysql2": "^3.13.0",
     "node-cron": "^3.0.3",
-    "nodemailer": "^6.10.1",
+    "nodemailer": "^7.0.12",
     "npm": "^11.6.4",
     "openai": "^6.15.0",
     "redis": "^5.10.0",

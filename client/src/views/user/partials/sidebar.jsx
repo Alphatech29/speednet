@@ -25,7 +25,7 @@ import { SiNordvpn } from "react-icons/si";
 import { TiFlashOutline } from "react-icons/ti";
 import { IoListCircle, IoShareSocialOutline } from "react-icons/io5";
 
-// -------- PLATFORM TYPES --------
+/* ---------------- PLATFORM TYPES ---------------- */
 const types = [
   { name: "Advanced", icon: FaGlobe },
   { name: "Social Media", icon: IoShareSocialOutline },
@@ -36,22 +36,27 @@ const types = [
   { name: "Gaming", icon: FaGamepad },
   { name: "Account & Subscription", icon: FaUser },
   { name: "Other", icon: FaGlobe },
-
 ];
 
-const PRIORITY_PLATFORMS = ["Facebook", "Twitter-X", "Instagram", "Snapchat", "LinkedIn"];
+const PRIORITY_PLATFORMS = [
+  "Facebook",
+  "Twitter-X",
+  "Instagram",
+  "Snapchat",
+  "LinkedIn",
+];
 
 const linkClasses =
-  "flex items-center gap-2 text-base hover:bg-primary-600 p-2 hover:p-2 hover:rounded-lg hover:text-pay";
+  "flex items-center gap-2 text-base hover:bg-primary-600 p-2 rounded-lg hover:text-pay";
 
-// --------- SIDEBAR DROPDOWN COMPONENT ---------
+/* ---------------- DROPDOWN ---------------- */
 const SidebarDropdown = ({ label, children }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="w-full">
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between cursor-pointer p-2  hover:p-2 bg-gray-800 text-white hover:bg-primary-600 rounded-lg"
+        className="flex items-center justify-between cursor-pointer p-2 bg-gray-800 text-white hover:bg-primary-600 rounded-lg"
       >
         <div className="flex items-center gap-2">{label}</div>
         {open ? <FaChevronUp size={11} /> : <FaChevronDown size={11} />}
@@ -61,7 +66,7 @@ const SidebarDropdown = ({ label, children }) => {
   );
 };
 
-// ---------- SIDEBAR COMPONENT ----------
+/* ---------------- SIDEBAR ---------------- */
 const Sidebar = ({
   platformFilter,
   setPlatformFilter = () => {},
@@ -77,31 +82,30 @@ const Sidebar = ({
   const [darkCategories, setDarkCategories] = useState([]);
   const [localPriceRange, setLocalPriceRange] = useState(priceRange);
 
-  const handlePriceChange = (e, index) => {
+  /* -------- PRICE FILTER -------- */
+  const handlePriceChange = (e) => {
     const value = Number(e.target.value);
-    const newRange = [...localPriceRange];
-    if (index === 0) newRange[0] = Math.min(value, newRange[1]);
-    else newRange[1] = Math.max(value, newRange[0]);
+    const newRange = [value, localPriceRange[1]];
     setLocalPriceRange(newRange);
     setPriceRange(newRange);
   };
 
-  // Set initial active tab
+  /* -------- ACTIVE TAB -------- */
   useEffect(() => {
     const width = window.innerWidth;
     setActiveTab(width < 768 ? "menu" : role === "merchant" ? "menu" : "categories");
   }, [role]);
 
-  // Fetch normal platforms
+  /* -------- FETCH NORMAL PLATFORMS -------- */
   useEffect(() => {
     const fetchPlatforms = async () => {
       try {
         const response = await getAllPlatformCate();
         if (response.success) {
           const grouped = (response.data?.platforms || []).reduce((acc, p) => {
-            const { type, name, id, image_path, price } = p;
+            const { type, name, id, image_path } = p;
             if (!acc[type]) acc[type] = [];
-            acc[type].push({ name, id, image_path, price });
+            acc[type].push({ name, id, image_path });
             return acc;
           }, {});
           setPlatforms(grouped);
@@ -113,7 +117,7 @@ const Sidebar = ({
     fetchPlatforms();
   }, []);
 
-  // Fetch dark categories
+  /* -------- FETCH DARK CATEGORIES -------- */
   useEffect(() => {
     const fetchDarkCategories = async () => {
       try {
@@ -126,14 +130,9 @@ const Sidebar = ({
     fetchDarkCategories();
   }, []);
 
-  // ---------- RENDER NORMAL PLATFORM ITEMS ----------
+  /* -------- RENDER NORMAL PLATFORM ITEMS -------- */
   const renderGroupItems = (items) =>
     items
-      .filter(
-        (platform) =>
-          !platform.price ||
-          (platform.price >= localPriceRange[0] && platform.price <= localPriceRange[1])
-      )
       .sort((a, b) => {
         const aPriority = PRIORITY_PLATFORMS.indexOf(a.name);
         const bPriority = PRIORITY_PLATFORMS.indexOf(b.name);
@@ -163,7 +162,7 @@ const Sidebar = ({
         </button>
       ));
 
-  // ---------- RENDER DARK CATEGORY ITEMS WITH NESTED GROUPS ----------
+  /* -------- RENDER DARK CATEGORIES -------- */
   const renderDarkCategoryItems = (categories) =>
     categories.map((category) => (
       <SidebarDropdown
@@ -171,17 +170,24 @@ const Sidebar = ({
         label={
           <div className="flex items-center gap-2">
             {category.icon && (
-              <img src={category.icon} alt={category.name} className="h-5 w-5 rounded-full" />
+              <img
+                src={category.icon}
+                alt={category.name}
+                className="h-5 w-5 rounded-full"
+              />
             )}
             {category.name}
           </div>
         }
       >
-        {category.groups.map((group) => (
+        {category.groups?.map((group) => (
           <button
             key={group.id}
             onClick={() =>
-              setPlatformFilter({ categoryId: category.id, groupId: group.id })
+              setPlatformFilter({
+                categoryId: category.id,
+                groupId: group.id,
+              })
             }
             className={`flex items-center gap-2 text-left w-full p-1 rounded ${
               platformFilter?.groupId === group.id
@@ -228,24 +234,26 @@ const Sidebar = ({
         </button>
       </div>
 
-      {/* SCROLLABLE CONTENT */}
+      {/* CONTENT */}
       <div className="flex-1 overflow-y-auto px-2 mb-5">
-        {/* ----- MENU ----- */}
+        {/* -------- MENU -------- */}
         {activeTab === "menu" && (
           <div className="flex flex-col gap-2">
             {role !== "merchant" && (
               <NavLink
                 to="/user/become-a-marchant"
-                className={`${linkClasses} bg-primary-600 rounded-lg`}
+                className={`${linkClasses} bg-primary-600`}
               >
                 <MdAddBusiness /> Become a Merchant
               </NavLink>
             )}
+
             {role !== "user" && (
               <NavLink to="/user/dashboard" className={linkClasses}>
                 <HiViewGrid /> Dashboard
               </NavLink>
             )}
+
             <NavLink to="/user/marketplace" className={linkClasses}>
               <FaShop /> Marketplace
             </NavLink>
@@ -288,6 +296,7 @@ const Sidebar = ({
                 <BsBank2 /> Withdraw
               </NavLink>
             )}
+
             {country === "Nigeria" && (
               <NavLink to="/user/vtu" className={linkClasses}>
                 <FaMobile /> VTU Service
@@ -302,19 +311,22 @@ const Sidebar = ({
             >
               <TiFlashOutline /> Boost Accounts
             </a>
+
             <NavLink to="/user/order" className={linkClasses}>
               <BiSolidPurchaseTag /> My Purchase
             </NavLink>
+
             <NavLink to="/user/report-list" className={linkClasses}>
               <IoListCircle /> My Report
             </NavLink>
+
             <NavLink to="/user/international-airtime" className={linkClasses}>
               <BiWorld /> International Airtime
             </NavLink>
           </div>
         )}
 
-        {/* ----- CATEGORIES ----- */}
+        {/* -------- CATEGORIES -------- */}
         {activeTab === "categories" && (
           <div className="flex flex-col gap-2">
             <div className="border-b-2 text-gray-200 py-2">
@@ -342,9 +354,21 @@ const Sidebar = ({
                 min="0"
                 max="1000"
                 value={localPriceRange[0]}
-                onChange={(e) => handlePriceChange(e, 0)}
+                onChange={handlePriceChange}
                 className="accent-primary-600 w-full"
               />
+
+              {/* CLEAR FILTERS */}
+              <button
+                onClick={() => {
+                  setPlatformFilter({});
+                  setLocalPriceRange([0, 1000]);
+                  setPriceRange([0, 1000]);
+                }}
+                className="mt-2 p-2 bg-primary-600 rounded text-sm"
+              >
+                Clear Filters
+              </button>
             </div>
           </div>
         )}

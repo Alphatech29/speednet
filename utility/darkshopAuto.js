@@ -213,9 +213,10 @@ async function productJob() {
   try {
     await productJob();
   } catch (err) {
-    console.error(" Startup job failed:", err);
+    console.error("Startup job failed:", err);
   }
 })();
+
 
 // ==============================
 // CRON — DAILY

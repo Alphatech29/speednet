@@ -20,7 +20,12 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        "https://static.cloudflareinsights.com"
+      ],
       styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
       imgSrc: ["*", "data:", "blob:"],
       connectSrc: ["'self'", "https://restcountries.com"],
@@ -30,6 +35,7 @@ app.use(
     },
   })
 );
+
 
 app.use(
   cors({

@@ -21,6 +21,7 @@ import {
   getDarkProducts,
   getDarkCategories,
 } from "../../../../components/backendApis/admin/apis/darkshop";
+import Sidebar from "../../../user/partials/sidebar";
 
 import ViewDetails from "./modal/viewDetails";
 import CustomPagination from "../../partials/CustomPagination";
@@ -271,6 +272,16 @@ const Marketplace = () => {
 
       <div className="flex flex-col bg-gray-800 min-h-screen">
         <ToastContainer />
+
+          <div className="hidden pc:block">
+          <Sidebar
+            platforms={platforms}
+            platformFilter={platformFilter}
+            setPlatformFilter={setPlatformFilter}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+          />
+        </div>
 
         {/* MOBILE CATEGORY FILTER */}
         {categoriesOpen && (

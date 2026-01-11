@@ -212,11 +212,11 @@ async function productJob() {
 // IMMEDIATE EXECUTION
 // ==============================
 
- (async () => {
+(async () => {
   try {
-    await productJob();
-  } catch (err) {
-    console.error("Startup job failed:", err);
+     await productJob();
+   } catch (err) {
+     console.error("Startup job failed:", err);
   }
  })();
 

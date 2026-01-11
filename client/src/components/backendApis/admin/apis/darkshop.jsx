@@ -59,6 +59,8 @@ export const getDarkProducts = async () => {
           view: product.view || 0,
           rating: product.rating || null,
           group_id: product.group_id || null,
+          seller: product.seller || null,
+          avatar: product.avatar || null,
           category_id: product.category_id || null,
           category_name: product.category_name || "Uncategorized",
           is_manual_order_delivery: product.is_manual_order_delivery || 0,

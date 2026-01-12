@@ -1,15 +1,15 @@
+require('dotenv').config();
 const axios = require("axios");
 const { getWebSettings } = require("./general");
+const { translateText } = require("./googleTranslate");
 const pool = require("../model/db");
 const { startjob } = require("../jobs/jobs");
 
-console.log(" Product job file loaded");
+console.log("Product job file loaded");
 
 // ==============================
 // CONFIG
 // ==============================
-
-// Allowed group IDs
 const allowedGroupIds = [
   60, 64, 71, 99, 107, 153, 246, 250, 260,
   61, 65, 72, 97, 98, 190, 245, 312, 337,
@@ -34,20 +34,16 @@ const allowedGroupIds = [
 // ==============================
 // DB GROUP VALIDATION
 // ==============================
-
 async function getExistingGroupIds() {
-  const [rows] = await pool.query(
-    "SELECT id FROM dark_shop_category_groups"
-  );
+  const [rows] = await pool.query("SELECT id FROM dark_shop_category_groups");
   return new Set(rows.map(r => r.id));
 }
 
 // ==============================
 // FETCH PRODUCTS
 // ==============================
-
 async function getProducts(params = {}) {
-  console.log(" getProducts() called");
+  console.log("getProducts() called");
 
   try {
     const settings = await getWebSettings();
@@ -64,14 +60,14 @@ async function getProducts(params = {}) {
     const allItems = [];
 
     do {
-      console.log(` Fetching page ${page}`);
+      console.log(`Fetching page ${page}`);
 
       const response = await axios.post(
         url,
         {
           key: dark_api_key,
           quantity_from: 1,
-          price_from: 1.00,
+          price_from: 1.0,
           only_in_stock: 1,
           delivery_type: "auto",
           language: "en",
@@ -85,9 +81,7 @@ async function getProducts(params = {}) {
       const data = response.data;
       if (!data?.success) break;
 
-      const items = Array.isArray(data.data?.items)
-        ? data.data.items
-        : [];
+      const items = Array.isArray(data.data?.items) ? data.data.items : [];
 
       const filtered = items
         .filter(item => allowedGroupIds.includes(item.group?.id))
@@ -101,22 +95,65 @@ async function getProducts(params = {}) {
       allItems.push(...filtered);
       totalPages = data.data._meta?.pageCount || 1;
       page++;
-
     } while (page <= totalPages);
 
-    console.log(` Total products fetched: ${allItems.length}`);
+    console.log(`Total products fetched: ${allItems.length}`);
     return allItems;
-
   } catch (err) {
-    console.error(" Fetch failed:", err.message);
+    console.error("Fetch failed:", err.message);
     return [];
   }
 }
 
 // ==============================
+// TRANSLATE PRODUCTS (Russian -> English) with logging
+// ==============================
+async function translateProductsInChunks(products, chunkSize = 100) {
+  const translatedProducts = [];
+
+  for (let i = 0; i < products.length; i += chunkSize) {
+    const chunk = products.slice(i, i + chunkSize);
+    console.log(`Translating chunk ${Math.floor(i / chunkSize) + 1} (products ${i + 1} to ${i + chunk.length})`);
+
+    const texts = [];
+    const mapIndex = [];
+
+    chunk.forEach((p, idx) => {
+      if (p.name) { texts.push(p.name); mapIndex.push({ idx, field: 'name' }); }
+      if (p.description) { texts.push(p.description); mapIndex.push({ idx, field: 'description' }); }
+    });
+
+    if (!texts.length) {
+      translatedProducts.push(...chunk);
+      continue;
+    }
+
+    // Use fake request/response to reuse your translateText function
+    const fakeReq = { body: { texts } };
+    const fakeRes = { status: (code) => ({ json: (data) => data }) };
+
+    const translationResponse = await translateText(fakeReq, fakeRes);
+    const translations = Array.isArray(translationResponse.results)
+      ? translationResponse.results
+      : [translationResponse.results];
+
+    // Only update Russian text (detectedLanguage === 'ru')
+    translations.forEach((t, index) => {
+      if (t.detectedLanguage === 'ru') {
+        const { idx, field } = mapIndex[index];
+        chunk[idx][field] = t.translated;
+      }
+    });
+
+    translatedProducts.push(...chunk);
+  }
+
+  return translatedProducts;
+}
+
+// ==============================
 // INSERT INTO DATABASE
 // ==============================
-
 async function insertProductsInChunks(products, chunkSize = 1000) {
   for (let i = 0; i < products.length; i += chunkSize) {
     const chunk = products.slice(i, i + chunkSize);
@@ -165,44 +202,34 @@ async function insertProductsInChunks(products, chunkSize = 1000) {
 // ==============================
 // MAIN JOB
 // ==============================
-
 let isRunning = false;
 
 async function productJob() {
   if (isRunning) {
-    console.log(" Product job already running, skipping");
+    console.log("Product job already running, skipping");
     return;
   }
 
   isRunning = true;
 
   try {
-    console.log(" Product job started");
+    console.log("Product job started");
 
-    const products = await getProducts();
+    let products = await getProducts();
     if (!products.length) return;
 
     const existingGroupIds = await getExistingGroupIds();
+    products = products.filter(p => existingGroupIds.has(p.group?.id));
 
-    const safeProducts = products.filter(p => {
-      const gid = p.group?.id;
-      if (!existingGroupIds.has(gid)) {
-        console.log(` Skipped product ${p.id} (missing group_id ${gid})`);
-        return false;
-      }
-      return true;
-    });
+    products = await translateProductsInChunks(products, 100);
 
-    if (safeProducts.length) {
-      await insertProductsInChunks(safeProducts);
+    if (products.length) {
+      await insertProductsInChunks(products);
     }
 
-    console.log(
-      ` Inserted ${safeProducts.length} / ${products.length} products`
-    );
-
+    console.log(`Inserted ${products.length} / ${products.length} products`);
   } catch (err) {
-    console.error(" Product job error:", err);
+    console.error("Product job error:", err);
   } finally {
     isRunning = false;
   }
@@ -211,26 +238,23 @@ async function productJob() {
 // ==============================
 // IMMEDIATE EXECUTION
 // ==============================
-
-(async () => {
-  try {
-     await productJob();
-   } catch (err) {
-     console.error("Startup job failed:", err);
-  }
- })();
-
+//(async () => {
+ // try {
+  //  await productJob();
+ // } catch (err) {
+ //   console.error("Startup job failed:", err);
+//  }
+//})();
 
 // ==============================
 // CRON — DAILY
 // ==============================
+//startjob(
+  //async () => {
+    //await productJob();
+  //},
+  //"3 0 * * *",
+ // "Africa/Lagos"
+//);
 
-startjob(
-  async () => {
-    await productJob();
-  },
-  "3 0 * * *",
-  "Africa/Lagos"
-);
-
-console.log("⏱️ Product job scheduled to run daily at 12:10 AM (WAT)");
+console.log("⏱️ Product job scheduled to run daily at 12:03 AM (WAT)");

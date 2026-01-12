@@ -316,17 +316,17 @@ async function getDarkShopOrderByBuyerAndOrderNo(buyerId, orderNo) {
 
 
 // Run job daily at 12:00 AM (midnight)
-startjob(
-    async () => {
-        await pool.execute("DELETE FROM dark_shop_products");
-        console.log(
-            "All dark shop products deleted by job at",
-            new Date().toLocaleString()
-        );
-    },
-    "0 0 * * *",
-    "Africa/Lagos"
-);
+//startjob(
+    //async () => {
+       // await pool.execute("DELETE FROM dark_shop_products");
+       // console.log(
+       //     "All dark shop products deleted by job at",
+      //      new Date().toLocaleString()
+      //  );
+   // },
+  //  "0 0 * * *",
+  //  "Africa/Lagos"
+//);
 
 module.exports = {
     getDarkShopProducts,

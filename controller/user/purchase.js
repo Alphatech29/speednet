@@ -14,6 +14,7 @@ const { createTransactionHistory } = require("../../utility/history");
 const { creditEscrow } = require("../../utility/escrow");
 const { getEscrowExpiry } = require("../../utility/countDown");
 const { taskVerification } = require("../../utility/referralVerification");
+const { translateRussianToEnglish } = require("../../utility/contentTranslate");
 
 const {
   getDarkShopProductPricesbyid,
@@ -130,19 +131,31 @@ if (darkProductIds.length > 0) {
       });
     }
 
-    // INSERT DARKSHOP ORDER USING PRICE FROM BODY
-    await insertDarkShopOrder({
-      account_id: productId,
-      buyer_id: safeUserId,
-      order_no: orderNo,
-      title: darkProductInfo?.name || `Darkshop Product #${productId}`,
-      platform: darkProductInfo?.category_name || "Darkshop",
-      price: priceFromBody, // <-- price from request body
-      payment_status: darkOrder.status === "pending" ? "Pending" : "Completed",
-      darkshop_order_id: darkOrder.id,
-      darkshop_link: darkOrder.link || null,
-      darkshop_content: darkOrder.content || null,
-    });
+// Translate darkshop content before saving
+let translatedDarkshopContent = null;
+
+if (darkOrder.content) {
+  try {
+    translatedDarkshopContent = await translateRussianToEnglish(darkOrder.content);
+  } catch (err) {
+    console.error("Darkshop content translation failed:", err.message);
+    translatedDarkshopContent = darkOrder.content; // fallback to original
+  }
+}
+
+await insertDarkShopOrder({
+  account_id: productId,
+  buyer_id: safeUserId,
+  order_no: orderNo,
+  title: darkProductInfo?.name || `Darkshop Product #${productId}`,
+  platform: darkProductInfo?.category_name || "Darkshop",
+  price: priceFromBody,
+  payment_status: darkOrder.status === "pending" ? "Pending" : "Completed",
+  darkshop_order_id: darkOrder.id,
+  darkshop_link: darkOrder.link || null,
+  darkshop_content: translatedDarkshopContent, // <-- translated content
+});
+
 
     darkProductsResponse.push({
       id: productId,
@@ -151,8 +164,8 @@ if (darkProductIds.length > 0) {
       price: priceFromBody,
       darkshop_order_id: darkOrder.id,
       darkshop_link: darkOrder.link || null,
-      darkshop_content: darkOrder.content || null,
-      payment_status: darkOrder.status
+      darkshop_content: translatedDarkshopContent || null,
+      payment_status: darkOrder.status,
     });
   }
 }

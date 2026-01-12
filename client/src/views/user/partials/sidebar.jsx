@@ -268,10 +268,21 @@ const Sidebar = ({
                 </NavLink>
               </SidebarDropdown>
             )}
-
-            <NavLink to="/user/wallet" className={linkClasses}>
-              <FaWallet /> My Wallet
+            <NavLink to="/user/order" className={linkClasses}>
+              <BiSolidPurchaseTag /> My Purchase
             </NavLink>
+
+            <NavLink to="/user/report-list" className={linkClasses}>
+              <IoListCircle /> My Report
+            </NavLink>
+            <a
+              href="https://mrbeanpanel.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={linkClasses}
+            >
+              <TiFlashOutline /> Boost Accounts
+            </a>
 
             <SidebarDropdown label={<><GiVirtualMarker /> Sms-Virtual-Phone</>}>
               <NavLink to="/user/sms-service" className="text-gray-400 hover:text-white p-1">
@@ -282,14 +293,11 @@ const Sidebar = ({
               </NavLink>
             </SidebarDropdown>
 
-            <SidebarDropdown label={<><SiNordvpn /> Nord Services</>}>
-              <NavLink to="/user/nord-services/vpn" className="text-gray-400 hover:text-white p-1">
-                NordVPN
-              </NavLink>
-              <NavLink to="/user/nord-services/locker" className="text-gray-400 hover:text-white p-1">
-                NordLocker
-              </NavLink>
-            </SidebarDropdown>
+            <NavLink to="/user/wallet" className={linkClasses}>
+              <FaWallet /> My Wallet
+            </NavLink>
+
+
 
             {role !== "user" && (
               <NavLink to="/user/withdraw" className={linkClasses}>
@@ -303,22 +311,8 @@ const Sidebar = ({
               </NavLink>
             )}
 
-            <a
-              href="https://mrbeanpanel.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={linkClasses}
-            >
-              <TiFlashOutline /> Boost Accounts
-            </a>
 
-            <NavLink to="/user/order" className={linkClasses}>
-              <BiSolidPurchaseTag /> My Purchase
-            </NavLink>
 
-            <NavLink to="/user/report-list" className={linkClasses}>
-              <IoListCircle /> My Report
-            </NavLink>
 
             <NavLink to="/user/international-airtime" className={linkClasses}>
               <BiWorld /> International Airtime

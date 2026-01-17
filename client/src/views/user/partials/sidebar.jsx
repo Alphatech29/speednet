@@ -204,7 +204,7 @@ const Sidebar = ({
   return (
     <div className="text-left w-[265px] h-screen bg-gray-800 text-slate-200 fixed top-0 left-0 z-50 flex flex-col">
       {/* LOGO */}
-      <div className="mb-4 w-full border-b border-gray-700 flex justify-center items-center p-3">
+      <div className="mb-4 w-full border-b border-gray-700 flex justify-start items-center p-3">
         <NavLink to="/">
           <img src="/image/user-logo.png" alt="Logo" className="h-10" />
         </NavLink>

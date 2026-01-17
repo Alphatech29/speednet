@@ -5,7 +5,7 @@ const { translateText } = require("./googleTranslate");
 const pool = require("../model/db");
 const { startjob } = require("../jobs/jobs");
 
-console.log("Product job file loaded");
+//console.log("Product job file loaded");
 
 // ==============================
 // CONFIG
@@ -257,4 +257,4 @@ async function productJob() {
  // "Africa/Lagos"
 //);
 
-console.log("⏱️ Product job scheduled to run daily at 12:03 AM (WAT)");
+//console.log("⏱️ Product job scheduled to run daily at 12:03 AM (WAT)");

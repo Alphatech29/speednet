@@ -44,6 +44,7 @@ const types = [
 const PRIORITY_PLATFORMS = [
   "Facebook",
   "Twitter-X",
+  "X",
   "Instagram",
   "Snapchat",
   "LinkedIn",
@@ -83,6 +84,7 @@ const Marketplace = () => {
   const [modalProduct, setModalProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
 
   const [platforms, setPlatforms] = useState({});
   const [darkCategories, setDarkCategories] = useState([]);
@@ -139,17 +141,27 @@ const Marketplace = () => {
             }))
           : [];
 
-        // Merge regular and dark products
-        const maxLen = Math.max(regularProducts.length, darkProducts.length);
-        const combinedProducts = [];
-        for (let i = 0; i < maxLen; i++) {
-          if (i < regularProducts.length)
-            combinedProducts.push(regularProducts[i]);
-          if (i < darkProducts.length) combinedProducts.push(darkProducts[i]);
-        }
+        // 1. Merge all products
+        const mergedProducts = [...regularProducts, ...darkProducts];
 
-        setProducts(combinedProducts);
-        setFilteredProducts(combinedProducts);
+        // keep raw mixed list
+        setAllProducts(mergedProducts);
+
+        // 2. Sort newest first (normal + darkshop)
+        const newestFirst = sortByNewest(mergedProducts);
+
+        // 3. Keep the very latest product fixed at the top
+        const [latestProduct, ...restProducts] = newestFirst;
+
+        // 4. Apply your existing darkshop priority + shuffle to the rest
+        const withDarkPriority = sortDarkshopPriority(restProducts);
+
+        // 5. Put the latest product back on top
+        const finalProducts = [latestProduct, ...withDarkPriority];
+
+        // 6. Set state
+        setProducts(finalProducts);
+        setFilteredProducts(finalProducts);
       } catch (err) {
         console.error("Error fetching products:", err);
       } finally {
@@ -158,6 +170,42 @@ const Marketplace = () => {
     };
     fetchProducts();
   }, []);
+
+  // -------- DARKSHOP PRIORITY CATEGORIES --------
+  const DARKSHOP_PRIORITY = [
+    "Facebook",
+    "Instagram",
+    "VPN & Proxy",
+    "TikTok",
+    "Twitter",
+    "Telegram",
+    "VPN (Private)",
+    "Gmail",
+  ];
+
+  // ---------- SORTING HELPERS ----------
+  const sortByNewest = (arr) => {
+    return [...arr].sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+  };
+  const sortDarkshopPriority = (arr) => {
+    const priorityProducts = arr.filter((p) =>
+      DARKSHOP_PRIORITY.includes(p.platform)
+    );
+
+    const otherProducts = arr.filter(
+      (p) => !DARKSHOP_PRIORITY.includes(p.platform)
+    );
+
+    // Shuffle both groups
+    const shuffledPriority = shuffleArray(priorityProducts);
+    const shuffledOthers = shuffleArray(otherProducts);
+
+    // Priority always on top but mixed internally
+    return [...shuffledPriority, ...shuffledOthers];
+  };
 
   // ---------- FETCH FILTERS ----------
   useEffect(() => {
@@ -204,11 +252,31 @@ const Marketplace = () => {
 
   // ---------- SHUFFLE PRODUCTS ----------
   useEffect(() => {
-    const interval = setInterval(() => {
-      setFilteredProducts((prev) => shuffleArray(prev));
-    }, 180000); // every 3 minutes
+    const remixAllProducts = () => {
+      setFilteredProducts(() => {
+        // Always remix from original mixed pool
+        const newestFirst = sortByNewest(allProducts);
+
+        const priorityProducts = newestFirst.filter((p) =>
+          DARKSHOP_PRIORITY.includes(p.platform)
+        );
+
+        const otherProducts = newestFirst.filter(
+          (p) => !DARKSHOP_PRIORITY.includes(p.platform)
+        );
+
+        const shuffledPriority = shuffleArray(priorityProducts);
+        const shuffledOthers = shuffleArray(otherProducts);
+
+        return [...shuffledPriority, ...shuffledOthers];
+      });
+    };
+
+    if (allProducts.length) remixAllProducts();
+
+    const interval = setInterval(remixAllProducts, 180000);
     return () => clearInterval(interval);
-  }, []);
+  }, [allProducts]);
 
   // ---------- FILTER PRODUCTS ----------
   useEffect(() => {
@@ -273,7 +341,7 @@ const Marketplace = () => {
       <div className="flex flex-col bg-gray-800 min-h-screen">
         <ToastContainer />
 
-          <div className="hidden pc:block">
+        <div className="hidden pc:block">
           <Sidebar
             platforms={platforms}
             platformFilter={platformFilter}

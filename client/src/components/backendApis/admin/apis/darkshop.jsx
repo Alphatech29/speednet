@@ -61,6 +61,8 @@ export const getDarkProducts = async () => {
           group_id: product.group_id || null,
           seller: product.seller || null,
           avatar: product.avatar || null,
+          instant_delivery: product.instant_delivery || true,
+          icon: product.icon || null,
           category_id: product.category_id || null,
           category_name: product.category_name || "Uncategorized",
           is_manual_order_delivery: product.is_manual_order_delivery || 0,
@@ -361,5 +363,57 @@ export const updateDarkShopProductAPI = async ({ id, name, description }) => {
       message,
       error: error.response?.data || null,
     };
+  }
+};
+
+// Delete a category by ID
+export const deleteCategoryAPI = async (categoryId) => {
+  try {
+    if (!categoryId) {
+      return { success: false, message: "Category ID is required." };
+    }
+
+    const response = await axios.delete(`/general/deleteCategory/${categoryId}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return {
+      success: true,
+      message: response.data?.message || "Category deleted successfully!",
+      data: response.data?.data || null,
+    };
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      "An error occurred while deleting the category.";
+
+    return { success: false, message, error: error.response?.data || null };
+  }
+};
+
+// Delete a group by ID
+export const deleteGroupAPI = async (groupId) => {
+  try {
+    if (!groupId) {
+      return { success: false, message: "Group ID is required." };
+    }
+
+    const response = await axios.delete(`/general/deleteGroup/${groupId}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return {
+      success: true,
+      message: response.data?.message || "Group deleted successfully!",
+      data: response.data?.data || null,
+    };
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      "An error occurred while deleting the group.";
+
+    return { success: false, message, error: error.response?.data || null };
   }
 };

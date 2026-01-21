@@ -14,6 +14,12 @@ const CustomPagination = ({
     if (typeof onPageChange === "function") {
       onPageChange(currentPage);
     }
+
+    // Scroll smoothly to top when page changes
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [currentPage, onPageChange]);
 
   const goToPage = (page) => {

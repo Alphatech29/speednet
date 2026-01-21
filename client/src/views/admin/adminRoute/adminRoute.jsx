@@ -30,6 +30,7 @@ import AssignProduct from "../shoppingProduct/assignProduct";
 import ShoppingProduct from "../shoppingProduct/product";
 import CategoryCommission from "../darkshopCommission/darkshop-commission";
 import EditProduct from "../shoppingProduct/editProduct";
+import ShoppingCategories from "../shoppingProduct/category";
 
 const AdminRoute = () => {
   return (
@@ -66,6 +67,7 @@ const AdminRoute = () => {
         <Route path="shopping/product" element={<ShoppingProduct />} />
         <Route path="darkshop-commission" element={<CategoryCommission />} />
         <Route path="shopping/product/edit/:id" element={<EditProduct />} />
+        <Route path="shopping/product/categories" element={<ShoppingCategories />} />
       </Route>
     </Routes>
   );

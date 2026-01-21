@@ -10,7 +10,7 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
         return (
           <div
             key={product.id}
-            className="flex justify-center shadow-md mobile:p-3 rounded-lg bg-gray-800 gap-3 items-center"
+            className="flex justify-center shadow-md mobile:p-1.5 rounded-lg bg-gray-800 gap-3 items-center"
           >
             <div>
               {/* Product Image */}
@@ -38,7 +38,8 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
                 ></p>
 
                 <div className="flex justify-between items-center w-full">
-                  {product.seller && (
+                  <div className="flex justify-start items-start gap-3">
+                     {product.seller && (
                     <div className="flex items-center gap-2 mt-2">
                       {product.avatar && (
                         <img
@@ -52,6 +53,22 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
                     </div>
                   )}
 
+                  <div>
+                       {product.instant_delivery && (
+                    <div className="flex items-center gap-2 mt-2">
+                      {product.icon && (
+                        <img
+                          src={product.icon}
+                          className="mobile:w-4 mobile:h-4 tab:w-4 tab:h-4 rounded-full object-cover"
+                        />
+                      )}
+                      <span className="text-gray-300 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
+                        Instant Delivery
+                      </span>
+                    </div>
+                  )}
+                  </div>
+                  </div>
                   <div className="flex gap-2">
                     {/* Details Button */}
                     <button

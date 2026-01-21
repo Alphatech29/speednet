@@ -5,7 +5,7 @@ const {
 
 
 const fetchDarkshopBuyerOrders = async (req, res) => {
-  const { userUid } = req.params; // ✅ MUST match route
+  const { userUid } = req.params; 
 
   try {
     if (!userUid) {

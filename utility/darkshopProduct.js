@@ -5,10 +5,13 @@ const { startjob } = require("../jobs/jobs");
 async function getDarkShopProducts() {
     try {
         const [rows] = await pool.execute(
-            `SELECT p.*, c.name AS category_name
+            `SELECT p.*,
+                    g.name AS group_name, 
+                    c.name AS category_name,
+                    c.id AS category_id
              FROM dark_shop_products p
-             LEFT JOIN dark_shop_categories c
-             ON p.category_id = c.id`
+             LEFT JOIN dark_shop_category_groups g ON p.group_id = g.id
+             LEFT JOIN dark_shop_categories c ON g.category_id = c.id`
         );
 
         if (!rows || rows.length === 0) {
@@ -31,12 +34,16 @@ async function getDarkShopProducts() {
 }
 
 
+
 async function getDarkShopProductById(id) {
     try {
         const [rows] = await pool.execute(
-            `SELECT p.*, c.name AS category_name
+            `SELECT p.*,
+                    c.id AS category_id,
+                    c.name AS category_name
              FROM dark_shop_products p
-             LEFT JOIN dark_shop_categories c ON p.category_id = c.id
+             LEFT JOIN dark_shop_category_groups g ON p.group_id = g.id
+             LEFT JOIN dark_shop_categories c ON g.category_id = c.id
              WHERE p.id = ?`,
             [id]
         );
@@ -59,6 +66,7 @@ async function getDarkShopProductById(id) {
         throw new Error("Unable to fetch product. Please try again later.");
     }
 }
+
 
 
 

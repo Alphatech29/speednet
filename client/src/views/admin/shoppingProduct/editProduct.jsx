@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 import {
   fetchDarkShopProductById,
@@ -11,9 +11,6 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-/**
- * Quill editor toolbar configuration
- */
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -51,15 +48,12 @@ const ViewProduct = () => {
     const fetchProduct = async () => {
       setLoading(true);
       setError(null);
-
       try {
         if (!id) throw new Error("Product ID is missing");
 
         const res = await fetchDarkShopProductById(id);
-
-        if (!res || !res.success) {
+        if (!res || !res.success)
           throw new Error(res?.message || "Failed to load product");
-        }
 
         const productData = {
           name: res.data.name || "",
@@ -84,10 +78,7 @@ const ViewProduct = () => {
   }, [id]);
 
   const handleChange = (field, value) => {
-    setEditable((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setEditable((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = async () => {
@@ -104,9 +95,8 @@ const ViewProduct = () => {
         description: editable.description,
       });
 
-      if (!res.success) {
+      if (!res.success)
         throw new Error(res.message || "Failed to update product");
-      }
 
       setProduct((prev) => ({
         ...prev,
@@ -122,6 +112,10 @@ const ViewProduct = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // Just go back, context already has page + scroll
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white text-gray-500">
@@ -135,7 +129,6 @@ const ViewProduct = () => {
       <ToastContainer />
 
       <div className="w-full shadow-lg bg-white rounded-lg border border-gray-200 p-6">
-        {/* Product Image */}
         {product.miniature ? (
           <img
             src={product.miniature}
@@ -148,7 +141,6 @@ const ViewProduct = () => {
           </div>
         )}
 
-        {/* Editable Product Name */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600 mb-1">
             Product Name
@@ -167,7 +159,6 @@ const ViewProduct = () => {
           </div>
         )}
 
-        {/* Price (Read-only) */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-600 mb-1">
             Price
@@ -175,7 +166,6 @@ const ViewProduct = () => {
           <p className="p-2 border rounded font-medium">${product.price}</p>
         </div>
 
-        {/* ReactQuill Description Editor */}
         <div className="mb-10">
           <label className="block text-sm font-medium text-gray-600 mb-1">
             Description
@@ -190,16 +180,14 @@ const ViewProduct = () => {
           />
         </div>
 
-        {/* Actions */}
         <div className="flex justify-end gap-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className="bg-gray-100 hover:bg-gray-200 px-6 py-2 rounded-md border"
             disabled={saving}
           >
             Back
           </button>
-
           <button
             onClick={handleSave}
             disabled={saving}

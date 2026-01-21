@@ -108,7 +108,11 @@ const Sidebar = () => {
               <NavLink to="/admin/shopping/product" className="sidebar-sub-link">
                 Products
               </NavLink>
+              <NavLink to="/admin/shopping/product/categories" className="sidebar-sub-link">
+                Categories
+              </NavLink>
             </div>
+
           )}
         </div>
 

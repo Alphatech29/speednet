@@ -16,6 +16,7 @@ import ResetPassword from "./views/general/resetPaword";
 import SeoManager from "./components/utils/seoManager";
 import Page from "./views/user/page/page";
 import ContactUs from "./views/general/contact";
+import { ShoppingProvider } from "./components/control/shoppingContext";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
     <Router>
       <AuthProvider>
         <AdminAuthProvider>
+          <ShoppingProvider >
            <SeoManager />
           <Routes>
             {/* Public Routes */}
@@ -105,6 +107,7 @@ function App() {
               }
             />
           </Routes>
+          </ShoppingProvider>
         </AdminAuthProvider>
       </AuthProvider>
     </Router>

@@ -72,6 +72,15 @@ const sortPlatforms = (list) => {
   });
 };
 
+// 🔥 Duplicate darkshop products helper
+const duplicateDarkshopProducts = (darkProducts, times = 2) => {
+  let duplicated = [];
+  for (let i = 0; i < times; i++) {
+    duplicated = duplicated.concat(darkProducts);
+  }
+  return duplicated;
+};
+
 // ---------- MAIN COMPONENT ----------
 const Marketplace = () => {
   const { updateCartState, cart } = useContext(AuthContext);
@@ -117,6 +126,8 @@ const Marketplace = () => {
                 image: acc.logo_url,
                 description: acc.description,
                 avatar: acc.avatar,
+                instant_delivery: true,
+                icon: acc.icon || "/uploads/image.png",
                 previewLink: acc.previewLink,
                 created_at: acc.create_at,
                 updated_at: acc.updated_at,
@@ -125,13 +136,15 @@ const Marketplace = () => {
 
         const darkProducts = darkRes?.success
           ? (darkRes.data || []).map((prod) => ({
-              id: `dark-${prod.id}`,
+              id: `dark-${prod.id}`, // same ID
               name: prod.name || "Unnamed Product",
               price: Number(prod.price) || 0,
               platform: prod.category_name || "Uncategorized",
               categoryId: prod.category_id,
               groupId: prod.group_id,
               seller: prod.seller,
+              instant_delivery: prod.instant_delivery,
+              icon: prod.icon,
               image: prod.miniature || "",
               description: prod.description || "",
               avatar: prod.avatar || "",
@@ -141,10 +154,12 @@ const Marketplace = () => {
             }))
           : [];
 
-        // 1. Merge all products
-        const mergedProducts = [...regularProducts, ...darkProducts];
+        // 🔥 Duplicate darkshop products for rendering
+        const duplicatedDarkProducts = duplicateDarkshopProducts(darkProducts, 2);
 
-        // keep raw mixed list
+        // 1. Merge all products
+        const mergedProducts = [...regularProducts, ...duplicatedDarkProducts];
+
         setAllProducts(mergedProducts);
 
         // 2. Sort newest first (normal + darkshop)
@@ -254,21 +269,16 @@ const Marketplace = () => {
   useEffect(() => {
     const remixAllProducts = () => {
       setFilteredProducts(() => {
-        // Always remix from original mixed pool
         const newestFirst = sortByNewest(allProducts);
 
         const priorityProducts = newestFirst.filter((p) =>
           DARKSHOP_PRIORITY.includes(p.platform)
         );
-
         const otherProducts = newestFirst.filter(
           (p) => !DARKSHOP_PRIORITY.includes(p.platform)
         );
 
-        const shuffledPriority = shuffleArray(priorityProducts);
-        const shuffledOthers = shuffleArray(otherProducts);
-
-        return [...shuffledPriority, ...shuffledOthers];
+        return [...shuffleArray(priorityProducts), ...shuffleArray(otherProducts)];
       });
     };
 
@@ -282,7 +292,6 @@ const Marketplace = () => {
   useEffect(() => {
     let result = [...products];
 
-    // Platform / category filters
     if (platformFilter) {
       if (platformFilter.groupId) {
         result = result.filter((p) => p.groupId === platformFilter.groupId);
@@ -295,11 +304,9 @@ const Marketplace = () => {
       }
     }
 
-    // Price filter
     const [minPrice, maxPrice] = priceRange;
     result = result.filter((p) => p.price >= minPrice && p.price <= maxPrice);
 
-    // Search filter
     if (searchQuery.trim()) {
       result = result.filter((p) =>
         p.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -353,7 +360,7 @@ const Marketplace = () => {
 
         {/* MOBILE CATEGORY FILTER */}
         {categoriesOpen && (
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
+             <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
             <div className="bg-gray-900 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-base font-semibold">Account Categories</h2>
@@ -505,7 +512,7 @@ const Marketplace = () => {
         )}
 
         {/* SEARCH & VIEW MODE */}
-        <div className="flex-1 p-3 tab:p-6">
+         <div className="flex-1 p-3 tab:p-6">
           <div className="flex flex-col pc:flex-row justify-between items-center gap-3 w-full">
             <div className="mobile:w-full w-full">
               <h1 className="text-2xl text-white font-semibold">
@@ -550,7 +557,6 @@ const Marketplace = () => {
               </button>
             ))}
           </div>
-
           <div className="mt-4">
             {loading ? (
               <div className="text-gray-400 py-20 text-center">Loading...</div>

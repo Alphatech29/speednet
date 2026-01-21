@@ -42,7 +42,7 @@ const { smspoolWebhook } = require("../utility/smspoolWebhook");
 const { contact } = require("../controller/user/contect");
 const { bulkUpdateStatusController } = require("../controller/admin/dashboard/bulkApproval");
 const { createShortNoticeController, getAllShortNoticesController, updateShortNoticeController, deleteShortNoticeController } = require("../controller/admin/dashboard/shortNotice");
-const { getCategoriesController, getCategoriesWithGroupsController, fetchProducts, fetchAllDarkShopProducts, fetchDarkShopProductById, updateDarkShopProductController } = require("../controller/admin/dashboard/daskshop");
+const { getCategoriesController, getCategoriesWithGroupsController, fetchProducts, fetchAllDarkShopProducts, fetchDarkShopProductById, updateDarkShopProductController, deleteCategoryController, deleteGroupController } = require("../controller/admin/dashboard/daskshop");
 const { getCategoryCommissionsController, addCategoryCommissionController, updateCategoryCommissionController } = require("../controller/admin/dashboard/darkshopCommission");
 const { fetchAllDarkShopProducts234 } = require("../controller/admin/dashboard/darktest");
 const { createDarkshopOrderController } = require("../controller/user/daskshopCreateOrder");
@@ -161,6 +161,8 @@ generalRoute.post("/category-commission", addCategoryCommissionController);
 generalRoute.put("/category-commission/:category_id", updateCategoryCommissionController);
 generalRoute.get("/darkshop-products/:id", fetchDarkShopProductById);
 generalRoute.put("/darkshop-products/:id", updateDarkShopProductController);
+generalRoute.delete("/deleteCategory/:id", deleteCategoryController);
+generalRoute.delete("/deleteGroup/:id", deleteGroupController);
 
 
 generalRoute.get("/darkshop-products-test", fetchAllDarkShopProducts234);

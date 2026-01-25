@@ -30,7 +30,6 @@ async function createShortNoticeController(req, res) {
 async function getAllShortNoticesController(req, res) {
   try {
     const result = await getAllShortNotices();
-    console.log("Get All Notices Result:", result);
 
     return res.status(result.code).json(result);
   } catch (error) {
@@ -49,10 +48,7 @@ async function updateShortNoticeController(req, res) {
     const { id } = req.params;
     const { content, status } = req.body;
 
-    console.log("Update Request:", { id, content, status });
-
     const result = await updateShortNoticeById(id, content, status);
-    console.log("Update Result:", result);
 
     return res.status(result.code).json(result);
   } catch (error) {
@@ -69,10 +65,8 @@ async function updateShortNoticeController(req, res) {
 async function deleteShortNoticeController(req, res) {
   try {
     const { id } = req.params;
-    console.log("Delete Request ID:", id);
 
     const result = await deleteShortNoticeById(id);
-    console.log("Delete Result:", result);
 
     return res.status(result.code).json(result);
   } catch (error) {

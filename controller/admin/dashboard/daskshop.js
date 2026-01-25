@@ -29,6 +29,36 @@ const SYSTEM_SELLERS = [
   { name: "MaxDigital", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=MaxDigital" },
   { name: "RyanHub", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=RyanHub" },
   { name: "NickServices", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=NickServices" },
+  { name: "Kwame Mensah", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=KwameMensah" },
+  { name: "Smart Network", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=SmartNetwork" },
+  { name: "Adewale Johnson", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=AdewaleJohnson" },
+  { name: "Digital Market", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=DigitalMarket" },
+  { name: "PrimeSocial Hub", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=PrimeSocialHub" },
+  { name: "Mamadou Diop", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=MamadouDiop" },
+  { name: "Fusion Accounts", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=FusionAccounts" },
+  { name: "Junior Nfor", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=JuniorNfor" },
+  { name: "TrueAccount Supply", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=TrueAccountSupply" },
+  { name: "Brian Mwangi", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=BrianMwangi" },
+  { name: "NextWave Social", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=NextWaveSocial" },
+  { name: "Chinedu Okafor", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=ChineduOkafor" },
+  { name: "Legacy Socials", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=LegacySocials" },
+  { name: "UrbanTrust", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=UrbanTrust" },
+  { name: "Ibrahim Musa", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=IbrahimMusa" },
+  { name: "Verified Path", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=VerifiedPath" },
+  { name: "AllStock Socials", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=AllStockSocials" },
+  { name: "Kofi Boateng", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=KofiBoateng" },
+  { name: "Elite Market", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=EliteMarket" },
+  { name: "Joseph Kato", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=JosephKato" },
+  { name: "Universal Supply", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=UniversalSupply" },
+  { name: "Authentic Vault", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=AuthenticVault" },
+  { name: "Hassan Ally", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=HassanAlly" },
+  { name: "RealEdge Social", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=RealEdgeSocial" },
+  { name: "Wilfried Ndzi", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=WilfriedNdzi" },
+  { name: "Human Provid", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=HumanProvid" },
+  { name: "Nana Asare", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=NanaAsare" },
+  { name: "TrustWave", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=TrustWave" },
+  { name: "Armand", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=Armand" },
+  { name: "Yao Kouassi", avatar: "https://api.dicebear.com/7.x/bottts/png?seed=YaoKouassi" }
 ];
 
 function getAutoAssignedSeller(productId) {
@@ -97,39 +127,74 @@ async function deleteGroupController(req, res) {
 async function fetchAllDarkShopProducts(req, res) {
   try {
     const products = await getDarkShopProducts();
-    if (!products.length) return res.status(404).json({ success: false, message: "No products found" });
+
+    if (!Array.isArray(products) || products.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+      });
+    }
 
     const webSettings = await getWebSettings();
-    const RUB_TO_USD = parseFloat(webSettings?.usd_rub) || 0;
+    const RUB_TO_USD = Number(webSettings?.usd_rub) || 0;
 
     const commissions = await getCategoryCommissions();
     const commissionLookup = {};
-    commissions.forEach((c) => { commissionLookup[c.category_id] = parseFloat(c.commission) || 0; });
-
-    const productsWithCommission = products.map((product) => {
-      const price_rub = parseFloat(product.price) || 0;
-      const priceUSD = price_rub * RUB_TO_USD;
-      const commissionPercent = commissionLookup[product.category_id] || 0;
-      const priceWithCommissionUSD = priceUSD + (priceUSD * commissionPercent) / 100;
-      const sellerInfo = getAutoAssignedSeller(product.id);
-
-      return {
-        ...product,
-        price_rub,
-        price: priceWithCommissionUSD.toFixed(2),
-        seller: sellerInfo.name,
-        avatar: sellerInfo.avatar,
-        instant_delivery: true,
-        icon: INSTANT_DELIVERY_ICON,
-      };
+    commissions.forEach((c) => {
+      commissionLookup[c.category_id] = Number(c.commission) || 0;
     });
 
-    return res.status(200).json({ success: true, data: productsWithCommission });
+    const productsWithCommission = await Promise.all(
+      products.map(async (product) => {
+        const price_rub = Number(product.price) || 0;
+        const priceUSD = price_rub * RUB_TO_USD;
+        const commissionPercent =
+          commissionLookup[product.category_id] || 0;
+
+        const priceWithCommissionUSD =
+          priceUSD + (priceUSD * commissionPercent) / 100;
+
+        const sellerInfo =
+          (await getAutoAssignedSeller(product.id)) || {};
+
+        return {
+          ...product,
+          price_rub,
+          price: priceWithCommissionUSD.toFixed(2),
+          seller: sellerInfo.name || "System",
+          avatar: sellerInfo.avatar || "",
+          instant_delivery: true,
+          icon: INSTANT_DELIVERY_ICON || "",
+        };
+      })
+    );
+
+    /* 🔀 INLINE SHUFFLE (Fisher–Yates) */
+    for (let i = productsWithCommission.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [
+        productsWithCommission[i],
+        productsWithCommission[j],
+      ] = [
+        productsWithCommission[j],
+        productsWithCommission[i],
+      ];
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: productsWithCommission,
+    });
   } catch (error) {
-    console.error("Controller error:", error.message || error);
-    return res.status(500).json({ success: false, message: "Internal server error" });
+    console.error("Controller error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
   }
 }
+
+
 
 /**
  * Fetch single product by ID

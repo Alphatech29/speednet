@@ -1,40 +1,51 @@
 import React from "react";
-import { Modal, Button } from "flowbite-react";
+import { formatHtmlToPlainText } from "../../../../../components/utils/formatHtmlToReadableText";
 
 const ViewDetails = ({ product, onClose }) => {
-  const show = !!product;
+  if (!product) return null;
 
-  // Format description with paragraphs
-  const formattedDescription = (product?.description || "No description available.")
-    .split("\n\n")
-    .map(paragraph => `<p style="margin-bottom: 1rem;">${paragraph}</p>`)
-    .join("");
+  // Raw HTML from ReactQuill
+  const descriptionHTML =
+    product?.description?.trim() ||
+    "<p>No description available.</p>";
 
-  // --- FIXED PREVIEW LINK LOGIC ---
-  const rawLink = product?.previewLink?.trim(); // remove spaces
+  // Convert HTML → readable text
+  const readableDescription = formatHtmlToPlainText(descriptionHTML);
 
+  // Normalize preview link
+  const rawLink = product?.previewLink?.trim();
   const normalizedPreviewLink =
-    rawLink && rawLink !== "" &&
+    rawLink &&
     (rawLink.startsWith("http://") || rawLink.startsWith("https://")
       ? rawLink
       : `https://${rawLink}`);
 
   return (
-    <Modal show={show} onClose={onClose} popup>
-      <Modal.Header className="bg-gray-800">
-        <h2 className="text-lg mobile:text-[16px] font-semibold text-white">
-          {product?.name || "Product"} Details
-        </h2>
-      </Modal.Header>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      {/* Modal Container */}
+      <div className="mobile:w-full tab:w-[712px] max-h-dvh bg-gray-800 rounded-lg shadow-lg overflow-hidden">
 
-      <Modal.Body className="bg-gray-800 text-gray-300">
-        <div className="flex flex-col gap-4">
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+          <h2 className="text-lg font-semibold text-white">
+            {product?.name || "Product"} Details
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white text-xl"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
 
-          {/* Description */}
-          <div
-            className="text-sm"
-            dangerouslySetInnerHTML={{ __html: formattedDescription }}
-          />
+        {/* Body */}
+        <div className="p-4 text-gray-300 space-y-4 max-h-[70vh] overflow-y-auto">
+
+          {/* Description (Readable Text) */}
+          <pre className="text-sm leading-relaxed whitespace-pre-wrap font-sans">
+            {readableDescription}
+          </pre>
 
           {/* Preview Link */}
           {normalizedPreviewLink ? (
@@ -42,7 +53,7 @@ const ViewDetails = ({ product, onClose }) => {
               href={normalizedPreviewLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:underline text-sm"
+              className="text-blue-400 hover:underline text-sm inline-block"
             >
               🔗 Preview Product
             </a>
@@ -52,9 +63,9 @@ const ViewDetails = ({ product, onClose }) => {
             </p>
           )}
 
-           {/* Seller Info */}
+          {/* Seller Info */}
           {product?.seller && (
-            <div className="flex items-center gap-3 mt-2">
+            <div className="flex items-center gap-3 pt-2">
               {product?.avatar && (
                 <img
                   src={product.avatar}
@@ -62,19 +73,24 @@ const ViewDetails = ({ product, onClose }) => {
                   className="w-8 h-8 rounded-full object-cover"
                 />
               )}
-              <span className="text-sm font-medium">{product.seller}</span>
+              <span className="text-sm font-medium text-white">
+                {product.seller}
+              </span>
             </div>
           )}
-
         </div>
-      </Modal.Body>
 
-      <Modal.Footer className="justify-end bg-gray-800">
-        <Button color="failure" onClick={onClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+        {/* Footer */}
+        <div className="flex justify-end px-4 py-3 border-t border-gray-700">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

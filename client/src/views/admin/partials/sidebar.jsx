@@ -3,10 +3,10 @@ import "../cssFile/dashboard.css";
 import { NavLink } from "react-router-dom";
 
 // Icons
-import { FaCartShopping } from "react-icons/fa6"; // FA6 icon
+import { FaCartShopping } from "react-icons/fa6";
 import { HiViewGrid } from "react-icons/hi";
 import { SiNordvpn } from "react-icons/si";
-import { FaUsers, FaChevronDown, FaChevronUp } from "react-icons/fa"; // only FA5 icons
+import { FaUsers, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { PiUsersFourLight, PiCubeTransparentFill } from "react-icons/pi";
 import { MdOutlineAccountTree } from "react-icons/md";

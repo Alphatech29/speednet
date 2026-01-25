@@ -28,6 +28,7 @@ import CustomPagination from "../../partials/CustomPagination";
 import GridView from "./views/gridView";
 import ColumnView from "./views/columnView";
 
+
 // -------- PLATFORM TYPES & PRIORITY --------
 const types = [
   { name: "Advanced", icon: FaGlobe },
@@ -41,70 +42,77 @@ const types = [
   { name: "Other", icon: FaGlobe },
 ];
 
-const PRIORITY_PLATFORMS = [
-  "Facebook",
-  "Twitter-X",
-  "X",
-  "Instagram",
-  "Snapchat",
-  "LinkedIn",
-];
+
+/* -------- CONSTANTS -------- */
 const ITEMS_PER_PAGE = 100;
 
-// ---------- HELPER FUNCTIONS ----------
-const shuffleArray = (arr) => {
+/* -------- HELPERS -------- */
+
+// Sort by newest
+function sortByNewest(arr) {
+  return [...arr].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+}
+
+// Shuffle array (Fisher–Yates)
+function shuffleArray(arr) {
   const shuffled = [...arr];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
-};
+}
 
-const sortPlatforms = (list) => {
-  return [...list].sort((a, b) => {
-    const aP = PRIORITY_PLATFORMS.indexOf(a.name);
-    const bP = PRIORITY_PLATFORMS.indexOf(b.name);
-    if (aP !== -1 && bP !== -1) return aP - bP;
-    if (aP !== -1) return -1;
-    if (bP !== -1) return 1;
-    return a.name.localeCompare(b.name);
-  });
-};
+// ✅ Interleave regular & dark products
+function interleaveArrays(regular = [], dark = []) {
+  const result = [];
+  const maxLength = Math.max(regular.length, dark.length);
 
-// 🔥 Duplicate darkshop products helper
-const duplicateDarkshopProducts = (darkProducts, times = 2) => {
-  let duplicated = [];
-  for (let i = 0; i < times; i++) {
-    duplicated = duplicated.concat(darkProducts);
+  for (let i = 0; i < maxLength; i++) {
+    if (regular[i]) result.push(regular[i]);
+    if (dark[i]) result.push(dark[i]);
   }
-  return duplicated;
-};
 
-// ---------- MAIN COMPONENT ----------
+  return result;
+}
+
+/* -------- SORT PLATFORMS -------- */
+function sortPlatforms(list = []) {
+  return [...list].sort((a, b) =>
+    (a.name || "").localeCompare(b.name || "")
+  );
+}
+
+
+
+/* -------- MAIN COMPONENT -------- */
 const Marketplace = () => {
   const { updateCartState, cart } = useContext(AuthContext);
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [openCategory, setOpenCategory] = useState({});
+const [openDarkCategory, setOpenDarkCategory] = useState({});
+
+
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState("column");
   const [currentPage, setCurrentPage] = useState(1);
   const [modalProduct, setModalProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [categoriesOpen, setCategoriesOpen] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
 
   const [platforms, setPlatforms] = useState({});
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [darkCategories, setDarkCategories] = useState([]);
   const [platformFilter, setPlatformFilter] = useState({});
   const [priceRange, setPriceRange] = useState([0, 1000]);
 
-  const [openCategory, setOpenCategory] = useState({});
-  const [openDarkCategory, setOpenDarkCategory] = useState({});
   const [notices, setNotices] = useState([]);
 
-  // ---------- FETCH PRODUCTS ----------
+  /* -------- FETCH PRODUCTS -------- */
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -136,7 +144,7 @@ const Marketplace = () => {
 
         const darkProducts = darkRes?.success
           ? (darkRes.data || []).map((prod) => ({
-              id: `dark-${prod.id}`, // same ID
+              id: `dark-${prod.id}`,
               name: prod.name || "Unnamed Product",
               price: Number(prod.price) || 0,
               platform: prod.category_name || "Uncategorized",
@@ -154,27 +162,17 @@ const Marketplace = () => {
             }))
           : [];
 
-        // 🔥 Duplicate darkshop products for rendering
-        const duplicatedDarkProducts = duplicateDarkshopProducts(darkProducts, 2);
+        // ✅ Shuffle regular products only
+        const shuffledRegular = shuffleArray(sortByNewest(regularProducts));
 
-        // 1. Merge all products
-        const mergedProducts = [...regularProducts, ...duplicatedDarkProducts];
+        // ✅ Optional: sort dark products (or keep as-is)
+        const sortedDark = sortByNewest(darkProducts);
 
-        setAllProducts(mergedProducts);
+        // ✅ Interleave them
+        const finalProducts = interleaveArrays(shuffledRegular, sortedDark);
 
-        // 2. Sort newest first (normal + darkshop)
-        const newestFirst = sortByNewest(mergedProducts);
 
-        // 3. Keep the very latest product fixed at the top
-        const [latestProduct, ...restProducts] = newestFirst;
-
-        // 4. Apply your existing darkshop priority + shuffle to the rest
-        const withDarkPriority = sortDarkshopPriority(restProducts);
-
-        // 5. Put the latest product back on top
-        const finalProducts = [latestProduct, ...withDarkPriority];
-
-        // 6. Set state
+        setAllProducts(finalProducts);
         setProducts(finalProducts);
         setFilteredProducts(finalProducts);
       } catch (err) {
@@ -183,46 +181,11 @@ const Marketplace = () => {
         setLoading(false);
       }
     };
+
     fetchProducts();
   }, []);
 
-  // -------- DARKSHOP PRIORITY CATEGORIES --------
-  const DARKSHOP_PRIORITY = [
-    "Facebook",
-    "Instagram",
-    "VPN & Proxy",
-    "TikTok",
-    "Twitter",
-    "Telegram",
-    "VPN (Private)",
-    "Gmail",
-  ];
-
-  // ---------- SORTING HELPERS ----------
-  const sortByNewest = (arr) => {
-    return [...arr].sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
-  };
-  const sortDarkshopPriority = (arr) => {
-    const priorityProducts = arr.filter((p) =>
-      DARKSHOP_PRIORITY.includes(p.platform)
-    );
-
-    const otherProducts = arr.filter(
-      (p) => !DARKSHOP_PRIORITY.includes(p.platform)
-    );
-
-    // Shuffle both groups
-    const shuffledPriority = shuffleArray(priorityProducts);
-    const shuffledOthers = shuffleArray(otherProducts);
-
-    // Priority always on top but mixed internally
-    return [...shuffledPriority, ...shuffledOthers];
-  };
-
-  // ---------- FETCH FILTERS ----------
+  /* -------- FETCH FILTER CATEGORIES -------- */
   useEffect(() => {
     const fetchFilters = async () => {
       try {
@@ -234,82 +197,54 @@ const Marketplace = () => {
         if (platformRes?.success) {
           const grouped = (platformRes.data?.platforms || []).reduce(
             (acc, p) => {
-              const { type, name, id, image_path, price } = p;
-              if (!acc[type]) acc[type] = [];
-              acc[type].push({ name, id, image_path, price });
+              if (!acc[p.type]) acc[p.type] = [];
+              acc[p.type].push(p);
               return acc;
             },
-            {}
+            {},
           );
           setPlatforms(grouped);
         }
 
         if (darkRes?.success) setDarkCategories(darkRes.data || []);
       } catch (err) {
-        console.error("Error fetching filter categories:", err);
+        console.error("Error fetching filters:", err);
       }
     };
     fetchFilters();
   }, []);
 
-  // ---------- FETCH NOTICES ----------
+  /* -------- FETCH NOTICES -------- */
   useEffect(() => {
     const fetchNotices = async () => {
       try {
         const res = await getAllShortNoticesAPI();
         if (res.success) setNotices(res.data || []);
       } catch (err) {
-        console.error("Error fetching short notices:", err);
+        console.error("Error fetching notices:", err);
       }
     };
     fetchNotices();
   }, []);
 
-  // ---------- SHUFFLE PRODUCTS ----------
-  useEffect(() => {
-    const remixAllProducts = () => {
-      setFilteredProducts(() => {
-        const newestFirst = sortByNewest(allProducts);
-
-        const priorityProducts = newestFirst.filter((p) =>
-          DARKSHOP_PRIORITY.includes(p.platform)
-        );
-        const otherProducts = newestFirst.filter(
-          (p) => !DARKSHOP_PRIORITY.includes(p.platform)
-        );
-
-        return [...shuffleArray(priorityProducts), ...shuffleArray(otherProducts)];
-      });
-    };
-
-    if (allProducts.length) remixAllProducts();
-
-    const interval = setInterval(remixAllProducts, 180000);
-    return () => clearInterval(interval);
-  }, [allProducts]);
-
-  // ---------- FILTER PRODUCTS ----------
+  /* -------- FILTER PRODUCTS -------- */
   useEffect(() => {
     let result = [...products];
 
-    if (platformFilter) {
-      if (platformFilter.groupId) {
-        result = result.filter((p) => p.groupId === platformFilter.groupId);
-      } else if (platformFilter.name) {
-        result = result.filter(
-          (p) =>
-            p.platform?.toLowerCase() === platformFilter.name.toLowerCase() ||
-            p.category_name?.toLowerCase() === platformFilter.name.toLowerCase()
-        );
-      }
+    if (platformFilter?.groupId) {
+      result = result.filter((p) => p.groupId === platformFilter.groupId);
+    } else if (platformFilter?.name) {
+      result = result.filter(
+        (p) => p.platform?.toLowerCase() === platformFilter.name.toLowerCase(),
+      );
     }
 
-    const [minPrice, maxPrice] = priceRange;
-    result = result.filter((p) => p.price >= minPrice && p.price <= maxPrice);
+    const [min, max] = priceRange;
+    result = result.filter((p) => p.price >= min && p.price <= max);
 
     if (searchQuery.trim()) {
       result = result.filter((p) =>
-        p.name.toLowerCase().includes(searchQuery.toLowerCase())
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -317,16 +252,17 @@ const Marketplace = () => {
     setCurrentPage(1);
   }, [products, platformFilter, priceRange, searchQuery]);
 
-  // ---------- CART ----------
+  /* -------- CART -------- */
   const addToCart = (item) => {
     if (cart.some((c) => c.id === item.id)) return;
     updateCartState([...cart, item]);
     toast.success("Product added to cart");
   };
 
+  /* -------- PAGINATION -------- */
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+    currentPage * ITEMS_PER_PAGE,
   );
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
@@ -360,7 +296,7 @@ const Marketplace = () => {
 
         {/* MOBILE CATEGORY FILTER */}
         {categoriesOpen && (
-             <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
             <div className="bg-gray-900 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-base font-semibold">Account Categories</h2>
@@ -476,7 +412,7 @@ const Marketplace = () => {
                                   {platform.name}
                                 </span>
                               </button>
-                            )
+                            ),
                           )}
                     </div>
                   )}
@@ -512,7 +448,7 @@ const Marketplace = () => {
         )}
 
         {/* SEARCH & VIEW MODE */}
-         <div className="flex-1 p-3 tab:p-6">
+        <div className="flex-1 p-3 tab:p-6">
           <div className="flex flex-col pc:flex-row justify-between items-center gap-3 w-full">
             <div className="mobile:w-full w-full">
               <h1 className="text-2xl text-white font-semibold">

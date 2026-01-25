@@ -2987,3 +2987,16 @@ export default function ShoppingCategories() {
     </div>
   );
 }
+
+
+
+const DARKSHOP_PRIORITY = [
+  "Facebook",
+  "Instagram",
+  "VPN & Proxy",
+  "TikTok",
+  "Twitter",
+  "Telegram",
+  "VPN (Private)",
+  "Gmail",
+];

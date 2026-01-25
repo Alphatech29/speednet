@@ -3,7 +3,7 @@ const { getWebSettings } = require("./general");
 
 async function createDarkshopOrder({
   product,
-  orderNo, // explicitly passed from caller
+  orderNo,
   send_email_copy = false,
   promo_code,
 }) {

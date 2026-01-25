@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
 
 import {
   fetchDarkShopProductById,
@@ -11,26 +9,14 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ color: [] }, { background: [] }],
-    [{ align: [] }],
-    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-    ["blockquote", "code-block"],
-    ["link", "image", "video"],
-    ["clean"],
-  ],
-};
-
 const ViewProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [wordCount, setWordCount] = useState(0);
 
   const [product, setProduct] = useState({
     name: "",
@@ -44,31 +30,34 @@ const ViewProduct = () => {
     description: "",
   });
 
+  /* ===== FETCH PRODUCT ===== */
   useEffect(() => {
     const fetchProduct = async () => {
       setLoading(true);
-      setError(null);
       try {
-        if (!id) throw new Error("Product ID is missing");
-
         const res = await fetchDarkShopProductById(id);
-        if (!res || !res.success)
-          throw new Error(res?.message || "Failed to load product");
 
-        const productData = {
+        if (!res?.success) {
+          throw new Error(res?.message || "Product not found");
+        }
+
+        const data = {
           name: res.data.name || "",
           price: res.data.price || "",
           miniature: res.data.miniature || "",
           description: res.data.description || "",
         };
 
-        setProduct(productData);
+        setProduct(data);
         setEditable({
-          name: productData.name,
-          description: productData.description,
+          name: data.name,
+          description: data.description,
         });
+
+        const text = data.description.trim();
+        setWordCount(text ? text.split(/\s+/).length : 0);
       } catch (err) {
-        setError(err.message || "Something went wrong while loading the product");
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -77,8 +66,13 @@ const ViewProduct = () => {
     fetchProduct();
   }, [id]);
 
-  const handleChange = (field, value) => {
-    setEditable((prev) => ({ ...prev, [field]: value }));
+  /* ===== TEXTAREA CHANGE ===== */
+  const handleDescriptionChange = (e) => {
+    const value = e.target.value;
+    setEditable((prev) => ({ ...prev, description: value }));
+
+    const text = value.trim();
+    setWordCount(text ? text.split(/\s+/).length : 0);
   };
 
   const handleSave = async () => {
@@ -95,30 +89,21 @@ const ViewProduct = () => {
         description: editable.description,
       });
 
-      if (!res.success)
+      if (!res.success) {
         throw new Error(res.message || "Failed to update product");
-
-      setProduct((prev) => ({
-        ...prev,
-        name: editable.name,
-        description: editable.description,
-      }));
+      }
 
       toast.success("Product updated successfully");
     } catch (err) {
-      toast.error(err.message || "Error updating product");
+      toast.error(err.message);
     } finally {
       setSaving(false);
     }
   };
 
-  const handleBack = () => {
-    navigate(-1); // Just go back, context already has page + scroll
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white text-gray-500">
+      <div className="min-h-screen flex items-center justify-center text-gray-500">
         Loading product...
       </div>
     );
@@ -128,7 +113,8 @@ const ViewProduct = () => {
     <>
       <ToastContainer />
 
-      <div className="w-full shadow-lg bg-white rounded-lg border border-gray-200 p-6">
+      <div className="w-full bg-white rounded-lg shadow-md border p-6">
+        {/* IMAGE */}
         {product.miniature ? (
           <img
             src={product.miniature}
@@ -141,6 +127,7 @@ const ViewProduct = () => {
           </div>
         )}
 
+        {/* NAME */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600 mb-1">
             Product Name
@@ -148,17 +135,14 @@ const ViewProduct = () => {
           <input
             type="text"
             value={editable.name}
-            onChange={(e) => handleChange("name", e.target.value)}
-            className="w-full p-2 border rounded font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={(e) =>
+              setEditable((prev) => ({ ...prev, name: e.target.value }))
+            }
+            className="w-full p-2 border rounded font-medium focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
-        {error && (
-          <div className="mb-4 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-600">
-            {error}
-          </div>
-        )}
-
+        {/* PRICE (READ ONLY) */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-600 mb-1">
             Price
@@ -166,32 +150,38 @@ const ViewProduct = () => {
           <p className="p-2 border rounded font-medium">${product.price}</p>
         </div>
 
-        <div className="mb-10">
+        {/* DESCRIPTION — TEXTAREA */}
+        <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">
             Description
           </label>
-          <ReactQuill
-            theme="snow"
+
+          <textarea
             value={editable.description}
-            onChange={(value) => handleChange("description", value)}
-            modules={modules}
+            onChange={handleDescriptionChange}
             placeholder="Write product description..."
-            className="h-[400px]"
+            rows={10}
+            className="w-full p-3 border rounded-lg resize-none focus:ring-2 focus:ring-blue-400"
           />
+
+          <p className="text-xs text-gray-500 mt-2">
+            Word count: <span className="font-semibold">{wordCount}</span>
+          </p>
         </div>
 
-        <div className="flex justify-end gap-4">
+        {/* ACTIONS */}
+        <div className="flex justify-end gap-4 mt-8">
           <button
-            onClick={handleBack}
-            className="bg-gray-100 hover:bg-gray-200 px-6 py-2 rounded-md border"
-            disabled={saving}
+            onClick={() => navigate(-1)}
+            className="px-6 py-2 border rounded-md bg-gray-100 hover:bg-gray-200"
           >
             Back
           </button>
+
           <button
             onClick={handleSave}
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-6 py-2 rounded-md"
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-60"
           >
             {saving ? "Saving..." : "Save"}
           </button>

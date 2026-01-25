@@ -44,6 +44,12 @@ export const getDarkProducts = async () => {
     const response = await axios.get("/general/darkshop-all-products", {
       headers: {
         "Content-Type": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+      params: {
+        _t: Date.now(),
       },
     });
 
@@ -61,7 +67,7 @@ export const getDarkProducts = async () => {
           group_id: product.group_id || null,
           seller: product.seller || null,
           avatar: product.avatar || null,
-          instant_delivery: product.instant_delivery || true,
+          instant_delivery: product.instant_delivery ?? true,
           icon: product.icon || null,
           category_id: product.category_id || null,
           category_name: product.category_name || "Uncategorized",
@@ -91,6 +97,7 @@ export const getDarkProducts = async () => {
     };
   }
 };
+
 
 
 

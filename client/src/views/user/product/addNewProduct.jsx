@@ -227,7 +227,7 @@ const AddNewProduct = () => {
   );
 
   return (
-    <div className="text-gray-200 flex flex-col">
+    <div className="text-secondary flex flex-col">
       <ToastContainer position="top-right" autoClose={3000} />
       <h1 className="text-lg font-semibold">Add New Product</h1>
       <p className="mb-4 text-sm">
@@ -237,7 +237,7 @@ const AddNewProduct = () => {
 
       <Stepper steps={steps} currentStep={currentStep} />
 
-      <div className="w-full max-w-lg mx-auto p-3 border border-gray-400/70 rounded-md space-y-4">
+      <div className="w-full max-w-lg mx-auto p-3 border border-primary-600 rounded-md space-y-4">
         {/* STEP 1 */}
         {currentStep === 1 && (
           <>
@@ -249,7 +249,7 @@ const AddNewProduct = () => {
 
               <div className="relative">
                 <div
-                  className="w-full bg-gray-700 text-white border border-gray-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
+                  className="w-full bg-[#fffbd2] text-secondary border border-primary-600 rounded-md p-2 pr-10 cursor-pointer flex items-center"
                   onClick={() =>
                     setIsPlatformDropdownOpen(!isPlatformDropdownOpen)
                   }
@@ -278,28 +278,28 @@ const AddNewProduct = () => {
 
                 {/* Dropdown */}
                 {isPlatformDropdownOpen && (
-                  <div className="absolute z-10 mt-1 w-full bg-gray-700 border border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto">
+                  <div className="absolute z-10 mt-1 w-full bg-[#fffbd2] border border-primary-600 rounded-md shadow-lg max-h-60 overflow-auto">
                     {/* Sticky Search Box */}
-                    <div className="sticky top-0 bg-gray-700 z-20 p-2 border-b border-gray-500">
+                    <div className="sticky top-0 bg-[#fffbd2] z-20 p-2 border-b border-primary-600">
                       <input
                         type="text"
                         value={platformSearch}
                         onChange={(e) => setPlatformSearch(e.target.value)}
                         placeholder="Search platform..."
-                        className="w-full bg-gray-600 text-white p-2 text-sm outline-none rounded"
+                        className="w-full bg-[#fffbd2] text-secondary p-2 text-sm outline-none rounded"
                       />
                     </div>
 
                     {/* Filtered items */}
                     {filteredPlatforms.length === 0 ? (
-                      <p className="p-3 text-gray-400 text-sm">
+                      <p className="p-3 text-secondary text-sm">
                         No platform found
                       </p>
                     ) : (
                       filteredPlatforms.map((option) => (
                         <div
                           key={option.id}
-                          className="px-3 py-2 hover:bg-gray-600 cursor-pointer flex items-center"
+                          className="px-3 py-2 hover:bg-[#f7f3cfb9] cursor-pointer flex items-center"
                           onClick={() => handlePlatformSelect(option.id)}
                         >
                           {option.image_path && (
@@ -346,7 +346,7 @@ const AddNewProduct = () => {
                 onChange={handleChange}
                 rows={6}
                 placeholder="Describe the account"
-                className="w-full bg-transparent border rounded-md p-2 placeholder:text-gray-600 text-sm"
+                className="w-full bg-transparent border rounded-md p-2 placeholder:text-secondary text-sm"
               />
             </div>
           </>

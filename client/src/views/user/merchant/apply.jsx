@@ -10,17 +10,17 @@ const Apply = () => {
   return (
     <div className="flex flex-col gap-3 mobile:px-0 tab:px-8 pc:px-0 w-full pc:mx-auto">
       {/* Header */}
-      <div className="text-gray-100 flex flex-col">
+      <div className="text-secondary flex flex-col">
         <span className="mobile:text-[22px] tab:text-[26px] pc:text-[30px] font-semibold leading-tight">
           Become a Merchant
         </span>
-        <p className="text-gray-400 mobile:text-sm tab:text-base mt-1">
+        <p className="text-secondary mobile:text-sm tab:text-base mt-1">
           A one-time payment is required to complete your merchant registration.
         </p>
       </div>
 
       {/* Info Section */}
-      <div className="bg-slate-800 border border-gray-600 rounded-lg mobile:p-4 tab:p-5 pc:p-6 flex flex-col gap-4 text-gray-100">
+      <div className="bg-[#fefce8] border border-primary-600 rounded-lg mobile:p-4 tab:p-5 pc:p-6 flex flex-col gap-4 text-secondary">
         <p className="mobile:text-sm tab:text-base">
           Monetize your digital assets by becoming a merchant on our platform.
           If you have premium accounts, subscriptions, or digital services to sell,
@@ -36,7 +36,7 @@ const Apply = () => {
         </ul>
 
         <h1 className="font-semibold mobile:text-[15px] tab:text-[17px] mt-2">How It Works?</h1>
-        <ol className="list-decimal list-inside space-y-1 text-gray-300 mobile:text-sm tab:text-base">
+        <ol className="list-decimal list-inside space-y-1 text-secondary mobile:text-sm tab:text-base">
           <li>
             Sign Up & Pay {webSettings?.currency || '$'}
             {webSettings?.merchant_activation_fee || '0.00'} – Register and make a one-time merchant activation payment.

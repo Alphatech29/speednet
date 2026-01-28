@@ -59,7 +59,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="w-full bg-slate-800 shadow-lg px-4 py-2 text-white mobile:sticky mobile:top-0 mobile:z-10">
+    <div className="w-full bg-[#fefce8] shadow-lg px-4 py-2 text-secondary mobile:sticky mobile:top-0 mobile:z-10">
       <div className="flex w-full justify-end items-center space-x-3 relative">
         {/* Menu Icon */}
         <div className="mobile:flex pc:hidden justify-start items-start w-full">
@@ -77,12 +77,12 @@ const Header = () => {
             onClick={toggleNoticeDropdown}
           />
           {isNoticeOpen && (
-            <div className="absolute right-0  mt-2 w-80 mobile:w-96  mobile:right-[-102px] bg-slate-700 text-white rounded-lg shadow-lg py-6 px-4">
+            <div className="absolute right-0  mt-2 w-80 mobile:w-96  mobile:right-[-102px] bg-[#fefce8] text-secondary rounded-lg shadow-lg py-6 px-4">
               <div className="flex flex-col items-center gap-2">
-                <span className="text-[25px] text-gray-400">
+                <span className="text-[25px] text-secondary">
                   <IoNotificationsOffSharp />
                 </span>
-                <p className="text-gray-400 text-center">No new notifications</p>
+                <p className="text-secondary text-center">No new notifications</p>
               </div>
             </div>
           )}
@@ -106,10 +106,10 @@ const Header = () => {
           />
 
           {isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-slate-700 text-white rounded-lg shadow-lg py-2 px-2">
-              <div className="flex flex-col px-4 border-b border-slate-400 mb-3 pb-3">
+            <div className="absolute right-0 mt-2 w-48 bg-[#fefce8] text-secondary rounded-lg shadow-lg py-2 px-2">
+              <div className="flex flex-col px-4 border-b border-primary-600 mb-3 pb-3">
                 <p className="text-sm font-bold">{user.full_name}</p>
-                <p className="text-xs text-gray-400">{user.email}</p>
+                <p className="text-xs text-secondary/50">{user.email}</p>
               </div>
               <a href="/user/profile" className="flex items-center px-4 py-2 hover:text-primary-600">
                 <CgProfile className="mr-2" /> Profile

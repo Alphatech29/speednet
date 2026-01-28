@@ -48,7 +48,7 @@ const SmsActivate = () => {
   const [smsMessages, setSmsMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countdowns, setCountdowns] = useState({});
-  const [countries, setCountries] = useState([]); // store countries
+  const [countries, setCountries] = useState([]);
 
   const errorNotify = (msg) => toast.error(msg);
 
@@ -58,7 +58,7 @@ const SmsActivate = () => {
       const res = await getSmsServiceByUserId();
       if (res.success && Array.isArray(res.data)) {
         setSmsMessages(res.data);
-        localStorage.setItem("smsMessages", JSON.stringify(res.data)); // ✅ cache SMS
+        localStorage.setItem("smsMessages", JSON.stringify(res.data));
       } else {
         setSmsMessages([]);
         localStorage.removeItem("smsMessages");
@@ -74,7 +74,7 @@ const SmsActivate = () => {
 
   const fetchCountries = async () => {
     try {
-      // ✅ load from cache if available
+      // load from cache if available
       const cached = localStorage.getItem("smsCountries");
       if (cached) {
         setCountries(JSON.parse(cached));
@@ -84,7 +84,7 @@ const SmsActivate = () => {
       const res = await getSmsPoolCountries();
       if (res.success && Array.isArray(res.data)) {
         setCountries(res.data);
-        localStorage.setItem("smsCountries", JSON.stringify(res.data)); // ✅ cache
+        localStorage.setItem("smsCountries", JSON.stringify(res.data));
       } else {
         setCountries([]);
       }
@@ -96,7 +96,6 @@ const SmsActivate = () => {
   };
 
   useEffect(() => {
-    // ✅ load cached data first
     const cachedSms = localStorage.getItem("smsMessages");
     if (cachedSms) setSmsMessages(JSON.parse(cachedSms));
 
@@ -105,7 +104,6 @@ const SmsActivate = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // fetch countries only once on mount
   useEffect(() => {
     fetchCountries();
   }, []);
@@ -143,7 +141,6 @@ const SmsActivate = () => {
   const formatDate = (dateString) =>
     dateString ? new Date(dateString).toLocaleString() : "N/A";
 
-  // ✅ Find short_name by country (from sms.country)
   const getCountryShortName = (country) => {
     if (!country || countries.length === 0) return null;
     const match = countries.find(
@@ -154,12 +151,11 @@ const SmsActivate = () => {
     return match ? match.short_name : null;
   };
 
-  // ✅ Build flagcdn URL
   const getFlagUrl = (shortName) =>
     shortName ? `https://flagcdn.com/w20/${shortName.toLowerCase()}.png` : null;
 
   return (
-    <div className="text-gray-300">
+    <div className="text-secondary">
       <ToastContainer />
       <h2 className="text-xl font-bold mb-4">SMS Activation Service</h2>
 
@@ -216,9 +212,9 @@ const SmsActivate = () => {
 
       {/* Recent Messages */}
       <section className="w-full">
-        <div className="bg-gray-800 rounded-lg border border-gray-600 p-4">
+        <div className="bg-primary-50 rounded-lg border border-primary-600 p-4">
           {smsMessages.length === 0 && !loading && (
-            <div className="text-center py-6 text-gray-400">
+            <div className="text-center py-6 text-secondary">
               No messages found.
             </div>
           )}
@@ -230,17 +226,17 @@ const SmsActivate = () => {
             return (
               <div
                 key={sms.id || idx}
-                className="mb-4 p-3 border border-gray-700 rounded hover:bg-gray-700/50"
+                className="mb-4 p-3 border border-primary-600 rounded hover:bg-primary-600/20"
               >
                 <div className="flex flex-col justify-start items-start gap-1">
                   <div className="flex justify-between items-center w-full ">
                     <div className="flex items-center gap-2">
-                      <p className="text-[16px] text-gray-400">
+                      <p className="text-[16px] text-secondary">
                         +{sms?.number || "N/A"}
                       </p>
                       <button
                         onClick={() => copyToClipboard(sms?.number)}
-                        className="bg-gray-700 text-gray-200 py-1 px-2 rounded flex items-center text-[11px] hover:bg-gray-600"
+                        className="bg-primary-600 text-white py-1 px-2 rounded flex items-center text-[11px]"
                       >
                         <FaCopy className="mr-1 text-[11px]" />
                         Copy
@@ -257,9 +253,8 @@ const SmsActivate = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-between w-full mt-1 text-sm text-gray-400">
+                  <div className="flex justify-between w-full mt-1 text-sm text-secondary/70">
                     <div className="flex items-center gap-2">
-                      {/* ✅ Show flag if available */}
                       {flagUrl && (
                         <img
                           src={flagUrl}
@@ -275,7 +270,7 @@ const SmsActivate = () => {
 
                 {sms.status === 1 ? (
                   <>
-                    <div className="bg-gray-700 p-2 rounded my-2 text-sm text-green-200">
+                    <div className="bg-primary-600/20 p-2 rounded my-2 text-sm text-green-500">
                       SMS received successfully! You can now use the code{" "}
                       {sms?.code || "N/A"}.
                     </div>
@@ -283,7 +278,7 @@ const SmsActivate = () => {
                     <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center gap-2">
                       <span className="text-sm">
                         <strong>Code:</strong>{" "}
-                        <code className="bg-blue-900 text-blue-300 px-2 py-1 rounded">
+                        <code className="bg-primary-600 text-white px-2 py-1 rounded">
                           {sms?.code || "N/A"}
                         </code>
                       </span>
@@ -297,12 +292,12 @@ const SmsActivate = () => {
                     </div>
                   </>
                 ) : sms.status === 2 ? (
-                  <div className="text-center py-6 text-gray-400">
+                  <div className="text-center py-6 text-secondary">
                     <ImCancelCircle className="mx-auto text-2xl animate-pulse mb-1" />
                     <p>This number has expired and cannot receive SMS.</p>
                   </div>
                 ) : (
-                  <div className="text-center py-6 text-gray-400">
+                  <div className="text-center py-6 text-secondary">
                     <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
                     <p>Waiting for SMS.....</p>
                   </div>

@@ -63,9 +63,9 @@ const Wallet = () => {
             <Notice onClose={() => setShowNotice(false)} />
           )}
 
-          <div className="text-lg font-medium mb-4 text-gray-200">Wallet</div>
+          <div className="text-lg font-medium mb-4 text-secondary">Wallet</div>
 
-          <div className="flex flex-col pc:flex-row tab:flex-col border border-gray-400 rounded-lg overflow-hidden">
+          <div className="flex flex-col pc:flex-row tab:flex-col border border-primary-600 rounded-lg overflow-hidden">
             {/* Left Panel */}
             <div className="bg-primary-600 mobile:h-60 pc:h-full tab:h-full pc:w-[300px] tab:w-full px-4 py-6 flex flex-col items-center justify-between">
               <div className="flex flex-col items-center justify-center">
@@ -84,27 +84,27 @@ const Wallet = () => {
             </div>
 
             {/* Right Panel */}
-            <div className="bg-slate-700 w-full px-3 py-4 flex flex-col pc:min-h-[400px]">
-              <div className="flex justify-between items-center text-white text-[14px] tab:text-[15px] pc:text-[16px]">
+            <div className="bg-primary-50 w-full px-3 py-4 flex flex-col pc:min-h-[400px]">
+              <div className="flex justify-between items-center text-secondary text-[14px] tab:text-[15px] pc:text-[16px]">
                 <span>Recent Transactions</span>
                 <span className="cursor-pointer hover:underline">View More</span>
               </div>
 
-              <div className="overflow-x-auto text-gray-300">
+              <div className="overflow-x-auto text-secondary">
                 {loading ? (
                   <p className="text-center text-gray-400">Loading transactions...</p>
                 ) : transactions.length > 0 ? (
                   <Table hoverable className="bg-transparent ">
-                    <Table.Head className="bg-transparent text-gray-200">
+                    <Table.Head className="bg-transparent text-secondary">
                       <Table.HeadCell>Transaction ID</Table.HeadCell>
                       <Table.HeadCell>Description</Table.HeadCell>
                       <Table.HeadCell>Amount</Table.HeadCell>
                       <Table.HeadCell>Status</Table.HeadCell>
                       <Table.HeadCell>Date</Table.HeadCell>
                     </Table.Head>
-                    <Table.Body className="divide-y divide-gray-600">
+                    <Table.Body className="divide-y divide-primary-600">
                       {transactions.slice(0, 6).map((transaction) => (
-                        <Table.Row key={transaction.transaction_no} className="text-gray-400">
+                        <Table.Row key={transaction.transaction_no} className="text-secondary">
                           <Table.Cell className="text-[12px] tab:text-sm">{transaction.transaction_no}</Table.Cell>
                           <Table.Cell className="text-[12px] tab:text-sm">{transaction.transaction_type}</Table.Cell>
                           <Table.Cell className="text-[12px] tab:text-sm">{formatAmount(transaction.amount)}</Table.Cell>
@@ -119,7 +119,7 @@ const Wallet = () => {
                     </Table.Body>
                   </Table>
                 ) : (
-                  <p className="text-center text-gray-400 pc:py-32">No transactions found</p>
+                  <p className="text-center text-secondary pc:py-32">No transactions found</p>
                 )}
               </div>
             </div>

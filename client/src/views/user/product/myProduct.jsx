@@ -62,13 +62,13 @@ const Myproduct = () => {
     <div className="flex flex-col gap-4">
       {/* Header */}
       <div>
-        <span className="text-lg font-medium text-gray-300">My Product</span>
+        <span className="text-lg font-medium text-secondary">My Product</span>
       </div>
 
       {/* Product Table */}
-      <div className="bg-slate-700 flex flex-col w-full border border-gray-400 rounded-lg px-3 py-4 overflow-auto">
+      <div className="bg-primary-50 flex flex-col w-full border border-primary-600 rounded-lg px-3 py-4 overflow-auto">
         <Table hoverable={true} className="bg-transparent">
-          <Table.Head className="text-gray-200 font-semibold">
+          <Table.Head className="text-secondary bg-transparent font-semibold">
             <Table.HeadCell>S/N</Table.HeadCell>
             <Table.HeadCell>Image</Table.HeadCell>
             <Table.HeadCell>Platform</Table.HeadCell>
@@ -118,7 +118,7 @@ const Myproduct = () => {
               ))
             ) : (
               <Table.Row>
-                <Table.Cell colSpan="8" className="py-24 text-gray-500 text-center">
+                <Table.Cell colSpan="8" className="py-24 text-secondary text-center">
                   No products available
                 </Table.Cell>
               </Table.Row>
@@ -128,7 +128,7 @@ const Myproduct = () => {
 
         {/* Empty State */}
         {accounts.length === 0 && (
-          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-gray-300">
+          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-secondary">
             <FaFile className="text-4xl" />
             <p>No Product Record</p>
           </div>

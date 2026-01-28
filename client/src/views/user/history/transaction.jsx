@@ -88,23 +88,23 @@ const Transaction = () => {
   };
 
   return (
-    <div className="bg-slate-700 flex flex-col mobile:w-full tab:w-full pc:w-full border border-gray-400 rounded-lg px-3 py-4">
-      <div className="w-full flex justify-between items-center text-white mobile:text-[13px] tab:text-[15px] pc:text-base">
+    <div className="bg-[#fefce8] flex flex-col mobile:w-full tab:w-full pc:w-full border border-primary-600 rounded-lg px-3 py-4">
+      <div className="w-full flex justify-between items-center text-secondary mobile:text-[13px] tab:text-[15px] pc:text-base">
         <span>Recent Transactions</span>
         {!loading && !error && transactions.length > 0 && (
           <span className="cursor-pointer text-primary-400 hover:underline">View More</span>
         )}
       </div>
 
-      <div className="min-h-[300px] flex flex-col gap-2 mt-4 text-gray-300 overflow-auto">
+      <div className="min-h-[300px] flex flex-col gap-2 mt-4 text-secondary overflow-auto">
         {loading || error || transactions.length === 0 ? (
-          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 text-gray-300">
+          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 text-secondary">
             <FaHistory className="text-4xl" />
             <p>{loading ? "Loading..." : error || "No Transactions Yet"}</p>
           </div>
         ) : (
           <Table hoverable className="bg-transparent min-w-[700px]">
-            <Table.Head className="bg-transparent text-gray-200">
+            <Table.Head className="bg-transparent text-secondary bg-[#fefce8]">
               <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Order ID / Transaction ID</Table.HeadCell>
               <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Description</Table.HeadCell>
               <Table.HeadCell className="mobile:text-[12px] tab:text-sm">Amount</Table.HeadCell>
@@ -114,19 +114,19 @@ const Transaction = () => {
             <Table.Body className="divide-y">
               {transactions.slice(0, 10).map((transaction) => (
                 <Table.Row key={transaction.id}>
-                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                  <Table.Cell className="text-secondary mobile:text-[12px] tab:text-sm">
                     {transaction.source} {transaction.id}
                   </Table.Cell>
-                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">{transaction.type}</Table.Cell>
-                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                  <Table.Cell className="text-secondary mobile:text-[12px] tab:text-sm">{transaction.type}</Table.Cell>
+                  <Table.Cell className="text-secondary mobile:text-[12px] tab:text-sm">
                     {webSettings?.currency}{transaction.amount}
                   </Table.Cell>
-                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                  <Table.Cell className="text-secondary mobile:text-[12px] tab:text-sm">
                     <div className={`px-3 py-1 rounded-full text-white text-xs ${getStatusColor(transaction.status)}`}>
                       {transaction.status || "Unknown"}
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="text-gray-300 mobile:text-[12px] tab:text-sm">
+                  <Table.Cell className="text-secondary mobile:text-[12px] tab:text-sm">
                     {formatDateTime(transaction.date)}
                   </Table.Cell>
                 </Table.Row>

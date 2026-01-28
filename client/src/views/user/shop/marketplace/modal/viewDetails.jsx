@@ -23,16 +23,16 @@ const ViewDetails = ({ product, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
       {/* Modal Container */}
-      <div className="mobile:w-full tab:w-[712px] max-h-dvh bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+      <div className="mobile:w-full tab:w-[712px] max-h-dvh bg-[#fefce8] rounded-lg shadow-lg overflow-hidden">
 
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
-          <h2 className="text-lg font-semibold text-white">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-primary-600">
+          <h2 className="text-lg font-semibold text-secondary">
             {product?.name || "Product"} Details
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-xl"
+            className="text-secondary text-xl"
             aria-label="Close"
           >
             ✕
@@ -40,7 +40,7 @@ const ViewDetails = ({ product, onClose }) => {
         </div>
 
         {/* Body */}
-        <div className="p-4 text-gray-300 space-y-4 max-h-[70vh] overflow-y-auto">
+        <div className="p-4 text-secondary space-y-4 max-h-[70vh] overflow-y-auto">
 
           {/* Description (Readable Text) */}
           <pre className="text-sm leading-relaxed whitespace-pre-wrap font-sans">
@@ -81,7 +81,7 @@ const ViewDetails = ({ product, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end px-4 py-3 border-t border-gray-700">
+        <div className="flex justify-end px-4 py-3 border-t border-primary-600">
           <button
             onClick={onClose}
             className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700"

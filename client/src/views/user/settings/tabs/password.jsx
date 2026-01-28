@@ -68,45 +68,45 @@ const PasswordTab = () => {
   };
 
   return (
-    <div className="bg-gray-800 min-h-[300px] mobile:p-4 tab:p-6 pc:p-10 text-gray-100">
+    <div className="bg-[#fefce8] min-h-[300px] mobile:p-4 tab:p-6 pc:p-10 text-secondary">
       <ToastContainer />
-      <div className="mx-auto w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg border border-gray-700 p-6 rounded-lg shadow-lg">
-        <h2 className="text-xl text-center font-semibold text-white mb-4">Change Password</h2>
+      <div className="mx-auto w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg border border-secondary p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl text-center font-semibold text-secondary mb-4">Change Password</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="oldPassword" value="Old Password" className="text-white"/>
+            <Label htmlFor="oldPassword" value="Old Password" className="text-secondary"/>
             <input
               id="oldPassword"
               name="oldPassword"
               type="password"
               value={formData.oldPassword}
               onChange={handleInputChange}
-              className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md text-gray-300"
+              className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
             />
           </div>
 
           <div>
-            <Label htmlFor="newPassword" value="New Password" className="text-white"/>
+            <Label htmlFor="newPassword" value="New Password" className="text-secondary"/>
             <input
               id="newPassword"
               name="newPassword"
               type="password"
               value={formData.newPassword}
               onChange={handleInputChange}
-              className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md text-gray-300"
+              className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
             />
           </div>
 
           <div>
-            <Label htmlFor="confirmPassword" value="Confirm New Password" className="text-white"/>
+            <Label htmlFor="confirmPassword" value="Confirm New Password" className="text-secondary"/>
             <input
               id="confirmPassword"
               name="confirmPassword"
               type="password"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md text-gray-300"
+              className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
             />
           </div>
 

@@ -10,14 +10,14 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
         return (
           <div
             key={product.id}
-            className="flex justify-center shadow-md mobile:p-1.5 rounded-lg bg-gray-800 gap-3 items-center"
+            className="flex justify-center mobile:p-1.5 rounded-lg bg-[#fefce8] shadow-lg gap-3 items-center"
           >
             <div>
               {/* Product Image */}
               <img
                 src={product.image}
                 alt={product.name}
-                className="mobile:w-8 mobile:h-9 tab:w-16 tab:h-16 pc:w-16 pc:h-16 rounded-md object-cover flex-shrink-0 bg-white"
+                className="mobile:w-8 mobile:h-9 tab:w-16 tab:h-16 pc:w-16 pc:h-16 rounded-md object-cover flex-shrink-0 "
               />
             </div>
 
@@ -25,15 +25,15 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
             <div className="flex flex-1 flex-col justify-between">
               <div className="flex-1">
                 <div className="flex justify-between items-center w-full">
-                  <h2 className="text-white font-semibold text-sm mobile:text-[13px] tab:text-base pc:text-lg line-clamp-2 break-words capitalize">
+                  <h2 className="text-secondary font-semibold text-sm mobile:text-[13px] tab:text-base pc:text-lg line-clamp-2 break-words capitalize">
                     {product.name}
                   </h2>
-                  <span className="text-white font-medium text-sm mobile:text-sm tab:text-base pc:text-lg">
+                  <span className="text-secondary font-medium text-sm mobile:text-sm tab:text-base pc:text-lg">
                     ${product.price}
                   </span>
                 </div>
                 <p
-                  className="text-gray-300 text-xs mobile:text-[11px] tab:text-sm pc:text-sm line-clamp-2 mt-1"
+                  className="text-secondary/50 text-xs mobile:text-[11px] tab:text-sm pc:text-sm line-clamp-2 mt-1"
                   dangerouslySetInnerHTML={{ __html: product.description }}
                 ></p>
 
@@ -47,7 +47,7 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
                           className="mobile:w-4 mobile:h-4 tab:w-4 tab:h-4 rounded-full border border-white object-cover"
                         />
                       )}
-                      <span className="text-gray-300 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
+                      <span className="text-secondary/60 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
                         {product.seller}
                       </span>
                     </div>
@@ -62,7 +62,7 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
                           className="mobile:w-4 mobile:h-4 tab:w-4 tab:h-4 rounded-full object-cover"
                         />
                       )}
-                      <span className="text-gray-300 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
+                      <span className="text-secondary/60 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
                         Instant Delivery
                       </span>
                     </div>

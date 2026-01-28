@@ -9,19 +9,19 @@ const GridView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
         return (
           <div
             key={product.id}
-            className="flex flex-col justify-between shadow-lg p-2 rounded-lg bg-gray-700"
+            className="flex flex-col justify-between shadow-lg p-2 rounded-lg bg-[#fefce8]"
           >
             <img
               src={product.image}
-              className="w-full h-[120px] rounded-md object-cover bg-white"
+              className="w-full h-[120px] rounded-md object-cover "
             />
 
-            <div className="mt-2 font-semibold text-white line-clamp-2 break-words capitalize mb-2">
+            <div className="mt-2 font-semibold text-secondary line-clamp-2 break-words capitalize mb-2">
               {product.name}
             </div>
 
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2 text-gray-300">
+              <div className="flex items-center gap-2 text-secondary/50">
                 {product.avatar && (
                   <img
                     src={product.avatar}
@@ -30,7 +30,7 @@ const GridView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
                 )}
                 <span className="text-sm">{product.seller}</span>
               </div>
-              <span className="text-sm text-white">${product.price}</span>
+              <span className="text-sm text-secondary">${product.price}</span>
             </div>
 
             <div className="flex justify-end gap-3 mt-2">

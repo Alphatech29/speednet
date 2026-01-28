@@ -65,7 +65,7 @@ function shuffleArray(arr) {
   return shuffled;
 }
 
-// ✅ Interleave regular & dark products
+// Interleave regular & dark products
 function interleaveArrays(regular = [], dark = []) {
   const result = [];
   const maxLength = Math.max(regular.length, dark.length);
@@ -162,13 +162,13 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
             }))
           : [];
 
-        // ✅ Shuffle regular products only
+        // Shuffle regular products only
         const shuffledRegular = shuffleArray(sortByNewest(regularProducts));
 
-        // ✅ Optional: sort dark products (or keep as-is)
+        // Optional: sort dark products (or keep as-is)
         const sortedDark = sortByNewest(darkProducts);
 
-        // ✅ Interleave them
+        // Interleave them
         const finalProducts = interleaveArrays(shuffledRegular, sortedDark);
 
 
@@ -269,7 +269,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
   return (
     <>
       {notices.length > 0 && (
-        <div className="w-full bg-primary-600/30 text-white border-primary-600 border-l-4 mb-3 px-2 py-3 rounded-lg">
+        <div className="w-full bg-primary-600/50 text-white border-primary-600 border-l-4 mb-3 px-2 py-3 rounded-lg">
           {notices.map((notice) => (
             <p key={notice.id} className="flex justify-start items-start">
               <span className="text-primary-600 text-[25px] mr-3">
@@ -281,7 +281,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
         </div>
       )}
 
-      <div className="flex flex-col bg-gray-800 min-h-screen">
+      <div className="flex flex-col bg-[#fefce8] shadow-md min-h-screen">
         <ToastContainer />
 
         <div className="hidden pc:block">
@@ -297,7 +297,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
         {/* MOBILE CATEGORY FILTER */}
         {categoriesOpen && (
           <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center pt-8 mobile:block pc:hidden">
-            <div className="bg-gray-900 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
+            <div className="bg-primary-600 text-white p-4 rounded-md w-full h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-base font-semibold">Account Categories</h2>
                 <button
@@ -312,7 +312,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
               {types.map(({ name, icon: Icon }) => (
                 <div key={name} className="mb-2">
                   <button
-                    className="flex justify-between w-full items-center py-2 px-2 bg-gray-800 rounded"
+                    className="flex justify-between w-full items-center hover:bg-[#fefce891] py-2 px-2 bg-primary-600 rounded"
                     onClick={() =>
                       setOpenCategory((prev) => ({
                         ...prev,
@@ -335,7 +335,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
                         ? darkCategories.map((cat) => (
                             <div key={cat.id}>
                               <button
-                                className="flex justify-between w-full items-center py-1 px-1 bg-gray-800 rounded"
+                                className="flex justify-between w-full items-center py-1 px-1 bg-primary-600 shadow-md rounded"
                                 onClick={() =>
                                   setOpenDarkCategory((prev) => ({
                                     ...prev,
@@ -366,7 +366,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
                                     {cat.groups.map((group) => (
                                       <button
                                         key={group.id}
-                                        className={`flex items-center gap-2 w-full py-1 text-sm ${
+                                        className={`flex items-center gap-2 w-full  hover:bg-[#fefce8a2] py-1 text-sm ${
                                           platformFilter?.groupId === group.id
                                             ? "text-orange-500"
                                             : "text-gray-400"
@@ -451,10 +451,10 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
         <div className="flex-1 p-3 tab:p-6">
           <div className="flex flex-col pc:flex-row justify-between items-center gap-3 w-full">
             <div className="mobile:w-full w-full">
-              <h1 className="text-2xl text-white font-semibold">
+              <h1 className="text-2xl text-secondary font-semibold">
                 Latest account
               </h1>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-secondary/70">
                 Browse verified product listings
               </p>
             </div>
@@ -463,7 +463,7 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
               <input
                 type="text"
                 placeholder="Search by name..."
-                className="w-full px-3 py-1 rounded border bg-transparent text-white placeholder-gray-400"
+                className="w-full px-3 py-1 rounded border bg-transparent text-secondary placeholder-secondary/70"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -495,9 +495,9 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
           </div>
           <div className="mt-4">
             {loading ? (
-              <div className="text-gray-400 py-20 text-center">Loading...</div>
+              <div className="text-secondary py-20 text-center">Loading...</div>
             ) : filteredProducts.length === 0 ? (
-              <div className="text-gray-500 py-20 text-center">
+              <div className="text-secondary py-20 text-center">
                 No products found
               </div>
             ) : viewMode === "column" ? (

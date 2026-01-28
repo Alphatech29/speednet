@@ -153,14 +153,14 @@ const Withdrawal = () => {
   };
 
   return (
-    <div className='text-gray-200 flex flex-col'>
+    <div className='text-secondary flex flex-col'>
       <h1 className='text-lg font-semibold'>Withdrawal</h1>
       <p className='mb-4 mobile:text-[13px] pc:text-base'>
         Easily withdraw funds from your account! Enter the required details, choose the amount, confirm the transaction, and track your withdrawal status in real-time.
       </p>
 
-      <div className='rounded-md px-3 py-2 bg-gray-800 justify-center items-center'>
-        <div className='pc:w-[50%] mx-auto p-3 border border-gray-400/70 rounded-md space-y-4'>
+      <div className='rounded-md px-3 py-2 bg-primary-50 justify-center items-center'>
+        <div className='pc:w-[50%] mx-auto p-3 border border-primary-600/70 rounded-md space-y-4'>
 
           <div className='bg-primary-600 text-gray-200 p-2 rounded-md h-[7rem] flex justify-center items-center'>
             <div className='flex flex-col justify-center items-center'>
@@ -172,7 +172,7 @@ const Withdrawal = () => {
           </div>
 
           <div>
-            <h1 className='text-gray-300 text-base'>Withdrawal Method:</h1>
+            <h1 className='text-secondary text-base'>Withdrawal Method:</h1>
             <div className='flex justify-start items-center gap-2'>
               {options.map((option) => (
                 <span
@@ -197,7 +197,7 @@ const Withdrawal = () => {
                 ) : (
                   <select
                     id="bankName"
-                    className='bg-gray-800 text-gray-300 rounded-md p-2'
+                    className='bg-primary-50 text-secondary shadow-md rounded-md p-2'
                     value={selectedBankCode}
                     onChange={(e) => setSelectedBankCode(e.target.value)}
                     disabled={loadingBanks}

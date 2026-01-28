@@ -43,19 +43,19 @@ const Activate = ({ onClose }) => {
         onClose={onClose}
         popup
       >
-        <Modal.Header className="bg-gray-800">
-          <h3 className="text-lg font-medium text-gray-200">
+        <Modal.Header className="bg-[#fefce8]">
+          <h3 className="text-lg font-medium text-secondary">
             Become a Merchant
           </h3>
         </Modal.Header>
 
-        <Modal.Body className="bg-gray-800">
-          <div className="space-y-4 text-gray-100">
-            <p className="text-sm text-gray-400">
+        <Modal.Body className="bg-[#fefce8]">
+          <div className="space-y-4 text-secondary">
+            <p className="text-sm text-secondary/50">
               A one-time payment is required to activate your merchant account. This ensures secure
               transactions, exclusive access, and seamless selling on our platform. Join now and start earning instantly!
             </p>
-            <p className="text-xs text-gray-300">
+            <p className="text-xs text-secondary/50">
               <strong>Note:</strong> A one-time activation fee of {webSettings?.currency}
               {webSettings?.merchant_activation_fee } will be deducted from your wallet.
             </p>

@@ -68,18 +68,18 @@ const Profile = () => {
 
   return (
     <div>
-      <div className='text-[24px] mb-3 font-medium text-gray-300'>Profile</div>
-      <div className="bg-gray-800 p-4 rounded-md text-gray-100">
+      <div className='text-[24px] mb-3 font-medium text-secondary'>Profile</div>
+      <div className="bg-[#fefce8] shadow-md p-4 rounded-md text-secondary">
       <ToastContainer />
       {!user ? (
-        <p className="text-gray-400">User data not available.</p>
+        <p className="text-secondary">User data not available.</p>
       ) : (
         <div>
           <div className="flex items-center gap-4">
             <div className="relative">
               <label
                 htmlFor="avatarUpload"
-                className="w-28 h-28 rounded-full overflow-hidden border border-gray-600 cursor-pointer block"
+                className="w-28 h-28 rounded-full overflow-hidden border border-primary-600 cursor-pointer block"
               >
                 <img
                   src={previewAvatar || user.avatar}
@@ -108,8 +108,8 @@ const Profile = () => {
 
             <div>
               <h2 className="mt-3 text-xl font-semibold">{user.full_name}</h2>
-              <p className="text-sm text-gray-400">Username: {user.username}</p>
-              <p className="text-sm text-gray-400">Level: {user.role}</p>
+              <p className="text-sm text-secondary/50">Username: {user.username}</p>
+              <p className="text-sm text-secondary/50">Level: {user.role}</p>
             </div>
           </div>
 
@@ -121,7 +121,7 @@ const Profile = () => {
                 name="email"
                 type="text"
                 value={user.email}
-                className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md placeholder:text-gray-600"
+                className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md placeholder:text-secondary"
                 readOnly
               />
             </div>
@@ -133,7 +133,7 @@ const Profile = () => {
                 name="phone"
                 type="text"
                 value={user.phone_number}
-                className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md placeholder:text-gray-600"
+                className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md placeholder:text-secondary"
                 readOnly
               />
             </div>
@@ -145,14 +145,14 @@ const Profile = () => {
                 name="country"
                 type="text"
                 value={user.country}
-                className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md placeholder:text-gray-600"
+                className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md placeholder:text-secondary"
                 readOnly
               />
             </div>
 
             <p className="text-sm mt-3">
               <strong>Note:</strong> To update more details, contact support at{" "}
-              <span className="text-blue-400">support@speednet.com</span>.
+              <span className="text-primary-600">support@speednet.com</span>.
             </p>
           </div>
         </div>

@@ -7,7 +7,7 @@ import DataTab from './tabs/dataTab';
 const Vtu = () => {
   return (
     <div className="w-full mobile:px-4 tab:px-8 pc:px-16 py-6">
-      <div className="bg-gray-800 text-white rounded-md mobile:p-4 tab:p-6 pc:p-8 max-w-4xl mx-auto">
+      <div className="bg-primary-50 text-secondary rounded-md mobile:p-4 tab:p-6 pc:p-8 max-w-4xl mx-auto">
         <Tabs aria-label="Default tabs" variant="default">
           <TabItem active title="Airtime Purchase" icon={FaSquarePhone}>
             <AirtimeTab />

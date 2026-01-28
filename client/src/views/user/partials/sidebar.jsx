@@ -47,7 +47,7 @@ const PRIORITY_PLATFORMS = [
 ];
 
 const linkClasses =
-  "flex items-center gap-2 text-base hover:bg-primary-600 p-2 rounded-lg hover:text-pay";
+  "flex items-center gap-2 text-base hover:bg-[#fefce869] p-2 rounded-lg hover:text-pay";
 
 /* ---------------- DROPDOWN ---------------- */
 const SidebarDropdown = ({ label, children }) => {
@@ -56,7 +56,7 @@ const SidebarDropdown = ({ label, children }) => {
     <div className="w-full">
       <div
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between cursor-pointer p-2 bg-gray-800 text-white hover:bg-primary-600 rounded-lg"
+        className="flex items-center justify-between cursor-pointer p-2 bg-primary-600 text-white hover:bg-[#fefce869] rounded-lg"
       >
         <div className="flex items-center gap-2">{label}</div>
         {open ? <FaChevronUp size={11} /> : <FaChevronDown size={11} />}
@@ -202,9 +202,9 @@ const Sidebar = ({
     ));
 
   return (
-    <div className="text-left w-[265px] h-screen bg-gray-800 text-slate-200 fixed top-0 left-0 z-50 flex flex-col">
+    <div className="text-left w-[265px] h-screen bg-primary-600 text-slate-200 fixed top-0 left-0 z-50 flex flex-col">
       {/* LOGO */}
-      <div className="mb-4 w-full border-b border-gray-700 flex justify-start items-center p-3">
+      <div className="mb-4 w-full border-b border-secondary flex justify-start items-center p-3">
         <NavLink to="/">
           <img src="/image/user-logo.png" alt="Logo" className="h-10" />
         </NavLink>
@@ -216,7 +216,7 @@ const Sidebar = ({
           onClick={() => setActiveTab("menu")}
           className={`flex-1 p-2 rounded-lg ${
             activeTab === "menu"
-              ? "bg-primary-600 text-white"
+              ? "bg-secondary text-white"
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
           }`}
         >
@@ -226,7 +226,7 @@ const Sidebar = ({
           onClick={() => setActiveTab("categories")}
           className={`flex-1 p-2 rounded-lg ${
             activeTab === "categories"
-              ? "bg-primary-600 text-white"
+              ? "bg-secondary text-white"
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
           }`}
         >
@@ -242,7 +242,7 @@ const Sidebar = ({
             {role !== "merchant" && (
               <NavLink
                 to="/user/become-a-marchant"
-                className={`${linkClasses} bg-primary-600`}
+                className={`${linkClasses} bg-[#fefce869]`}
               >
                 <MdAddBusiness /> Become a Merchant
               </NavLink>

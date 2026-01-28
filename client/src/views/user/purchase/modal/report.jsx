@@ -45,18 +45,18 @@ const Report = ({ defendantId, orderId, onClose }) => {
   return (
     <>
       <Modal show={true} onClose={onClose}>
-        <Modal.Header className="bg-gray-800 px-4 pt-4 border-b border-gray-700">
-          <span className="text-lg font-medium text-gray-200">Report a Problem</span>
+        <Modal.Header className="bg-primary-50 px-4 pt-4 border-b border-secondary/20">
+          <span className="text-lg font-medium text-secondary">Report a Problem</span>
         </Modal.Header>
 
-        <Modal.Body className="bg-gray-800">
+        <Modal.Body className="bg-primary-50">
           <div className="space-y-3">
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-secondary/50">
               You're reporting <strong>Order No: {orderId}</strong>
             </p>
             <textarea
               rows="4"
-              className="w-full p-3 bg-gray-600 text-gray-200 placeholder:text-gray-400 border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full p-3 bg-primary-50 text-secondary placeholder:text-secondary/50 border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
               placeholder="Describe the issue..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -64,7 +64,7 @@ const Report = ({ defendantId, orderId, onClose }) => {
           </div>
         </Modal.Body>
 
-        <Modal.Footer className="bg-gray-800 border-t border-gray-700">
+        <Modal.Footer className="bg-primary-50 border-t border-secondary/20">
           <div className="flex justify-end gap-3 w-full">
             <Button
               size="sm"

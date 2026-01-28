@@ -137,7 +137,7 @@ const Order = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 text-gray-300">
+      <div className="flex flex-col items-center justify-center h-64 text-secondary">
         <p>Loading...</p>
       </div>
     );
@@ -146,7 +146,7 @@ const Order = () => {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div>
-        <span className="text-lg font-medium text-gray-300">My Purchases</span>
+        <span className="text-lg font-medium text-secondary">My Purchases</span>
       </div>
 
       <div className="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500 px-4 py-3 rounded-lg text-sm">
@@ -155,9 +155,9 @@ const Order = () => {
       </div>
 
       {/* MOBILE UI */}
-      <div className="block lg:hidden bg-slate-700 border border-gray-400 rounded-lg px-3 py-4">
+      <div className="block lg:hidden bg-primary-50 border border-primary-600 rounded-lg px-3 py-4">
         {Object.keys(orders).length > 0 ? (
-          <div className="flex flex-col gap-4 text-gray-300">
+          <div className="flex flex-col gap-4 text-secondary">
             {Object.keys(orders)
               .sort(
                 (a, b) =>
@@ -171,28 +171,28 @@ const Order = () => {
                 return (
                   <div
                     key={groupKey}
-                    className="mb-4 bg-gray-800 p-4 rounded-md shadow-md"
+                    className="mb-4 bg-primary-50 p-4 rounded-md shadow-md"
                   >
                     <div className="flex justify-between items-start border-b pb-2">
                       <div>
-                        <h2 className="font-semibold text-white text-base">
+                        <h2 className="font-semibold text-secondary text-base">
                           Order No: {groupKey}
                         </h2>
                         <p className="text-sm">
                           Status: {orderData.payment_status || "Pending"}
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-secondary/50">
                           {formatDateTime(orderData.create_at)}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-white">
+                        <p className="font-semibold text-secondary">
                           {orderData.isDarkshop ? "" : countdown}
                         </p>
                         <div className="flex gap-2 mt-2 justify-end">
                           <Button
                             size="sm"
-                            className="bg-primary-600/20 py-1"
+                            className="bg-primary-600/60 py-1"
                             onClick={() => {
                               setReportData({
                                 defendantId: orderData.seller_id,
@@ -228,7 +228,7 @@ const Order = () => {
                         .map((order, index) => (
                           <div
                             key={order.id}
-                            className="bg-gray-700 p-3 rounded-md flex flex-col gap-1"
+                            className="bg-primary-50 p-3 rounded-md flex flex-col gap-1"
                           >
                             <div className="flex justify-between">
                               <span className="font-medium">
@@ -239,7 +239,7 @@ const Order = () => {
                                 {order.price}
                               </span>
                             </div>
-                            <div className="flex justify-between items-center mt-1 text-xs text-gray-300">
+                            <div className="flex justify-between items-center mt-1 text-xs text-secondary/50">
                               <span>Platform: {order.platform}</span>
                               <Button
                                 size="xs"
@@ -257,7 +257,7 @@ const Order = () => {
               })}
           </div>
         ) : (
-          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-gray-300">
+          <div className="w-full min-h-[300px] flex flex-col items-center justify-center gap-2 mt-4 text-secondary">
             <FaFile className="text-4xl" />
             <p>No Purchase Record</p>
           </div>
@@ -265,8 +265,7 @@ const Order = () => {
       </div>
 
       {/* PC & Tablet UI */}
-      <div className="hidden lg:block bg-slate-700 border border-gray-400 rounded-lg px-3 py-4">
-        {/* Your previous table-based UI goes here */}
+      <div className="hidden lg:block bg-primary-50 border border-primary-600 rounded-lg px-3 py-4">
       </div>
 
       {isModalOpen && selectedOrder && (

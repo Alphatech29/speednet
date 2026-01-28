@@ -226,7 +226,7 @@ const InternationalAirtime = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white p-4 rounded-md">
+    <div className="bg-primary-50 text-secondary p-4 rounded-md">
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
           <Spinner size="xl" aria-label="Loading..." />
@@ -255,10 +255,10 @@ const InternationalAirtime = () => {
       <form onSubmit={handleSubmit}  className="gap-5 flex flex-col justify-center items-center w-full">
         {/* Country Dropdown */}
         <div ref={dropdownRef} className="w-full">
-          <Label value="Select Country" className="text-white"/>
+          <Label value="Select Country" className="text-secondary"/>
           <div className="relative mt-1">
             <div
-              className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 cursor-pointer flex items-center justify-between"
+              className="w-full bg-[#fefce8] border border-primary-600 rounded-md px-3 py-2 cursor-pointer flex items-center justify-between"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               {selectedCountry ? (
@@ -272,18 +272,18 @@ const InternationalAirtime = () => {
               <span className="text-sm">&#x25BC;</span>
             </div>
             {dropdownOpen && (
-              <div className="absolute w-full bg-gray-800 border border-gray-700 mt-1 max-h-64 overflow-y-auto rounded-md z-50">
+              <div className="absolute w-full bg-[#fefce8] border border-primary-600 mt-1 max-h-64 overflow-y-auto rounded-md z-50">
                 <input
                   type="text"
                   placeholder="Search country..."
                   value={searchTerm}
                   onChange={handleSearch}
-                  className="w-full bg-gray-700 text-white px-3 py-2 border-b border-gray-600 placeholder:text-sm"
+                  className="w-full bg-primary-50 text-secondary px-3 py-2 border-b border-primary-600 placeholder:text-sm"
                 />
                 {filteredCountries.map((country) => (
                   <div
                     key={country.code}
-                    className="flex items-center gap-2 px-3 py-2 hover:bg-gray-700 cursor-pointer"
+                    className="flex items-center gap-2 px-3 py-2 hover:bg-primary-50 cursor-pointer"
                     onClick={() => {
                       setSelectedCountry(country);
                       setDropdownOpen(false);
@@ -302,20 +302,20 @@ const InternationalAirtime = () => {
 
         {/* Product Type */}
         <div className="w-full">
-          <Label htmlFor="productType" value="Product Type" className="text-white"/>
+          <Label htmlFor="productType" value="Product Type" className="text-secondary"/>
           <select
             id="productType"
             value={selectedProductType}
             onChange={(e) => {
               setSelectedProductType(e.target.value);
             }}
-            className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white"
+            className="w-full bg-[#fefce8] border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
             disabled={loadingProductTypes || productTypes.length === 0}
           >
             <option value="">{productTypes.length === 0 ? "No product types available" : "Select a product type"}</option>
             {productTypes.map((type) => (
               <option
-                className="bg-gray-800 hover:bg-gray-700"
+                className="bg-[#fefce8] hover:bg-primary-600/15"
                 key={type.product_type_id}
                 value={type.product_type_id}
               >
@@ -327,9 +327,9 @@ const InternationalAirtime = () => {
 
         {/* Operator Dropdown */}
         <div className="w-full">
-          <Label htmlFor="operator" value="Operator" className="text-white"/>
+          <Label htmlFor="operator" value="Operator" className="text-secondary"/>
           {loadingOperators ? (
-            <div className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-400">
+            <div className="w-full bg-[#fefce8] border border-primary-600 rounded-md px-3 py-2 text-sm text-secondary">
               Loading operators...
             </div>
           ) : (
@@ -339,13 +339,13 @@ const InternationalAirtime = () => {
               onChange={(e) => {
                 setSelectedOperatorId(e.target.value);
               }}
-              className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white"
+              className="w-full bg-[#fefce8] border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
               disabled={operators.length === 0}
             >
               <option value="">{operators.length === 0 ? "No operators available" : "Select an operator"}</option>
               {operators.map((op) => (
                 <option 
-                  className="bg-gray-800 hover:bg-gray-700" 
+                  className="bg-[#fefce8] hover:bg-primary-600/15"
                   key={op.operator_id} 
                   value={op.operator_id}
                 >
@@ -358,18 +358,18 @@ const InternationalAirtime = () => {
 
         {/* Variation Dropdown */}
         <div className="w-full">
-          <Label htmlFor="variation" value="Variation" className="text-white"/>
+          <Label htmlFor="variation" value="Variation" className="text-secondary"/>
           <select
             id="variation"
             value={selectedVariation}
             onChange={(e) => setSelectedVariation(e.target.value)}
-            className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white"
+            className="w-full bg-[#fefce8] border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
             disabled={loadingVariations || variations.length === 0}
           >
             <option value="">{variations.length === 0 ? "No variations available" : "Select a variation"}</option>
             {variations.map((variation) => (
               <option
-                className="bg-gray-800 hover:bg-gray-700"
+                className="bg-[#fefce8] hover:bg-primary-600/15"
                 key={variation.variation_code}
                 value={variation.variation_code}
               >
@@ -384,14 +384,14 @@ const InternationalAirtime = () => {
 
         {/* Email */}
         <div className="w-full">
-          <Label htmlFor="email" value="Email Address" className="text-white"/>
+          <Label htmlFor="email" value="Email Address" className="text-secondary"/>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter recipient's email"
-            className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white placeholder:text-gray-500"
+            className="w-full bg-[#fefce8] border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary placeholder:text-gray-500"
           />
         </div>
 
@@ -407,13 +407,13 @@ const InternationalAirtime = () => {
               setPhone(value);
             }}
             placeholder="Enter recipient's number"
-            className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white placeholder:text-gray-500"
+            className="w-full bg-[#fefce8] border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary placeholder:text-gray-500"
           />
         </div>
 
         {/* Amount */}
         <div className="w-full">
-          <Label htmlFor="amount" value="Amount (₦)" className="text-white"/>
+          <Label htmlFor="amount" value="Amount (₦)" className="text-secondary"/>
           <input
             id="amount"
             type="text"
@@ -422,7 +422,7 @@ const InternationalAirtime = () => {
               const value = e.target.value.replace(/[^0-9.]/g, '');
               setAmount(value);
             }}
-            className="w-full bg-gray-700 border border-gray-600 text-sm px-3 py-2 rounded-md text-white placeholder:text-gray-500"
+            className="w-full bg-[#fefce8] border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary placeholder:text-gray-500"
             placeholder="₦100"
             disabled={
               variations.find((v) => v.variation_code === selectedVariation)?.fixedPrice === "Yes"
@@ -437,8 +437,8 @@ const InternationalAirtime = () => {
         {/* PIN Modal */}
         {showPinModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-gray-800 p-6 rounded-md shadow-lg w-full max-w-sm">
-              <h2 className="text-white text-center text-lg font-bold mb-4">
+            <div className="bg-[#fefce8] p-6 rounded-md shadow-lg w-full max-w-sm">
+              <h2 className="text-secondary text-center text-lg font-bold mb-4">
                 Enter Transaction PIN
               </h2>
               <div className="flex justify-center gap-3 mb-4">

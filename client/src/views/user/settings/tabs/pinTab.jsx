@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const PinInput = ({ label, pinValue, setPinValue, prefix }) => (
   <div className="flex flex-col items-center mb-6 w-full">
-    <Label htmlFor={prefix} value={label} className="text-white mb-2" />
+    <Label htmlFor={prefix} value={label} className="text-se mb-2" />
     <div className="flex justify-center gap-3">
       {[0, 1, 2, 3].map((i) => (
         <input
@@ -32,7 +32,7 @@ const PinInput = ({ label, pinValue, setPinValue, prefix }) => (
               if (prev) prev.focus();
             }
           }}
-          className="w-12 h-12 text-center text-xl bg-gray-700 border border-gray-500 rounded-md text-white"
+          className="w-12 h-12 text-center text-xl bg-[#fefce8] border border-primary-600 rounded-md text-secondary"
         />
       ))}
     </div>
@@ -85,8 +85,8 @@ const PinTab = () => {
   return (
     <div className="min-h-screen flex justify-center items-center ">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex flex-col justify-center items-center border border-gray-600 bg-gray-800 rounded-lg w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg px-4 py-6">
-        <div className="text-center text-white mb-6">
+      <div className="flex flex-col justify-center items-center border border-primary-600 bg-[#fefce8] rounded-lg w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg px-4 py-6">
+        <div className="text-center text-secondary mb-6">
           <h2 className="text-2xl font-bold mb-4">
             {userPinExists ? "Change Pin" : "Create Pin"}
           </h2>

@@ -29,10 +29,10 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-[calc(100vh-1px)] w-full bg-slate-600 flex">
+    <div className="min-h-[calc(100vh-1px)] w-full bg-[#fefce8b9] flex">
       {/* Sidebar */}
       {isDesktop ? (
-        <div className="hidden pc:block w-[265px] bg-slate-800 z-50">
+        <div className="hidden pc:block w-[265px] bg-primary-600 z-50">
           <Sidebar />
         </div>
       ) : (

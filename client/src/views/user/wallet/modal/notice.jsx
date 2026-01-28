@@ -67,24 +67,24 @@ const Notice = () => {
           popup
           className="w-full  rounded-md"
         >
-          <Modal.Header className="bg-gray-700 flex items-start gap-1 mobile:px-4 mobile:pt-4 mobile:pb-2">
+          <Modal.Header className="bg-[#fefce8] flex items-start gap-1 mobile:px-4 mobile:pt-4 mobile:pb-2">
             <div>
-              <h2 className="text-base tab:text-lg font-semibold text-white">
+              <h2 className="text-base tab:text-lg font-semibold text-secondary">
               {currentNotice.title}
             </h2>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-secondary/50">
               Posted on: {formatDate(currentNotice.created_at)}
             </p>
             </div>
           </Modal.Header>
 
-          <Modal.Body className="bg-gray-700 text-white mobile:px-4 mobile:py-4 max-h-[70vh] overflow-y-auto">
-            <p className="text-sm tab:text-base whitespace-pre-line text-gray-300">
+          <Modal.Body className="bg-[#fefce8] text-secondary mobile:px-4 mobile:py-4 max-h-[70vh] overflow-y-auto">
+            <p className="text-sm tab:text-base whitespace-pre-line text-secondary">
               {currentNotice.message}
             </p>
           </Modal.Body>
 
-          <Modal.Footer className="justify-end bg-gray-700 mobile:px-4 mobile:pb-4 flex mobile:flex gap-2">
+          <Modal.Footer className="justify-end bg-[#fefce8] mobile:px-4 mobile:pb-4 flex mobile:flex gap-2">
             <Button
               size="sm"
               color="failure"

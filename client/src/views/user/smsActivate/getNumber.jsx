@@ -125,13 +125,13 @@ const GetNumber = () => {
   };
 
   return (
-    <div className="p-2 tab:p-4 pc:p-4 min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <div className="p-2 tab:p-4 pc:p-4 min-h-screen bg-gradient-to-b from-primary-50 to-purple-50 text-secondary">
       <ToastContainer position="top-right" autoClose={4000} />
       <h2 className="text-2xl font-extrabold mb-6 text-center tracking-wide">
         Get Your SMS Number
       </h2>
 
-      <div className="bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 tab:p-6 p-2 border border-gray-700">
+      <div className="bg-primary-50 backdrop-blur-md rounded-2xl shadow-lg pc:p-6 tab:p-6 p-2 border border-primary-600">
         <div className="flex items-center mb-6">
           <NavLink
             to="/user/sms-service"
@@ -153,7 +153,7 @@ const GetNumber = () => {
         ) : (
           <>
             <div className="flex md:flex-row gap-4">
-              <div className="flex-1">
+              <div className="flex-1 ">
                 <Select
                   options={countries}
                   value={selectedCountry}
@@ -173,17 +173,17 @@ const GetNumber = () => {
                   styles={{
                     control: (provided) => ({
                       ...provided,
-                      backgroundColor: "#1F2937",
+                      backgroundColor: "#fefce8b9",
                     }),
-                    singleValue: (provided) => ({ ...provided, color: "#FFFFFF" }),
-                    menu: (provided) => ({ ...provided, backgroundColor: "#111827" }),
+                    singleValue: (provided) => ({ ...provided, color: "#451805" }),
+                    menu: (provided) => ({ ...provided, backgroundColor: "#451805" }),
                     option: (provided, state) => ({
                       ...provided,
-                      backgroundColor: state.isFocused ? "#F66B04" : "#111827",
-                      color: state.isFocused ? "#FFFFFF" : "#E5E7EB",
+                      backgroundColor: state.isFocused ? "#fefce8b9" : "#faf7dc",
+                      color: state.isFocused ? "#451805" : "#451805",
                       cursor: "pointer",
                     }),
-                    placeholder: (provided) => ({ ...provided, color: "#9CA3AF" }),
+                    placeholder: (provided) => ({ ...provided, color: "#451805" }),
                     dropdownIndicator: (provided) => ({ ...provided, color: "#F66B04" }),
                     indicatorSeparator: (provided) => ({
                       ...provided,
@@ -199,7 +199,7 @@ const GetNumber = () => {
                   placeholder="Search service..."
                   value={serviceSearch}
                   onChange={(e) => setServiceSearch(e.target.value)}
-                  className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-2 rounded-md bg-primary-50 text-secondary border border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
             </div>
@@ -213,7 +213,7 @@ const GetNumber = () => {
                 {filteredServices.map((service) => (
                   <div
                     key={service.ID}
-                    className="bg-gray-900/60 border border-gray-700 rounded-xl p-5 flex flex-col justify-between hover:scale-105 transition-all"
+                    className="bg-primary-50 border border-primary-600 rounded-xl p-5 flex flex-col justify-between hover:scale-105 transition-all"
                   >
                     <h2 className="font-bold text-[15px]">
                       {highlightText(service.name, serviceSearch)}
@@ -226,7 +226,7 @@ const GetNumber = () => {
                         alt={selectedCountry?.label}
                         className="w-5 h-5 rounded-full"
                       />
-                      <span className="text-[13px] text-gray-300">
+                      <span className="text-[13px] text-secondary/70">
                         {selectedCountry?.label}
                       </span>
                     </div>
@@ -240,7 +240,7 @@ const GetNumber = () => {
 
                     <Button
                       size="sm"
-                      className="mt-3 w-full bg-gradient-to-r from-primary to-orange-500 text-white"
+                      className="mt-3 w-full bg-gradient-to-r from-primary to-orange-500 text-secondary"
                       onClick={() => handleBuyNumber(service)}
                       disabled={buyingServiceId === service.ID}
                     >

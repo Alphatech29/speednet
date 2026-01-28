@@ -13,13 +13,13 @@ const ProductDetails = ({ account = null, onClose }) => {
 
   return (
     <Modal show={show} onClose={onClose} popup>
-      <Modal.Header className="bg-gray-800">
-        <h2 className="text-lg font-semibold text-white uppercase">
+      <Modal.Header className="bg-primary-50">
+        <h2 className="text-lg font-semibold text-secondary uppercase">
           {account?.title || "N/A"} Details
         </h2>
       </Modal.Header>
 
-      <Modal.Body className="bg-gray-800 text-white overflow-y-auto max-h-[70vh]">
+      <Modal.Body className="bg-primary-50 text-secondary overflow-y-auto max-h-[70vh]">
         <div className="pc:text-[16px] mobile:text-[14px] flex justify-between items-center flex-wrap gap-y-1">
           <p>Account ID: {account?.id || "N/A"}</p>
           <p>{account?.create_at ? formatDateTime(account.create_at) : "N/A"}</p>
@@ -49,9 +49,9 @@ const ProductDetails = ({ account = null, onClose }) => {
             ],
           },
         ].map((section, idx) => (
-          <div key={idx} className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+          <div key={idx} className="mt-3 shadow-md shadow-primary-50 rounded-md px-3 py-2">
             <p className="text-[16px] pb-2 font-medium">{section.title}:</p>
-            <div className="text-[13px] text-gray-500 space-y-1">
+            <div className="text-[13px] text-secondary space-y-1">
               {section.details.map((item, i) => (
                 <p key={i}>
                   {item.label}: {item.value || "N/A"}
@@ -62,19 +62,19 @@ const ProductDetails = ({ account = null, onClose }) => {
         ))}
 
         {/* Account Description */}
-        <div className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+        <div className="mt-3 shadow-md shadow-primary-50 rounded-md px-3 py-2">
           <p className="text-[16px] pb-2 font-medium">Account Description:</p>
           <div
-            className="text-[13px] text-gray-500"
+            className="text-[13px] text-secondary"
             dangerouslySetInnerHTML={{ __html: formatText(account?.description) }}
           />
         </div>
 
         {/* Subscription Details */}
         {account?.subscription_status !== undefined && (
-          <div className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+          <div className="mt-3 shadow-md shadow-primary-50 rounded-md px-3 py-2">
             <p className="text-[16px] pb-2 font-medium">Subscription Details:</p>
-            <div className="text-[13px] text-gray-500">
+            <div className="text-[13px] text-secondary">
               <p>
                 Subscription:{" "}
                 <span
@@ -96,9 +96,9 @@ const ProductDetails = ({ account = null, onClose }) => {
 
         {/* Two-Factor Authentication */}
         {account?.two_factor_enabled !== undefined && (
-          <div className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+          <div className="mt-3 shadow-md shadow-primary-50 rounded-md px-3 py-2">
             <p className="text-[16px] pb-2 font-medium">2FA Details:</p>
-            <div className="text-[13px] text-gray-500">
+            <div className="text-[13px] text-secondary">
               <p>
                 2FA:{" "}
                 <span
@@ -124,7 +124,7 @@ const ProductDetails = ({ account = null, onClose }) => {
 
         {/* Rejection Remark (FIXED) */}
         {account?.status === "rejected" && (
-          <div className="mt-3 shadow-md shadow-gray-500 rounded-md px-3 py-2">
+          <div className="mt-3 shadow-md shadow-primary-50 rounded-md px-3 py-2">
             <p className="text-[16px] pb-2 font-medium text-red-500">Rejection Reason:</p>
             <div
               className="text-[13px] text-red-300"

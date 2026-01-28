@@ -12,7 +12,7 @@ const Footer = ({ toggleSidebar }) => {
   const role = user?.role;
 
   return (
-    <div className="w-full bg-slate-800 pc:hidden shadow-lg px-4 py-2 text-white fixed bottom-0 z-50">
+    <div className="w-full bg-[#fefce8] pc:hidden shadow-lg px-4 py-2 text-secondary fixed bottom-0 z-50">
       <div className="flex w-full justify-between items-center">
 
         {/* Conditional Dashboard/Wallet for first icon */}

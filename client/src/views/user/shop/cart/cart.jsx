@@ -41,31 +41,31 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
       )}
 
       {isCartOpen && (
-        <div className="absolute z-30 right-0 mt-2 w-96 max-h-[500px] mobile:right-[-50px] overflow-y-auto bg-slate-700 text-white rounded-lg shadow-lg py-6 px-2">
+        <div className="absolute z-30 right-0 mt-2 w-96 max-h-[500px] mobile:right-[-50px] overflow-y-auto bg-[#fefce8] text-secondary rounded-lg shadow-lg py-6 px-2">
           {cart.length > 0 ? (
             <div className="flex flex-col gap-4">
               {cart.map((item) => (
                 <div
                   key={item.id}
-                  className="flex gap-3 items-center border-b border-gray-500 pb-2"
+                  className="flex gap-3 items-center border-b border-primary-600 pb-2"
                 >
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-10 h-10 rounded-full border border-white"
+                    className="w-10 h-10 rounded-full border border-primary-600"
                   />
 
                   <div className="flex w-full flex-col">
                     <span className="font-semibold text-base">{item.name}</span>
 
                     <div className="flex justify-between w-full items-center">
-                      <span className="text-gray-400">
+                      <span className="text-secondary">
                         {webSettings.currency}
                         {Number(item.price || 0).toFixed(2)}
                       </span>
 
                       <button
-                        className="text-gray-300 hover:text-red-600"
+                        className="text-secondary hover:text-red-600"
                         onClick={() => removeFromCart(item.id)}
                       >
                         <MdDeleteForever size={18} />

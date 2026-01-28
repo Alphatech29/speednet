@@ -8,7 +8,7 @@ import PasswordTab from './tabs/password';
 
 const Settings = () => {
   return (
-    <div className='bg-gray-800 text-white rounded-md p-4'>
+    <div className='bg-[#fefce8] text-secondary rounded-md p-4'>
       <Tabs aria-label="Default tabs" variant="default">
        <TabItem active title="Password" icon={RiLockPasswordFill}>
        <PasswordTab/>

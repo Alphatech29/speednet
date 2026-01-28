@@ -83,19 +83,19 @@ const Deposit = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center px-4 bg-black bg-opacity-50 z-50">
       <ToastContainer />
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-[500px] flex flex-col gap-5 text-gray-200">
-        
+      <div className="bg-[#fefce8] p-6 rounded-lg shadow-lg w-full max-w-[500px] flex flex-col gap-5 text-secondary">
+
         {/* Header */}
         <div className="text-start">
           <h2 className="text-xl font-semibold mobile:text-lg">Automated Deposit</h2>
-          <p className="text-sm text-gray-400 mobile:text-xs mt-1">
+          <p className="text-sm text-secondary/50 mobile:text-xs mt-1">
             You can fund your wallet through several channels. Crypto deposits are supported.
           </p>
         </div>
 
         {/* Amount Input */}
-        <div className="flex items-center border border-gray-400 rounded-md focus-within:border-primary-600">
-          <span className="text-gray-300 px-4 text-lg">$</span>
+        <div className="flex items-center border border-primary-600 rounded-md focus-within:border-primary-600">
+          <span className="text-secondary px-4 text-lg">$</span>
           <input
             type="number"
             step="0.01"
@@ -103,7 +103,7 @@ const Deposit = ({ onClose }) => {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="0.0"
-            className="w-full bg-transparent px-2 py-2 text-gray-300 focus:outline-none"
+            className="w-full bg-transparent px-2 py-2 text-secondary focus:outline-none"
           />
         </div>
 
@@ -113,7 +113,7 @@ const Deposit = ({ onClose }) => {
           {/* MOMO */}
           <div
             className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
-              ${selected === 'fapshi' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+              ${selected === 'fapshi' ? 'border-primary-600 bg-primary-600/20' : 'border-primary-600'}`}
             onClick={() => setSelected('fapshi')}
           >
             <span className={`border p-3 rounded-full ${selected === 'fapshi' ? 'border-primary-600' : 'border-primary-600/50'}`}>
@@ -121,14 +121,14 @@ const Deposit = ({ onClose }) => {
             </span>
             <div className="text-start">
               <h1 className="font-semibold text-[15px]">MOMO Deposit (Cameroon)</h1>
-              <p className="text-sm text-slate-400 mobile:text-xs">Use Mobile Money to fund your wallet.</p>
+              <p className="text-sm text-secondary/50 mobile:text-xs">Use Mobile Money to fund your wallet.</p>
             </div>
           </div>
 
           {/* Crypto */}
           <div
             className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
-              ${selected === 'cryptomus' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+              ${selected === 'cryptomus' ? 'border-primary-600 bg-primary-600/20' : 'border-primary-600'}`}
             onClick={() => setSelected('cryptomus')}
           >
             <span className={`border p-3 rounded-full ${selected === 'cryptomus' ? 'border-primary-600' : 'border-primary-600/50'}`}>
@@ -136,14 +136,14 @@ const Deposit = ({ onClose }) => {
             </span>
             <div className="text-start">
               <h1 className="font-semibold text-[15px]">Crypto Deposit (International)</h1>
-              <p className="text-sm text-slate-400 mobile:text-xs">Fund wallet with USDT securely.</p>
+              <p className="text-sm text-secondary/50 mobile:text-xs">Fund wallet with USDT securely.</p>
             </div>
           </div>
 
           {/* Online Transfer */}
           <div
             className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
-              ${selected === 'online' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+              ${selected === 'online' ? 'border-primary-600 bg-primary-600/20' : 'border-primary-600'}`}
             onClick={() => setSelected('online')}
           >
             <span className={`border p-3 rounded-full ${selected === 'online' ? 'border-primary-600' : 'border-primary-600/50'}`}>
@@ -151,14 +151,14 @@ const Deposit = ({ onClose }) => {
             </span>
             <div className="text-start">
               <h1 className="font-semibold text-[15px]">Bank Transfer (Nigerian)</h1>
-              <p className="text-sm text-slate-400 mobile:text-xs">Fund wallet using bank transfer options.</p>
+              <p className="text-sm text-secondary/50 mobile:text-xs">Fund wallet using bank transfer options.</p>
             </div>
           </div>
 
           {/* Bank/Card */}
           <div
             className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
-              ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-gray-400'}`}
+              ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-primary-600'}`}
             onClick={() => setSelected('bank')}
           >
             <span className={`border p-3 rounded-full ${selected === 'bank' ? 'border-primary-600' : 'border-primary-600/50'}`}>
@@ -166,7 +166,7 @@ const Deposit = ({ onClose }) => {
             </span>
             <div className="text-start">
               <h1 className="font-semibold text-[15px]">Bank / Card Payment (Coming Soon)</h1>
-              <p className="text-sm text-slate-400 mobile:text-xs">Deposit via online transfer or card.</p>
+              <p className="text-sm text-secondary/50 mobile:text-xs">Deposit via online transfer or card.</p>
             </div>
           </div>
         </div>
@@ -193,14 +193,14 @@ const Deposit = ({ onClose }) => {
       {/* Online Transfer Popup */}
       {showOnlinePopup && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-800 p-6 rounded-lg w-full max-w-[400px] text-gray-200">
+          <div className="bg-[#fefce8] p-6 rounded-lg w-full max-w-[400px] text-secondary">
             <h2 className="text-xl font-semibold mb-3">Bank Transfer Instructions</h2>
-            <p className="text-sm text-gray-400 mb-2">
+            <p className="text-sm text-secondary mb-2">
               To deposit via bank transfer, please use your banking app to transfer the desired amount:
             </p>
             <p className="text-base font-semibold mb-4">Amount in Naira: ₦{nairaAmount}</p>
 
-            <ul className="text-gray-200 text-b mb-4 space-y-1">
+            <ul className="text-secondary text-b mb-4 space-y-1">
               <li>Bank: Jaiz Bank</li>
               <li>Account Name: GABRIEL EJEH ITODO</li>
               <li className="flex items-center gap-2">

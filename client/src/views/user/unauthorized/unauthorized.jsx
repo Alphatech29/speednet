@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 const Unauthorized = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center p-6 bg-gray-800 rounded-md">
+    <div className="flex flex-col items-center justify-center min-h-screen text-center p-6 bg-primary-50 rounded-md">
       <h1 className="text-4xl font-bold text-red-600 mb-4">403 - Unauthorized</h1>
-      <p className="text-gray-300 text-lg mb-6">
+      <p className="text-secondary text-lg mb-6">
         You do not have permission to access this page.
       </p>
       <NavLink

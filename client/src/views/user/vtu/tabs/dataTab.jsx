@@ -166,17 +166,17 @@ const DataTab = () => {
 
         {/* Phone Input */}
         <div>
-          <Label htmlFor="phone" value="Phone Number" className="text-white"/>
+          <Label htmlFor="phone" value="Phone Number" className="text-secondary"/>
           <div className="flex items-center mt-2 relative" ref={dropdownRef}>
             <div
               onClick={() => setShowDropdown(!showDropdown)}
-              className="cursor-pointer bg-gray-800 border border-gray-600 px-2 py-[2px] rounded-l-md flex items-center justify-center"
+              className="cursor-pointer bg-primary-50 border border-primary-600 px-2 py-[2px] rounded-l-md flex items-center justify-center"
             >
               <img src={network.logo} alt={network.name} className="w-8 h-8 rounded-full object-contain" />
             </div>
 
             {showDropdown && (
-              <div className="absolute z-10 bg-gray-800 border border-gray-600 rounded-md left-0 mt-12 flex gap-2 p-2">
+              <div className="absolute z-10 bg-primary-50 border border-primary-600 rounded-md left-0 mt-12 flex gap-2 p-2">
                 {NETWORK_OPTIONS.map((option) => (
                   <img
                     key={option.value}
@@ -199,24 +199,24 @@ const DataTab = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="0912******"
-              className="w-full bg-transparent border-t border-b border-r border-gray-600 text-sm px-3 py-2 rounded-r-md placeholder:text-gray-600"
+              className="w-full bg-transparent border-t border-b border-r border-primary-600 text-sm px-3 py-2 rounded-r-md placeholder:text-secondary"
             />
           </div>
         </div>
 
         {/* Select Data Variations */}
         <div>
-          <Label htmlFor="data-variations" value="Data Variations" className="text-white"/>
+          <Label htmlFor="data-variations" value="Data Variations" className="text-secondary"/>
           <select
             id="data-variations"
             name="data-variations"
             value={selectedVariationCode}
             onChange={(e) => setSelectedVariationCode(e.target.value)}
-            className="w-full bg-transparent border border-gray-600 text-sm px-3 py-2 rounded-md text-white"
+            className="w-full bg-transparent border border-primary-600 text-sm px-3 py-2 rounded-md text-secondary"
           >
             <option value="">Select Data Variation</option>
             {dataVariations.map((variation) => (
-              <option className="bg-gray-800 text-white" key={variation.variation_code} value={variation.variation_code}>
+              <option className="bg-primary-50 text-secondary" key={variation.variation_code} value={variation.variation_code}>
                 {variation.name}
               </option>
             ))}
@@ -240,7 +240,7 @@ const DataTab = () => {
         {/* Quick Variation Top-Up */}
         {dataVariations.length > 0 && (
           <div>
-            <Label value="Quick Top-Up" className="text-white"/>
+            <Label value="Quick Top-Up" className="text-secondary"/>
             <div className="flex flex-wrap gap-2 mt-2">
               {dataVariations.slice(0, 6).map((variation) => (
                 <button
@@ -250,7 +250,7 @@ const DataTab = () => {
                     setSelectedVariationCode(variation.variation_code);  
                     setAmount(variation.variation_amount);
                   }}
-                  className="rounded-md px-4 py-2 border border-gray-300 bg-gray-400 text-sm"
+                  className="rounded-md px-4 py-2 border border-primary-600 bg-primary-50 text-sm"
                 >
                   {variation.name}
                 </button>
@@ -267,8 +267,8 @@ const DataTab = () => {
         {/* PIN Modal */}
         {showPinModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-gray-800 p-6 rounded-md shadow-lg w-full max-w-sm">
-              <h2 className="text-white text-center text-lg font-bold mb-4">Enter Transaction PIN</h2>
+            <div className="bg-primary-50 p-6 rounded-md shadow-lg w-full max-w-sm">
+              <h2 className="text-secondary text-center text-lg font-bold mb-4">Enter Transaction PIN</h2>
               <div className="flex justify-center gap-3 mb-4">
                 {[0, 1, 2, 3].map((i) => (
                   <input
@@ -294,7 +294,7 @@ const DataTab = () => {
                         if (prev) prev.focus();
                       }
                     }}
-                    className="w-12 h-12 text-center text-xl bg-gray-700 border border-gray-500 rounded-md text-white"
+                    className="w-12 h-12 text-center text-xl bg-primary-50 border border-primary-600 rounded-md text-secondary"
                   />
                 ))}
               </div>

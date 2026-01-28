@@ -62,7 +62,7 @@ const Marchant = () => {
     <div className="w-full pc:h-screen mobile:pb-10 flex flex-col">
       {showNotice && <Notice onClose={() => setShowNotice(false)} />}
 
-      <div className="text-lg font-medium text-gray-200 mb-4">Dashboard</div>
+      <div className="text-lg font-medium text-secondary mb-4">Dashboard</div>
 
       <div className="w-full flex flex-wrap justify-start pc:justify-center tab:justify-center items-center gap-4 mobile:gap-2 mb-6 mobile:mb-4">
         {/* Available Balance */}

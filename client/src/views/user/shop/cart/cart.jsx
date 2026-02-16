@@ -7,14 +7,29 @@ import { AuthContext } from "../../../../components/control/authContext";
 
 const Cart = ({ isCartOpen, toggleCartDropdown }) => {
   const navigate = useNavigate();
-  const { cart = [], removeFromCart, webSettings } = useContext(AuthContext);
 
+  const {
+    cart = [],
+    removeFromCart,
+    increaseQty,
+    decreaseQty,
+    webSettings,
+  } = useContext(AuthContext);
+
+  // ==========================
+  // CALCULATE TOTAL + VAT
+  // ==========================
   const calculateTotalWithVAT = () => {
     if (!Array.isArray(cart) || cart.length === 0) {
       return { total: 0, vat: 0, grandTotal: 0 };
     }
 
-    const total = cart.reduce((sum, item) => sum + Number(item.price || 0), 0);
+    const total = cart.reduce((sum, item) => {
+      const isDarkshop = item.store === "darkshop";
+      const quantity = isDarkshop ? item.quantity : 1;
+      return sum + Number(item.price || 0) * quantity;
+    }, 0);
+
     const vatRate = Number(webSettings?.vat || 0);
     const vat = (total * vatRate) / 100;
     const grandTotal = total + vat;
@@ -26,58 +41,105 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
 
   return (
     <div className="relative">
+      {/* CART ICON */}
       <FiShoppingCart
         className="text-[40px] rounded-full shadow-lg p-2 cursor-pointer"
         onClick={toggleCartDropdown}
       />
 
+      {/* CART COUNT */}
       {cart.length > 0 && (
         <span
           className="bg-red-600 px-2 py-1 absolute top-0 right-0 text-[9px] text-white rounded-full cursor-pointer"
           onClick={toggleCartDropdown}
         >
-          {cart.length}
+          {cart.reduce((sum, item) => {
+            const isDarkshop = item.store === "darkshop";
+            return sum + (isDarkshop ? item.quantity : 1);
+          }, 0)}
         </span>
       )}
 
+      {/* CART DROPDOWN */}
       {isCartOpen && (
         <div className="absolute z-30 right-0 mt-2 w-96 max-h-[500px] mobile:right-[-50px] overflow-y-auto bg-[#fefce8] text-secondary rounded-lg shadow-lg py-6 px-2">
           {cart.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {cart.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-3 items-center border-b border-primary-600 pb-2"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-10 h-10 rounded-full border border-primary-600"
-                  />
+              {cart.map((item) => {
+                const isDarkshop = item.store === "darkshop";
+                const quantity = isDarkshop ? item.quantity : 1;
 
-                  <div className="flex w-full flex-col">
-                    <span className="font-semibold text-base">{item.name}</span>
+                return (
+                  <div
+                    key={item.id}
+                    className="flex gap-3 items-center border-b border-primary-600 pb-3"
+                  >
+                    {/* IMAGE */}
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-10 h-10 rounded-full border border-primary-600"
+                    />
 
-                    <div className="flex justify-between w-full items-center">
-                      <span className="text-secondary">
-                        {webSettings.currency}
-                        {Number(item.price || 0).toFixed(2)}
+                    {/* DETAILS */}
+                    <div className="flex w-full flex-col">
+                      <span className="font-semibold text-base">
+                        {item.name}
                       </span>
 
-                      <button
-                        className="text-secondary hover:text-red-600"
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        <MdDeleteForever size={18} />
-                      </button>
+                      <div className="flex justify-between items-center w-full mt-1">
+                        {/* PRICE */}
+                        <span className="text-secondary text-sm">
+                          {webSettings.currency}
+                          {(item.price * quantity).toFixed(2)}
+                        </span>
+
+                        {/* QUANTITY / ACTIONS */}
+                        <div className="flex items-center gap-2">
+                          {isDarkshop ? (
+                            <>
+                              <button
+                                onClick={() => decreaseQty(item.id)}
+                                className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded font-bold"
+                              >
+                                −
+                              </button>
+
+                              <span className="min-w-[20px] text-center text-sm font-semibold">
+                                {item.quantity}
+                              </span>
+
+                              <button
+                                onClick={() => increaseQty(item.id)}
+                                className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded font-bold"
+                              >
+                                +
+                              </button>
+                            </>
+                          ) : (
+                            <span className="text-sm font-semibold">
+                              Qty: 1
+                            </span>
+                          )}
+
+                          {/* DELETE */}
+                          <button
+                            className="text-secondary hover:text-red-600 ml-2"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            <MdDeleteForever size={18} />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
 
+              {/* TOTAL SECTION */}
               <div className="border-t border-gray-500 pt-4">
                 <p className="flex justify-between text-sm">
-                  <span>Sum:</span>
+                  <span>Subtotal:</span>
                   <span>
                     {webSettings.currency}
                     {total.toFixed(2)}
@@ -103,9 +165,7 @@ const Cart = ({ isCartOpen, toggleCartDropdown }) => {
                 <Button
                   className="bg-primary-600 text-base w-full border-0 mt-4 rounded-md"
                   onClick={() => {
-                    navigate("/user/check-out", {
-                      state: { cart, total, vat, grandTotal },
-                    });
+                    navigate("/user/check-out");
                     toggleCartDropdown();
                   }}
                 >

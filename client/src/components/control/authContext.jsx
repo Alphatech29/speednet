@@ -2,7 +2,7 @@ import React, {
   createContext,
   useState,
   useEffect,
-  useMemo
+  useMemo,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { getWebSettings } from "../backendApis/general/general";
@@ -14,7 +14,9 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  // Load cart from localStorage on first render
+  // ==========================
+  // CART STATE
+  // ==========================
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("speednet_cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -24,13 +26,16 @@ const AuthProvider = ({ children }) => {
   const [webSettings, setWebSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Save cart to localStorage whenever cart changes
+  // ==========================
+  // SAVE CART TO LOCALSTORAGE
+  // ==========================
   useEffect(() => {
     localStorage.setItem("speednet_cart", JSON.stringify(cart));
   }, [cart]);
 
-
-  // Fetch global site settings
+  // ==========================
+  // FETCH WEB SETTINGS
+  // ==========================
   const fetchWebSettings = async () => {
     try {
       const result = await getWebSettings();
@@ -44,7 +49,9 @@ const AuthProvider = ({ children }) => {
     return null;
   };
 
-  // Fetch authenticated user
+  // ==========================
+  // FETCH CURRENT USER
+  // ==========================
   const fetchUser = async () => {
     try {
       const result = await getCurrentUser();
@@ -61,17 +68,19 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Manual sign-in or auto login after refresh
+  // ==========================
+  // SIGN IN
+  // ==========================
   const signIn = async () => {
     try {
       const currentUser = await fetchUser();
       if (currentUser) {
         await fetchWebSettings();
-        if (currentUser.role === "merchant") {
-          navigate("/user/dashboard");
-        } else {
-          navigate("/user/marketplace");
-        }
+        navigate(
+          currentUser.role === "merchant"
+            ? "/user/dashboard"
+            : "/user/marketplace"
+        );
       }
     } catch (error) {
       console.error("Error in signIn:", error);
@@ -79,7 +88,9 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Run on page load / refresh
+  // ==========================
+  // INITIAL LOAD
+  // ==========================
   useEffect(() => {
     const initialize = async () => {
       setLoading(true);
@@ -89,7 +100,9 @@ const AuthProvider = ({ children }) => {
     initialize();
   }, []);
 
-  // Logout
+  // ==========================
+  // LOGOUT
+  // ==========================
   const logout = async () => {
     try {
       await logoutUser();
@@ -99,21 +112,66 @@ const AuthProvider = ({ children }) => {
 
     setUser(null);
     setCart([]);
-    localStorage.removeItem("paysparq_cart");
+    localStorage.removeItem("speednet_cart");
     setWebSettings(null);
-
     navigate("/auth/login");
   };
 
-  // Update cart
-  const updateCartState = (newCart) => setCart(newCart);
+  // ==========================
+  // CART ACTIONS (DARKSHOP SAFE)
+  // ==========================
 
-  // Remove item from cart
+  // Normalize cart (force non-darkshop qty = 1)
+  const normalizeCart = (items) =>
+    items.map((item) => ({
+      ...item,
+      quantity:
+        item.store === "darkshop"
+          ? item.quantity || 1
+          : 1,
+    }));
+
+  // External update
+  const updateCartState = (newCart) => {
+    setCart(normalizeCart(newCart));
+  };
+
+  // Remove item
   const removeFromCart = (itemId) => {
     setCart((prev) => prev.filter((item) => item.id !== itemId));
   };
 
-  // Memoized context value
+  // Increase quantity (Darkshop only)
+  const increaseQty = (itemId) => {
+    setCart((prev) =>
+      prev.map((item) => {
+        if (item.id !== itemId) return item;
+        if (item.store !== "darkshop") return item;
+
+        return { ...item, quantity: item.quantity + 1 };
+      })
+    );
+  };
+
+  // Decrease quantity (Darkshop only)
+  const decreaseQty = (itemId) => {
+    setCart((prev) =>
+      prev
+        .map((item) => {
+          if (item.id !== itemId) return item;
+          if (item.store !== "darkshop") return item;
+
+          return { ...item, quantity: item.quantity - 1 };
+        })
+        .filter((item) =>
+          item.store === "darkshop" ? item.quantity > 0 : true
+        )
+    );
+  };
+
+  // ==========================
+  // CONTEXT VALUE
+  // ==========================
   const contextValue = useMemo(
     () => ({
       user,
@@ -123,11 +181,15 @@ const AuthProvider = ({ children }) => {
       logout,
       updateCartState,
       removeFromCart,
+      increaseQty,
+      decreaseQty,
     }),
     [user, cart, webSettings]
   );
 
-  // Loading screen
+  // ==========================
+  // LOADING SCREEN
+  // ==========================
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-white">

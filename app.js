@@ -102,7 +102,7 @@ try {
 
 // Darkshop Product Job (NON-CRITICAL)
 try {
-  require("./utility/darkshopAuto");
+  require("./utility/darkshopAutoByid");
   logger.info("Darkshop product maintenance job started.");
   console.log("Darkshop product maintenance job started.");
 } catch (err) {

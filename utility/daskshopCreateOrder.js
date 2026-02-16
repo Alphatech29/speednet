@@ -4,13 +4,28 @@ const { getWebSettings } = require("./general");
 async function createDarkshopOrder({
   product,
   orderNo,
+  quantity,
   send_email_copy = false,
   promo_code,
 }) {
   try {
+    if (!quantity || isNaN(quantity) || Number(quantity) <= 0) {
+      return {
+        success: false,
+        error: "Invalid quantity supplied",
+        code: 400,
+      };
+    }
+
     const idempotence_id = orderNo;
 
-    console.log("Creating Darkshop order with params:", { product, send_email_copy, idempotence_id, promo_code });
+    console.log("Creating Darkshop order with params:", {
+      product,
+      quantity,
+      send_email_copy,
+      idempotence_id,
+      promo_code,
+    });
 
     // Extract numeric product ID
     const productId = product.replace("dark-", "");
@@ -20,42 +35,39 @@ async function createDarkshopOrder({
     const { dark_api_key, dark_base_url } = await getWebSettings();
     console.log("Fetched API settings:", { dark_api_key, dark_base_url });
 
-    // Build request URL and params
     const url = `${dark_base_url}/order/create`;
+
     const params = {
       key: dark_api_key,
       product: productId,
-      quantity: 1,
+      quantity: Number(quantity), // ✅ strictly from caller
       idempotence_id,
     };
+
     if (promo_code) params.promo_code = promo_code;
     if (send_email_copy) params.send_email_copy = true;
 
     console.log("Request URL and params:", url, params);
 
-    // Call external API
     const response = await axios.get(url, { params });
     console.log("Response from Darkshop:", response.data);
 
     if (!response.data.success) {
-      console.error("Order creation failed:", response.data.data);
       return {
         success: false,
-        error: response.data.data.message || "External API failed",
-        code: response.data.data.code,
+        error: response.data.data?.message || "External API failed",
+        code: response.data.data?.code,
       };
     }
 
     const orderData = response.data.data;
-    console.log("Order created successfully:", orderData);
 
     let content = null;
+
     if (orderData.link) {
       try {
-        // Fetch the actual file content from Darkshop link
         const contentResponse = await axios.get(orderData.link);
         content = contentResponse.data;
-        console.log("Fetched Darkshop file content successfully");
       } catch (fetchErr) {
         console.error("Failed to fetch Darkshop file content:", fetchErr.message);
       }
@@ -68,8 +80,9 @@ async function createDarkshopOrder({
       link: orderData.link || null,
       content,
       idempotence: orderData.idempotence || false,
-      quantity: 1,
+      quantity: Number(quantity), // ✅ return exact quantity used
     };
+
   } catch (error) {
     console.error("Error creating order:", error.response?.data || error.message);
     return {
@@ -79,6 +92,7 @@ async function createDarkshopOrder({
     };
   }
 }
+
 
 async function getDarkshopBalance() {
   try {

@@ -28,7 +28,7 @@ const {
 } = require("../../utility/daskshopCreateOrder");
 
 // Darkshop system sellers only
-const DARKSHOP_SYSTEM_SELLER_IDS = [4, 1313, 1309, 1311];
+const DARKSHOP_SYSTEM_SELLER_IDS = [4];
 
 const getRandomDarkshopSellerId = () => {
   const index = Math.floor(Math.random() * DARKSHOP_SYSTEM_SELLER_IDS.length);
@@ -90,32 +90,62 @@ const collectOrder = async (req, res) => {
     await updateUserBalance(safeUserId, newBalance);
     await createTransactionHistory(safeUserId, amountToDeduct, "Account Purchased", "Completed");
 
-    // ======================
+// ======================
 // PROCESS DARKSHOP PRODUCTS
 // ======================
 if (darkProductIds.length > 0) {
+
   // 1️ Get DB prices to check darkBalance
   const dbPrices = await getDarkShopProductPricesbyid(darkProductIds);
   const darkBalanceRes = await getDarkshopBalance(safeUserId);
   const darkBalance = Number(darkBalanceRes?.balance || 0);
 
-  const totalDarkPrice = Object.values(dbPrices).reduce((sum, price) => sum + Number(price), 0);
-  if (darkBalance < totalDarkPrice) throw new Error("System error: Insufficient darkshop balance");
+  //  FIX: multiply price × quantity
+  let totalDarkPrice = 0;
+
+  for (const productId of darkProductIds) {
+    const productFromBody = products.find(
+      p => p.id.toString() === `dark-${productId}`
+    );
+
+    const quantity = Number(productFromBody?.quantity) || 1;
+    const price = Number(dbPrices[productId] || 0);
+
+    totalDarkPrice += price * quantity;
+  }
+
+  if (darkBalance < totalDarkPrice)
+    throw new Error("System error: Insufficient darkshop balance");
 
   // 2️ Loop through dark products
   for (const productId of darkProductIds) {
+
     const darkProductInfo = await getDarkShopProductById(productId);
 
-    // Use price from request body for insertion and response
-    const productFromBody = products.find(p => p.id.toString() === `dark-${productId}`);
-    const priceFromBody = Number(productFromBody?.price || dbPrices[productId]);
+    const productFromBody = products.find(
+      p => p.id.toString() === `dark-${productId}`
+    );
 
-    const darkOrder = await createDarkshopOrder({ product: "dark-" + productId, orderNo });
+    const quantity = Number(productFromBody?.quantity) || 1;
+    const priceFromBody = Number(productFromBody?.price || dbPrices[productId]);
+    const totalForThisProduct = priceFromBody * quantity;
+
+    const darkOrder = await createDarkshopOrder({
+      product: "dark-" + productId,
+      orderNo,
+      quantity,
+    });
 
     if (!darkOrder?.success) {
-      // REFUND USER
+
       await updateUserBalance(safeUserId, originalBalance.toFixed(2));
-      await createTransactionHistory(safeUserId, amountToDeduct, "Refund for failed order", "Refunded");
+      await createTransactionHistory(
+        safeUserId,
+        amountToDeduct,
+        "Refund for failed order",
+        "Refunded"
+      );
+
       await storeOrderHistory({
         seller_id: darkshopSystemSellerId,
         buyer_id: safeUserId,
@@ -127,41 +157,49 @@ if (darkProductIds.length > 0) {
 
       return res.status(500).json({
         success: false,
-        message: `Order failed: ${darkOrder.data?.message || "Unknown error"}. Amount refunded.`,
+        message: `Order failed: ${
+          darkOrder.data?.message || "Unknown error"
+        }. Amount refunded.`,
       });
     }
 
-// Translate darkshop content before saving
-let translatedDarkshopContent = null;
+    // Translate darkshop content before saving
+    let translatedDarkshopContent = null;
 
-if (darkOrder.content) {
-  try {
-    translatedDarkshopContent = await translateRussianToEnglish(darkOrder.content);
-  } catch (err) {
-    console.error("Darkshop content translation failed:", err.message);
-    translatedDarkshopContent = darkOrder.content; // fallback to original
-  }
-}
+    if (darkOrder.content) {
+      try {
+        translatedDarkshopContent = await translateRussianToEnglish(
+          darkOrder.content
+        );
+      } catch (err) {
+        console.error("Darkshop content translation failed:", err.message);
+        translatedDarkshopContent = darkOrder.content;
+      }
+    }
 
-await insertDarkShopOrder({
-  account_id: productId,
-  buyer_id: safeUserId,
-  order_no: orderNo,
-  title: darkProductInfo?.name || `Darkshop Product #${productId}`,
-  platform: darkProductInfo?.category_name || "Darkshop",
-  price: priceFromBody,
-  payment_status: darkOrder.status === "pending" ? "Pending" : "Completed",
-  darkshop_order_id: darkOrder.id,
-  darkshop_link: darkOrder.link || null,
-  darkshop_content: translatedDarkshopContent, // <-- translated content
-});
-
+    await insertDarkShopOrder({
+      account_id: productId,
+      buyer_id: safeUserId,
+      order_no: orderNo,
+      title: darkProductInfo?.name || `Darkshop Product #${productId}`,
+      platform: darkProductInfo?.category_name || "Darkshop",
+      price: priceFromBody,
+      quantity,
+      total: totalForThisProduct,
+      payment_status:
+        darkOrder.status === "pending" ? "Pending" : "Completed",
+      darkshop_order_id: darkOrder.id,
+      darkshop_link: darkOrder.link || null,
+      darkshop_content: translatedDarkshopContent,
+    });
 
     darkProductsResponse.push({
       id: productId,
       title: darkProductInfo?.name,
       platform: darkProductInfo?.category_name,
       price: priceFromBody,
+      quantity,
+      total: totalForThisProduct,
       darkshop_order_id: darkOrder.id,
       darkshop_link: darkOrder.link || null,
       darkshop_content: translatedDarkshopContent || null,
@@ -169,6 +207,7 @@ await insertDarkShopOrder({
     });
   }
 }
+
 console.log("Darkshop products processed." , darkProductsResponse);
 
     // ======================

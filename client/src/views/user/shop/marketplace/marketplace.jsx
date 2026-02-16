@@ -139,6 +139,8 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
                 previewLink: acc.previewLink,
                 created_at: acc.create_at,
                 updated_at: acc.updated_at,
+                store: "regular",
+                quantity: 1,
               }))
           : [];
 
@@ -159,9 +161,10 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
               previewLink: "",
               created_at: prod.created_at,
               updated_at: prod.updated_at,
+              store: "darkshop",
+              quantity: 1,
             }))
           : [];
-
         // Shuffle regular products only
         const shuffledRegular = shuffleArray(sortByNewest(regularProducts));
 
@@ -252,10 +255,23 @@ const [openDarkCategory, setOpenDarkCategory] = useState({});
     setCurrentPage(1);
   }, [products, platformFilter, priceRange, searchQuery]);
 
-  /* -------- CART -------- */
+
+  /* -------- CART (UPDATED ONLY HERE) -------- */
   const addToCart = (item) => {
-    if (cart.some((c) => c.id === item.id)) return;
-    updateCartState([...cart, item]);
+    const isDarkshop = item.store === "darkshop";
+    const exists = cart.find((c) => c.id === item.id);
+
+    if (exists && !isDarkshop) {
+      toast.info("This product can only be added once");
+      return;
+    }
+
+    if (exists && isDarkshop) {
+      toast.info("Item already in cart");
+      return;
+    }
+
+    updateCartState([...cart, { ...item, quantity: 1 }]);
     toast.success("Product added to cart");
   };
 

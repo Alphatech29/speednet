@@ -5650,3 +5650,10 @@
 [2026-02-15T23:00:04.806Z] [INFO]: API expiry alert sent to admin:
 [2026-02-15T23:00:09.089Z] [INFO]: API expiry alert sent to admin:
 [2026-02-15T23:00:11.575Z] [INFO]: API expiry alert sent to admin:
+[2026-02-20T13:47:26.874Z] [INFO]: Login notification email sent:
+[2026-02-20T13:55:20.279Z] [INFO]: API expiry cron job loaded successfully.
+[2026-02-20T13:55:20.285Z] [INFO]: Escrow job queue loaded successfully.
+[2026-02-20T13:55:20.346Z] [INFO]: Darkshop product maintenance job started.
+[2026-02-20T13:55:20.352Z] [INFO]: Server started on http://localhost:8000
+[2026-02-20T13:55:21.501Z] [INFO]: Transporter is ready to send emails
+[2026-02-20T13:55:24.812Z] [INFO]: API expiry alert sent to admin:

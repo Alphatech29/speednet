@@ -276,7 +276,7 @@ async function getDarkShopOrdersByBuyer(userId) {
       `SELECT *
        FROM dark_shop_orders
        WHERE buyer_id = ?`,
-      [userId] // ✅ FIX
+      [userId] 
     );
 
     if (!rows || rows.length === 0) {

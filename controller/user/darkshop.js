@@ -5,7 +5,7 @@ const {
 
 
 const fetchDarkshopBuyerOrders = async (req, res) => {
-  const { userUid } = req.params; 
+  const { userUid } = req.params;
 
   try {
     if (!userUid) {

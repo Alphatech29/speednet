@@ -61,7 +61,7 @@ export const getDarkProducts = async () => {
           description: product.description || "",
           price: product.price || "0",
           price_rub: product.price_rub || "0",
-          quantity: product.quantity || 0,
+          stock_quantity: product.quantity || 0,
           view: product.view || 0,
           rating: product.rating || null,
           group_id: product.group_id || null,

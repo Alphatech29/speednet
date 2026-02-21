@@ -68,6 +68,15 @@ const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
                     </div>
                   )}
                   </div>
+                   <div>
+                       {product.quantity && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-secondary/60 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
+                        {product.stock_quantity} in stock
+                      </span>
+                    </div>
+                  )}
+                  </div>
                   </div>
                   <div className="flex gap-2">
                     {/* Details Button */}

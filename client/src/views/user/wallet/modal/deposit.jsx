@@ -44,7 +44,7 @@ const Deposit = ({ onClose }) => {
     }
 
     let currency = 'USDT';
-    if (selected === 'fapshi' || selected === 'bank' || selected === 'online') {
+    if (selected === 'fapshi' || selected === 'monnify' || selected === 'online') {
       currency = 'USD';
     }
 
@@ -120,7 +120,7 @@ const Deposit = ({ onClose }) => {
               <BiSolidMobileVibration className="text-[22px]" />
             </span>
             <div className="text-start">
-              <h1 className="font-semibold text-[15px]">MOMO Deposit (Cameroon)</h1>
+              <h1 className="font-semibold text-[15px]">MOMO Deposit</h1>
               <p className="text-sm text-secondary/50 mobile:text-xs">Use Mobile Money to fund your wallet.</p>
             </div>
           </div>
@@ -135,8 +135,23 @@ const Deposit = ({ onClose }) => {
               <RiBtcFill className="text-[22px]" />
             </span>
             <div className="text-start">
-              <h1 className="font-semibold text-[15px]">Crypto Deposit (International)</h1>
+              <h1 className="font-semibold text-[15px]">Crypto Deposit</h1>
               <p className="text-sm text-secondary/50 mobile:text-xs">Fund wallet with USDT securely.</p>
+            </div>
+          </div>
+
+          {/* Bank/Card */}
+          <div
+            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
+              ${selected === 'monnify' ? 'border-primary-600 bg-primary-600/20' : 'border-primary-600'}`}
+            onClick={() => setSelected('monnify')}
+          >
+            <span className={`border p-3 rounded-full ${selected === 'monnify' ? 'border-primary-600' : 'border-primary-600/50'}`}>
+              <BsBank2 className="text-[22px]" />
+            </span>
+            <div className="text-start">
+              <h1 className="font-semibold text-[15px]">Bank / Card Payment</h1>
+              <p className="text-sm text-secondary/50 mobile:text-xs">Deposit via online transfer or card.</p>
             </div>
           </div>
 
@@ -150,23 +165,8 @@ const Deposit = ({ onClose }) => {
               <SiStarlingbank className="text-[22px]" />
             </span>
             <div className="text-start">
-              <h1 className="font-semibold text-[15px]">Bank Transfer (Nigerian)</h1>
+              <h1 className="font-semibold text-[15px]">Bank Transfer</h1>
               <p className="text-sm text-secondary/50 mobile:text-xs">Fund wallet using bank transfer options.</p>
-            </div>
-          </div>
-
-          {/* Bank/Card */}
-          <div
-            className={`flex items-start gap-3 border p-3 rounded-lg cursor-pointer transition
-              ${selected === 'bank' ? 'border-primary-600 bg-primary-600/20' : 'border-primary-600'}`}
-            onClick={() => setSelected('bank')}
-          >
-            <span className={`border p-3 rounded-full ${selected === 'bank' ? 'border-primary-600' : 'border-primary-600/50'}`}>
-              <BsBank2 className="text-[22px]" />
-            </span>
-            <div className="text-start">
-              <h1 className="font-semibold text-[15px]">Bank / Card Payment (Coming Soon)</h1>
-              <p className="text-sm text-secondary/50 mobile:text-xs">Deposit via online transfer or card.</p>
             </div>
           </div>
         </div>

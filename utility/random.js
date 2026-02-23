@@ -5,4 +5,4 @@ function generateUniqueRandomNumber(maxLength = 13) {
   return (Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber).toString();
 }
 
-module.exports = { generateUniqueRandomNumber };  
+module.exports = { generateUniqueRandomNumber };

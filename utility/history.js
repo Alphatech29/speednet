@@ -24,7 +24,7 @@ const createTransactionHistory = async (user_uid, amount, transaction_type, stat
       return { success: false, message: "User ID or amount is not a valid number" };
     }
 
-    const sql = `INSERT INTO transactions (user_uid, amount, transaction_type, status, transaction_no) 
+    const sql = `INSERT INTO transactions (user_uid, amount, transaction_type, status, transaction_no)
                  VALUES (?, ?, ?, ?, ?)`;
     const [result] = await pool.execute(sql, [uid, amt, type, stat, txnNo]);
 
@@ -161,9 +161,82 @@ const getSmsServicesByUserId = async (user_id) => {
   }
 };
 
+// -------------------- Get Transaction By Transaction Number --------------------
+const getTransactionByTransactionNo = async (transaction_no) => {
+  try {
+    if (!transaction_no || typeof transaction_no !== "string") {
+      return { success: false, message: "Invalid transaction number" };
+    }
+
+    const sql = `
+      SELECT amount, user_uid
+      FROM transactions
+      WHERE transaction_no = ?
+      LIMIT 1
+    `;
+
+    const [rows] = await pool.execute(sql, [transaction_no]);
+
+    if (!rows.length) {
+      return { success: false, message: "Transaction not found" };
+    }
+
+    return {
+      success: true,
+      message: "Transaction retrieved successfully",
+      amount: rows[0].amount,
+      user_uid: rows[0].user_uid
+    };
+
+  } catch (error) {
+    logger.error("Database error while fetching transaction:", error);
+    return { success: false, message: "Error: " + error.message };
+  }
+};
+
+const updateTransactionStatusByTransactionNo = async (transaction_no, status) => {
+  try {
+    // -------- validation --------
+    if (!transaction_no || typeof transaction_no !== "string") {
+      return { success: false, message: "Invalid transaction number" };
+    }
+
+    if (!status || typeof status !== "string") {
+      return { success: false, message: "Invalid status" };
+    }
+
+    const sql = `
+      UPDATE transactions
+      SET status = ?
+      WHERE transaction_no = ?
+      AND status != ?
+    `;
+
+    const [result] = await pool.execute(sql, [status, transaction_no, status]);
+
+    // nothing updated → already processed OR not found
+    if (result.affectedRows === 0) {
+      return { success: false, message: "Transaction not found or already processed" };
+    }
+
+    return {
+      success: true,
+      message: "Transaction status updated successfully",
+      transaction_no,
+      status
+    };
+
+  } catch (error) {
+    logger.error("Database error while updating transaction status:", error);
+    return { success: false, message: "Error: " + error.message };
+  }
+};
+
 module.exports = {
   createTransactionHistory,
   getDepositTransactionsByUserUid,
+  getTransactionByTransactionNo,
+  updateTransactionStatusByTransactionNo,
   createSmsServiceRecord,
   getSmsServicesByUserId,
   updateSmsServiceRecord,

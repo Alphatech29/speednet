@@ -1,6 +1,6 @@
 const { getWebSettings } = require('../utility/general');
 const { updateUserBalance, getUserDetailsByUid } = require('../utility/userInfo');
-const { createTransactionHistory } = require('../utility/history');
+const { createTransactionHistory, getTransactionByTransactionNo, updateTransactionStatusByTransactionNo } = require('../utility/history');
 const { taskVerification } = require('../utility/referralVerification');
 const crypto = require('crypto');
 const logger = require('../utility/logger');
@@ -103,7 +103,7 @@ const cryptomusWebhook = async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const userUid = order_id.charAt(0); // Update this if UID is not the first char
+    const userUid = order_id.charAt(0);
     const userDetails = await getUserDetailsByUid(userUid);
 
     if (!userDetails) {
@@ -136,4 +136,118 @@ const cryptomusWebhook = async (req, res) => {
   }
 };
 
-module.exports = { fapshiWebhook, cryptomusWebhook };
+
+// ---------------------- MONNIFY WEBHOOK ----------------------
+const monnifyWebhook = async (req, res) => {
+  try {
+    // -------- RAW BODY --------
+    let rawBody = "";
+    if (Buffer.isBuffer(req.body)) {
+      rawBody = req.body.toString("utf8");
+    } else if (typeof req.body === "object") {
+      rawBody = JSON.stringify(req.body);
+    }
+
+    // -------- VERIFY SIGNATURE --------
+    const settings = await getWebSettings();
+    const secretKey = settings?.monnify_secretKey;
+    const signature = req.headers["monnify-signature"];
+
+    if (!signature || !secretKey) {
+      logger.warn("Missing Monnify signature or secret");
+      return res.status(200).json({ received: true });
+    }
+
+    const computedHash = crypto
+      .createHmac("sha512", secretKey)
+      .update(rawBody)
+      .digest("hex");
+
+    let valid = false;
+    try {
+      valid = crypto.timingSafeEqual(
+        Buffer.from(computedHash, "hex"),
+        Buffer.from(signature, "hex")
+      );
+    } catch {
+      valid = false;
+    }
+
+    // ACK FAST (Monnify requires this)
+    res.status(200).json({ received: true });
+    if (!valid) return;
+
+    // -------- PARSE PAYLOAD --------
+    const payload = JSON.parse(rawBody);
+    console.log("Parsed Payload:", payload);
+
+    // Only handle successful payments
+    if (payload?.eventType !== "SUCCESSFUL_TRANSACTION") return;
+
+    const eventData = payload?.eventData;
+    const paymentReference = eventData?.paymentReference;
+    const amountPaid = Number(eventData?.amountPaid);
+
+    if (!paymentReference || !amountPaid) {
+      console.warn("Invalid webhook data");
+      return;
+    }
+
+    // -------- GET TRANSACTION --------
+    const txn = await getTransactionByTransactionNo(paymentReference);
+    if (!txn.success) {
+      console.warn("Transaction not found:", paymentReference);
+      return;
+    }
+
+    const { amount, user_uid } = txn;
+
+
+    // -------- UPDATE TRANSACTION STATUS --------
+    const statusUpdate = await updateTransactionStatusByTransactionNo(
+      paymentReference,
+      "completed"
+    );
+
+    if (!statusUpdate.success) {
+      console.warn("Failed to update transaction:", statusUpdate.message);
+      return;
+    }
+
+    // -------- CREDIT USER --------
+    const userDetails = await getUserDetailsByUid(user_uid);
+    if (!userDetails) {
+      logger.error("User not found", { user_uid });
+      return;
+    }
+
+    const currentBalance = Number(userDetails.account_balance) || 0;
+    const newBalance = currentBalance + Number(amount);
+
+    const balanceUpdate = await updateUserBalance(user_uid, newBalance);
+    if (!balanceUpdate.success) {
+      logger.error("Balance update failed", { user_uid, currentBalance, newBalance });
+      return;
+    }
+
+    // -------- REFERRAL TASK --------
+    const userUid = user_uid;
+    taskVerification(userUid)
+      .then(() =>
+        logger.info("Referral task verified (monnify)", { userUid })
+      )
+      .catch((err) =>
+        logger.error("Referral task verification failed (monnify)", {
+          userUid,
+          error: err.message,
+        })
+      );
+
+  } catch (error) {
+    console.error("Webhook crash:", error);
+    res.status(200).end();
+  }
+};
+
+
+module.exports = { fapshiWebhook, cryptomusWebhook, monnifyWebhook };

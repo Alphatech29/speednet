@@ -26,6 +26,9 @@ const {
   getDarkshopBalance,
   createDarkshopOrder,
 } = require("../../utility/daskshopCreateOrder");
+const {
+  processPendingDarkOrders,
+} = require("../../utility/darkshopPendingProcessor");
 
 // Darkshop system sellers only
 const DARKSHOP_SYSTEM_SELLER_IDS = [4];
@@ -35,12 +38,11 @@ const getRandomDarkshopSellerId = () => {
   return DARKSHOP_SYSTEM_SELLER_IDS[index];
 };
 
-
 const collectOrder = async (req, res) => {
   let originalBalance = null;
   let safeUserId = null;
 
-   // One random system seller for all darkshop actions in this order
+  // One random system seller for all darkshop actions in this order
   const darkshopSystemSellerId = getRandomDarkshopSellerId();
 
   const pendingOrders = [];
@@ -51,22 +53,36 @@ const collectOrder = async (req, res) => {
     console.log("[REQUEST BODY]:", JSON.stringify(req.body, null, 2));
 
     const { userId, products, totalAmount } = req.body || {};
-    if (!userId || !Array.isArray(products) || products.length === 0 || !totalAmount) {
-      return res.status(400).json({ success: false, message: "Invalid request data" });
+    if (
+      !userId ||
+      !Array.isArray(products) ||
+      products.length === 0 ||
+      !totalAmount
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid request data" });
     }
 
     safeUserId = String(userId).trim();
     const amountToDeduct = Number(totalAmount);
     if (isNaN(amountToDeduct) || amountToDeduct <= 0) {
-      return res.status(400).json({ success: false, message: "Invalid total amount" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid total amount" });
     }
 
     // USER CHECK
     const user = await getUserDetailsByUid(safeUserId);
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     originalBalance = Number(user.account_balance);
     if (originalBalance < amountToDeduct) {
-      return res.status(400).json({ success: false, message: "Insufficient balance" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Insufficient balance" });
     }
 
     // SPLIT PRODUCTS
@@ -75,11 +91,14 @@ const collectOrder = async (req, res) => {
     for (const p of products) {
       if (!p?.id) continue;
       const productId = String(p.id).trim();
-      if (productId.startsWith("dark-")) darkProductIds.push(productId.replace("dark-", ""));
+      if (productId.startsWith("dark-"))
+        darkProductIds.push(productId.replace("dark-", ""));
       else normalProducts.push({ ...p, id: productId });
     }
     if (darkProductIds.length === 0 && normalProducts.length === 0) {
-      return res.status(400).json({ success: false, message: "No valid products found" });
+      return res
+        .status(400)
+        .json({ success: false, message: "No valid products found" });
     }
 
     const orderNo = generateUniqueRandomNumber(6);
@@ -88,127 +107,131 @@ const collectOrder = async (req, res) => {
     // DEDUCT BALANCE
     const newBalance = (originalBalance - amountToDeduct).toFixed(2);
     await updateUserBalance(safeUserId, newBalance);
-    await createTransactionHistory(safeUserId, amountToDeduct, "Account Purchased", "Completed");
-
-// ======================
-// PROCESS DARKSHOP PRODUCTS
-// ======================
-if (darkProductIds.length > 0) {
-
-  // 1️ Get DB prices to check darkBalance
-  const dbPrices = await getDarkShopProductPricesbyid(darkProductIds);
-  const darkBalanceRes = await getDarkshopBalance(safeUserId);
-  const darkBalance = Number(darkBalanceRes?.balance || 0);
-
-  //  FIX: multiply price × quantity
-  let totalDarkPrice = 0;
-
-  for (const productId of darkProductIds) {
-    const productFromBody = products.find(
-      p => p.id.toString() === `dark-${productId}`
+    await createTransactionHistory(
+      safeUserId,
+      amountToDeduct,
+      "Account Purchased",
+      "Completed",
     );
 
-    const quantity = Number(productFromBody?.quantity) || 1;
-    const price = Number(dbPrices[productId] || 0);
+    // ======================
+    // PROCESS DARKSHOP PRODUCTS
+    // ======================
+    if (darkProductIds.length > 0) {
+      // 1️ Get DB prices to check darkBalance
+      const dbPrices = await getDarkShopProductPricesbyid(darkProductIds);
+      const darkBalanceRes = await getDarkshopBalance(safeUserId);
+      const darkBalance = Number(darkBalanceRes?.balance || 0);
 
-    totalDarkPrice += price * quantity;
-  }
+      //  FIX: multiply price × quantity
+      let totalDarkPrice = 0;
 
-  if (darkBalance < totalDarkPrice)
-    throw new Error("System error: Insufficient darkshop balance");
-
-  // 2️ Loop through dark products
-  for (const productId of darkProductIds) {
-
-    const darkProductInfo = await getDarkShopProductById(productId);
-
-    const productFromBody = products.find(
-      p => p.id.toString() === `dark-${productId}`
-    );
-
-    const quantity = Number(productFromBody?.quantity) || 1;
-    const priceFromBody = Number(productFromBody?.price || dbPrices[productId]);
-    const totalForThisProduct = priceFromBody * quantity;
-
-    const darkOrder = await createDarkshopOrder({
-      product: "dark-" + productId,
-      orderNo,
-      quantity,
-    });
-
-    if (!darkOrder?.success) {
-
-      await updateUserBalance(safeUserId, originalBalance.toFixed(2));
-      await createTransactionHistory(
-        safeUserId,
-        amountToDeduct,
-        "Refund for failed order",
-        "Refunded"
-      );
-
-      await storeOrderHistory({
-        seller_id: darkshopSystemSellerId,
-        buyer_id: safeUserId,
-        order_no: orderNo,
-        order_type: "Refund due to order failure",
-        amount: amountToDeduct,
-        status: "Completed",
-      });
-
-      return res.status(500).json({
-        success: false,
-        message: `Order failed: ${
-          darkOrder.data?.message || "Unknown error"
-        }. Amount refunded.`,
-      });
-    }
-
-    // Translate darkshop content before saving
-    let translatedDarkshopContent = null;
-
-    if (darkOrder.content) {
-      try {
-        translatedDarkshopContent = await translateRussianToEnglish(
-          darkOrder.content
+      for (const productId of darkProductIds) {
+        const productFromBody = products.find(
+          (p) => p.id.toString() === `dark-${productId}`,
         );
-      } catch (err) {
-        console.error("Darkshop content translation failed:", err.message);
-        translatedDarkshopContent = darkOrder.content;
+
+        const quantity = Number(productFromBody?.quantity) || 1;
+        const price = Number(dbPrices[productId] || 0);
+
+        totalDarkPrice += price * quantity;
+      }
+
+      if (darkBalance < totalDarkPrice)
+        throw new Error("System error: Insufficient darkshop balance");
+
+      // 2️ Loop through dark products
+      for (const productId of darkProductIds) {
+        const darkProductInfo = await getDarkShopProductById(productId);
+
+        const productFromBody = products.find(
+          (p) => p.id.toString() === `dark-${productId}`,
+        );
+
+        const quantity = Number(productFromBody?.quantity) || 1;
+        const priceFromBody = Number(
+          productFromBody?.price || dbPrices[productId],
+        );
+        const totalForThisProduct = priceFromBody * quantity;
+
+        const darkOrder = await createDarkshopOrder({
+          product: "dark-" + productId,
+          orderNo,
+          quantity,
+        });
+
+        if (!darkOrder?.success) {
+          await updateUserBalance(safeUserId, originalBalance.toFixed(2));
+          await createTransactionHistory(
+            safeUserId,
+            amountToDeduct,
+            "Refund for failed order",
+            "Refunded",
+          );
+
+          await storeOrderHistory({
+            seller_id: darkshopSystemSellerId,
+            buyer_id: safeUserId,
+            order_no: orderNo,
+            order_type: "Refund due to order failure",
+            amount: amountToDeduct,
+            status: "Completed",
+          });
+
+          return res.status(500).json({
+            success: false,
+            message: `Order failed: ${
+              darkOrder.data?.message || "Unknown error"
+            }. Amount refunded.`,
+          });
+        }
+
+        // Translate darkshop content before saving
+        let translatedDarkshopContent = null;
+
+        if (darkOrder.content) {
+          try {
+            translatedDarkshopContent = await translateRussianToEnglish(
+              darkOrder.content,
+            );
+          } catch (err) {
+            console.error("Darkshop content translation failed:", err.message);
+            translatedDarkshopContent = darkOrder.content;
+          }
+        }
+
+        await insertDarkShopOrder({
+          account_id: productId,
+          buyer_id: safeUserId,
+          order_no: orderNo,
+          title: darkProductInfo?.name || `Darkshop Product #${productId}`,
+          platform: darkProductInfo?.category_name || "Darkshop",
+          price: priceFromBody,
+          quantity,
+          total: totalForThisProduct,
+          payment_status:
+            darkOrder.status === "pending" ? "Pending" : "Completed",
+          darkshop_order_id: darkOrder.id,
+          darkshop_link: darkOrder.link || null,
+          darkshop_content: translatedDarkshopContent,
+        });
+
+        darkProductsResponse.push({
+          id: productId,
+          title: darkProductInfo?.name,
+          platform: darkProductInfo?.category_name,
+          price: priceFromBody,
+          quantity,
+          total: totalForThisProduct,
+          darkshop_order_id: darkOrder.id,
+          darkshop_link: darkOrder.link || null,
+          darkshop_content: translatedDarkshopContent || null,
+          payment_status: darkOrder.status,
+        });
       }
     }
 
-    await insertDarkShopOrder({
-      account_id: productId,
-      buyer_id: safeUserId,
-      order_no: orderNo,
-      title: darkProductInfo?.name || `Darkshop Product #${productId}`,
-      platform: darkProductInfo?.category_name || "Darkshop",
-      price: priceFromBody,
-      quantity,
-      total: totalForThisProduct,
-      payment_status:
-        darkOrder.status === "pending" ? "Pending" : "Completed",
-      darkshop_order_id: darkOrder.id,
-      darkshop_link: darkOrder.link || null,
-      darkshop_content: translatedDarkshopContent,
-    });
-
-    darkProductsResponse.push({
-      id: productId,
-      title: darkProductInfo?.name,
-      platform: darkProductInfo?.category_name,
-      price: priceFromBody,
-      quantity,
-      total: totalForThisProduct,
-      darkshop_order_id: darkOrder.id,
-      darkshop_link: darkOrder.link || null,
-      darkshop_content: translatedDarkshopContent || null,
-      payment_status: darkOrder.status,
-    });
-  }
-}
-
-console.log("Darkshop products processed." , darkProductsResponse);
+    console.log("Darkshop products processed.", darkProductsResponse);
 
     // ======================
     // PROCESS NORMAL PRODUCTS
@@ -251,7 +274,8 @@ console.log("Darkshop products processed." , darkProductsResponse);
       // COMMIT NORMAL ORDERS
       for (const order of pendingOrders) {
         await storeOrder(order.data);
-        if (order.type === "normal") await updateAccountStatusById(String(order.data.account_id), "sold");
+        if (order.type === "normal")
+          await updateAccountStatusById(String(order.data.account_id), "sold");
       }
 
       // STORE ORDER HISTORY FOR NORMAL PRODUCTS
@@ -268,11 +292,15 @@ console.log("Darkshop products processed." , darkProductsResponse);
           status: "Completed",
         });
       }
-
     } catch (normalError) {
       // REFUND USER if normal product processing fails
       await updateUserBalance(safeUserId, originalBalance.toFixed(2));
-      await createTransactionHistory(safeUserId, amountToDeduct, "Refund for failed order", "Refunded");
+      await createTransactionHistory(
+        safeUserId,
+        amountToDeduct,
+        "Refund for failed order",
+        "Refunded",
+      );
       await storeOrderHistory({
         seller_id: null,
         buyer_id: safeUserId,
@@ -294,7 +322,7 @@ console.log("Darkshop products processed." , darkProductsResponse);
       taskVerification(safeUserId).catch(() => {});
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: "Order completed successfully",
       order_no: orderNo,
@@ -304,13 +332,22 @@ console.log("Darkshop products processed." , darkProductsResponse);
       escrow_expires_at: escrowExpiresAt,
     });
 
+    // run background reconciliation (non-blocking)
+    setImmediate(() => processPendingDarkOrders(darkProductsResponse));
+    return;
+
   } catch (error) {
     console.error("ORDER ERROR:", error);
 
     // REFUND USER IF ANY OTHER ERROR OCCURS
     if (safeUserId && originalBalance !== null) {
       await updateUserBalance(safeUserId, originalBalance.toFixed(2));
-      await createTransactionHistory(safeUserId, Number(totalAmount), "Refund due to order failure", "Refunded");
+      await createTransactionHistory(
+        safeUserId,
+        Number(totalAmount),
+        "Refund due to order failure",
+        "Refunded",
+      );
       await storeOrderHistory({
         seller_id: null,
         buyer_id: safeUserId,

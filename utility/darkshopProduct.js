@@ -6,7 +6,7 @@ async function getDarkShopProducts() {
     try {
         const [rows] = await pool.execute(
             `SELECT p.*,
-                    g.name AS group_name, 
+                    g.name AS group_name,
                     c.name AS category_name,
                     c.id AS category_id
              FROM dark_shop_products p
@@ -276,7 +276,7 @@ async function getDarkShopOrdersByBuyer(userId) {
       `SELECT *
        FROM dark_shop_orders
        WHERE buyer_id = ?`,
-      [userId] 
+      [userId]
     );
 
     if (!rows || rows.length === 0) {
@@ -321,6 +321,45 @@ async function getDarkShopOrderByBuyerAndOrderNo(buyerId, orderNo) {
 }
 
 
+async function updateDarkShopOrderContent({
+    darkshop_order_id,
+    darkshop_link = null,
+    darkshop_content = null,
+    payment_status = null
+}) {
+    try {
+
+        let query = `
+            UPDATE dark_shop_orders
+            SET darkshop_link = ?,
+                darkshop_content = ?
+        `;
+
+        const params = [darkshop_link, darkshop_content];
+
+        // allow optional status update
+        if (payment_status !== null) {
+            query += `, payment_status = ?`;
+            params.push(payment_status);
+        }
+
+        query += ` WHERE darkshop_order_id = ?`;
+        params.push(darkshop_order_id);
+
+        const [result] = await pool.execute(query, params);
+
+        return {
+            success: result.affectedRows > 0,
+            updated: result.affectedRows
+        };
+
+    } catch (error) {
+        console.error("Error updating dark shop order:", error.message);
+        throw new Error("Unable to update darkshop order.");
+    }
+}
+
+
 
 
 // Run job daily at 12:00 AM (midnight)
@@ -345,5 +384,6 @@ module.exports = {
     insertDarkShopOrder,
     updateDarkShopOrderStatus,
     getPendingDarkShopOrderById,
-    getDarkShopOrdersByBuyer
+    getDarkShopOrdersByBuyer,
+    updateDarkShopOrderContent
 };

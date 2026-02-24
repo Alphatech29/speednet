@@ -211,7 +211,7 @@ const Sidebar = ({
       </div>
 
       {/* MOBILE TABS */}
-      <div className="flex md:hidden justify-between mb-4 gap-2 px-2">
+      <div className="flex mobile:hidden justify-between mb-4 gap-2 px-2">
         <button
           onClick={() => setActiveTab("menu")}
           className={`flex-1 p-2 rounded-lg ${

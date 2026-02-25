@@ -81,8 +81,8 @@ const apis = [
   },
    {
     name: "VTPass Api",
-    start_on: "2025-01-13",
-    expires_on: "2026-02-12",
+    start_on: "2025-02-13",
+    expires_on: "2026-03-12",
     premium_plan: {
       plan: "Pro",
       price_usd: 90,

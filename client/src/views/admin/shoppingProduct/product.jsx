@@ -271,7 +271,7 @@ export default function ShoppingCategories() {
               <Table.Body className="divide-y">
                 {visibleProducts.map((product) => (
                   <Table.Row key={product.id} className="text-sm">
-                    <Table.Cell>{product.id}</Table.Cell>
+                    <Table.Cell className="cursor-pointer z-20 relative">{product.id}</Table.Cell>
                     <Table.Cell>
                       {product.miniature ? (
                         <img
@@ -285,11 +285,11 @@ export default function ShoppingCategories() {
                     </Table.Cell>
                     <Table.Cell>
                       <div className="text-gray-600 flex flex-col">
-                        <span className="line-clamp-2 max-w-[500px]">
+                        <span className="line-clamp-2 max-w-[500px] cursor-pointer z-20 relative">
                           {product.name}
                         </span>
                         <span className="text-xs">
-                          Quantity: {product.quantity}
+                          Quantity: {product.stock_quantity}
                         </span>
                       </div>
                     </Table.Cell>

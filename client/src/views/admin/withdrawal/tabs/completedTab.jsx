@@ -1,161 +1,176 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Spinner, Modal, Button } from 'flowbite-react';
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { HiSearch } from "react-icons/hi";
+import { HiCheckCircle, HiCurrencyDollar } from "react-icons/hi2";
+import { getAllWithdrawals } from "../../../../components/backendApis/admin/apis/withdrawal";
+import { fadeUp, Avatar, MethodBadge, StatusBadge, WithdrawalModal, EmptyState } from "./_shared";
 
-import {
-  getAllWithdrawals
-} from '../../../../components/backendApis/admin/apis/withdrawal';
+/* ── Skeleton card ────────────────────────────────────────────── */
+const SkeletonCard = () => (
+  <div className="bg-white border border-gray-100 rounded-2xl p-4 animate-pulse shadow-sm">
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 rounded-full bg-gray-100 flex-shrink-0" />
+      <div className="flex-1 space-y-2">
+        <div className="h-3 bg-gray-100 rounded w-2/5" />
+        <div className="h-2.5 bg-gray-100 rounded w-1/3" />
+        <div className="flex gap-1.5">
+          <div className="h-4 bg-gray-100 rounded-full w-14" />
+          <div className="h-4 bg-gray-100 rounded-full w-12" />
+        </div>
+      </div>
+      <div className="flex flex-col items-end gap-2">
+        <div className="h-5 bg-gray-100 rounded w-16" />
+        <div className="h-7 bg-gray-100 rounded-xl w-20" />
+      </div>
+    </div>
+  </div>
+);
 
+/* ── Withdrawal card ──────────────────────────────────────────── */
+const WithdrawalCard = ({ w, index, onView }) => (
+  <motion.div
+    variants={fadeUp} initial="hidden" animate="visible" custom={index}
+    className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-md hover:border-gray-200 transition-all"
+  >
+    {/* Top: user info + amount */}
+    <div className="flex items-center gap-3 px-4 pt-4 pb-3">
+      <Avatar name={w.full_name} />
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-extrabold text-gray-900 truncate">{w.full_name}</p>
+        {w.email && <p className="text-[11px] text-gray-400 truncate">{w.email}</p>}
+        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+          <MethodBadge method={w.method} />
+          <span className="text-[10px] text-gray-300">·</span>
+          <span className="text-[10px] text-gray-400">
+            {w.updated_at ? new Date(w.updated_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}
+          </span>
+        </div>
+      </div>
+      <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+        <span className="text-lg font-extrabold text-emerald-600 leading-tight">
+          ${Number(w.amount).toLocaleString()}
+        </span>
+        <StatusBadge status={w.status} />
+      </div>
+    </div>
+
+    {/* Payout destination */}
+    {(w.method === "Bank" || w.method === "Crypto" || w.method === "MOMO") && (
+      <div className="mx-4 mb-3 px-3 py-2 bg-gray-50 rounded-xl border border-gray-100 text-[11px] text-gray-500 truncate">
+        {w.method === "Bank"   && <span><span className="font-semibold text-gray-700">{w.bank_name}</span> · {w.account_number}</span>}
+        {w.method === "Crypto" && <span><span className="font-semibold text-gray-700">{w.coin_name}</span> · {w.wallet_address}</span>}
+        {w.method === "MOMO"   && <span><span className="font-semibold text-gray-700">MOMO</span> · {w.momo_number}</span>}
+      </div>
+    )}
+
+    {/* Action row */}
+    <div className="px-4 pb-4">
+      <button
+        onClick={() => onView(w)}
+        className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-xl transition-all"
+      >
+        View Details
+      </button>
+    </div>
+  </motion.div>
+);
+
+/* ── Component ────────────────────────────────────────────────── */
 const CompletedTab = () => {
-  const [completedWithdrawals, setCompletedWithdrawals] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Fetch withdrawals
-  const fetchWithdrawals = async () => {
-    setLoading(true);
-    const result = await getAllWithdrawals();
-    if (result.success && Array.isArray(result.data)) {
-      const filtered = result.data.filter(w => w.status === 'completed');
-      setCompletedWithdrawals(filtered);
-    } else {
-      toast.error("Failed to fetch withdrawals.");
-    }
-    setLoading(false);
-  };
+  const [withdrawals, setWithdrawals] = useState([]);
+  const [loading,     setLoading]     = useState(true);
+  const [selected,    setSelected]    = useState(null);
+  const [search,      setSearch]      = useState("");
 
   useEffect(() => {
-    fetchWithdrawals();
+    getAllWithdrawals()
+      .then((res) => {
+        if (res.success && Array.isArray(res.data))
+          setWithdrawals(res.data.filter((w) => w.status === "completed"));
+        else toast.error("Failed to load withdrawals");
+      })
+      .catch(() => toast.error("Error loading withdrawals"))
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleViewDetails = (withdrawal) => {
-    setSelectedWithdrawal(withdrawal);
-    setIsModalOpen(true);
-  };
-
-  const renderDetails = () => {
-    if (!selectedWithdrawal) return null;
-    const { method } = selectedWithdrawal;
-
-    if (method === 'Bank') {
-      return (
-        <div className="space-y-2">
-          <p><strong>Account Name:</strong> {selectedWithdrawal.account_name}</p>
-          <p><strong>Account Number:</strong> {selectedWithdrawal.account_number}</p>
-          <p><strong>Bank Name:</strong> {selectedWithdrawal.bank_name}</p>
-          <p><strong>Amount:</strong> ${Number(selectedWithdrawal.amount).toLocaleString()}</p>
-        </div>
-      );
-    }
-
-    if (method === 'Crypto') {
-      return (
-        <div className="space-y-2">
-          <p><strong>Coin Name:</strong> {selectedWithdrawal.coin_name}</p>
-          <p><strong>Wallet Address:</strong> {selectedWithdrawal.wallet_address}</p>
-          <p><strong>Wallet Network:</strong> {selectedWithdrawal.wallet_network}</p>
-          <p><strong>Amount:</strong> ${Number(selectedWithdrawal.amount).toLocaleString()}</p>
-        </div>
-      );
-    }
-
-    if (method === 'MOMO') {
-      return (
-        <div className="space-y-2">
-          <p><strong>MOMO Number:</strong> {selectedWithdrawal.momo_number}</p>
-          <p><strong>Amount:</strong> ${Number(selectedWithdrawal.amount).toLocaleString()}</p>
-        </div>
-      );
-    }
-
-    return <p>No method-specific data available.</p>;
-  };
-
-  if (loading) {
-    return (
-      <div className="text-center py-8">
-        <Spinner aria-label="Loading completed withdrawals" />
-      </div>
-    );
-  }
+  const total    = withdrawals.reduce((s, w) => s + Number(w.amount), 0);
+  const q        = search.toLowerCase();
+  const filtered = withdrawals.filter((w) =>
+    (w.full_name || "").toLowerCase().includes(q) ||
+    (w.method    || "").toLowerCase().includes(q)
+  );
 
   return (
-    <div className="w-full">
-      <ToastContainer />
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Completed Withdrawals</h2>
+    <div className="flex flex-col gap-4">
+      <ToastContainer position="top-right" autoClose={4000} theme="colored" />
 
-      <div className="overflow-x-auto">
-        <Table hoverable className="bg-transparent">
-          <Table.Head className="bg-transparent text-gray-600 mobile:text-[13px]">
-            <Table.HeadCell>S/N</Table.HeadCell>
-            <Table.HeadCell>Full Name</Table.HeadCell>
-            <Table.HeadCell>Amount</Table.HeadCell>
-            <Table.HeadCell>Method</Table.HeadCell>
-            <Table.HeadCell>Status</Table.HeadCell>
-            <Table.HeadCell>Date</Table.HeadCell>
-            <Table.HeadCell className="text-center">Actions</Table.HeadCell>
-          </Table.Head>
+      {/* ── Summary strip ── */}
+      <AnimatePresence>
+        {!loading && withdrawals.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            className="grid grid-cols-2 gap-3"
+          >
+            <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-100 rounded-2xl px-4 py-3.5">
+              <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                <HiCheckCircle size={17} className="text-emerald-600" />
+              </div>
+              <div>
+                <p className="text-xl font-extrabold text-gray-900 leading-tight">{withdrawals.length}</p>
+                <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-wide">Completed</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-green-50 border border-green-100 rounded-2xl px-4 py-3.5">
+              <div className="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                <HiCurrencyDollar size={17} className="text-green-600" />
+              </div>
+              <div>
+                <p className="text-xl font-extrabold text-gray-900 leading-tight">${total.toLocaleString()}</p>
+                <p className="text-[10px] text-green-600 font-bold uppercase tracking-wide">Total Paid Out</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-          <Table.Body className="divide-y">
-            {completedWithdrawals.length > 0 ? (
-              completedWithdrawals.map((withdrawal, index) => (
-                <Table.Row key={withdrawal.id} className="text-gray-800">
-                  <Table.Cell>{index + 1}</Table.Cell>
-                  <Table.Cell>{withdrawal.full_name}</Table.Cell>
-                  <Table.Cell>${Number(withdrawal.amount).toLocaleString()}</Table.Cell>
-                  <Table.Cell>{withdrawal.method}</Table.Cell>
-                  <Table.Cell>
-                    <span className="px-2 py-1 rounded-full text-green-800 text-xs bg-green-100 capitalize">
-                      {withdrawal.status}
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    {withdrawal.updated_at
-                      ? new Date(withdrawal.updated_at).toLocaleString()
-                      : 'N/A'}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="flex gap-2 justify-center flex-wrap">
-                      <Button
-                        size="sm"
-                        className="px-2 py-1 bg-slate-800 text-white rounded text-xs hover:bg-gray-700"
-                        onClick={() => handleViewDetails(withdrawal)}
-                      >
-                        Details
-                      </Button>
-                    </div>
-                  </Table.Cell>
-                </Table.Row>
-              ))
-            ) : (
-              <Table.Row>
-                <Table.Cell colSpan={7} className="py-24 text-gray-500 text-center">
-                  No completed withdrawals found.
-                </Table.Cell>
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
+      {/* ── Toolbar ── */}
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
+          <HiSearch size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text" value={search} onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name or method…"
+            className="w-full pl-9 pr-4 py-2.5 text-xs rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 outline-none transition-all"
+          />
+        </div>
+        {!loading && (
+          <span className="flex items-center px-3 py-2.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-extrabold rounded-xl flex-shrink-0 whitespace-nowrap">
+            {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+          </span>
+        )}
       </div>
 
-      {/* Modal */}
-      <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)} popup>
-        <Modal.Body>
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">
-              {selectedWithdrawal?.full_name}'s Withdrawal Details
-            </h3>
-            {renderDetails()}
-            <div className="flex justify-end gap-2 pt-6">
-              <Button size="sm" color="gray" onClick={() => setIsModalOpen(false)}>
-                Close
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      {/* ── Cards grid ── */}
+      {loading ? (
+        <div className="grid grid-cols-1 tab:grid-cols-2 pc:grid-cols-3 gap-3">
+          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+        </div>
+      ) : filtered.length === 0 ? (
+        <EmptyState
+          message={search ? "No results found." : "No completed withdrawals yet."}
+          icon={HiCheckCircle}
+        />
+      ) : (
+        <div className="grid grid-cols-1 tab:grid-cols-2 pc:grid-cols-3 gap-3">
+          {filtered.map((w, i) => (
+            <WithdrawalCard key={w.id} w={w} index={i} onView={setSelected} />
+          ))}
+        </div>
+      )}
+
+      {selected && <WithdrawalModal withdrawal={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 };

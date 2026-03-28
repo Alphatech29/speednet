@@ -1,51 +1,48 @@
-.main-wrapper{
-  min-height: calc(100vh - 1px);
-  background-color: rgb(228 228 231 / var(--tw-bg-opacity, 1)) /* #e4e4e7 */;
-  width: 100%;
-}
-.side-wrapper{
-  overflow: auto;
-  background-color: rgb(0 102 102 / var(--tw-bg-opacity, 1)) /* #006666 */;
-  background: #006666;
-  width: 265px;
-  text-align: left;
-  height: 100%;
-  position: fixed;
-  bottom: 0;
-  top: 0;
-}
-.Main-Content-Wrapper{
-  margin-left: 265px;
-  width: calc(100% - 265px);
-  height: auto;
-}
-.bibb {
-        padding: 20px;
-        width: 100%;
-    }
- 
-.sidebar-link {
-  width: 100%;
+/* Admin layout shell — all visual styling is in Tailwind; only structural rules here */
+.admin-shell {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  padding: 8px;
-  border-radius: 6px;
-  color: var(--pay-color);
+  min-height: 100vh;
+  background-color: #f8fafc; /* slate-50 */
 }
 
-.sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.4);
+.admin-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.sidebar-sub-link {
-  font-size: 14px;
-  padding: 8px;
-  border-radius: 6px;
-  color: var(--pay-color);
+.admin-main {
+  margin-left: 260px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.sidebar-sub-link:hover {
-  background: rgba(255, 255, 255, 0.4);
+/* Scrollbar styling for sidebar */
+.admin-sidebar::-webkit-scrollbar { width: 4px; }
+.admin-sidebar::-webkit-scrollbar-track { background: transparent; }
+.admin-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
+
+/* Inner nav scroll area */
+.sidebar-nav::-webkit-scrollbar { width: 3px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 99px; }
+
+/* Table scrollbar */
+.admin-table-wrap::-webkit-scrollbar { height: 5px; }
+.admin-table-wrap::-webkit-scrollbar-track { background: #f1f5f9; }
+.admin-table-wrap::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+
+@media (max-width: 1023px) {
+  .admin-sidebar { transform: translateX(-100%); transition: transform 0.25s ease; }
+  .admin-sidebar.open { transform: translateX(0); }
+  .admin-main { margin-left: 0; }
 }

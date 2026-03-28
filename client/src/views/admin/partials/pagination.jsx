@@ -1,127 +1,73 @@
 import { useEffect, useState, useRef } from "react";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
 const Pagination = ({ totalPages = 1, initialPage = 1, onPageChange }) => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const maxVisiblePages = 10;
+  const [current, setCurrent] = useState(initialPage);
   const firstRender = useRef(true);
+  const MAX = 7;
 
-
-  useEffect(() => {
-    setCurrentPage(initialPage);
-  }, [initialPage]);
-
+  useEffect(() => { setCurrent(initialPage); }, [initialPage]);
 
   useEffect(() => {
-    if (typeof onPageChange === "function" && totalPages > 0) {
-      onPageChange(currentPage);
-    }
-
-    if (!firstRender.current) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      firstRender.current = false;
-    }
-  }, [currentPage, onPageChange, totalPages]);
-
-  const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
-  const renderPageNumbers = () => {
-    if (!totalPages || totalPages <= 1) return null;
-
-    const pageNumbers = [];
-    let startPage, endPage;
-
-    if (totalPages <= maxVisiblePages) {
-      startPage = 1;
-      endPage = totalPages;
-    } else {
-      const halfVisible = Math.floor(maxVisiblePages / 2);
-      if (currentPage <= halfVisible + 1) {
-        startPage = 1;
-        endPage = maxVisiblePages;
-      } else if (currentPage >= totalPages - halfVisible) {
-        startPage = totalPages - maxVisiblePages + 1;
-        endPage = totalPages;
-      } else {
-        startPage = currentPage - halfVisible;
-        endPage = currentPage + halfVisible;
-      }
-    }
-
-    if (startPage > 1) {
-      pageNumbers.push(
-        <button
-          key={1}
-          onClick={() => goToPage(1)}
-          className="px-3 py-1 rounded-md text-sm font-medium bg-gray-600 text-gray-300 hover:bg-gray-500"
-        >
-          1
-        </button>
-      );
-
-      if (startPage > 2) pageNumbers.push(<span key="ellipsis-start">...</span>);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          onClick={() => goToPage(i)}
-          className={`px-3 py-1 rounded-md text-sm ${
-            i === currentPage
-              ? "bg-teal-600 text-white"
-              : "bg-gray-600 text-gray-300 hover:bg-gray-500"
-          }`}
-        >
-          {i}
-        </button>
-      );
-    }
-
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) pageNumbers.push(<span key="ellipsis-end">...</span>);
-
-      pageNumbers.push(
-        <button
-          key={totalPages}
-          onClick={() => goToPage(totalPages)}
-          className="px-3 py-1 rounded-md text-sm font-medium bg-gray-600 text-gray-300 hover:bg-gray-500"
-        >
-          {totalPages}
-        </button>
-      );
-    }
-
-    return pageNumbers;
-  };
+    if (typeof onPageChange === "function" && totalPages > 0) onPageChange(current);
+    if (!firstRender.current) window.scrollTo({ top: 0, behavior: "smooth" });
+    else firstRender.current = false;
+  }, [current, onPageChange, totalPages]);
 
   if (totalPages <= 1) return null;
 
+  const go = (p) => { if (p >= 1 && p <= totalPages) setCurrent(p); };
+
+  const pages = () => {
+    let start, end;
+    if (totalPages <= MAX) { start = 1; end = totalPages; }
+    else {
+      const half = Math.floor(MAX / 2);
+      if (current <= half + 1)          { start = 1; end = MAX; }
+      else if (current >= totalPages - half) { start = totalPages - MAX + 1; end = totalPages; }
+      else                               { start = current - half; end = current + half; }
+    }
+
+    const items = [];
+    if (start > 1) {
+      items.push(<Btn key={1} page={1} active={current === 1} onClick={() => go(1)} />);
+      if (start > 2) items.push(<span key="e1" className="px-1 text-gray-400 text-sm">…</span>);
+    }
+    for (let i = start; i <= end; i++)
+      items.push(<Btn key={i} page={i} active={current === i} onClick={() => go(i)} />);
+    if (end < totalPages) {
+      if (end < totalPages - 1) items.push(<span key="e2" className="px-1 text-gray-400 text-sm">…</span>);
+      items.push(<Btn key={totalPages} page={totalPages} active={current === totalPages} onClick={() => go(totalPages)} />);
+    }
+    return items;
+  };
+
   return (
-    <div className="flex justify-center items-center mt-4 flex-wrap gap-2 w-full">
-      <button
-        onClick={() => goToPage(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-3 py-1 rounded-md text-sm bg-gray-700 text-gray-200 disabled:opacity-50"
-      >
-        Prev
+    <div className="flex items-center gap-1 flex-wrap justify-center">
+      <button onClick={() => go(current - 1)} disabled={current === 1}
+        className="w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+        <HiChevronLeft size={14} />
       </button>
 
-      <div className="flex flex-wrap justify-center gap-1">{renderPageNumbers()}</div>
+      <div className="flex items-center gap-1">{pages()}</div>
 
-      <button
-        onClick={() => goToPage(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-3 py-1 rounded-md text-sm bg-gray-700 text-gray-200 disabled:opacity-50"
-      >
-        Next
+      <button onClick={() => go(current + 1)} disabled={current === totalPages}
+        className="w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+        <HiChevronRight size={14} />
       </button>
     </div>
   );
 };
+
+const Btn = ({ page, active, onClick }) => (
+  <button onClick={onClick}
+    className={`w-8 h-8 flex items-center justify-center rounded-xl text-xs font-bold transition-all ${
+      active
+        ? "bg-primary-600 text-white shadow-sm shadow-primary-600/25"
+        : "border border-gray-200 bg-white text-gray-600 hover:bg-gray-100"
+    }`}>
+    {page}
+  </button>
+);
 
 export default Pagination;

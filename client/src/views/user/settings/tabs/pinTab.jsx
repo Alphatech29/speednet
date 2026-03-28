@@ -1,13 +1,12 @@
-import React, { useState, useContext } from "react";
-import { Label, Button } from "flowbite-react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../../../components/control/authContext";
 import { setTransactionPin } from "../../../../components/backendApis/pin/transactionPin";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PinInput = ({ label, pinValue, setPinValue, prefix }) => (
-  <div className="flex flex-col items-center mb-6 w-full">
-    <Label htmlFor={prefix} value={label} className="text-se mb-2" />
+  <div className="flex flex-col items-center gap-3 w-full">
+    <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 tracking-wide">{label}</p>
     <div className="flex justify-center gap-3">
       {[0, 1, 2, 3].map((i) => (
         <input
@@ -32,7 +31,7 @@ const PinInput = ({ label, pinValue, setPinValue, prefix }) => (
               if (prev) prev.focus();
             }
           }}
-          className="w-12 h-12 text-center text-xl bg-[#fefce8] border border-primary-600 rounded-md text-secondary"
+          className="w-12 h-12 text-center text-xl font-bold bg-gray-50 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-700 rounded-2xl text-gray-900 dark:text-white focus:outline-none focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 transition-all"
         />
       ))}
     </div>
@@ -49,75 +48,51 @@ const PinTab = () => {
   const userPinExists = !!(user?.pin && user.pin.trim() !== "");
 
   const handleSubmit = async () => {
-    if (pin.length !== 4 || confirmPin.length !== 4) {
-      toast.error("PIN must be 4 digits.");
-      return;
-    }
+    if (pin.length !== 4 || confirmPin.length !== 4) { toast.error("PIN must be 4 digits."); return; }
+    if (pin !== confirmPin) { toast.error("PINs do not match."); return; }
 
-    if (pin !== confirmPin) {
-      toast.error("PINs do not match.");
-      return;
-    }
-
-    const payload = {
-      newPin: pin,
-      ...(userPinExists && { oldPin }),
-    };
-
+    const payload = { newPin: pin, ...(userPinExists && { oldPin }) };
     try {
       setLoading(true);
-      const response = await setTransactionPin(payload);
-      if (response?.success) {
-        toast.success(response.message || "PIN updated successfully.");
-        setPin("");
-        setConfirmPin("");
-        setOldPin("");
+      const res = await setTransactionPin(payload);
+      if (res?.success) {
+        toast.success(res.message || "PIN updated successfully.");
+        setPin(""); setConfirmPin(""); setOldPin("");
       } else {
-        toast.error(response.message || "Something went wrong.");
+        toast.error(res.message || "Something went wrong.");
       }
-    } catch (error) {
-      toast.error(error?.message || "Failed to update PIN.");
+    } catch (err) {
+      toast.error(err?.message || "Failed to update PIN.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center ">
+    <div className="flex flex-col items-center gap-6">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div className="flex flex-col justify-center items-center border border-primary-600 bg-[#fefce8] rounded-lg w-full mobile:max-w-sm tab:max-w-md pc:max-w-lg px-4 py-6">
-        <div className="text-center text-secondary mb-6">
-          <h2 className="text-2xl font-bold mb-4">
-            {userPinExists ? "Change Pin" : "Create Pin"}
-          </h2>
-          <p>
-            {userPinExists
-              ? "You already have a pin. Enter your old pin to set a new one."
-              : "Manage your transaction pin settings here."}
-          </p>
-        </div>
-
-        <div className="w-full flex flex-col items-center">
-          {userPinExists && (
-            <PinInput label="Old Pin" pinValue={oldPin} setPinValue={setOldPin} prefix="old-pin" />
-          )}
-          <PinInput label="New Pin" pinValue={pin} setPinValue={setPin} prefix="new-pin" />
-          <PinInput
-            label="Confirm New Pin"
-            pinValue={confirmPin}
-            setPinValue={setConfirmPin}
-            prefix="confirm-new-pin"
-          />
-
-          <Button
-            onClick={handleSubmit}
-            disabled={loading}
-            className="mt-4 w-full tab:w-1/2 bg-primary-600 hover:bg-primary-700 border-0"
-          >
-            {loading ? (userPinExists ? "Changing..." : "Creating...") : userPinExists ? "Change Pin" : "Create Pin"}
-          </Button>
-        </div>
+      <div className="text-center">
+        <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">
+          {userPinExists ? "Change PIN" : "Create PIN"}
+        </h3>
+        <p className="text-xs text-gray-400 dark:text-slate-500">
+          {userPinExists ? "Enter your old PIN to set a new one." : "Set a 4-digit transaction PIN."}
+        </p>
       </div>
+
+      {userPinExists && (
+        <PinInput label="Old PIN" pinValue={oldPin} setPinValue={setOldPin} prefix="old-pin" />
+      )}
+      <PinInput label="New PIN" pinValue={pin} setPinValue={setPin} prefix="new-pin" />
+      <PinInput label="Confirm New PIN" pinValue={confirmPin} setPinValue={setConfirmPin} prefix="confirm-new-pin" />
+
+      <button
+        onClick={handleSubmit}
+        disabled={loading}
+        className="w-full bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-bold py-3.5 rounded-2xl shadow-md shadow-primary-600/25 hover:-translate-y-0.5 transition-all text-sm"
+      >
+        {loading ? (userPinExists ? "Changing..." : "Creating...") : userPinExists ? "Change PIN" : "Create PIN"}
+      </button>
     </div>
   );
 };

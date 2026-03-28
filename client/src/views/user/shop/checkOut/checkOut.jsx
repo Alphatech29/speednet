@@ -1,91 +1,50 @@
-import React, { useContext, useState, useMemo } from "react";
+import { useContext, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { AuthContext } from "../../../../components/control/authContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { collectOrder } from "../../../../components/backendApis/purchase/collectOrder";
+import { HiShieldCheck, HiArrowLeft } from "react-icons/hi";
+import { FiShoppingCart, FiTrash2 } from "react-icons/fi";
+import { MdVerified } from "react-icons/md";
+import { BiPackage } from "react-icons/bi";
+
+const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } };
 
 const Checkout = () => {
   const navigate = useNavigate();
-
-  const {
-    cart = [],
-    webSettings,
-    user,
-    updateCartState,
-    increaseQty,
-    decreaseQty,
-  } = useContext(AuthContext);
-
+  const { cart = [], webSettings, user, updateCartState, increaseQty, decreaseQty, removeFromCart } = useContext(AuthContext);
   const [isProcessing, setIsProcessing] = useState(false);
+  const currency = webSettings?.currency || "$";
 
-  // ==========================
-  // ORDER CALCULATION
-  // ==========================
-  const { products, subtotal, vat, grandTotal } = useMemo(() => {
-    const products = cart.map((item) => {
+  const { lineItems, subtotal, vat, grandTotal } = useMemo(() => {
+    const lineItems = cart.map((item) => {
       const isDarkshop = item.store === "darkshop";
       const quantity = isDarkshop ? item.quantity : 1;
-
-      return {
-        id: item.id,
-        price: Number(item.price || 0),
-        quantity,
-        total: Number(item.price || 0) * quantity,
-      };
+      return { id: item.id, price: Number(item.price || 0), quantity, total: Number(item.price || 0) * quantity };
     });
-
-    const subtotal = products.reduce(
-      (sum, item) => sum + item.total,
-      0
-    );
-
+    const subtotal = lineItems.reduce((s, i) => s + i.total, 0);
     const vatRate = Number(webSettings?.vat || 0);
     const vat = (subtotal * vatRate) / 100;
-    const grandTotal = subtotal + vat;
-
-    return { products, subtotal, vat, grandTotal };
+    return { lineItems, subtotal, vat, grandTotal: subtotal + vat };
   }, [cart, webSettings]);
 
-  // ==========================
-  // HANDLE PAYMENT
-  // ==========================
   const handlePayment = async () => {
-    if (!user?.uid) {
-      toast.error("User not authenticated");
-      return;
-    }
-
-    if (!products.length) {
-      toast.error("Your cart is empty");
-      return;
-    }
-
+    if (!user?.uid) { toast.error("User not authenticated"); return; }
+    if (!lineItems.length) { toast.error("Your cart is empty"); return; }
     setIsProcessing(true);
-
-    const orderDetails = {
-      userId: user.uid,
-      products,
-      subtotal,
-      vat,
-      totalAmount: grandTotal,
-    };
-
     try {
-      const response = await collectOrder(orderDetails);
-
+      const response = await collectOrder({ userId: user.uid, products: lineItems, subtotal, vat, totalAmount: grandTotal });
       if (response?.success) {
         toast.success(response.message || "Order placed successfully");
-
         updateCartState([]);
         localStorage.removeItem("speednet_cart");
-
         setTimeout(() => navigate("/user/order"), 1000);
       } else {
         toast.error(response?.message || "Order failed");
       }
     } catch (error) {
-      console.error("Checkout Error:", error);
       toast.error(error?.message || "Something went wrong");
     } finally {
       setIsProcessing(false);
@@ -93,139 +52,160 @@ const Checkout = () => {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-screen-xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4 text-secondary">
-        Checkout
-      </h2>
+    <div className="w-full max-w-5xl mx-auto">
+      <ToastContainer position="top-right" theme="light" />
 
-      <div className="bg-[#fefce8] shadow-md p-4 rounded-lg flex flex-col tab:flex-row pc:flex-row justify-between gap-6">
-        {/* ================= CART ITEMS ================= */}
-        <div className="w-full tab:w-[65%] pc:w-[65%]">
-          {cart.length > 0 ? (
-            <div className="flex flex-col gap-4">
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-6">
+        <button onClick={() => navigate(-1)}
+          className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 flex items-center justify-center text-gray-600 dark:text-slate-300 transition-all">
+          <HiArrowLeft size={16} />
+        </button>
+        <div>
+          <h1 className="text-xl font-extrabold text-gray-900 dark:text-white">Checkout</h1>
+          <p className="text-sm text-gray-400 dark:text-slate-500 mt-0.5">{cart.length} item{cart.length !== 1 ? "s" : ""} in your cart</p>
+        </div>
+      </div>
+
+      {cart.length === 0 ? (
+        <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/5 rounded-3xl p-16 flex flex-col items-center gap-4 shadow-sm">
+          <div className="w-16 h-16 rounded-3xl bg-gray-100 dark:bg-slate-700 flex items-center justify-center">
+            <FiShoppingCart size={24} className="text-gray-300 dark:text-slate-600" />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-bold text-gray-500 dark:text-slate-400">Your cart is empty</p>
+            <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">Add products from the marketplace to continue</p>
+          </div>
+          <button onClick={() => navigate("/user/marketplace")}
+            className="mt-2 px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm rounded-2xl shadow-md shadow-primary-600/25 transition-all">
+            Browse Marketplace
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col pc:flex-row gap-5">
+          {/* Cart items */}
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.4 }}
+            className="flex-1 bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/5 rounded-3xl shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-100 dark:border-white/5">
+              <p className="text-sm font-bold text-gray-900 dark:text-white">Order Items</p>
+            </div>
+            <div className="divide-y divide-gray-50 dark:divide-slate-800">
               {cart.map((item) => {
                 const isDarkshop = item.store === "darkshop";
-                const quantity = isDarkshop ? item.quantity : 1;
-
+                const qty = isDarkshop ? item.quantity : 1;
                 return (
-                  <div
-                    key={item.id}
-                    className="flex items-center gap-4 border-b pb-3 text-secondary"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-16 h-16 rounded-md border"
-                    />
+                  <div key={item.id} className="flex items-center gap-4 px-6 py-4">
+                    {/* Image */}
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-gray-50 dark:bg-slate-800/50 border border-gray-100 dark:border-white/5 flex-shrink-0">
+                      <img src={item.image} alt={item.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { e.target.style.display = "none"; }} />
+                    </div>
 
-                    <div className="flex flex-col w-full">
-                      <span className="font-bold text-base uppercase">
-                        {item.name}
-                      </span>
-
-                      <div className="flex items-center gap-2 text-xs">
-                        <img
-                          src={item.avatar}
-                          alt="Seller"
-                          className="w-4 h-4 rounded-full border"
-                        />
-                        <span>{item.seller}</span>
-                      </div>
-
-                      {/* PRICE + QUANTITY */}
-                      <div className="flex justify-between items-center mt-2">
-                        <span className="text-sm">
-                          {webSettings.currency}
-                          {Number(item.price).toFixed(2)}
-                        </span>
-
-                        {/* DARKSHOP ONLY */}
-                        {isDarkshop ? (
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => decreaseQty(item.id)}
-                              className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded font-bold"
-                            >
-                              −
-                            </button>
-
-                            <span className="min-w-[24px] text-center font-semibold">
-                              {item.quantity}
-                            </span>
-
-                            <button
-                              onClick={() => increaseQty(item.id)}
-                              className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded font-bold"
-                            >
-                              +
-                            </button>
-                          </div>
-                        ) : (
-                          <span className="text-sm font-semibold">
-                            Qty: 1
+                    {/* Details */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-gray-800 dark:text-slate-100 capitalize truncate">{item.name}</p>
+                      {item.seller && (
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          {item.avatar && (
+                            <img src={item.avatar} alt="" className="w-3.5 h-3.5 rounded-full object-cover border border-gray-200 dark:border-slate-700"
+                              onError={(e) => { e.target.style.display = "none"; }} />
+                          )}
+                          <span className="text-xs text-gray-400 dark:text-slate-500 flex items-center gap-1">
+                            {item.seller} <MdVerified size={11} className="text-blue-400" />
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-gray-400 dark:text-slate-500">{currency}{Number(item.price).toFixed(2)} each</span>
+                        {isDarkshop && item.stock_quantity != null && (
+                          <span className="text-[10px] text-gray-400 dark:text-slate-500 flex items-center gap-0.5">
+                            <BiPackage size={10} /> {item.stock_quantity} in stock
                           </span>
                         )}
+                      </div>
+                    </div>
 
-                        <span className="font-semibold">
-                          {webSettings.currency}
-                          {(item.price * quantity).toFixed(2)}
-                        </span>
+                    {/* Qty + price */}
+                    <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                      <span className="text-sm font-extrabold text-gray-900 dark:text-white">{currency}{(item.price * qty).toFixed(2)}</span>
+                      <div className="flex items-center gap-1.5">
+                        {isDarkshop ? (
+                          <>
+                            <button onClick={() => decreaseQty(item.id)}
+                              className="w-7 h-7 flex items-center justify-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-xl font-bold text-gray-700 dark:text-slate-200 transition-all">
+                              −
+                            </button>
+                            <span className="text-sm font-bold text-gray-700 dark:text-slate-200 min-w-[20px] text-center">{item.quantity}</span>
+                            <button onClick={() => increaseQty(item.id)}
+                              className="w-7 h-7 flex items-center justify-center bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-xl font-bold text-gray-700 dark:text-slate-200 transition-all">
+                              +
+                            </button>
+                          </>
+                        ) : (
+                          <span className="text-xs text-gray-400 dark:text-slate-500 bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded-lg">Qty: 1</span>
+                        )}
+                        <button onClick={() => removeFromCart(item.id)}
+                          className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all">
+                          <FiTrash2 size={13} />
+                        </button>
                       </div>
                     </div>
                   </div>
                 );
               })}
             </div>
-          ) : (
-            <p className="text-secondary">No items in cart</p>
-          )}
+          </motion.div>
+
+          {/* Order summary */}
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.4, delay: 0.1 }}
+            className="w-full pc:w-80 flex flex-col gap-4">
+            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/5 rounded-3xl shadow-sm overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-100 dark:border-white/5">
+                <p className="text-sm font-bold text-gray-900 dark:text-white">Order Summary</p>
+              </div>
+              <div className="px-6 py-4 space-y-2">
+                <div className="flex justify-between text-sm text-gray-500 dark:text-slate-400">
+                  <span>Subtotal</span>
+                  <span className="font-semibold text-gray-700 dark:text-slate-200">{currency}{subtotal.toFixed(2)}</span>
+                </div>
+                {Number(webSettings?.vat) > 0 && (
+                  <div className="flex justify-between text-sm text-gray-500 dark:text-slate-400">
+                    <span>VAT ({webSettings.vat}%)</span>
+                    <span className="font-semibold text-gray-700 dark:text-slate-200">{currency}{vat.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-base font-extrabold text-gray-900 dark:text-white pt-2 border-t border-gray-100 dark:border-white/5">
+                  <span>Total</span>
+                  <span>{currency}{grandTotal.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Pay button */}
+            <button
+              onClick={handlePayment}
+              disabled={isProcessing || cart.length === 0}
+              className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary-600/25 hover:-translate-y-0.5 transition-all text-sm"
+            >
+              {isProcessing ? (
+                <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>Processing...</>
+              ) : (
+                <>Pay {currency}{grandTotal.toFixed(2)}</>
+              )}
+            </button>
+
+            <div className="flex flex-col gap-2 px-2">
+              {["256-bit SSL encryption", "Instant order processing", "Funds held in escrow"].map((item) => (
+                <div key={item} className="flex items-center gap-2 text-xs text-gray-400 dark:text-slate-500">
+                  <HiShieldCheck size={13} className="text-green-500 flex-shrink-0" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
-
-        {/* ================= ORDER SUMMARY ================= */}
-        <div className="w-full tab:w-[35%] pc:w-[35%] border-t tab:border-t-0 pc:border-t-0 tab:border-l pc:border-l border-primary-600 pt-4 tab:pt-0 tab:pl-6">
-          <h3 className="text-secondary font-medium mb-3 text-lg">
-            Order Summary
-          </h3>
-
-          <p className="flex justify-between text-secondary text-sm">
-            <span>Subtotal:</span>
-            <span>
-              {webSettings.currency}
-              {subtotal.toFixed(2)}
-            </span>
-          </p>
-
-          <p className="flex justify-between text-secondary text-sm">
-            <span>VAT ({webSettings.vat}%):</span>
-            <span>
-              {webSettings.currency}
-              {vat.toFixed(2)}
-            </span>
-          </p>
-
-          <p className="flex justify-between font-bold text-secondary text-base mt-2">
-            <span>Total:</span>
-            <span>
-              {webSettings.currency}
-              {grandTotal.toFixed(2)}
-            </span>
-          </p>
-
-          <button
-            onClick={handlePayment}
-            disabled={isProcessing || cart.length === 0}
-            className={`w-full p-2 mt-4 rounded-md transition ${
-              isProcessing
-                ? "bg-gray-600 cursor-not-allowed"
-                : "bg-primary-600 hover:bg-primary-700 text-white"
-            }`}
-          >
-            {isProcessing ? "Processing..." : "Pay"}
-          </button>
-        </div>
-      </div>
-
-      <ToastContainer position="top-right" autoClose={3000} />
+      )}
     </div>
   );
 };

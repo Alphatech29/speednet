@@ -16,12 +16,21 @@ import ResetPassword from "./views/general/resetPaword";
 import SeoManager from "./components/utils/seoManager";
 import Page from "./views/user/page/page";
 import ContactUs from "./views/general/contact";
+import NotFound from "./views/general/NotFound";
+import MarketplacePage from "./views/general/services/marketplace";
+import VtuPage from "./views/general/services/vtu";
+import VpnPage from "./views/general/services/vpn";
+import VirtualNumbersPage from "./views/general/services/virtualNumbers";
+import P2PTradingPage from "./views/general/services/p2pTrading";
+import PaymentsPage from "./views/general/services/payments";
 import { ShoppingProvider } from "./components/control/shoppingContext";
+import { ThemeProvider } from "./components/control/themeContext";
 
 function App() {
   return (
-    
+
     <Router>
+      <ThemeProvider>
       <AuthProvider>
         <AdminAuthProvider>
           <ShoppingProvider >
@@ -45,6 +54,12 @@ function App() {
                 </Layout>
               }
             />
+            <Route path="/services/marketplace" element={<Layout><MarketplacePage /></Layout>} />
+            <Route path="/services/vtu" element={<Layout><VtuPage /></Layout>} />
+            <Route path="/services/vpn" element={<Layout><VpnPage /></Layout>} />
+            <Route path="/services/virtual-numbers" element={<Layout><VirtualNumbersPage /></Layout>} />
+            <Route path="/services/p2p-trading" element={<Layout><P2PTradingPage /></Layout>} />
+            <Route path="/services/payments" element={<Layout><PaymentsPage /></Layout>} />
              <Route
               path="/page/:slug"
               element={
@@ -106,10 +121,21 @@ function App() {
                 </Layout>
               }
             />
+
+            {/* 404 Catch-all */}
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
+              }
+            />
           </Routes>
           </ShoppingProvider>
         </AdminAuthProvider>
       </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 }

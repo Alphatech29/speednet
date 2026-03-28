@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaPhone, FaRegClock, FaCopy } from "react-icons/fa";
-import { FcExpired } from "react-icons/fc";
-import { ImCancelCircle } from "react-icons/im";
 import { AiFillMessage } from "react-icons/ai";
 import { BsClockHistory } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { ImCancelCircle } from "react-icons/im";
+import { HiPlus } from "react-icons/hi";
+import { MdRefresh } from "react-icons/md";
 import {
   getSmsServiceByUserId,
   getSmsPoolCountries,
 } from "../../../components/backendApis/sms-service/sms-service";
 
-const getStatusBadge = (status) => {
-  switch (status) {
-    case 1:
-      return (
-        <span className="bg-green-100 text-green-800 px-2 py-0.5 text-xs rounded">
-          Used
-        </span>
-      );
-    case 0:
-      return (
-        <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 text-xs rounded">
-          Pending
-        </span>
-      );
-    case 2:
-      return (
-        <span className="bg-red-100 text-red-800 px-2 py-0.5 text-xs rounded">
-          Expired
-        </span>
-      );
-    default:
-      return null;
-  }
+const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } };
+
+const statusConfig = {
+  0: { label: "Pending", className: "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50" },
+  1: { label: "Received", className: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800/50" },
+  2: { label: "Expired", className: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800/50" },
 };
 
-// format countdown seconds -> mm:ss
 const formatCountdown = (seconds) => {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
@@ -45,12 +29,11 @@ const formatCountdown = (seconds) => {
 };
 
 const SmsActivate = () => {
+  const navigate = useNavigate();
   const [smsMessages, setSmsMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countdowns, setCountdowns] = useState({});
   const [countries, setCountries] = useState([]);
-
-  const errorNotify = (msg) => toast.error(msg);
 
   const fetchSmsMessages = async () => {
     setLoading(true);
@@ -65,7 +48,7 @@ const SmsActivate = () => {
       }
     } catch (err) {
       console.error("Error fetching SMS messages:", err);
-      errorNotify(err.message || "Failed to fetch SMS messages");
+      toast.error(err.message || "Failed to fetch SMS messages");
       setSmsMessages([]);
     } finally {
       setLoading(false);
@@ -74,41 +57,28 @@ const SmsActivate = () => {
 
   const fetchCountries = async () => {
     try {
-      // load from cache if available
       const cached = localStorage.getItem("smsCountries");
-      if (cached) {
-        setCountries(JSON.parse(cached));
-        return;
-      }
-
+      if (cached) { setCountries(JSON.parse(cached)); return; }
       const res = await getSmsPoolCountries();
       if (res.success && Array.isArray(res.data)) {
         setCountries(res.data);
         localStorage.setItem("smsCountries", JSON.stringify(res.data));
-      } else {
-        setCountries([]);
       }
     } catch (err) {
       console.error("Error fetching countries:", err);
-      errorNotify(err.message || "Failed to fetch countries");
-      setCountries([]);
     }
   };
 
   useEffect(() => {
     const cachedSms = localStorage.getItem("smsMessages");
     if (cachedSms) setSmsMessages(JSON.parse(cachedSms));
-
     fetchSmsMessages();
     const interval = setInterval(fetchSmsMessages, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    fetchCountries();
-  }, []);
+  useEffect(() => { fetchCountries(); }, []);
 
-  // countdown effect
   useEffect(() => {
     const interval = setInterval(() => {
       setCountdowns(() => {
@@ -116,8 +86,7 @@ const SmsActivate = () => {
         smsMessages.forEach((sms) => {
           if (sms.status === 0 && sms.time) {
             const now = Math.floor(Date.now() / 1000);
-            const expireAt = Number(sms.time);
-            const remaining = expireAt - now;
+            const remaining = Number(sms.time) - now;
             updated[sms.orderid] = remaining > 0 ? remaining : 0;
           }
         });
@@ -128,185 +97,259 @@ const SmsActivate = () => {
   }, [smsMessages]);
 
   const copyToClipboard = (text) => {
-    if (!text) return errorNotify("Nothing to copy");
-    try {
-      navigator.clipboard.writeText(text);
-      toast.success("Copied to clipboard");
-    } catch (err) {
-      console.error("Clipboard error:", err);
-      errorNotify("Failed to copy text");
-    }
+    if (!text) return toast.error("Nothing to copy");
+    navigator.clipboard.writeText(text)
+      .then(() => toast.success("Copied to clipboard"))
+      .catch(() => toast.error("Failed to copy"));
   };
 
   const formatDate = (dateString) =>
     dateString ? new Date(dateString).toLocaleString() : "N/A";
 
   const getCountryShortName = (country) => {
-    if (!country || countries.length === 0) return null;
+    if (!country || !countries.length) return null;
     const match = countries.find(
-      (c) =>
-        c.name?.toLowerCase() === country?.toLowerCase() ||
-        String(c.id) === String(country)
+      (c) => c.name?.toLowerCase() === country?.toLowerCase() || String(c.id) === String(country)
     );
-    return match ? match.short_name : null;
+    return match?.short_name || null;
   };
 
   const getFlagUrl = (shortName) =>
     shortName ? `https://flagcdn.com/w20/${shortName.toLowerCase()}.png` : null;
 
+  const stats = [
+    {
+      label: "Active Numbers",
+      value: smsMessages.filter((m) => m.status === 0).length,
+      icon: FaPhone,
+      iconBg: "bg-blue-500",
+      cardBg: "bg-blue-50 dark:bg-blue-500/10",
+      border: "border-blue-100 dark:border-blue-500/20",
+      text: "text-blue-600 dark:text-blue-400",
+    },
+    {
+      label: "Received",
+      value: smsMessages.filter((m) => m.status === 1).length,
+      icon: AiFillMessage,
+      iconBg: "bg-emerald-500",
+      cardBg: "bg-emerald-50 dark:bg-emerald-500/10",
+      border: "border-emerald-100 dark:border-emerald-500/20",
+      text: "text-emerald-600 dark:text-emerald-400",
+    },
+    {
+      label: "Pending",
+      value: smsMessages.filter((m) => m.status === 0).length,
+      icon: FaRegClock,
+      iconBg: "bg-amber-500",
+      cardBg: "bg-amber-50 dark:bg-amber-500/10",
+      border: "border-amber-100 dark:border-amber-500/20",
+      text: "text-amber-600 dark:text-amber-400",
+    },
+    {
+      label: "Expired",
+      value: smsMessages.filter((m) => m.status === 2).length,
+      icon: ImCancelCircle,
+      iconBg: "bg-red-500",
+      cardBg: "bg-red-50 dark:bg-red-500/10",
+      border: "border-red-100 dark:border-red-500/20",
+      text: "text-red-600 dark:text-red-400",
+    },
+  ];
+
   return (
-    <div className="text-secondary">
-      <ToastContainer />
-      <h2 className="text-xl font-bold mb-4">SMS Activation Service</h2>
+    <div className="w-full max-w-5xl mx-auto">
+      <ToastContainer position="top-right" theme="colored" />
 
-      {/* Analytics */}
-      <div className="grid mobile:grid-cols-1 tab:grid-cols-3 pc:grid-cols-4 gap-3 mb-4">
-        <div className="bg-blue-800/40 px-4 py-4 flex items-center gap-4 rounded-md border-b border-[#1e1d7c]">
-          <span className="bg-blue-800 rounded-full p-3">
-            <FaPhone className="text-[20px]" />
-          </span>
-          <div>
-            <h2 className="font-semibold">
-              {smsMessages.filter((m) => m.status === 0).length}
-            </h2>
-            <p>Active Numbers</p>
-          </div>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-xl font-extrabold text-gray-900 dark:text-white">SMS Activation</h1>
+          <p className="text-sm text-gray-400 dark:text-slate-500 mt-0.5">Manage your virtual numbers</p>
         </div>
-
-        <div className="bg-teal-600/40 px-4 py-4 flex items-center gap-4 rounded-md border-b border-[#1c7e21]">
-          <span className="bg-teal-600 rounded-full p-3">
-            <AiFillMessage className="text-[20px]" />
-          </span>
-          <div>
-            <h2 className="font-semibold">
-              {smsMessages.filter((m) => m.status === 1).length}
-            </h2>
-            <p>Messages Received</p>
-          </div>
-        </div>
-
-        <div className="bg-yellow-300/40 px-4 py-4 flex items-center gap-4 rounded-md border-b border-[#ffe23b]">
-          <span className="bg-yellow-300 rounded-full p-3">
-            <FaRegClock className="text-[20px]" />
-          </span>
-          <div>
-            <h2 className="text-[20px] font-semibold">
-              {smsMessages.filter((m) => m.status === 0).length}
-            </h2>
-            <p>Pending</p>
-          </div>
-        </div>
-
-        <div className="bg-red-300/40 px-4 py-4 flex items-center gap-4 rounded-md border-b border-red-400">
-          <span className="bg-red-300 rounded-full p-3">
-            <FcExpired className="text-[20px]" />
-          </span>
-          <div>
-            <h2 className="text-[20px] font-semibold">
-              {smsMessages.filter((m) => m.status === 2).length}
-            </h2>
-            <p>Expired</p>
-          </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={fetchSmsMessages}
+            disabled={loading}
+            className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 flex items-center justify-center text-gray-600 dark:text-slate-400 transition-all disabled:opacity-50"
+          >
+            <MdRefresh size={18} className={loading ? "animate-spin" : ""} />
+          </button>
+          <button
+            onClick={() => navigate("/user/get-number")}
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm rounded-2xl shadow-md shadow-primary-600/25 hover:-translate-y-0.5 transition-all"
+          >
+            <HiPlus size={16} /> Get Number
+          </button>
         </div>
       </div>
 
-      {/* Recent Messages */}
-      <section className="w-full">
-        <div className="bg-primary-50 rounded-lg border border-primary-600 p-4">
-          {smsMessages.length === 0 && !loading && (
-            <div className="text-center py-6 text-secondary">
-              No messages found.
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 pc:grid-cols-4 gap-3 mb-6">
+        {stats.map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.4, delay: i * 0.06 }}
+            className={`${stat.cardBg} border ${stat.border} rounded-3xl px-4 py-4 flex items-center gap-3`}
+          >
+            <div className={`${stat.iconBg} w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0`}>
+              <stat.icon className="text-white text-[16px]" />
             </div>
+            <div className="min-w-0">
+              <p className={`text-2xl font-extrabold ${stat.text}`}>{stat.value}</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 truncate">{stat.label}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Messages list */}
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ duration: 0.4, delay: 0.25 }}
+        className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/5 rounded-3xl shadow-sm overflow-hidden"
+      >
+        <div className="px-6 py-4 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
+          <p className="text-sm font-bold text-gray-900 dark:text-white">Recent Numbers</p>
+          {loading && (
+            <span className="text-xs text-gray-400 dark:text-slate-500 flex items-center gap-1.5">
+              <svg className="animate-spin w-3 h-3" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+              </svg>
+              Refreshing...
+            </span>
           )}
+        </div>
 
-          {smsMessages.map((sms, idx) => {
-            const shortName = getCountryShortName(sms?.country);
-            const flagUrl = getFlagUrl(shortName);
+        {smsMessages.length === 0 && !loading ? (
+          <div className="flex flex-col items-center gap-4 py-16 px-6">
+            <div className="w-16 h-16 rounded-3xl bg-gray-100 dark:bg-slate-700 flex items-center justify-center">
+              <FaPhone className="text-2xl text-gray-300 dark:text-slate-600" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-bold text-gray-500 dark:text-slate-400">No active numbers</p>
+              <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
+                Purchase a number to receive SMS verifications
+              </p>
+            </div>
+            <button
+              onClick={() => navigate("/user/get-number")}
+              className="mt-1 px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm rounded-2xl shadow-md shadow-primary-600/25 transition-all"
+            >
+              Get a Number
+            </button>
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-50 dark:divide-slate-800">
+            {smsMessages.map((sms, idx) => {
+              const shortName = getCountryShortName(sms?.country);
+              const flagUrl = getFlagUrl(shortName);
+              const statusCfg = statusConfig[sms.status] ?? statusConfig[0];
+              const countdown = countdowns[sms.orderid];
 
-            return (
-              <div
-                key={sms.id || idx}
-                className="mb-4 p-3 border border-primary-600 rounded hover:bg-primary-600/20"
-              >
-                <div className="flex flex-col justify-start items-start gap-1">
-                  <div className="flex justify-between items-center w-full ">
-                    <div className="flex items-center gap-2">
-                      <p className="text-[16px] text-secondary">
-                        +{sms?.number || "N/A"}
-                      </p>
-                      <button
-                        onClick={() => copyToClipboard(sms?.number)}
-                        className="bg-primary-600 text-white py-1 px-2 rounded flex items-center text-[11px]"
-                      >
-                        <FaCopy className="mr-1 text-[11px]" />
-                        Copy
-                      </button>
+              return (
+                <motion.div
+                  key={sms.id || idx}
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ duration: 0.3, delay: idx * 0.04 }}
+                  className="px-6 py-4"
+                >
+                  {/* Top row */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-primary-600/10 flex items-center justify-center flex-shrink-0">
+                        <FaPhone className="text-primary-600 text-sm" />
+                      </div>
+                      <div>
+                        <p className="text-base font-extrabold text-gray-900 dark:text-white tracking-wide">
+                          +{sms?.number || "N/A"}
+                        </p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          {flagUrl && (
+                            <img
+                              src={flagUrl}
+                              alt={sms?.country}
+                              className="w-4 h-3 rounded-sm object-cover"
+                            />
+                          )}
+                          <span className="text-xs text-gray-400 dark:text-slate-500">
+                            {sms?.service || "Unknown service"}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="flex items-center gap-2 text-xs">
-                      {getStatusBadge(sms?.status)}
-                      {sms.status === 0 && countdowns[sms.orderid] > 0 && (
-                        <span className="text-yellow-300 text-[16px]">
-                          {formatCountdown(countdowns[sms.orderid])}
+                    <div className="flex items-center gap-2">
+                      {sms.status === 0 && countdown > 0 && (
+                        <span className="text-xs font-bold text-primary-600 bg-primary-600/10 px-2.5 py-1 rounded-xl flex items-center gap-1">
+                          <BsClockHistory size={11} />
+                          {formatCountdown(countdown)}
                         </span>
                       )}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between w-full mt-1 text-sm text-secondary/70">
-                    <div className="flex items-center gap-2">
-                      {flagUrl && (
-                        <img
-                          src={flagUrl}
-                          alt={sms?.country}
-                          className="w-5 h-4 rounded-sm"
-                        />
-                      )}
-                      <p>{sms?.service || "N/A"}</p>
-                    </div>
-                    <p className="text-[10px]">{formatDate(sms?.created_at)}</p>
-                  </div>
-                </div>
-
-                {sms.status === 1 ? (
-                  <>
-                    <div className="bg-primary-600/20 p-2 rounded my-2 text-sm text-green-500">
-                      SMS received successfully! You can now use the code{" "}
-                      {sms?.code || "N/A"}.
-                    </div>
-
-                    <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center gap-2">
-                      <span className="text-sm">
-                        <strong>Code:</strong>{" "}
-                        <code className="bg-primary-600 text-white px-2 py-1 rounded">
-                          {sms?.code || "N/A"}
-                        </code>
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusCfg.className}`}>
+                        {statusCfg.label}
                       </span>
+                    </div>
+                  </div>
+
+                  {/* Status content */}
+                  {sms.status === 1 ? (
+                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/30 rounded-2xl p-3">
+                      <p className="text-xs text-green-700 dark:text-green-400 font-semibold mb-2">
+                        SMS received! Your verification code is ready.
+                      </p>
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-500 dark:text-slate-400">Code:</span>
+                          <code className="bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-xl tracking-widest">
+                            {sms?.code || "N/A"}
+                          </code>
+                        </div>
+                        <button
+                          onClick={() => copyToClipboard(sms?.code)}
+                          className="flex items-center gap-1.5 text-xs font-semibold bg-white dark:bg-slate-800 border border-green-200 dark:border-green-800/30 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/30 transition-all"
+                        >
+                          <FaCopy size={10} /> Copy Code
+                        </button>
+                      </div>
+                    </div>
+                  ) : sms.status === 2 ? (
+                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800/30 rounded-2xl p-3 flex items-center gap-3">
+                      <ImCancelCircle className="text-red-500 text-lg flex-shrink-0" />
+                      <p className="text-xs text-red-600 dark:text-red-400">
+                        This number has expired and can no longer receive SMS.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/30 rounded-2xl p-3 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <BsClockHistory className="text-amber-500 text-lg animate-pulse flex-shrink-0" />
+                        <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
+                          Waiting for SMS...
+                        </p>
+                      </div>
                       <button
-                        onClick={() => copyToClipboard(sms?.code)}
-                        className="bg-blue-900 text-blue-300 py-2 px-3 rounded-md flex items-center text-[11px]"
+                        onClick={() => copyToClipboard(sms?.number)}
+                        className="flex items-center gap-1.5 text-xs font-semibold bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-800/30 text-amber-700 dark:text-amber-400 px-3 py-1.5 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-all"
                       >
-                        <FaCopy className="mr-1 text-[11px]" />
-                        Copy Code
+                        <FaCopy size={10} /> Copy Number
                       </button>
                     </div>
-                  </>
-                ) : sms.status === 2 ? (
-                  <div className="text-center py-6 text-secondary">
-                    <ImCancelCircle className="mx-auto text-2xl animate-pulse mb-1" />
-                    <p>This number has expired and cannot receive SMS.</p>
-                  </div>
-                ) : (
-                  <div className="text-center py-6 text-secondary">
-                    <BsClockHistory className="mx-auto text-2xl animate-pulse mb-1" />
-                    <p>Waiting for SMS.....</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </section>
+                  )}
+
+                  <p className="text-[10px] text-gray-400 dark:text-slate-600 mt-2">{formatDate(sms?.created_at)}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
+      </motion.div>
     </div>
   );
 };

@@ -11,8 +11,8 @@ const dayDifference = (expiryDateStr) => {
 const apis = [
   {
     name: "540 Cron Jobs Apis",
-    start_on: "2025-02-09",
-    expires_on: "2026-03-07",
+    start_on: "2025-03-09",
+    expires_on: "2026-04-07",
     premium_plan: {
       plan: "Pro",
       price_usd: 100,
@@ -40,29 +40,20 @@ const apis = [
     },
   },
   {
-    name: "Escrow IPv4 API/Docker Server",
+    name: "Escrow IPv4 API/RabbitMQ Server",
   start_on: "2025-12-30",
     expires_on: "2026-12-29",
     premium_plan: {
       plan: "Pro",
-      price_usd: 500.99,
+      price_usd: 200.01,
       billing_cycle: "yearly",
     },
   },
-  {
-    name: "Chat IPv4 API",
-    start_on: "2025-08-13",
-    expires_on: "2025-09-12",
-    premium_plan: {
-      plan: "Business",
-      price_usd: 95,
-      billing_cycle: "monthly",
-    },
-  },
+
   {
     name: "Redis Cloud",
-    start_on: "2025-02-09",
-    expires_on: "2026-03-07",
+    start_on: "2025-03-09",
+    expires_on: "2026-04-07",
     premium_plan: {
       plan: "Cloud",
       price_usd: 100,
@@ -81,8 +72,8 @@ const apis = [
   },
    {
     name: "VTPass Api",
-    start_on: "2025-02-13",
-    expires_on: "2026-03-12",
+    start_on: "2025-03-13",
+    expires_on: "2026-04-12",
     premium_plan: {
       plan: "Pro",
       price_usd: 90,

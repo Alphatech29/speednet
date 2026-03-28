@@ -1,12 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "flowbite-react";
+import { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import { FaArrowRight } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { register } from "../../components/backendApis/auth/auth";
 import { NavLink, useLocation } from "react-router-dom";
+
+const FloatingInput = ({ id, type = "text", value, onChange, label, required, children }) => (
+  <div className="relative">
+    <input
+      id={id}
+      type={type}
+      value={value}
+      onChange={onChange}
+      required={required}
+      placeholder=" "
+      className="peer w-full bg-slate-800/60 border border-slate-600 text-white rounded-xl px-4 pt-6 pb-2 text-sm focus:outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600/50 transition-all duration-200"
+    />
+    <label
+      htmlFor={id}
+      className="absolute left-4 top-2 text-[11px] text-primary-600 font-medium transition-all
+        peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-normal
+        peer-focus:top-2 peer-focus:text-[11px] peer-focus:text-primary-600 peer-focus:font-medium"
+    >
+      {label}
+    </label>
+    {children}
+  </div>
+);
 
 const Register = () => {
   const [fullname, setFullname] = useState("");
@@ -20,38 +43,27 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [country, setCountry] = useState("");
   const [countries, setCountries] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const referralCode = searchParams.get("ref");
+  const referralCode = new URLSearchParams(location.search).get("ref");
 
-  // ✅ Hardcoded country list (no external fetch)
   useEffect(() => {
-    const allowedCountries = [
-      "Nigeria",
-      "Cameroon",
-      "Ghana",
-      "South Africa",
-      "Kenya",
-      "Rwanda",
-      "United Kingdom",
-      "United States",
-      "Canada"
-    ];
-    setCountries(allowedCountries);
+    setCountries([
+      "Nigeria", "Cameroon", "Ghana", "South Africa",
+      "Kenya", "Rwanda", "United Kingdom", "United States", "Canada",
+    ]);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
     if (password !== confirmPassword) {
       toast.error("Passwords do not match.");
       return;
     }
-
+    setLoading(true);
     try {
-      const formData = {
+      const response = await register({
         full_name: fullname,
         username,
         email,
@@ -59,218 +71,244 @@ const Register = () => {
         password,
         country,
         referral_code: referralCode || "",
-      };
-
-      const response = await register(formData);
+      });
 
       if (response?.success) {
         toast.success("Registration successful!");
-        setFullname("");
-        setUsername("");
-        setEmail("");
-        setPhone("");
-        setPassword("");
-        setConfirmPassword("");
-        setAgree(false);
-        setCountry("");
+        setFullname(""); setUsername(""); setEmail(""); setPhone("");
+        setPassword(""); setConfirmPassword(""); setAgree(false); setCountry("");
       } else {
         if (response?.error?.errors?.length) {
           response.error.errors.forEach((err) => toast.error(err));
-        } else if (response?.message) {
-          toast.error(response.message);
         } else {
-          toast.error("An unknown error occurred.");
+          toast.error(response?.message || "An unknown error occurred.");
         }
       }
     } catch (error) {
-      if (error.response?.data) {
-        const errorData = error.response.data;
-        if (errorData?.error?.errors?.length) {
-          errorData.error.errors.forEach((err) => toast.error(err));
-        } else if (errorData?.message) {
-          toast.error(errorData.message);
-        } else {
-          toast.error("An unexpected error occurred. Please try again.");
-        }
+      const data = error.response?.data;
+      if (data?.error?.errors?.length) {
+        data.error.errors.forEach((err) => toast.error(err));
       } else {
-        toast.error("Network error. Please check your connection.");
+        toast.error(data?.message || "Network error. Please check your connection.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col pc:flex-row bg-slate-700 px-4 tab:px-10 pc:px-20 py-8 gap-10">
-      <ToastContainer position="top-right" className="text-sm" />
+    <div className="min-h-screen w-full flex bg-slate-900">
+      <ToastContainer position="top-right" theme="dark" />
 
-      {/* Left panel */}
-      <div className="hidden tab:flex w-full pc:w-1/2 bg-slate-500/50 px-6 py-8 rounded-xl flex-col justify-between">
-        <div className="text-pay self-end">
-          <h1 className="text-2xl tab:text-3xl pc:text-4xl font-bold mb-3 leading-snug">
-            Connect. Trade. Elevate Your Influence.
-          </h1>
-          <p className="text-sm tab:text-base text-white">
-            Empower your social journey by exploring and trading social media accounts on a platform built on integrity and ethical engagement.
-          </p>
+      {/* Left Panel — brand */}
+      <div className="hidden pc:flex w-5/12 relative overflow-hidden bg-gradient-to-br from-secondary via-primary-100 to-slate-900 flex-col justify-between p-12 flex-shrink-0">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-600/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+        <div className="relative z-10">
+          <a href="/">
+            <img src="/image/user-logo.png" alt="Logo" className="h-12 w-auto object-contain" />
+          </a>
         </div>
+
+        <div className="relative z-10">
+          <h1 className="text-3xl font-extrabold text-white leading-tight mb-4">
+            Join{" "}
+            <span className="text-primary-600">70,000+</span>{" "}
+            users on Speednet
+          </h1>
+          <p className="text-gray-300 text-sm leading-relaxed mb-8">
+            Buy and sell verified digital accounts, access virtual numbers, VPNs, airtime and
+            more — all in one secure platform.
+          </p>
+          <div className="flex flex-col gap-3">
+            {[
+              "Free to sign up, no hidden fees",
+              "Escrow-protected transactions",
+              "Instant delivery on digital goods",
+              "24/7 customer support",
+            ].map((t) => (
+              <div key={t} className="flex items-center gap-3 text-sm text-gray-300">
+                <span className="w-5 h-5 rounded-full bg-primary-600/20 border border-primary-600/40 flex items-center justify-center flex-shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary-600" />
+                </span>
+                {t}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p className="relative z-10 text-xs text-gray-500">
+          &copy; {new Date().getFullYear()} Speednet. All rights reserved.
+        </p>
       </div>
 
-      {/* Right panel */}
-      <div className="w-full pc:w-1/2 px-2 tab:px-4 pc:px-10 flex items-center justify-center">
-        <div className="w-full max-w-md flex flex-col gap-6">
-          <div className="text-center">
-            <h1 className="text-2xl tab:text-3xl pc:text-4xl font-bold text-pay">Welcome to Speednet</h1>
-            <p className="text-slate-300 text-sm tab:text-base">Sign up and start your journey</p>
+      {/* Right Panel — form */}
+      <div className="w-full pc:flex-1 flex items-start justify-center px-5 tab:px-10 py-10 overflow-y-auto">
+        <div className="w-full max-w-lg py-4">
+          {/* Mobile logo */}
+          <div className="pc:hidden mb-8 flex justify-center">
+            <a href="/">
+              <img src="/image/user-logo.png" alt="Logo" className="h-10 w-auto object-contain" />
+            </a>
           </div>
 
-          <form onSubmit={handleSubmit} className="flex w-full flex-col gap-6 text-pay">
-            {/* Full Name */}
-            <div className="relative">
-              <input
-                type="text"
+          <div className="mb-8">
+            <h2 className="text-2xl tab:text-3xl font-extrabold text-white">Create account</h2>
+            <p className="text-slate-400 text-sm mt-1">Join Speednet and start your journey today</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* Full Name + Username */}
+            <div className="grid grid-cols-1 tab:grid-cols-2 gap-4">
+              <FloatingInput
+                id="fullname"
                 value={fullname}
                 onChange={(e) => setFullname(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer"
-                placeholder=" "
+                label="Full Name"
+                required
               />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Full Name
-              </label>
-            </div>
-
-            {/* Username */}
-            <div className="relative">
-              <input
-                type="text"
+              <FloatingInput
+                id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer"
-                placeholder=" "
+                label="Username"
+                required
               />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Username
-              </label>
             </div>
 
             {/* Email */}
-            <div className="relative">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Email Address
-              </label>
-            </div>
+            <FloatingInput
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              label="Email Address"
+              required
+            />
 
-            {/* Phone and Country */}
-            <div className="flex flex-col tab:flex-row gap-4">
-              <PhoneInput
-                country={"ng"}
-                value={phone_number}
-                onChange={(value) => setPhone(value)}
-                enableSearch={true}
-                onlyCountries={["ng", "cm", "gh", "za", "ke", "rw", "gb", "us", "ca"]}
-                containerClass="w-full"
-                inputClass="!text-base !w-full !py-5 !border !border-gray-500 !bg-gray-800 !text-white !rounded-md"
-                buttonClass="!bg-gray-800 !border-gray-500 !rounded-l-md"
-                dropdownClass="!bg-gray-800 !text-white"
-              />
-
-              <select
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3"
-              >
-                <option value="" disabled>
-                  Select your country
-                </option>
-                {countries.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
+            {/* Phone + Country */}
+            <div className="grid grid-cols-1 tab:grid-cols-2 gap-4">
+              <div>
+                <p className="text-[11px] text-primary-600 font-medium mb-1.5 ml-1">Phone Number</p>
+                <PhoneInput
+                  country="ng"
+                  value={phone_number}
+                  onChange={(value) => setPhone(value)}
+                  enableSearch
+                  onlyCountries={["ng", "cm", "gh", "za", "ke", "rw", "gb", "us", "ca"]}
+                  containerClass="w-full"
+                  inputClass="!text-sm !w-full !py-5 !border !border-slate-600 !bg-slate-800 !bg-opacity-60 !text-white !rounded-xl !pl-12"
+                  buttonClass="!bg-slate-800 !border-slate-600 !rounded-l-xl !border-r-0"
+                  dropdownClass="!bg-slate-800 !text-white"
+                />
+              </div>
+              <div className="relative">
+                <p className="text-[11px] text-primary-600 font-medium mb-1.5 ml-1">Country</p>
+                <select
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                  className="w-full bg-slate-800/60 border border-slate-600 text-white rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600/50 transition-all duration-200 appearance-none"
+                >
+                  <option value="" disabled>Select country</option>
+                  {countries.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Password */}
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer pr-10"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Password
-              </label>
+            <FloatingInput
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              label="Password"
+              required
+            >
               <button
                 type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                onClick={() => setShowPassword((p) => !p)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
               >
-                {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+                {showPassword ? <HiEyeOff size={18} /> : <HiEye size={18} />}
               </button>
-            </div>
+            </FloatingInput>
 
             {/* Confirm Password */}
-            <div className="relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full border border-gray-500 bg-gray-800 text-white text-base rounded-md p-3 peer pr-10"
-                placeholder=" "
-              />
-              <label className="absolute left-3 top-0 text-xs text-primary-600 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-600 peer-focus:top-0 peer-focus:text-xs peer-focus:text-primary-600">
-                Confirm Password
-              </label>
+            <FloatingInput
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              label="Confirm Password"
+              required
+            >
               <button
                 type="button"
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                onClick={() => setShowConfirmPassword((p) => !p)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
               >
-                {showConfirmPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+                {showConfirmPassword ? <HiEyeOff size={18} /> : <HiEye size={18} />}
               </button>
-            </div>
+            </FloatingInput>
 
             {/* Agreement */}
-            <div className="flex items-center">
+            <label className="flex items-start gap-3 cursor-pointer select-none">
               <input
                 type="checkbox"
-                id="agree"
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
-                className="w-4 h-4 text-primary-600 border-gray-500 rounded focus:ring-0 cursor-pointer"
+                className="w-4 h-4 mt-0.5 accent-primary-600 rounded cursor-pointer flex-shrink-0"
               />
-              <label htmlFor="agree" className="ml-2 text-gray-300 text-sm cursor-pointer">
+              <span className="text-sm text-slate-300 leading-relaxed">
                 I agree to Speednet's{" "}
-                <span className="text-primary-600">Privacy Policy</span> and{" "}
-                <span className="text-primary-600">Terms of Use</span>
-              </label>
-            </div>
+                <NavLink to="/page/privacy-policy" className="text-primary-600 hover:underline">
+                  Privacy Policy
+                </NavLink>{" "}
+                and{" "}
+                <NavLink to="/page/terms-of-use" className="text-primary-600 hover:underline">
+                  Terms of Use
+                </NavLink>
+              </span>
+            </label>
 
-            {/* Submit Button */}
-            <Button
+            {/* Submit */}
+            <button
               type="submit"
-              className="bg-primary-600 border-none shadow-md py-1 text-pay"
-              disabled={!agree}
+              disabled={!agree || loading}
+              className="flex items-center justify-center gap-2 w-full bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-orange-900/40 mt-1"
             >
-              Sign Up
-            </Button>
+              {loading ? (
+                <>
+                  <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                  </svg>
+                  Creating account...
+                </>
+              ) : (
+                <>
+                  Create Account
+                  <FaArrowRight size={13} />
+                </>
+              )}
+            </button>
           </form>
 
-          <div className="flex justify-center text-gray-300 mt-4">
-            <span>
-              Already have an account?{" "}
-              <NavLink to="/auth/login" className="text-primary-600">
-                Login
-              </NavLink>
-            </span>
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-slate-700" />
+            <span className="text-xs text-slate-500">Already have an account?</span>
+            <div className="flex-1 h-px bg-slate-700" />
           </div>
+
+          <NavLink to="/auth/login">
+            <button className="w-full border border-slate-600 hover:border-primary-600 text-slate-300 hover:text-primary-600 font-semibold py-3.5 rounded-xl transition-all duration-200 text-sm">
+              Sign In Instead
+            </button>
+          </NavLink>
         </div>
       </div>
     </div>

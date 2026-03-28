@@ -1,131 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { addCategoryCommissionAPI, getDarkCategories } from '../../../../components/backendApis/admin/apis/darkshop';
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { addCategoryCommissionAPI, getDarkCategories } from "../../../../components/backendApis/admin/apis/darkshop";
+import { HiCheck, HiX } from "react-icons/hi";
+
+const inputCls = "w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 bg-white text-gray-800 focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 outline-none transition-all";
 
 const AddCommission = ({ onClose }) => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null); // store as number
-  const [commissionRate, setCommissionRate] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Fetch categories
-  const fetchCategories = async () => {
-    try {
-      const response = await getDarkCategories();
-      if (response.success) {
-        setCategories(response.data);
-        console.log('Fetched categories:', response.data);
-      } else {
-        toast.error(response.message || 'Failed to fetch categories');
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-      toast.error('Error fetching categories');
-    }
-  };
+  const [categories, setCategories]           = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [commissionRate, setCommissionRate]   = useState("");
+  const [submitting, setSubmitting]           = useState(false);
 
   useEffect(() => {
-    fetchCategories();
+    getDarkCategories()
+      .then((res) => { if (res?.success) setCategories(res.data); else toast.error(res?.message || "Failed to fetch categories"); })
+      .catch(() => toast.error("Error fetching categories"));
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!selectedCategory || commissionRate.toString().trim() === '') {
-      toast.error('Please select a category and enter a commission rate');
-      return;
+    if (!selectedCategory || commissionRate.toString().trim() === "") {
+      toast.error("Please select a category and enter a commission rate"); return;
     }
-
-    setIsSubmitting(true);
-
-    const payload = {
-      categoryId: selectedCategory, // send as number
-      commissionRate: parseFloat(commissionRate)
-    };
-
-    console.log('Submitting payload:', payload);
-
+    setSubmitting(true);
     try {
-      const response = await addCategoryCommissionAPI(payload);
-
-      if (response.success) {
-        toast.success(response.message || 'Commission added successfully');
-        setSelectedCategory(null);
-        setCommissionRate('');
-        if (onClose) onClose();
-      } else {
-        toast.error(response.message || 'Failed to add commission');
-      }
-    } catch (error) {
-      console.error('Error adding category commission:', error);
-      toast.error('Error adding commission');
-    } finally {
-      setIsSubmitting(false);
-    }
+      const res = await addCategoryCommissionAPI({
+        categoryId: Number(selectedCategory),
+        commissionRate: parseFloat(commissionRate),
+      });
+      if (res?.success) {
+        toast.success(res.message || "Commission added successfully");
+        onClose?.();
+      } else toast.error(res?.message || "Failed to add commission");
+    } catch { toast.error("Error adding commission"); }
+    setSubmitting(false);
   };
 
   return (
-    <div>
-      <ToastContainer position="top-right" autoClose={3000} />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-semibold text-gray-500">Category</label>
+        <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className={inputCls} required>
+          <option value="">Select category</option>
+          {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+        </select>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Category Dropdown */}
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-            Category
-          </label>
-          <select
-            id="category"
-            value={selectedCategory || ''}
-            onChange={(e) => setSelectedCategory(Number(e.target.value))}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          >
-            <option value="">Select Category</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
-            ))}
-          </select>
-        </div>
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-semibold text-gray-500">Commission Rate (%)</label>
+        <input type="number" value={commissionRate} onChange={(e) => setCommissionRate(e.target.value)}
+          min="0" step="0.01" placeholder="e.g. 5.00" className={inputCls} required />
+      </div>
 
-        {/* Commission Rate */}
-        <div>
-          <label htmlFor="commissionRate" className="block text-sm font-medium text-gray-700">
-            Commission Rate (%)
-          </label>
-          <input
-            type="number"
-            id="commissionRate"
-            value={commissionRate}
-            onChange={(e) => setCommissionRate(e.target.value)}
-            min="0"
-            step="0.01"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-          />
-        </div>
-
-        {/* Buttons */}
-        <div className="flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`px-4 py-2 text-white rounded ${
-              isSubmitting ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'
-            }`}
-          >
-            {isSubmitting ? 'Submitting...' : 'Add Commission'}
-          </button>
-        </div>
-      </form>
-    </div>
+      <div className="flex gap-2 pt-1">
+        <button type="button" onClick={onClose}
+          className="flex-1 flex items-center justify-center gap-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-xl transition-all">
+          <HiX size={12} /> Cancel
+        </button>
+        <button type="submit" disabled={submitting}
+          className="flex-1 flex items-center justify-center gap-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white text-xs font-bold rounded-xl transition-all">
+          <HiCheck size={12} /> {submitting ? "Adding..." : "Add Commission"}
+        </button>
+      </div>
+    </form>
   );
 };
 

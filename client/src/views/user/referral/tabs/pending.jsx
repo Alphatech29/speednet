@@ -1,75 +1,140 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Table } from "flowbite-react";
-import { fetchReferralsByUser } from "../../../../components/backendApis/referral/referral";
-import { AuthContext } from "../../../../components/control/authContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { MdOutlinePendingActions } from "react-icons/md";
+import { HiClock } from "react-icons/hi";
 
-const Pending = () => {
-  const { user } = useContext(AuthContext);
-  const [referrals, setReferrals] = useState([]);
-  const [loading, setLoading] = useState(true);
+/* ── Skeleton row ── */
+const SkeletonRow = () => (
+  <div className="flex items-center gap-3 px-4 py-3.5 border-b border-gray-50 dark:border-white/5 last:border-0">
+    <div className="w-8 h-8 rounded-xl bg-gray-200 dark:bg-slate-700 animate-pulse flex-shrink-0" />
+    <div className="flex-1 space-y-1.5">
+      <div className="h-2.5 bg-gray-200 dark:bg-slate-700 rounded-lg animate-pulse w-3/5" />
+      <div className="h-2 bg-gray-100 dark:bg-slate-800 rounded-lg animate-pulse w-2/5" />
+    </div>
+    <div className="h-2.5 bg-gray-200 dark:bg-slate-700 rounded-lg animate-pulse w-14" />
+    <div className="h-6 bg-yellow-100 dark:bg-yellow-900/20 rounded-full animate-pulse w-16" />
+  </div>
+);
 
-  useEffect(() => {
-    if (!user?.uid) return;
-
-    const loadReferrals = async () => {
-      const result = await fetchReferralsByUser(user.uid);
-      if (result.success) {
-        setReferrals(result.data);
-      }
-      setLoading(false);
-    };
-
-    loadReferrals();
-  }, [user?.uid]);
-
-  const pendingReferrals = referrals.filter(
-    (referral) => referral.referral_status === 0
+/* ── Initials avatar ── */
+const Avatar = ({ email }) => {
+  const letter = (email?.[0] || "?").toUpperCase();
+  return (
+    <div className="w-8 h-8 rounded-xl bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center flex-shrink-0">
+      <span className="text-xs font-extrabold text-yellow-600 dark:text-yellow-400">{letter}</span>
+    </div>
   );
+};
+
+const Pending = ({ referrals = [], loading = false }) => {
+  const pendingReferrals = referrals.filter((r) => r.referral_status === 0);
+
+  if (loading) {
+    return (
+      <div className="divide-y divide-gray-50 dark:divide-white/5">
+        {[1, 2, 3].map((i) => <SkeletonRow key={i} />)}
+      </div>
+    );
+  }
+
+  if (pendingReferrals.length === 0) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center py-14 text-center px-4"
+      >
+        <div className="w-14 h-14 rounded-2xl bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center mb-4">
+          <HiClock size={26} className="text-yellow-400 dark:text-yellow-500" />
+        </div>
+        <p className="text-sm font-bold text-gray-700 dark:text-slate-200 mb-1">No Pending Referrals</p>
+        <p className="text-xs text-gray-400 dark:text-slate-500 max-w-[220px]">
+          Referrals will appear here while awaiting completion.
+        </p>
+      </motion.div>
+    );
+  }
 
   return (
-    <div className="w-full overflow-x-auto mobile:px-2 tab:px-4 pc:px-0">
-      {loading ? (
-        <p className="text-white text-center text-sm tab:text-base">Loading referrals...</p>
-      ) : (
-        <Table
-          hoverable
-          className="bg-transparent min-w-[600px] text-xs tab:text-sm pc:text-base"
-        >
-          <Table.Head className="bg-transparent text-white text-xs tab:text-sm">
-            <Table.HeadCell>S/N</Table.HeadCell>
-            <Table.HeadCell>Email</Table.HeadCell>
-            <Table.HeadCell>Amount</Table.HeadCell>
-            <Table.HeadCell>Status</Table.HeadCell>
-          </Table.Head>
+    <div>
+      {/* Mobile cards */}
+      <div className="tab:hidden divide-y divide-gray-50 dark:divide-white/5">
+        <AnimatePresence>
+          {pendingReferrals.map((r, i) => (
+            <motion.div
+              key={r.id}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.04 }}
+              className="flex items-center gap-3 px-4 py-3.5"
+            >
+              <Avatar email={r.email} />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-gray-800 dark:text-slate-200 truncate">{r.email}</p>
+                <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">#{i + 1}</p>
+              </div>
+              <div className="flex flex-col items-end gap-1.5">
+                <span className="text-xs font-extrabold text-gray-800 dark:text-slate-200">
+                  ${Number(r.referral_amount).toLocaleString()}
+                </span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700/40">
+                  <MdOutlinePendingActions size={9} /> Pending
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
 
-          <Table.Body className="divide-y">
-            {pendingReferrals.length > 0 ? (
-              pendingReferrals.map((referral, index) => (
-                <Table.Row key={referral.id} className="text-white">
-                  <Table.Cell>{index + 1}</Table.Cell>
-                  <Table.Cell>
-                    <span className="text-gray-200">{referral.email}</span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    ${Number(referral.referral_amount).toLocaleString()}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span className="px-2 py-1 rounded-full text-white text-[10px] tab:text-xs bg-yellow-500">
-                      Pending
+      {/* Desktop table */}
+      <div className="hidden tab:block overflow-x-auto">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="border-b border-gray-100 dark:border-white/5">
+              {["#", "Referral", "Amount", "Status"].map((h) => (
+                <th key={h} className="px-4 py-3 text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-50 dark:divide-white/5">
+            {pendingReferrals.map((r, i) => (
+              <motion.tr
+                key={r.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.04 }}
+                className="hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+              >
+                <td className="px-4 py-3.5 text-xs text-gray-400 dark:text-slate-500 font-medium">{i + 1}</td>
+                <td className="px-4 py-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <Avatar email={r.email} />
+                    <span className="text-xs font-semibold text-gray-700 dark:text-slate-300 truncate max-w-[180px]">
+                      {r.email}
                     </span>
-                  </Table.Cell>
-                </Table.Row>
-              ))
-            ) : (
-              <Table.Row>
-                <Table.Cell colSpan={4} className="py-24 text-gray-500 text-center">
-                  No pending referrals found.
-                </Table.Cell>
-              </Table.Row>
-            )}
-          </Table.Body>
-        </Table>
-      )}
+                  </div>
+                </td>
+                <td className="px-4 py-3.5 text-xs font-extrabold text-gray-800 dark:text-slate-200">
+                  ${Number(r.referral_amount).toLocaleString()}
+                </td>
+                <td className="px-4 py-3.5">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700/40">
+                    <MdOutlinePendingActions size={9} /> Pending
+                  </span>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Footer count */}
+      <div className="px-4 py-2.5 border-t border-gray-50 dark:border-white/5">
+        <p className="text-[10px] text-gray-400 dark:text-slate-500">
+          {pendingReferrals.length} pending referral{pendingReferrals.length !== 1 ? "s" : ""}
+        </p>
+      </div>
     </div>
   );
 };

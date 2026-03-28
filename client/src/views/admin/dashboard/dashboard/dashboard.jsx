@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Sidebar from '../../../../views/admin/partials/sidebar';
-import Header from '../../../../views/admin/partials/Header';
-import '../../cssFile/dashboard.css'; 
-import Footer from '../../partials/footer';
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../partials/sidebar";
+import Header  from "../../partials/header";
+import Footer  from "../../partials/footer";
+import "../../cssFile/dashboard.css";
 
 const Dashboard = () => {
- 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex main-wrapper ">
-      {/* Sidebar (Fixed) */}
-      <Sidebar  />
+    <div className="admin-shell">
+      {/* Mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm pc:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      {/* Main Content */}
-      <div className=" Main-Content-Wrapper flex w-full min-h-screen flex-col flex-grow mobile:h-[100%]">
-        {/* Sticky Header */}
-        <Header />
+      <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
+        <Sidebar onClose={() => setSidebarOpen(false)} />
+      </aside>
 
-        {/* Scrollable Outlet */}
-        <div className="flex-grow  overflow-auto pc:py-4 mobile:py-4 mobile:mb-14 px:px-6 mobile:px-4">
+      <div className="admin-main">
+        <Header onToggleSidebar={() => setSidebarOpen((v) => !v)} />
+        <main className="flex-1 p-4 pc:p-6 bg-slate-50 min-h-0">
           <Outlet />
-        </div>
-        {/* Sticky Header */}
+        </main>
         <Footer />
       </div>
     </div>

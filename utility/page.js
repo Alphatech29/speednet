@@ -39,8 +39,8 @@ const deletePageById = async (id) => {
 const editPageById = async (id, { title, slug, content }) => {
   try {
     const sql = `
-      UPDATE pages 
-      SET title = ?, slug = ?, content = ? 
+      UPDATE pages
+      SET title = ?, slug = ?, content = ?
       WHERE id = ?
     `;
     const [result] = await pool.execute(sql, [title, slug, content, id]);

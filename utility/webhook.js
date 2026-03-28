@@ -179,7 +179,6 @@ const monnifyWebhook = async (req, res) => {
 
     // -------- PARSE PAYLOAD --------
     const payload = JSON.parse(rawBody);
-    console.log("Parsed Payload:", payload);
 
     // Only handle successful payments
     if (payload?.eventType !== "SUCCESSFUL_TRANSACTION") return;

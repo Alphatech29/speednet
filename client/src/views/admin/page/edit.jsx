@@ -1,91 +1,85 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate, NavLink } from 'react-router-dom';
-import { Button } from 'flowbite-react';
-import { updatePageById } from '../../../components/backendApis/admin/apis/page';
-
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import { updatePageById } from "../../../components/backendApis/admin/apis/page";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { HiArrowLeft, HiCheck } from "react-icons/hi";
 
 const Edit = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const page      = location.state?.pageData;
 
-  const page = location.state?.pageData;
+  const [title, setTitle]     = useState(page?.title || "");
+  const [slug, setSlug]       = useState(page?.slug || "");
+  const [content, setContent] = useState(page?.content || "");
+  const [saving, setSaving]   = useState(false);
 
-  const [title, setTitle] = useState(page?.title || '');
-  const [newSlug, setNewSlug] = useState(page?.slug || '');
-  const [content, setContent] = useState(page?.content || '');
+  if (!page) return (
+    <div className="flex flex-col gap-4 p-6">
+      <p className="text-sm text-red-500">No page data received.</p>
+      <NavLink to="/admin/page" className="text-xs text-primary-600 underline">← Go back</NavLink>
+    </div>
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setSaving(true);
     try {
-      const result = await updatePageById(page.id, {
-        title,
-        slug: newSlug,
-        content,
-      });
-
-      if (result.success) {
-        toast.success('Page updated successfully!');
-        setTimeout(() => navigate('/admin/page'), 1500);
-      } else {
-        toast.error(result.message || 'Update failed.');
-      }
-    } catch (error) {
-      toast.error('Something went wrong. Please try again.');
-    }
+      const res = await updatePageById(page.id, { title, slug, content });
+      if (res?.success) {
+        toast.success("Page updated successfully!");
+        setTimeout(() => navigate("/admin/page"), 1500);
+      } else toast.error(res?.message || "Update failed.");
+    } catch { toast.error("Something went wrong. Please try again."); }
+    setSaving(false);
   };
 
-  return (
-    <div className="w-full bg-white shadow-md rounded-xl px-8 py-6">
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+  const inputCls = "w-full px-4 py-2.5 text-sm rounded-xl border border-gray-200 bg-white text-gray-800 focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 outline-none transition-all";
 
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Edit Page</h1>
-        <NavLink to="/admin/page" className="text-gray-500 hover:underline text-sm">
-          ← Back to Pages List
-        </NavLink>
+  return (
+    <div className="flex flex-col gap-6">
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <NavLink to="/admin/page"
+            className="w-8 h-8 flex items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all">
+            <HiArrowLeft size={14} />
+          </NavLink>
+          <div>
+            <p className="text-sm font-bold text-gray-800">Edit Page</p>
+            <p className="text-xs text-gray-400 mt-0.5">Update page content and metadata</p>
+          </div>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block font-semibold mb-1 text-sm">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
-          />
-        </div>
+      <form onSubmit={handleSubmit} className="max-w-2xl">
+        <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-5 flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-gray-500">Title</label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
+              required className={inputCls} />
+          </div>
 
-        <div>
-          <label className="block font-semibold mb-1 text-sm">Slug</label>
-          <input
-            type="text"
-            value={newSlug}
-            onChange={(e) => setNewSlug(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
-          />
-        </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-gray-500">Slug</label>
+            <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)}
+              required className={`${inputCls} font-mono`} />
+          </div>
 
-        <div>
-          <label className="block font-semibold mb-1 text-sm">Content</label>
-          <textarea
-            rows="10"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            placeholder="Enter page content..."
-          ></textarea>
-        </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-gray-500">Content</label>
+            <textarea rows={10} value={content} onChange={(e) => setContent(e.target.value)}
+              placeholder="Enter page content..." className={`${inputCls} resize-y`} />
+          </div>
 
-        <div className="flex justify-end items-center">
-          <Button type="submit" className="bg-primary-600 hover:bg-primary-700">
-            Update Page
-          </Button>
+          <div className="flex justify-end pt-1">
+            <button type="submit" disabled={saving}
+              className="flex items-center gap-1.5 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white text-xs font-bold rounded-xl transition-all">
+              <HiCheck size={12} /> {saving ? "Updating..." : "Update Page"}
+            </button>
+          </div>
         </div>
       </form>
     </div>

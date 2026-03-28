@@ -1,111 +1,93 @@
-import React from "react";
 import { FiEye, FiShoppingCart, FiCheck } from "react-icons/fi";
+import { HiLightningBolt } from "react-icons/hi";
+import { BiPackage } from "react-icons/bi";
 
 const ColumnView = ({ products, cart, openDetailsModal, handleAddToCart }) => {
   return (
-    <div className="flex flex-col gap-3 mobile:p-2">
+    <div className="flex flex-col gap-3">
       {products.map((product) => {
         const isAdded = cart.some((i) => i.id === product.id);
+        const isDarkshop = product.store === "darkshop";
 
         return (
           <div
             key={product.id}
-            className="flex justify-center mobile:p-1.5 rounded-lg bg-[#fefce8] shadow-lg gap-3 items-center"
+            className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/5 rounded-2xl p-4 shadow-sm hover:shadow-md hover:border-primary-600/20 transition-all group flex items-center gap-4"
           >
-            <div>
-              {/* Product Image */}
+            {/* Image */}
+            <div className="relative flex-shrink-0 w-14 h-14 tab:w-16 tab:h-16 rounded-xl overflow-hidden bg-gray-50 dark:bg-slate-800/50">
               <img
                 src={product.image}
                 alt={product.name}
-                className="mobile:w-8 mobile:h-9 tab:w-16 tab:h-16 pc:w-16 pc:h-16 rounded-md object-cover flex-shrink-0 "
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => { e.target.style.display = "none"; }}
               />
             </div>
 
-            {/* Product Info */}
-            <div className="flex flex-1 flex-col justify-between">
-              <div className="flex-1">
-                <div className="flex justify-between items-center w-full">
-                  <h2 className="text-secondary font-semibold text-sm mobile:text-[13px] tab:text-base pc:text-lg line-clamp-2 break-words capitalize">
-                    {product.name}
-                  </h2>
-                  <span className="text-secondary font-medium text-sm mobile:text-sm tab:text-base pc:text-lg">
-                    ${product.price}
-                  </span>
-                </div>
-                <p
-                  className="text-secondary/50 text-xs mobile:text-[11px] tab:text-sm pc:text-sm line-clamp-2 mt-1"
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                ></p>
-
-                <div className="flex justify-between items-center w-full">
-                  <div className="flex justify-start items-start gap-3">
-                     {product.seller && (
-                    <div className="flex items-center gap-2 mt-2">
-                      {product.avatar && (
-                        <img
-                          src={product.avatar}
-                          className="mobile:w-4 mobile:h-4 tab:w-4 tab:h-4 rounded-full border border-white object-cover"
-                        />
-                      )}
-                      <span className="text-secondary/60 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
-                        {product.seller}
-                      </span>
-                    </div>
-                  )}
-
-                  <div>
-                       {product.instant_delivery && (
-                    <div className="flex items-center gap-2 mt-2">
+            {/* Info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-gray-800 dark:text-slate-100 line-clamp-1 capitalize">{product.name}</p>
+                  <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                    {/* Platform */}
+                    <div className="flex items-center gap-1">
                       {product.icon && (
-                        <img
-                          src={product.icon}
-                          className="mobile:w-4 mobile:h-4 tab:w-4 tab:h-4 rounded-full object-cover"
-                        />
+                        <img src={product.icon} alt="" className="w-3.5 h-3.5 rounded-full object-cover" onError={(e) => { e.target.style.display = "none"; }} />
                       )}
-                      <span className="text-secondary/60 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
-                        Instant Delivery
+                      <span className="text-[11px] text-gray-400 dark:text-slate-500">{product.platform}</span>
+                    </div>
+
+                    {/* Badges */}
+                    {product.instant_delivery && (
+                      <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-green-700 bg-green-100 px-1.5 py-0.5 rounded-full">
+                        <HiLightningBolt size={9} /> Instant
                       </span>
+                    )}
+                    {isDarkshop && (
+                      <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-full">
+                        Advanced
+                      </span>
+                    )}
+                    {product.stock_quantity != null && (
+                      <span className="inline-flex items-center gap-0.5 text-[10px] text-gray-400 dark:text-slate-500">
+                        <BiPackage size={10} /> {product.stock_quantity} in stock
+                      </span>
+                    )}
+                  </div>
+                  {/* Seller */}
+                  {product.seller && (
+                    <div className="flex items-center gap-1.5 mt-1">
+                      {product.avatar && (
+                        <img src={product.avatar} alt="" className="w-3.5 h-3.5 rounded-full object-cover border border-gray-200 dark:border-slate-700" onError={(e) => { e.target.style.display = "none"; }} />
+                      )}
+                      <span className="text-[11px] text-gray-400 dark:text-slate-500">{product.seller}</span>
                     </div>
                   )}
-                  </div>
-                   <div>
-                       {product.quantity && (
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="text-secondary/60 text-xs mobile:text-[11px] tab:text-sm pc:text-sm">
-                        {product.stock_quantity} in stock
-                      </span>
-                    </div>
-                  )}
-                  </div>
-                  </div>
-                  <div className="flex gap-2">
-                    {/* Details Button */}
+                </div>
+
+                {/* Price + actions */}
+                <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                  <span className="text-sm font-extrabold text-primary-600">${product.price}</span>
+                  <div className="flex gap-1.5">
                     <button
                       onClick={() => openDetailsModal(product)}
-                      className="bg-orange-900 text-white text-xs mobile:text-[11px] tab:text-sm pc:text-base px-3 py-1 rounded flex items-center justify-center"
+                      className="flex items-center gap-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-600 dark:text-slate-300 text-[11px] font-semibold px-2.5 py-1.5 rounded-xl transition-all"
                     >
-                      <span className="tab:inline mobile:hidden pc:inline text-[10px]">
-                        Details
-                      </span>
-                      <FiEye className="mobile:inline tab:hidden pc:hidden text-[14px]" />
+                      <FiEye size={12} />
+                      <span className="hidden tab:inline">Details</span>
                     </button>
-
-                    {/* Add to Cart Button */}
                     <button
                       onClick={() => handleAddToCart(product)}
                       disabled={isAdded}
-                      className={`flex items-center justify-center text-xs mobile:text-[11px] tab:text-sm pc:text-base px-3  rounded ${
-                        isAdded ? "bg-green-500" : "bg-primary-600"
-                      } text-white`}
+                      className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 rounded-xl transition-all ${
+                        isAdded
+                          ? "bg-green-100 text-green-700 border border-green-200"
+                          : "bg-primary-600 hover:bg-primary-700 text-white"
+                      }`}
                     >
-                      <span className="tab:inline mobile:hidden pc:inline text-[10px]">
-                        {isAdded ? "Added" : "Add to cart"}
-                      </span>
-                      {isAdded ? (
-                        <FiCheck className="mobile:inline tab:hidden pc:hidden text-[14px]" />
-                      ) : (
-                        <FiShoppingCart className="mobile:inline tab:hidden pc:hidden text-[14px]" />
-                      )}
+                      {isAdded ? <FiCheck size={12} /> : <FiShoppingCart size={12} />}
+                      <span className="hidden tab:inline">{isAdded ? "Added" : "Add"}</span>
                     </button>
                   </div>
                 </div>

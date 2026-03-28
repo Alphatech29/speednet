@@ -299,6 +299,24 @@ const Marketplace = () => {
             })}
           </div>
 
+          {/* ── MOBILE: active filter chip ── */}
+          {(platformFilter?.name || platformFilter?.groupId) && (
+            <div className="tab:hidden flex items-center gap-2 px-3 pb-2.5">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Filtered:</span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1 bg-primary-600/10 text-primary-600 text-xs font-bold rounded-full border border-primary-600/20">
+                {platformFilter?.groupId
+                  ? darkCategories.flatMap((c) => c.groups || []).find((g) => g.id === platformFilter.groupId)?.name
+                  : platformFilter?.name}
+                <button
+                  onClick={clearAll}
+                  className="w-3.5 h-3.5 rounded-full bg-primary-600/20 flex items-center justify-center hover:bg-primary-600/40 transition-all flex-shrink-0"
+                >
+                  <BiX size={9} />
+                </button>
+              </span>
+            </div>
+          )}
+
           {/* ── TAB+: horizontal scroll pills ── */}
           <div className="relative hidden tab:block">
             <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide px-3 py-2.5">
@@ -534,7 +552,7 @@ const Marketplace = () => {
                               >
                                 <div className="flex flex-col gap-0.5 pl-5 pb-2 pt-0.5">
                                   {cat.groups.map((group) => (
-                                    <button key={group.id} onClick={() => handleGroupClick(cat, group)}
+                                    <button key={group.id} onClick={() => { handleGroupClick(cat, group); setActiveType(null); }}
                                       className={`w-full flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                                         platformFilter?.groupId === group.id
                                           ? "bg-primary-600 text-white shadow-sm shadow-primary-600/25"
@@ -554,7 +572,7 @@ const Marketplace = () => {
                     <div className="flex flex-col gap-0.5">
                       {sortPlatforms(platforms[activeType] || []).map((platform) => (
                         <button key={platform.id || platform.name}
-                          onClick={() => handlePlatformClick(platform)}
+                          onClick={() => { handlePlatformClick(platform); setActiveType(null); }}
                           className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${
                             platformFilter?.name === platform.name
                               ? "bg-primary-600/10 dark:bg-primary-600/20 text-primary-600 border border-primary-600/20"

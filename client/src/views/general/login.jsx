@@ -56,9 +56,7 @@ const Login = () => {
     const remembered = localStorage.getItem("rememberMe") === "true";
     if (remembered) {
       const savedEmail = localStorage.getItem("rememberedEmail");
-      const savedPassword = localStorage.getItem("rememberedPassword");
       if (savedEmail) setEmail(savedEmail);
-      if (savedPassword) setPassword(savedPassword);
       setRememberMe(true);
     }
   }, []);
@@ -76,13 +74,12 @@ const Login = () => {
         toast.success(response.message || "Login successful!");
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
-          localStorage.setItem("rememberedPassword", password);
           localStorage.setItem("rememberMe", "true");
         } else {
           localStorage.removeItem("rememberedEmail");
-          localStorage.removeItem("rememberedPassword");
           localStorage.removeItem("rememberMe");
         }
+        localStorage.removeItem("rememberedPassword");
         await signIn();
       } else {
         toast.error(response.message || "Login failed");
@@ -220,12 +217,10 @@ const Login = () => {
 
             {/* Remember + Forgot */}
             <div className="flex justify-between items-center">
-              <label className="flex items-center gap-2.5 cursor-pointer select-none group">
-                <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${rememberMe ? "bg-primary-600 border-primary-600" : "border-slate-600 bg-transparent"}`}
-                  onClick={() => setRememberMe(p => !p)}>
+              <label className="flex items-center gap-2.5 cursor-pointer select-none group" onClick={() => setRememberMe(p => !p)}>
+                <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${rememberMe ? "bg-primary-600 border-primary-600" : "border-slate-600 bg-transparent"}`}>
                   {rememberMe && <svg viewBox="0 0 10 8" fill="none" className="w-2.5 h-2.5"><path d="M1 4l2.5 2.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                 </div>
-                <input type="checkbox" className="hidden" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
                 <span className="text-sm text-slate-400 group-hover:text-slate-200 transition-colors">Remember me</span>
               </label>
               <NavLink to="/auth/forgot-password" className="text-sm text-primary-600 hover:text-primary-500 font-semibold transition-colors">

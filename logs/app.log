@@ -11082,3 +11082,89 @@
 [2026-03-28T00:55:24.863Z] [INFO]: Transporter is ready to send emails
 [2026-03-28T00:55:26.666Z] [ERROR]: sendApiExpiryAlertToAdmin error:
 [2026-03-28T00:55:29.601Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T01:22:15.424Z] [INFO]: Fetched 830 accounts
+[2026-03-28T01:22:48.472Z] [ERROR]: sendLoginNotificationEmail error:
+[2026-03-28T01:22:51.924Z] [INFO]: Fetched 830 accounts
+[2026-03-28T01:24:39.111Z] [INFO]: Fetched 830 accounts
+[2026-03-28T01:36:14.793Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T01:36:14.795Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T01:36:14.817Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T01:36:14.822Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T01:36:21.761Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T01:36:21.762Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T01:36:21.779Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T01:36:21.783Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T01:36:23.110Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T01:36:26.626Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T01:36:30.292Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T01:52:25.233Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T01:52:25.235Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T01:52:25.254Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T01:52:25.257Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T01:52:26.736Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T01:52:29.469Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T01:52:31.289Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T01:52:32.026Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T01:52:32.027Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T01:52:32.045Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T01:52:32.049Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T01:52:33.430Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T01:52:36.048Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T01:52:39.128Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T06:57:08.443Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T06:57:08.446Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T06:57:08.473Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T06:57:08.479Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T06:57:13.408Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T06:57:13.411Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T06:57:13.432Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T06:57:13.435Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T06:57:15.082Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T06:57:19.868Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T06:57:25.069Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:01:01.262Z] [ERROR]: sendLoginNotificationEmail error:
+[2026-03-28T07:01:04.040Z] [INFO]: Fetched 830 accounts
+[2026-03-28T07:01:06.696Z] [INFO]: Fetched 830 accounts
+[2026-03-28T07:01:07.940Z] [INFO]: Fetched 830 accounts
+[2026-03-28T07:07:56.150Z] [INFO]: Fetched 830 accounts
+[2026-03-28T07:12:53.105Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T07:12:53.107Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T07:12:53.131Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T07:12:53.135Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T07:12:59.237Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T07:13:04.495Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:13:07.268Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T07:13:07.270Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T07:13:07.289Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T07:13:07.294Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T07:13:09.792Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T07:13:14.805Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:13:19.259Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:14:41.734Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T07:14:41.737Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T07:14:41.776Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T07:14:41.782Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T07:14:46.160Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T07:14:50.180Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:14:57.361Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:14:58.176Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T07:14:58.178Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T07:14:58.200Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T07:14:58.204Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T07:15:00.925Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T07:15:05.502Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:15:10.210Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:16:46.745Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T07:16:46.747Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T07:16:46.787Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T07:16:46.796Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T07:16:56.401Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T07:17:01.767Z] [INFO]: API expiry cron job loaded successfully.
+[2026-03-28T07:17:01.770Z] [INFO]: Escrow job queue loaded successfully.
+[2026-03-28T07:17:01.799Z] [INFO]: Darkshop product maintenance job started.
+[2026-03-28T07:17:01.806Z] [INFO]: Server started on http://localhost:8000
+[2026-03-28T07:17:03.099Z] [INFO]: Transporter is ready to send emails
+[2026-03-28T07:17:06.538Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:17:10.219Z] [ERROR]: sendApiExpiryAlertToAdmin error:
+[2026-03-28T07:17:28.652Z] [ERROR]: sendLoginNotificationEmail error:
+[2026-03-28T07:17:49.130Z] [ERROR]: sendLoginNotificationEmail error:

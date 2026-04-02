@@ -14,7 +14,7 @@ const fadeUp = {
 const PROVIDER_COLORS = {
   fapshi:    { bg: "bg-blue-50",   dot: "bg-blue-500",    text: "text-blue-700",   border: "border-blue-100"   },
   cryptomus: { bg: "bg-purple-50", dot: "bg-purple-500",  text: "text-purple-700", border: "border-purple-100" },
-  monnify:   { bg: "bg-emerald-50",dot: "bg-emerald-500", text: "text-emerald-700",border: "border-emerald-100"},
+  flutterwave: { bg: "bg-orange-50", dot: "bg-orange-500", text: "text-orange-700", border: "border-orange-100" },
 };
 
 /* ── Provider card ──────────────────────────────────────────── */
@@ -68,17 +68,17 @@ const PaymentTab = () => {
   const blank = {
     fapshi_url: "", fapshi_user: "", fapshi_key: "",
     cryptomus_url: "", cryptomus_merchant_uuid: "", cryptomus_api_key: "",
-    monnify_baseUrl: "", monnify_apiKey: "", monnify_secretKey: "", monnify_contractCode: "",
+    flw_public_key: "", flw_secret_key: "",
   };
 
   const [settings, setSettings] = useState(blank);
   const [formData, setFormData] = useState({
     fapshi:    { fapshi_url: "", fapshi_user: "", fapshi_key: "" },
     cryptomus: { cryptomus_url: "", cryptomus_merchant_uuid: "", cryptomus_api_key: "" },
-    monnify:   { monnify_baseUrl: "", monnify_apiKey: "", monnify_secretKey: "", monnify_contractCode: "" },
+    flutterwave: { flw_public_key: "", flw_secret_key: "" },
   });
-  const [editing, setEditing] = useState({ fapshi: false, cryptomus: false, monnify: false });
-  const [saving,  setSaving]  = useState({ fapshi: false, cryptomus: false, monnify: false });
+  const [editing, setEditing] = useState({ fapshi: false, cryptomus: false, flutterwave: false });
+  const [saving,  setSaving]  = useState({ fapshi: false, cryptomus: false, flutterwave: false });
 
   useEffect(() => {
     getWebSettings().then((res) => {
@@ -89,7 +89,7 @@ const PaymentTab = () => {
       setFormData({
         fapshi:    { fapshi_url: d.fapshi_url||"",    fapshi_user: d.fapshi_user||"",    fapshi_key: d.fapshi_key||""   },
         cryptomus: { cryptomus_url: d.cryptomus_url||"", cryptomus_merchant_uuid: d.cryptomus_merchant_uuid||"", cryptomus_api_key: d.cryptomus_api_key||"" },
-        monnify:   { monnify_baseUrl: d.monnify_baseUrl||"", monnify_apiKey: d.monnify_apiKey||"", monnify_secretKey: d.monnify_secretKey||"", monnify_contractCode: d.monnify_contractCode||"" },
+        flutterwave: { flw_public_key: d.flw_public_key||"", flw_secret_key: d.flw_secret_key||"" },
       });
     }).catch((err) => toast.error(err.message));
   }, []);
@@ -137,12 +137,10 @@ const PaymentTab = () => {
       ],
     },
     {
-      id: "monnify", title: "Monnify", desc: "Bank transfers and card payments for Nigerian customers.",
+      id: "flutterwave", title: "Flutterwave", desc: "Card, bank transfer and mobile money payments for African customers.",
       fields: [
-        { label: "Base URL",      name: "monnify_baseUrl"      },
-        { label: "API Key",       name: "monnify_apiKey",       sensitive: true },
-        { label: "Secret Key",    name: "monnify_secretKey",    sensitive: true },
-        { label: "Contract Code", name: "monnify_contractCode" },
+        { label: "Public Key", name: "flw_public_key" },
+        { label: "Secret Key", name: "flw_secret_key", sensitive: true },
       ],
     },
   ];

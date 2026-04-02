@@ -67,9 +67,13 @@ const Transaction = () => {
 
   useEffect(() => {
     let intervalId;
+    let isMounted = true;
 
     const fetchOrderHistory = async () => {
-      if (!user?.uid) { setError("User not authenticated"); setLoading(false); return; }
+      if (!user?.uid) {
+        if (isMounted) { setError("User not authenticated"); setLoading(false); }
+        return;
+      }
       try {
         const response = await getUserOrderHistory(String(user.uid));
         const { orderHistory = [], merchantHistory = [] } = response.data || {};
@@ -92,18 +96,17 @@ const Transaction = () => {
           })),
         ].sort((a, b) => b.date - a.date);
 
-        setTransactions(merged);
-        setError(null);
+        if (isMounted) { setTransactions(merged); setError(null); }
       } catch {
-        setError("Error fetching transaction history");
+        if (isMounted) setError("Error fetching transaction history");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchOrderHistory();
     intervalId = setInterval(fetchOrderHistory, 30000);
-    return () => clearInterval(intervalId);
+    return () => { isMounted = false; clearInterval(intervalId); };
   }, [user]);
 
   const filtered = transactions.filter((t) => {
@@ -272,9 +275,9 @@ const Transaction = () => {
           <>
             {/* ── Mobile cards (hidden on tab+) ── */}
             <div className="tab:hidden divide-y divide-gray-50 dark:divide-white/5">
-              {filtered.map((t) => (
+              {filtered.map((t, i) => (
                 <div
-                  key={`mob-${t.id}-${t.date}`}
+                  key={`mob-${i}-${t.id}`}
                   className="flex items-start gap-3 p-4 hover:bg-gray-50/60 dark:hover:bg-slate-800/30 transition-colors"
                 >
                   {/* icon */}
@@ -317,9 +320,9 @@ const Transaction = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50 dark:divide-white/5">
-                  {filtered.map((t) => (
+                  {filtered.map((t, i) => (
                     <tr
-                      key={`desk-${t.id}-${t.date}`}
+                      key={`desk-${i}-${t.id}`}
                       className="hover:bg-gray-50/60 dark:hover:bg-slate-800/30 transition-colors"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">

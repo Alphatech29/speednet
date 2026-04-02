@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PageSeo from "../../components/utils/PageSeo";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -65,6 +66,12 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen w-full bg-slate-900 flex items-center justify-center px-5 py-10 relative overflow-hidden">
+      <PageSeo
+        title="Reset Password"
+        description="Create a new password for your Speednet account."
+        keywords="reset password, new password, speednet"
+        path="/auth/reset-password"
+      />
       <ToastContainer position="top-right" theme="dark" />
 
       {/* Background blobs */}

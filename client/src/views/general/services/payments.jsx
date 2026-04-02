@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import PageSeo from "../../../components/utils/PageSeo";
 import { HiCheckCircle, HiChevronDown } from "react-icons/hi";
 import { FaArrowRight, FaLock } from "react-icons/fa";
 import { RiShieldCheckLine, RiSecurePaymentLine } from "react-icons/ri";
@@ -94,6 +95,12 @@ const faqs = [
 export default function PaymentsPage() {
   return (
     <>
+      <PageSeo
+        title="Payments & Wallet"
+        description="Fund your Speednet wallet with card, bank transfer, or crypto. Fast multi-currency payments with instant confirmation."
+        keywords="payments, wallet, fund account, card payment, bank transfer, crypto payment africa"
+        path="/services/payments"
+      />
       {/* ── Hero ── */}
       <section className="relative min-h-[92vh] flex items-center bg-gradient-to-br from-pay via-white to-orange-50 pt-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

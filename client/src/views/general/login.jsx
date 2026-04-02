@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import PageSeo from "../../components/utils/PageSeo";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HiEye, HiEyeOff, HiShieldCheck } from "react-icons/hi";
@@ -93,6 +94,12 @@ const Login = () => {
 
   return (
     <div className="min-h-screen w-full flex bg-slate-950">
+      <PageSeo
+        title="Sign In"
+        description="Sign in to your Speednet account to access the marketplace, wallet, and digital services."
+        keywords="login, sign in, speednet account"
+        path="/auth/login"
+      />
       <ToastContainer position="top-right" theme="dark" />
 
       {/* ── Left Panel ── */}

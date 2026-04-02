@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import PageSeo from "../../../components/utils/PageSeo";
 import { HiCheckCircle, HiChevronDown, HiStar } from "react-icons/hi";
 import { RiShieldCheckLine, RiStoreLine, RiVerifiedBadgeFill } from "react-icons/ri";
 import { FaArrowRight, FaQuoteLeft, FaShieldAlt, FaStore } from "react-icons/fa";
@@ -82,6 +83,12 @@ const faqs = [
 export default function MarketplacePage() {
   return (
     <>
+      <PageSeo
+        title="Digital Accounts Marketplace"
+        description="Browse thousands of verified digital accounts — social media, gaming, streaming, email and more. Buy with confidence on Speednet."
+        keywords="buy accounts, sell accounts, social media accounts, gaming accounts, verified accounts marketplace africa"
+        path="/services/marketplace"
+      />
       {/* ── Hero ── */}
       <section className="relative min-h-[95vh] flex items-center bg-gradient-to-br from-[#fff9ec] via-white to-orange-50 pt-24 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import PageSeo from "../../components/utils/PageSeo";
 import { motion } from "framer-motion";
 import { MdOutlinePhoneAndroid, MdEmail, MdLocationOn } from "react-icons/md";
 import { RiTelegramLine } from "react-icons/ri";
@@ -85,6 +86,12 @@ const ContactUs = () => {
 
   return (
     <>
+      <PageSeo
+        title="Contact Us"
+        description="Get in touch with the Speednet support team. We're available 24/7 to help with your account, trades, and payments."
+        keywords="contact speednet, support, help, customer service"
+        path="/contact"
+      />
       {/* Hero */}
       <section className="bg-pay pt-28 pb-16 px-5 pc:px-20 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

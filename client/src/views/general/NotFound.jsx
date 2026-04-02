@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import PageSeo from "../../components/utils/PageSeo";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
@@ -9,6 +10,12 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-pay flex items-center justify-center px-5 relative overflow-hidden">
+      <PageSeo
+        title="404 — Page Not Found"
+        description="The page you're looking for doesn't exist. Head back to the Speednet homepage."
+        keywords="404, page not found, speednet"
+        path="/404"
+      />
       {/* Background blobs */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-600/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-600/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3 pointer-events-none" />

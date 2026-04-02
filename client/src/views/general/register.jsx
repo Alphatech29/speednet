@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PageSeo from "../../components/utils/PageSeo";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { HiEye, HiEyeOff } from "react-icons/hi";
@@ -98,6 +99,12 @@ const Register = () => {
 
   return (
     <div className="min-h-screen w-full flex bg-slate-900">
+      <PageSeo
+        title="Create Account"
+        description="Join Speednet for free — buy and sell digital accounts, top-up airtime, get VPN access, and trade securely."
+        keywords="register, sign up, create account, join speednet"
+        path="/auth/register"
+      />
       <ToastContainer position="top-right" theme="dark" />
 
       {/* Left Panel — brand */}

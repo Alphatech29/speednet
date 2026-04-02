@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PageSeo from "../../components/utils/PageSeo";
 import { NavLink } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
@@ -26,6 +27,12 @@ const ForgetPassword = () => {
 
   return (
     <div className="min-h-screen w-full bg-slate-900 flex items-center justify-center px-5 py-10 relative overflow-hidden">
+      <PageSeo
+        title="Forgot Password"
+        description="Reset your Speednet account password. Enter your email and we'll send you a recovery link."
+        keywords="forgot password, reset password, account recovery"
+        path="/auth/forgot-password"
+      />
       <ToastContainer position="top-right" theme="dark" />
 
       {/* Background blobs */}

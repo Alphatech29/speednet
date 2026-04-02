@@ -36,7 +36,7 @@ const METHODS = [
     bg: "bg-orange-50 dark:bg-orange-900/20",
   },
   {
-    id: "monnify",
+    id: "flutterwave",
     label: "Bank / Card Payment",
     desc: "Pay via online bank transfer or debit card.",
     Icon: BsBank2,

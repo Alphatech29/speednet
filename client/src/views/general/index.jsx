@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import PageSeo from "../../components/utils/PageSeo";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { GrShieldSecurity } from "react-icons/gr";
@@ -205,6 +206,12 @@ const Home = () => {
 
   return (
     <>
+      <PageSeo
+        title="Africa's #1 Digital Marketplace"
+        description="Buy verified social media accounts, VPN, virtual numbers, airtime and more. Secure escrow-protected trading on Speednet."
+        keywords="buy accounts, sell accounts, vpn, vtu, airtime, virtual numbers, p2p trading, digital marketplace africa"
+        path="/"
+      />
       {/* ══════════════════════════════════════
           HERO
       ══════════════════════════════════════ */}

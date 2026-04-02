@@ -41,6 +41,7 @@ const UserRoute = () => {
         <Route path="become-a-marchant" element={<Apply />} />
         <Route path="check-out" element={<Checkout />} />
         <Route path="vtu" element={<Vtu />} />
+        <Route path="history" element={<Transaction />} />
         <Route path="referral" element={<Referral />} />
         <Route path="settings" element={<Settings />} />
         <Route path="international-airtime" element={<InternationalAirtime />} />

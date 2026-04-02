@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import PageSeo from "../../../components/utils/PageSeo";
 import { HiCheckCircle, HiChevronDown } from "react-icons/hi";
 import { FaArrowRight } from "react-icons/fa";
 import { MdOutlinePhoneAndroid, MdOutlineTimer, MdOutlineSignalCellularAlt } from "react-icons/md";
@@ -80,6 +81,12 @@ const faqs = [
 export default function VirtualNumbersPage() {
   return (
     <>
+      <PageSeo
+        title="Virtual Phone Numbers"
+        description="Get virtual phone numbers for SMS verification, OTP, and privacy. Works with WhatsApp, Telegram, and more."
+        keywords="virtual numbers, sms verification, otp, temporary phone number, whatsapp number africa"
+        path="/services/virtual-numbers"
+      />
       {/* ── Hero ── */}
       <section className="relative min-h-[92vh] flex items-center bg-gradient-to-br from-pay via-white to-orange-50 pt-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import PageSeo from "../../../components/utils/PageSeo";
 import { HiCheckCircle, HiChevronDown, HiArrowRight } from "react-icons/hi";
 import { FaArrowRight, FaHandshake } from "react-icons/fa";
 import { RiP2pFill, RiShieldCheckLine } from "react-icons/ri";
@@ -76,6 +77,12 @@ const faqs = [
 export default function P2PTradingPage() {
   return (
     <>
+      <PageSeo
+        title="Secure P2P Trading"
+        description="Trade digital accounts and assets peer-to-peer with full escrow protection. Fast, safe, and verified on Speednet."
+        keywords="p2p trading, peer to peer, escrow, secure trading, buy sell accounts africa"
+        path="/services/p2p-trading"
+      />
       {/* ── Hero ── */}
       <section className="relative min-h-[92vh] flex items-center bg-gradient-to-br from-pay via-white to-orange-50 pt-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import PageSeo from "../../../components/utils/PageSeo";
 import { HiCheckCircle, HiChevronDown, HiStar } from "react-icons/hi";
 import { FaArrowRight, FaBolt, FaQuoteLeft, FaGlobeAfrica } from "react-icons/fa";
 import { MdOutlinePhoneAndroid, MdOutlineSpeed, MdOutlinePublic, MdOutlineSupportAgent, MdOutlineAutorenew } from "react-icons/md";
@@ -78,6 +79,12 @@ const faqs = [
 export default function VtuPage() {
   return (
     <>
+      <PageSeo
+        title="VTU — Airtime & Data Top-Up"
+        description="Buy airtime and data bundles instantly for MTN, Airtel, Glo, and 9mobile. Cheapest VTU rates in Africa on Speednet."
+        keywords="vtu, buy airtime, buy data, mtn airtime, airtel data, glo data, 9mobile, recharge nigeria"
+        path="/services/vtu"
+      />
       {/* ── Hero ── */}
       <section className="relative min-h-[95vh] flex items-center bg-gradient-to-br from-[#fff9ec] via-white to-orange-50 pt-24 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

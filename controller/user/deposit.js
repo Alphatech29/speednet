@@ -1,6 +1,6 @@
 const { createPayment } = require("../../utility/cryptomus");
 const { fapshiPayment } = require("../../utility/fapshi");
-const { initializeMonnifyTransaction } = require("../../utility/monnify");
+const { initializeFlutterwaveTransaction } = require("../../utility/flutterwave");
 
 const Deposit = async (req, res) => {
   const { amount, currency, user_id, email, paymentMethod } = req.body;
@@ -64,21 +64,22 @@ const Deposit = async (req, res) => {
           userUid: payment.user_id,
         });
 
-      case "monnify": {
+      case "flutterwave": {
         const payload = {
           amount: Number(amount),
           user_id: String(user_id),
           paymentDescription: "Wallet funding",
         };
 
-        const payment = await initializeMonnifyTransaction(payload);
+        const payment = await initializeFlutterwaveTransaction(payload);
 
         return res.status(200).json({
           status: "success",
-          message: "Monnify payment initiated",
-          provider: "monnify",
+          message: "Flutterwave payment initiated",
+          provider: "flutterwave",
 
           payment_url: payment.checkoutUrl,
+          public_key: payment.publicKey,
           transaction_reference: payment.transactionReference,
           payment_reference: payment.paymentReference,
 

@@ -2,7 +2,6 @@ const { getWebSettings } = require('../utility/general');
 const { updateUserBalance, getUserDetailsByUid } = require('../utility/userInfo');
 const { createTransactionHistory, getTransactionByTransactionNo, updateTransactionStatusByTransactionNo } = require('../utility/history');
 const { taskVerification } = require('../utility/referralVerification');
-const crypto = require('crypto');
 const logger = require('../utility/logger');
 
 require('dotenv').config();
@@ -137,116 +136,96 @@ const cryptomusWebhook = async (req, res) => {
 };
 
 
-// ---------------------- MONNIFY WEBHOOK ----------------------
-const monnifyWebhook = async (req, res) => {
+// ---------------------- FLUTTERWAVE WEBHOOK ----------------------
+const flutterwaveWebhook = async (req, res) => {
   try {
-    // -------- RAW BODY --------
-    let rawBody = "";
-    if (Buffer.isBuffer(req.body)) {
-      rawBody = req.body.toString("utf8");
-    } else if (typeof req.body === "object") {
-      rawBody = JSON.stringify(req.body);
-    }
-
     // -------- VERIFY SIGNATURE --------
-    const settings = await getWebSettings();
-    const secretKey = settings?.monnify_secretKey;
-    const signature = req.headers["monnify-signature"];
+    const secretHash = process.env.FLW_SECRET_HASH;
+    const signature = req.headers["verif-hash"];
 
-    if (!signature || !secretKey) {
-      logger.warn("Missing Monnify signature or secret");
-      return res.status(200).json({ received: true });
+    console.log("Flutterwave webhook received", { signature, event: req.body?.event });
+
+    if (!signature || !secretHash || signature !== secretHash) {
+      console.warn("Flutterwave webhook signature mismatch", { signature, hasSecret: !!secretHash });
+      return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const computedHash = crypto
-      .createHmac("sha512", secretKey)
-      .update(rawBody)
-      .digest("hex");
+    console.log("Flutterwave signature verified");
 
-    let valid = false;
-    try {
-      valid = crypto.timingSafeEqual(
-        Buffer.from(computedHash, "hex"),
-        Buffer.from(signature, "hex")
-      );
-    } catch {
-      valid = false;
-    }
-
-    // ACK FAST (Monnify requires this)
+    // ACK FAST
     res.status(200).json({ received: true });
-    if (!valid) return;
 
-    // -------- PARSE PAYLOAD --------
-    const payload = JSON.parse(rawBody);
+    const payload = req.body;
 
-    // Only handle successful payments
-    if (payload?.eventType !== "SUCCESSFUL_TRANSACTION") return;
-
-    const eventData = payload?.eventData;
-    const paymentReference = eventData?.paymentReference;
-    const amountPaid = Number(eventData?.amountPaid);
-
-    if (!paymentReference || !amountPaid) {
-      console.warn("Invalid webhook data");
+    // Only handle successful charge events
+    if (payload?.event !== "charge.completed") {
+      console.log("Flutterwave webhook ignored (event not charge.completed)", { event: payload?.event });
       return;
     }
 
+    const data = payload?.data;
+    if (!data || data.status !== "successful") {
+      console.log("Flutterwave webhook ignored (status not successful)", { status: data?.status });
+      return;
+    }
+
+    const tx_ref = data?.tx_ref;
+    if (!tx_ref) {
+      console.warn("Flutterwave webhook missing tx_ref", { data });
+      return;
+    }
+
+    console.log("Flutterwave charge successful", { tx_ref, amount: data?.amount, currency: data?.currency, customer: data?.customer?.email });
+
     // -------- GET TRANSACTION --------
-    const txn = await getTransactionByTransactionNo(paymentReference);
+    const txn = await getTransactionByTransactionNo(tx_ref);
     if (!txn.success) {
-      console.warn("Transaction not found:", paymentReference);
+      console.warn("Flutterwave transaction not found in DB", { tx_ref });
       return;
     }
 
     const { amount, user_uid } = txn;
-
+    console.log("Flutterwave transaction found", { tx_ref, amount, user_uid });
 
     // -------- UPDATE TRANSACTION STATUS --------
-    const statusUpdate = await updateTransactionStatusByTransactionNo(
-      paymentReference,
-      "completed"
-    );
-
+    const statusUpdate = await updateTransactionStatusByTransactionNo(tx_ref, "completed");
     if (!statusUpdate.success) {
-      console.warn("Failed to update transaction:", statusUpdate.message);
+      console.error("Flutterwave failed to update transaction status", { tx_ref, message: statusUpdate.message });
       return;
     }
+
+    console.log("Flutterwave transaction status updated to completed", { tx_ref });
 
     // -------- CREDIT USER --------
     const userDetails = await getUserDetailsByUid(user_uid);
     if (!userDetails) {
-      logger.error("User not found", { user_uid });
+      console.error("Flutterwave user not found", { user_uid });
       return;
     }
 
     const currentBalance = Number(userDetails.account_balance) || 0;
     const newBalance = currentBalance + Number(amount);
 
+    console.log("Flutterwave crediting user", { user_uid, currentBalance, amount, newBalance });
+
     const balanceUpdate = await updateUserBalance(user_uid, newBalance);
     if (!balanceUpdate.success) {
-      logger.error("Balance update failed", { user_uid, currentBalance, newBalance });
+      console.error("Flutterwave balance update failed", { user_uid, currentBalance, newBalance });
       return;
     }
 
+    console.log("Flutterwave user balance updated successfully", { user_uid, newBalance });
+
     // -------- REFERRAL TASK --------
-    const userUid = user_uid;
-    taskVerification(userUid)
-      .then(() =>
-        logger.info("Referral task verified (monnify)", { userUid })
-      )
-      .catch((err) =>
-        logger.error("Referral task verification failed (monnify)", {
-          userUid,
-          error: err.message,
-        })
-      );
+    taskVerification(user_uid)
+      .then(() => console.log("Flutterwave referral task verified", { user_uid }))
+      .catch((err) => console.error("Flutterwave referral task verification failed", { user_uid, error: err.message }));
 
   } catch (error) {
-    console.error("Webhook crash:", error);
+    console.error("Flutterwave webhook crash", { error: error.message });
     res.status(200).end();
   }
 };
 
 
-module.exports = { fapshiWebhook, cryptomusWebhook, monnifyWebhook };
+module.exports = { fapshiWebhook, cryptomusWebhook, flutterwaveWebhook };

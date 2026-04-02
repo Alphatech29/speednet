@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import PageSeo from "../../../components/utils/PageSeo";
 import { HiCheckCircle, HiChevronDown } from "react-icons/hi";
 import { FaArrowRight, FaLock, FaShieldAlt, FaUserSecret } from "react-icons/fa";
 import { GrShieldSecurity } from "react-icons/gr";
@@ -67,6 +68,12 @@ const faqs = [
 export default function VpnPage() {
   return (
     <>
+      <PageSeo
+        title="Premium VPN & Proxy Accounts"
+        description="Buy premium VPN and proxy accounts at the best prices. NordVPN, ExpressVPN, and more — instant delivery on Speednet."
+        keywords="buy vpn, nordvpn, expressvpn, vpn accounts, proxy, cheap vpn africa"
+        path="/services/vpn"
+      />
       {/* ── Hero ── */}
       <section className="relative min-h-[92vh] flex items-center bg-gradient-to-br from-slate-900 via-secondary to-slate-900 pt-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">

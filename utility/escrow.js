@@ -104,7 +104,7 @@ const creditEscrow = async (escrowData) => {
       continue;
     }
 
-    const expiryStr = await getEscrowExpiryByOrderNo(order_no);
+    const expiryStr = await getEscrowExpiryByOrderNo(String(order_no));
     if (!expiryStr) {
       console.warn(`[ESCROW SKIPPED] Expiry not found for order ${order_no}`);
       continue;
@@ -114,10 +114,8 @@ const creditEscrow = async (escrowData) => {
     const now = moment.tz(TIMEZONE);
     const delay = expiresAt.diff(now);
 
-    if (delay <= 0) {
-      console.warn(`[ESCROW WARNING] Order ${order_no} expired too long ago. Skipping.`);
-      continue;
-    }
+    // If already expired, process immediately instead of skipping
+    const scheduleAt = delay > 0 ? expiresAt.toDate() : new Date();
 
     const transactionId = generateUniqueRandomNumber();
     const newBalance = Number(user.escrow_balance || 0) + Number(amount);
@@ -140,7 +138,7 @@ const creditEscrow = async (escrowData) => {
       product_id,
     });
 
-    await queue.add(
+    queue.add(
       {
         seller_id,
         transactionId,
@@ -150,11 +148,11 @@ const creditEscrow = async (escrowData) => {
         product_id,
       },
       {
-        delayUntil: expiresAt.toDate(),
+        delayUntil: scheduleAt,
         retries: 3,
         priority: 1,
       }
-    );
+    ).catch((err) => logger.error(`[ESCROW QUEUE ERROR] Failed to queue order ${order_no}`, { message: err.message }));
 
     processedTransactions.push({
       seller_id,

@@ -64,7 +64,7 @@ const OrderDetails = ({ order, onClose }) => {
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-white/5">
             <div className="min-w-0">
-              <h2 className="text-sm font-extrabold text-gray-900 dark:text-white truncate capitalize">
+              <h2 className="text-sm font-extrabold text-gray-900 dark:text-white  capitalize">
                 {order?.title || "Order"} Details
               </h2>
               <p className="text-xs text-gray-400 dark:text-slate-500 mt-0.5">

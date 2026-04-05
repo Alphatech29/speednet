@@ -27,6 +27,19 @@ const Deposit = async (req, res) => {
     });
   }
 
+  const minimumMessages = {
+    cryptomus: "Minimum deposit is $10.",
+    fapshi: "Minimum deposit is $5.",
+    flutterwave: "Minimum deposit is $5.",
+  };
+  const minimums = { cryptomus: 10, fapshi: 5, flutterwave: 5 };
+  const min = minimums[paymentMethod.toLowerCase()];
+  if (min && Number(amount) < min) {
+    return res.status(400).json({
+      error: minimumMessages[paymentMethod.toLowerCase()],
+    });
+  }
+
   try {
     const order_id = user_id;
     let payment;

@@ -41,6 +41,7 @@ const getRandomDarkshopSellerId = () => {
 const collectOrder = async (req, res) => {
   let originalBalance = null;
   let safeUserId = null;
+  let totalAmount = null;
 
   // One random system seller for all darkshop actions in this order
   const darkshopSystemSellerId = getRandomDarkshopSellerId();
@@ -52,7 +53,8 @@ const collectOrder = async (req, res) => {
   try {
     console.log("[REQUEST BODY]:", JSON.stringify(req.body, null, 2));
 
-    const { userId, products, totalAmount } = req.body || {};
+    const { userId, products, totalAmount: rawTotal } = req.body || {};
+    totalAmount = rawTotal;
     if (
       !userId ||
       !Array.isArray(products) ||
@@ -102,7 +104,7 @@ const collectOrder = async (req, res) => {
     }
 
     const orderNo = generateUniqueRandomNumber(6);
-    const escrowExpiresAt = await getEscrowExpiry();
+    const escrowExpiresAt = normalProducts.length > 0 ? await getEscrowExpiry() : null;
 
     // DEDUCT BALANCE
     const newBalance = (originalBalance - amountToDeduct).toFixed(2);
@@ -266,7 +268,7 @@ const collectOrder = async (req, res) => {
         pendingEscrow.push({
           seller_id: product.user_id,
           amount: Number(product.price) || 0,
-          product_ids: [product.id],
+          product_id: product.id,
           order_no: orderNo,
         });
       }
@@ -319,8 +321,8 @@ const collectOrder = async (req, res) => {
     // NON-BLOCKING TASKS
     if (pendingEscrow.length > 0) {
       setTimeout(() => creditEscrow(pendingEscrow).catch(() => {}), 2000);
-      taskVerification(safeUserId).catch(() => {});
     }
+    taskVerification(safeUserId).catch(() => {});
 
     res.status(200).json({
       success: true,

@@ -40,7 +40,7 @@ const ViewDetails = ({ product, onClose }) => {
                   onError={(e) => { e.target.style.display = "none"; }} />
               )}
               <div className="min-w-0">
-                <h2 className="text-sm font-bold text-gray-900 dark:text-white truncate capitalize">{product.name}</h2>
+                <h2 className="text-sm font-bold text-gray-900 dark:text-white capitalize">{product.name}</h2>
                 <p className="text-xs text-gray-400 dark:text-slate-500">{product.platform}</p>
               </div>
             </div>

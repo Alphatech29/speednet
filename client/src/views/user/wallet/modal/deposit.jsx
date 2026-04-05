@@ -145,19 +145,19 @@ const BankTransferPopup = ({ nairaAmount, onClose }) => {
             </div>
           </div>
 
-          {/* Telegram note */}
+          {/* WhatsApp note */}
           <div className="bg-blue-50 dark:bg-blue-900/15 border border-blue-200 dark:border-blue-700/40 rounded-2xl px-4 py-3">
             <div className="flex gap-2">
               <HiInformationCircle size={15} className="text-blue-500 flex-shrink-0 mt-0.5" />
               <p className="text-xs text-blue-700 dark:text-blue-400 leading-relaxed">
                 After transfer,{" "}
                 <a
-                  href="https://t.me/bobcarly888"
+                  href="https://wa.me/17656359872"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-bold underline text-primary-600 hover:text-primary-700"
                 >
-                  submit your receipt on Telegram
+                  submit your receipt on WhatsApp
                 </a>{" "}
                 for instant confirmation.
               </p>

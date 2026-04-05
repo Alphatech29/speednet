@@ -22,6 +22,7 @@ import Unauthorized from '../views/user/unauthorized/unauthorized';
 import ReportList from '../views/user/purchase/reportList';
 import SmsActivate from '../views/user/smsActivate/smsActivate';
 import GetNumber from '../views/user/smsActivate/getNumber';
+import Transaction from '../views/user/history/transaction';
 
 // Role-based guards
 const RequireRole = ({ user, role, children }) => {

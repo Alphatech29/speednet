@@ -11453,3 +11453,357 @@
 [2026-04-02T11:44:26.638Z] [INFO]: API expiry alert sent to admin:
 [2026-04-02T11:44:30.058Z] [INFO]: API expiry alert sent to admin:
 [2026-04-02T11:44:33.469Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:08:47.474Z] [INFO]: Login notification email sent:
+[2026-04-05T12:21:33.099Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:21:33.101Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:21:33.134Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:21:33.140Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:21:34.478Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:21:37.232Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:21:39.799Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:21:41.097Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:21:41.099Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:21:41.123Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:21:41.128Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:21:42.162Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:21:44.473Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:21:46.832Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:21:49.886Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:24:21.598Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:26:32.551Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:26:32.553Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:26:32.577Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:26:32.583Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:26:34.064Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:26:36.805Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:26:39.778Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:26:39.779Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:26:39.796Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:26:39.799Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:26:40.952Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:26:44.434Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:26:47.396Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:26:51.040Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:27:25.324Z] [INFO]: Login notification email sent:
+[2026-04-05T12:27:28.280Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:27:37.875Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:27:38.667Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:27:47.325Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:29:17.031Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:29:17.032Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:29:17.051Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:29:17.054Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:29:18.646Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:29:22.397Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:29:24.469Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:29:24.471Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:29:24.506Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:29:24.513Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:29:26.122Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:29:30.353Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:29:30.355Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:29:30.374Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:29:30.378Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:29:31.678Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:29:32.566Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:32.657Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:33.662Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:33.710Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:34.173Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:34.223Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:34.699Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:34.745Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:35.188Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:35.241Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:35.654Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:35.706Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:29:35.779Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:29:36.913Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:29:36.915Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:29:36.937Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:29:36.940Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:29:39.801Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:29:44.517Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:29:48.257Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:29:52.091Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:31:18.893Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:31:18.899Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:31:18.955Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:31:18.960Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:31:20.267Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:31:23.214Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:31:26.896Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:31:26.897Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:31:26.919Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:31:26.923Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:31:30.017Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:31:33.895Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:31:33.897Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:31:33.915Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:31:33.919Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:31:35.386Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:31:38.738Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:31:42.077Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:31:45.578Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:32:37.884Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:34:32.535Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:34:32.537Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:34:32.563Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:34:32.566Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:34:39.243Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:34:39.245Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:34:39.266Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:34:39.270Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:34:40.908Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:34:40.910Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:34:40.927Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:34:40.931Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:34:42.520Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:34:44.123Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:44.201Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:44.903Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:34:45.390Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:45.440Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:45.986Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:46.039Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:46.519Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:46.567Z] [ERROR]: Failed to serve index.html
+[2026-04-05T12:34:47.572Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:34:47.574Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:34:47.591Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:34:47.595Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:34:47.824Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:34:49.078Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:34:52.847Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:34:57.739Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:35:01.479Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:35:02.034Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:35:14.739Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:40:26.146Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:40:26.148Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:40:26.167Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:40:26.169Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:40:27.886Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:40:32.322Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:40:37.317Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:40:41.003Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:42:09.779Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:42:09.781Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:42:09.800Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:42:09.804Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:42:11.991Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:42:18.714Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:42:21.477Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:42:25.526Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:42:51.216Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:42:51.218Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:42:51.235Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:42:51.238Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:42:52.582Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:42:55.119Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:42:58.342Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:43:03.075Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:20.973Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:49:20.974Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:49:20.992Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:49:20.995Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:49:24.729Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:49:29.487Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:32.986Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:36.594Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:42.297Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:49:42.299Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:49:42.319Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:49:42.322Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:49:43.933Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:49:46.923Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:50.519Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:55.158Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:49:59.068Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:49:59.069Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:49:59.086Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:49:59.090Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:50:00.555Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:50:06.812Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:50:11.632Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:50:14.806Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:53:06.498Z] [INFO]: Order stored successfully with ID: 574
+[2026-04-05T12:53:06.510Z] [INFO]: Order stored successfully with ID: 575
+[2026-04-05T12:53:06.521Z] [INFO]: Order history stored successfully with ID: 402
+[2026-04-05T12:53:06.526Z] [INFO]: Order history stored successfully with ID: 403
+[2026-04-05T12:53:07.576Z] [INFO]: Fetched 4 orders for user: 4
+[2026-04-05T12:53:08.553Z] [INFO]: Escrow expiry for order_no 130128 is 2026-04-05 14:53:06
+[2026-04-05T12:53:08.578Z] [INFO]: Escrow expiry for order_no 130128 is 2026-04-05 14:53:06
+[2026-04-05T12:53:27.637Z] [INFO]: Fetched 830 accounts
+[2026-04-05T12:56:46.125Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:56:46.127Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:56:46.144Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:56:46.148Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:56:47.692Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:56:51.247Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:56:54.319Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:56:57.371Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:57:23.296Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T12:57:23.297Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T12:57:23.315Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T12:57:23.319Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T12:57:24.720Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T12:57:27.843Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:57:30.906Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T12:57:34.097Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:04:55.447Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:04:55.450Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:04:55.469Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:04:55.473Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:04:59.228Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:05:16.631Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:05:24.185Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:05:27.615Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:05:30.538Z] [INFO]: Login notification email sent:
+[2026-04-05T13:07:44.811Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:07:44.813Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:07:44.831Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:07:44.834Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:07:47.231Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:07:51.987Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:07:55.093Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:08:00.731Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:08:00.733Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:08:00.753Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:08:00.756Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:08:02.218Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:08:06.516Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:08:12.294Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:08:15.174Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:08:15.176Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:08:15.192Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:08:15.195Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:08:17.381Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:08:21.468Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:08:25.188Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:08:28.574Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:12:43.977Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:12:43.979Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:12:43.997Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:12:44.000Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:12:45.646Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:12:50.608Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:12:51.418Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:12:51.420Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:12:51.437Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:12:51.440Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:12:53.126Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:12:58.912Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:13:03.419Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:13:10.359Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:21:12.955Z] [INFO]: Fetched 4 orders for user: 4
+[2026-04-05T13:23:21.626Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:23:21.627Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:23:21.653Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:23:21.657Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:23:22.853Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:23:25.799Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:23:28.915Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:23:28.917Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:23:28.935Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:23:28.937Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:23:30.607Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:23:35.176Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:23:39.067Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:23:42.201Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:23:58.728Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:23:58.730Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:23:58.751Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:23:58.756Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:24:00.734Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:24:04.516Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:24:05.676Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:24:05.678Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:24:05.696Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:24:05.701Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:24:07.540Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:24:10.831Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:24:14.086Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:24:17.408Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:24:51.146Z] [INFO]: Login notification email sent:
+[2026-04-05T13:24:53.663Z] [INFO]: Fetched 4 orders for user: 4
+[2026-04-05T13:28:51.105Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:28:51.107Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:28:51.126Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:28:51.130Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:28:53.222Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:28:57.296Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:28:58.874Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:28:58.875Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:28:58.893Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:28:58.901Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:29:00.181Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:29:04.654Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:09.165Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:12.187Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:16.222Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:29:16.223Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:29:16.240Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:29:16.243Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:29:19.000Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:29:22.442Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:24.091Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:29:24.093Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:29:24.112Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:29:24.117Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:29:25.247Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:29:28.179Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:32.356Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:35.188Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:44.170Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:29:44.172Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:29:44.190Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:29:44.194Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:29:45.901Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:29:50.456Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:29:52.205Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T13:29:52.207Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T13:29:52.226Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T13:29:52.229Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T13:29:54.418Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T13:29:58.352Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:30:06.420Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:30:12.979Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T13:34:55.826Z] [INFO]: Fetched 830 accounts
+[2026-04-05T13:53:06.148Z] [INFO]: [QUEUE START] Processing order 130128
+[2026-04-05T13:53:06.190Z] [INFO]: [QUEUE TIME] Order 130128 processed at: 2026-04-05 14:53:06 WAT / UTC: 2026-04-05T13:53:06.186Z
+[2026-04-05T13:53:06.191Z] [INFO]: [RELEASED] Order 130128 processed. Final: ₦5.70, Commission: ₦0.30
+[2026-04-05T13:53:06.192Z] [INFO]: [QUEUE END] Order 130128 completed
+[2026-04-05T13:53:06.199Z] [INFO]: [QUEUE START] Processing order 130128
+[2026-04-05T13:53:06.210Z] [INFO]: [QUEUE TIME] Order 130128 processed at: 2026-04-05 14:53:06 WAT / UTC: 2026-04-05T13:53:06.210Z
+[2026-04-05T13:53:06.211Z] [INFO]: [RELEASED] Order 130128 processed. Final: ₦4.75, Commission: ₦0.25
+[2026-04-05T13:53:06.212Z] [INFO]: [QUEUE END] Order 130128 completed
+[2026-04-05T14:04:39.098Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T14:04:39.100Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T14:04:39.121Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T14:04:39.125Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T14:04:40.597Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T14:04:42.763Z] [INFO]: Fetched 4 orders for user: 4
+[2026-04-05T14:04:43.387Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:04:46.636Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T14:04:46.638Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T14:04:46.655Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T14:04:46.658Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T14:04:48.122Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T14:04:53.106Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:04:58.274Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:05:03.058Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:05:52.672Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T14:05:52.674Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T14:05:52.695Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T14:05:52.701Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T14:05:55.593Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T14:06:00.579Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-05T14:06:00.581Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-05T14:06:00.599Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-05T14:06:00.603Z] [INFO]: Server started on http://localhost:8000
+[2026-04-05T14:06:02.079Z] [INFO]: Transporter is ready to send emails
+[2026-04-05T14:06:06.538Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:06:11.150Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:06:14.428Z] [INFO]: API expiry alert sent to admin:
+[2026-04-05T14:07:46.089Z] [INFO]: Login notification email sent:

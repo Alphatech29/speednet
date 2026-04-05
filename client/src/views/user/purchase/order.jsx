@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaFile, FaTelegramPlane } from "react-icons/fa";
+import { FaFile, FaWhatsapp } from "react-icons/fa";
 import { MdReport } from "react-icons/md";
 import { HiClock, HiShieldCheck } from "react-icons/hi";
 import { BiPackage } from "react-icons/bi";
@@ -108,9 +108,9 @@ const Order = () => {
           <h1 className="text-xl font-extrabold text-gray-900 dark:text-white">My Purchases</h1>
           <p className="text-sm text-gray-400 dark:text-slate-500 mt-0.5">{orderKeys.length} order{orderKeys.length !== 1 ? "s" : ""}</p>
         </div>
-        <a href="https://t.me/bobcarly888" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#229ed9] hover:bg-[#1a8bbf] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all">
-          <FaTelegramPlane size={14} /> Get Support
+        <a href="https://wa.me/17656359872" target="_blank" rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-[#25d366] hover:bg-[#1ebe5d] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all">
+          <FaWhatsapp size={14} /> Get Support
         </a>
       </div>
 

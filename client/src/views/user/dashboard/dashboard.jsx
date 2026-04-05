@@ -5,6 +5,7 @@ import Sidebar from "../../../views/user/partials/sidebar";
 import Header from "../../../views/user/partials/header";
 import Footer from "../../../views/user/partials/footer";
 import { useTheme } from "../../../components/control/themeContext";
+import WhatsAppSupport from "../../../components/ui/WhatsAppSupport";
 
 const Dashboard = () => {
   const { theme } = useTheme();
@@ -76,6 +77,7 @@ const Dashboard = () => {
         </main>
         <Footer toggleSidebar={() => setSidebarOpen((p) => !p)} />
       </div>
+      <WhatsAppSupport />
     </div>
   );
 };

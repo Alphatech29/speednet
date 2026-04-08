@@ -16,17 +16,42 @@ const quickMessages = [
 const WhatsAppSupport = () => {
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [hidden, setHidden] = useState(() => localStorage.getItem("wa_support_hidden") === "true");
+
+  const hide = () => {
+    localStorage.setItem("wa_support_hidden", "true");
+    setHidden(true);
+    setOpen(false);
+  };
+
+  const restore = () => {
+    localStorage.removeItem("wa_support_hidden");
+    setHidden(false);
+  };
 
   // Show greeting bubble after 4s, hide after 8s
   useEffect(() => {
+    if (hidden) return;
     const show = setTimeout(() => setShowBubble(true), 4000);
-    const hide = setTimeout(() => setShowBubble(false), 12000);
-    return () => { clearTimeout(show); clearTimeout(hide); };
-  }, []);
+    const hideTimer = setTimeout(() => setShowBubble(false), 12000);
+    return () => { clearTimeout(show); clearTimeout(hideTimer); };
+  }, [hidden]);
 
   const handleQuickMessage = (msg) => {
     window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, "_blank");
   };
+
+  if (hidden) {
+    return (
+      <button
+        onClick={restore}
+        title="Show WhatsApp support"
+        className="fixed bottom-6 right-5 z-50 pc:z-[9999] w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 shadow flex items-center justify-center text-[#25d366] hover:scale-110 transition-all opacity-50 hover:opacity-100"
+      >
+        <FaWhatsapp size={15} />
+      </button>
+    );
+  }
 
   return (
     <div className="fixed bottom-6 right-5 z-[9999] flex flex-col items-end gap-3 pointer-events-none">
@@ -111,6 +136,13 @@ const WhatsAppSupport = () => {
                 <FaWhatsapp size={15} />
                 Open WhatsApp
               </a>
+
+              <button
+                onClick={hide}
+                className="w-full text-center text-[11px] text-gray-400 dark:text-slate-600 hover:text-gray-600 dark:hover:text-slate-400 transition-colors py-1"
+              >
+                Hide support button
+              </button>
             </div>
           </motion.div>
         )}

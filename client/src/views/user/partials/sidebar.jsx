@@ -8,6 +8,7 @@ import { MdAddBusiness, MdOutlineStorefront } from "react-icons/md";
 import { GoHistory } from "react-icons/go";
 import { GiVirtualMarker } from "react-icons/gi";
 import { BsBank2 } from "react-icons/bs";
+import { FaTelegramPlane } from "react-icons/fa";
 import { TiFlashOutline } from "react-icons/ti";
 import { IoListCircle } from "react-icons/io5";
 import { RiLogoutCircleRLine } from "react-icons/ri";
@@ -119,6 +120,15 @@ const Sidebar = () => {
         >
           <TiFlashOutline size={16} className="opacity-70 flex-shrink-0" />
           Boost Accounts
+        </a>
+        <a
+          href="https://beansms.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-white/8 hover:text-white transition-all"
+        >
+          <FaTelegramPlane  size={16} className="opacity-70 flex-shrink-0" />
+          Telegram Premium
         </a>
 
         <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 px-3 mt-4 mb-2">Finance</p>

@@ -39,7 +39,7 @@ const getCountdown = (expiresAt) => {
 
 const Order = () => {
   const { user, webSettings } = useContext(AuthContext);
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -70,7 +70,7 @@ const Order = () => {
         Object.keys(grouped).forEach((k) => grouped[k].sort((a, b) => new Date(b.create_at) - new Date(a.create_at)));
         const sorted = Object.keys(grouped)
           .sort((a, b) => new Date(grouped[b][0].create_at) - new Date(grouped[a][0].create_at))
-          .reduce((acc, k) => ({ ...acc, [k]: grouped[k] }), {});
+          .map((k) => [k, grouped[k]]);
         setOrders(sorted);
       } catch (err) {
         console.error("Order fetch error:", err);
@@ -84,8 +84,8 @@ const Order = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const next = {};
-      Object.keys(orders).forEach((k) => {
-        const o = orders[k][0];
+      orders.forEach(([k, items]) => {
+        const o = items[0];
         next[k] = o.isDarkshop ? null : getCountdown(o.escrow_expires_at);
       });
       setTimers(next);
@@ -94,11 +94,11 @@ const Order = () => {
   }, [orders]);
 
   const handleViewDetails = (orderId) => {
-    const o = Object.values(orders).flat().find((o) => o.id === orderId);
+    const o = orders.flatMap(([, items]) => items).find((o) => o.id === orderId);
     if (o) { setSelectedOrder(o); setIsModalOpen(true); }
   };
 
-  const orderKeys = Object.keys(orders);
+  const orderKeys = orders.map(([k]) => k);
 
   return (
     <div className="w-full max-w-5xl mx-auto">
@@ -149,10 +149,9 @@ const Order = () => {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
-          {orderKeys.map((groupKey, idx) => {
-            const orderData = orders[groupKey][0];
+          {orders.map(([groupKey, items], idx) => {
+            const orderData = items[0];
             const countdown = timers[groupKey];
-            const items = orders[groupKey];
 
             return (
               <motion.div

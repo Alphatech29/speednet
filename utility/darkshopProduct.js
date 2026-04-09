@@ -245,6 +245,21 @@ async function updateDarkShopOrderStatus(orderId, {
 }
 
 
+async function getAllPendingDarkShopOrders() {
+  try {
+    const [rows] = await pool.execute(
+      `SELECT darkshop_order_id, order_no, buyer_id, price, title
+       FROM dark_shop_orders
+       WHERE payment_status = 'Pending'
+         AND darkshop_order_id IS NOT NULL`
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error fetching all pending dark shop orders:", error.message);
+    return [];
+  }
+}
+
 async function getPendingDarkShopOrderById(darkshop_order_id) {
   try {
     const [rows] = await pool.execute(
@@ -384,6 +399,8 @@ module.exports = {
     insertDarkShopOrder,
     updateDarkShopOrderStatus,
     getPendingDarkShopOrderById,
+    getAllPendingDarkShopOrders,
     getDarkShopOrdersByBuyer,
+    getDarkShopOrderByBuyerAndOrderNo,
     updateDarkShopOrderContent
 };

@@ -114,6 +114,19 @@ try {
   // ❗ DO NOT EXIT — server should still run
 }
 
+// Darkshop Pending Order Worker (NON-CRITICAL)
+try {
+  const { startDarkshopWorker } = require("./utility/darkshopPendingProcessor");
+  startDarkshopWorker();
+  logger.info("Darkshop pending-order worker started.");
+} catch (err) {
+  logger.error("Failed to start Darkshop pending-order worker", {
+    message: err.message,
+    stack: err.stack,
+  });
+  console.error("Darkshop worker load failed:", err);
+}
+
 // Start HTTP Server
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {

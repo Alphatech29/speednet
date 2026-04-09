@@ -212,7 +212,7 @@ const collectOrder = async (req, res) => {
           quantity,
           total: totalForThisProduct,
           payment_status:
-            darkOrder.status === "pending" ? "Pending" : "Completed",
+            darkOrder.status === "in_process" ? "Pending" : "Completed",
           darkshop_order_id: darkOrder.id,
           darkshop_link: darkOrder.link || null,
           darkshop_content: translatedDarkshopContent,
@@ -225,6 +225,8 @@ const collectOrder = async (req, res) => {
           price: priceFromBody,
           quantity,
           total: totalForThisProduct,
+          order_no: orderNo,
+          buyer_id: safeUserId,
           darkshop_order_id: darkOrder.id,
           darkshop_link: darkOrder.link || null,
           darkshop_content: translatedDarkshopContent || null,

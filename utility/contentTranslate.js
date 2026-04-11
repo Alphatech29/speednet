@@ -1,28 +1,34 @@
 const axios = require("axios");
 
-async function translateRussianToEnglish(text) {
-  try {
-    const url = "https://translate.googleapis.com/translate_a/single";
+// Returns true if text contains Cyrillic characters (worth translating)
+function hasCyrillic(text) {
+  return /[\u0400-\u04FF]/.test(text);
+}
 
-    const response = await axios.get(url, {
+async function translateRussianToEnglish(text) {
+  if (!text || !hasCyrillic(text)) return text; // nothing to translate
+
+  try {
+    const response = await axios.get("https://translate.googleapis.com/translate_a/single", {
       params: {
         client: "gtx",
-        sl: "ru",
+        sl: "auto",
         tl: "en",
         dt: "t",
-        q: text
-      }
+        q: text,
+      },
+      timeout: 8000,
     });
 
-    // Google returns a deeply nested array
-    const translatedText = response.data[0]
-      .map(item => item[0])
+    const translated = response.data[0]
+      .filter((item) => item && item[0])
+      .map((item) => item[0])
       .join("");
 
-    return translatedText;
+    return translated || text;
   } catch (error) {
     console.error("Translation error:", error.message);
-    return null;
+    return text; // return original instead of null so content is never lost
   }
 }
 

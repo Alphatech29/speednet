@@ -260,6 +260,21 @@ async function getAllPendingDarkShopOrders() {
   }
 }
 
+async function getMissingContentDarkShopOrders() {
+  try {
+    const [rows] = await pool.execute(
+      `SELECT darkshop_order_id, order_no, buyer_id, price, title
+       FROM dark_shop_orders
+       WHERE darkshop_order_id IS NOT NULL
+         AND (darkshop_link IS NULL OR darkshop_content IS NULL)`
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error fetching missing-content dark shop orders:", error.message);
+    return [];
+  }
+}
+
 async function getPendingDarkShopOrderById(darkshop_order_id) {
   try {
     const [rows] = await pool.execute(
@@ -400,6 +415,7 @@ module.exports = {
     updateDarkShopOrderStatus,
     getPendingDarkShopOrderById,
     getAllPendingDarkShopOrders,
+    getMissingContentDarkShopOrders,
     getDarkShopOrdersByBuyer,
     getDarkShopOrderByBuyerAndOrderNo,
     updateDarkShopOrderContent

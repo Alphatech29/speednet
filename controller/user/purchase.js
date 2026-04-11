@@ -25,6 +25,7 @@ const {
 const {
   getDarkshopBalance,
   createDarkshopOrder,
+  getDarkshopOrderStatus,
 } = require("../../utility/daskshopCreateOrder");
 const {
   processPendingDarkOrders,
@@ -188,17 +189,31 @@ const collectOrder = async (req, res) => {
           });
         }
 
+        // If completed immediately, fetch download link + content via order/download
+        let finalLink = darkOrder.link || null;
+        let finalContent = darkOrder.content || null;
+
+        if (darkOrder.status === "completed" && !finalLink) {
+          try {
+            const dlRes = await getDarkshopOrderStatus(darkOrder.id);
+            if (dlRes.success) {
+              finalLink = dlRes.link || null;
+              finalContent = dlRes.content || null;
+            }
+          } catch (err) {
+            console.error("Failed to fetch completed darkshop order content:", err.message);
+          }
+        }
+
         // Translate darkshop content before saving
         let translatedDarkshopContent = null;
 
-        if (darkOrder.content) {
+        if (finalContent) {
           try {
-            translatedDarkshopContent = await translateRussianToEnglish(
-              darkOrder.content,
-            );
+            translatedDarkshopContent = await translateRussianToEnglish(finalContent);
           } catch (err) {
             console.error("Darkshop content translation failed:", err.message);
-            translatedDarkshopContent = darkOrder.content;
+            translatedDarkshopContent = finalContent;
           }
         }
 
@@ -214,7 +229,7 @@ const collectOrder = async (req, res) => {
           payment_status:
             darkOrder.status === "in_process" ? "Pending" : "Completed",
           darkshop_order_id: darkOrder.id,
-          darkshop_link: darkOrder.link || null,
+          darkshop_link: finalLink,
           darkshop_content: translatedDarkshopContent,
         });
 
@@ -228,7 +243,7 @@ const collectOrder = async (req, res) => {
           order_no: orderNo,
           buyer_id: safeUserId,
           darkshop_order_id: darkOrder.id,
-          darkshop_link: darkOrder.link || null,
+          darkshop_link: finalLink,
           darkshop_content: translatedDarkshopContent || null,
           payment_status: darkOrder.status,
         });

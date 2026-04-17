@@ -67,7 +67,7 @@ const Sidebar = () => {
   const country = user?.country;
 
   return (
-    <div className="w-[265px] h-screen bg-slate-900 text-slate-200 fixed top-0 left-0 z-50 flex flex-col border-r border-white/5">
+    <div className="w-[265px] mb-16 h-screen bg-slate-900 text-slate-200 fixed top-0 left-0 z-50 flex flex-col border-r border-white/5">
       {/* Logo */}
       <div className="flex items-center gap-3 px-4 py-5 border-b border-white/5">
         <NavLink to="/" className="flex items-center gap-2">
@@ -88,7 +88,7 @@ const Sidebar = () => {
 
         {role !== "merchant" && (
           <NavLink
-            to="/user/become-a-marchant"
+            to="/user/become-a-merchant"
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-primary-600/10 border border-primary-600/20 text-primary-500 hover:bg-primary-600/20 transition-all mb-2"
           >
             <MdAddBusiness size={18} className="flex-shrink-0" />
@@ -112,6 +112,23 @@ const Sidebar = () => {
         <NavItem to="/user/order" icon={<BiSolidPurchaseTag size={15} />}>My Purchases</NavItem>
         <NavItem to="/user/report-list" icon={<IoListCircle size={16} />}>My Reports</NavItem>
 
+
+
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 px-3 mt-4 mb-2">Finance</p>
+
+        <NavItem to="/user/wallet" icon={<FaWallet size={14} />}>My Wallet</NavItem>
+
+        {role !== "user" && (
+          <NavItem to="/user/withdraw" icon={<BsBank2 size={14} />}>Withdraw</NavItem>
+        )}
+        <NavItem to="/user/history" icon={<GoHistory size={14} />}>History</NavItem>
+
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 px-3 mt-4 mb-2">Services</p>
+
+        <SidebarDropdown label="SMS / Virtual Phone" icon={<GiVirtualMarker size={16} />}>
+          <NavLink to="/user/sms-service" className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-white/8 hover:text-white transition-all">Portal</NavLink>
+          <NavLink to="/user/get-number" className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-white/8 hover:text-white transition-all">Get Number</NavLink>
+        </SidebarDropdown>
         <a
           href="https://mrbeanpanel.com/"
           target="_blank"
@@ -131,22 +148,6 @@ const Sidebar = () => {
           Telegram Premium
         </a>
 
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 px-3 mt-4 mb-2">Finance</p>
-
-        <NavItem to="/user/wallet" icon={<FaWallet size={14} />}>My Wallet</NavItem>
-
-        {role !== "user" && (
-          <NavItem to="/user/withdraw" icon={<BsBank2 size={14} />}>Withdraw</NavItem>
-        )}
-        <NavItem to="/user/history" icon={<GoHistory size={14} />}>History</NavItem>
-
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 px-3 mt-4 mb-2">Services</p>
-
-        <SidebarDropdown label="SMS / Virtual Phone" icon={<GiVirtualMarker size={16} />}>
-          <NavLink to="/user/sms-service" className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-white/8 hover:text-white transition-all">Portal</NavLink>
-          <NavLink to="/user/get-number" className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-white/8 hover:text-white transition-all">Get Number</NavLink>
-        </SidebarDropdown>
-
         {country === "Nigeria" && (
           <NavItem to="/user/vtu" icon={<FaMobile size={14} />}>VTU Service</NavItem>
         )}
@@ -156,7 +157,7 @@ const Sidebar = () => {
       </div>
 
       {/* User info footer */}
-      <div className="border-t border-white/5 px-4 py-3 flex items-center gap-3">
+      <div className="border-t mb-16 border-white/5 px-4 py-3 flex items-center gap-3">
         <img
           src={user?.avatar}
           alt="avatar"

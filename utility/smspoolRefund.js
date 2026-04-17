@@ -1,9 +1,11 @@
 const { getSmsServiceRecord, updateSmsServiceRecord, createTransactionHistory } = require("./history");
 const { getUserDetailsByUid, updateUserBalance } = require("./userInfo");
+const { cancelActivation } = require("./smspool");
 
 async function smspoolRefund(time, orderid) {
   if (!time || !orderid) {
-    throw new Error("Both time and orderid are required.");
+    console.error("[smspoolRefund] Missing time or orderid — skipping");
+    return { success: false, message: "Both time and orderid are required." };
   }
 
   const order = await getSmsServiceRecord(orderid);
@@ -24,12 +26,19 @@ async function smspoolRefund(time, orderid) {
 
     const updatedOrder = await getSmsServiceRecord(orderid);
 
+    if (!updatedOrder) {
+      return { success: false, message: `Order ${orderid} not found after expiry delay.` };
+    }
+
     if (updatedOrder.code !== undefined && updatedOrder.code !== null && updatedOrder.code !== "") {
       return {
         success: false,
         message: `Order ${orderid} now has a code. Aborted.`,
       };
     } else {
+      // Cancel on HeroSMS so they don't charge for unused number
+      await cancelActivation(orderid);
+
       const updateResult = await updateSmsServiceRecord(orderid, "", 2);
 
       const userId = updatedOrder.user_id;

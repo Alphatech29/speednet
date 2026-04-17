@@ -39,7 +39,7 @@ const UserRoute = () => {
         <Route path="marketplace" element={<Marketplace />} />
         <Route path="wallet" element={<Wallet />} />
         <Route path="order" element={<Order />} />
-        <Route path="become-a-marchant" element={<Apply />} />
+        <Route path="become-a-merchant" element={<Apply />} />
         <Route path="check-out" element={<Checkout />} />
         <Route path="vtu" element={<Vtu />} />
         <Route path="history" element={<Transaction />} />

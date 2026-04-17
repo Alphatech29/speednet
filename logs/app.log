@@ -14535,3 +14535,235 @@
 [2026-04-17T21:31:16.982Z] [INFO]: Transporter is ready to send emails
 [2026-04-17T21:31:20.285Z] [INFO]: API expiry alert sent to admin:
 [2026-04-17T21:31:23.097Z] [INFO]: API expiry alert sent to admin:
+[2026-04-17T21:36:14.450Z] [INFO]: [EscrowWorker] 50 expired escrow order(s) found
+[2026-04-17T21:36:14.462Z] [INFO]: [EscrowWorker] Released order 713437 — ₦6.65 credited to seller 287
+[2026-04-17T21:36:14.469Z] [INFO]: [EscrowWorker] Released order 137521 — ₦3.33 credited to seller 19
+[2026-04-17T21:36:14.475Z] [INFO]: [EscrowWorker] Released order 425681 — ₦5.70 credited to seller 564
+[2026-04-17T21:36:14.481Z] [INFO]: [EscrowWorker] Released order 470050 — ₦4.75 credited to seller 555
+[2026-04-17T21:36:14.489Z] [INFO]: [EscrowWorker] Released order 891107 — ₦3.99 credited to seller 20
+[2026-04-17T21:36:14.494Z] [INFO]: [EscrowWorker] Released order 209469 — ₦3.61 credited to seller 287
+[2026-04-17T21:36:14.500Z] [INFO]: [EscrowWorker] Released order 163002 — ₦4.75 credited to seller 20
+[2026-04-17T21:36:14.507Z] [INFO]: [EscrowWorker] Released order 864991 — ₦3.99 credited to seller 20
+[2026-04-17T21:36:14.514Z] [INFO]: [EscrowWorker] Released order 495210 — ₦3.80 credited to seller 536
+[2026-04-17T21:36:14.516Z] [INFO]: [EscrowWorker] Order 495210 already claimed by queue — skipping
+[2026-04-17T21:36:14.523Z] [INFO]: [EscrowWorker] Released order 819321 — ₦2.85 credited to seller 20
+[2026-04-17T21:36:14.529Z] [INFO]: [EscrowWorker] Released order 334007 — ₦3.80 credited to seller 536
+[2026-04-17T21:36:14.534Z] [INFO]: [EscrowWorker] Released order 851575 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.539Z] [INFO]: [EscrowWorker] Released order 785412 — ₦3.80 credited to seller 536
+[2026-04-17T21:36:14.529Z] [INFO]: [EscrowWorker] Released order 160434 — ₦4.75 credited to seller 555
+[2026-04-17T21:36:14.537Z] [INFO]: [EscrowWorker] Released order 230130 — ₦3.99 credited to seller 20
+[2026-04-17T21:36:14.544Z] [INFO]: [EscrowWorker] Released order 486272 — ₦3.33 credited to seller 19
+[2026-04-17T21:36:14.552Z] [INFO]: [EscrowWorker] Released order 892841 — ₦4.75 credited to seller 442
+[2026-04-17T21:36:14.559Z] [INFO]: [EscrowWorker] Released order 850500 — ₦2.85 credited to seller 622
+[2026-04-17T21:36:14.566Z] [INFO]: [EscrowWorker] Released order 369875 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.572Z] [INFO]: [EscrowWorker] Released order 854877 — ₦2.85 credited to seller 622
+[2026-04-17T21:36:14.578Z] [INFO]: [EscrowWorker] Released order 843272 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.583Z] [INFO]: [EscrowWorker] Released order 449984 — ₦2.85 credited to seller 20
+[2026-04-17T21:36:14.589Z] [INFO]: [EscrowWorker] Released order 895880 — ₦3.61 credited to seller 287
+[2026-04-17T21:36:14.596Z] [INFO]: [EscrowWorker] Released order 529546 — ₦2.85 credited to seller 20
+[2026-04-17T21:36:14.603Z] [INFO]: [EscrowWorker] Released order 172813 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.611Z] [INFO]: [EscrowWorker] Released order 375964 — ₦2.85 credited to seller 622
+[2026-04-17T21:36:14.618Z] [INFO]: [EscrowWorker] Released order 568512 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.621Z] [INFO]: [EscrowWorker] Order 568512 already claimed by queue — skipping
+[2026-04-17T21:36:14.626Z] [INFO]: [EscrowWorker] Released order 562815 — ₦4.75 credited to seller 442
+[2026-04-17T21:36:14.632Z] [INFO]: [EscrowWorker] Released order 191675 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.639Z] [INFO]: [EscrowWorker] Released order 287294 — ₦3.80 credited to seller 287
+[2026-04-17T21:36:14.647Z] [INFO]: [EscrowWorker] Released order 812967 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.655Z] [INFO]: [EscrowWorker] Released order 333212 — ₦3.80 credited to seller 287
+[2026-04-17T21:36:14.666Z] [INFO]: [EscrowWorker] Released order 793986 — ₦3.32 credited to seller 20
+[2026-04-17T21:36:14.673Z] [INFO]: [EscrowWorker] Released order 839210 — ₦2.85 credited to seller 622
+[2026-04-17T21:36:14.679Z] [INFO]: [EscrowWorker] Released order 146491 — ₦4.75 credited to seller 555
+[2026-04-17T21:36:14.686Z] [INFO]: [EscrowWorker] Released order 371786 — ₦4.75 credited to seller 19
+[2026-04-17T21:36:14.695Z] [INFO]: [EscrowWorker] Released order 945010 — ₦2.85 credited to seller 622
+[2026-04-17T21:36:14.703Z] [INFO]: [EscrowWorker] Released order 531540 — ₦5.98 credited to seller 20
+[2026-04-17T21:36:14.711Z] [INFO]: [EscrowWorker] Released order 422380 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.716Z] [INFO]: [EscrowWorker] Released order 980087 — ₦2.85 credited to seller 622
+[2026-04-17T21:36:14.723Z] [INFO]: [EscrowWorker] Released order 859498 — ₦4.75 credited to seller 536
+[2026-04-17T21:36:14.730Z] [INFO]: [EscrowWorker] Released order 984113 — ₦7.13 credited to seller 20
+[2026-04-17T21:36:14.736Z] [INFO]: [EscrowWorker] Released order 514021 — ₦3.80 credited to seller 536
+[2026-04-17T21:36:14.741Z] [INFO]: [EscrowWorker] Released order 562133 — ₦3.80 credited to seller 536
+[2026-04-17T21:36:14.746Z] [INFO]: [EscrowWorker] Released order 293158 — ₦2.85 credited to seller 20
+[2026-04-17T21:36:14.801Z] [INFO]: [EscrowWorker] Released order 870382 — ₦6.17 credited to seller 20
+[2026-04-17T21:36:14.810Z] [INFO]: [EscrowWorker] Released order 922886 — ₦4.75 credited to seller 442
+[2026-04-17T21:36:14.820Z] [INFO]: [EscrowWorker] Released order 628489 — ₦3.80 credited to seller 287
+[2026-04-17T21:41:14.453Z] [INFO]: [EscrowWorker] 50 expired escrow order(s) found
+[2026-04-17T21:41:14.487Z] [INFO]: [EscrowWorker] Released order 718567 — ₦5.98 credited to seller 20
+[2026-04-17T21:41:14.496Z] [INFO]: [EscrowWorker] Released order 393905 — ₦3.33 credited to seller 20
+[2026-04-17T21:41:14.498Z] [INFO]: [EscrowWorker] Order 393905 already claimed by queue — skipping
+[2026-04-17T21:41:14.500Z] [INFO]: [EscrowWorker] Order 393905 already claimed by queue — skipping
+[2026-04-17T21:41:14.501Z] [INFO]: [EscrowWorker] Order 393905 already claimed by queue — skipping
+[2026-04-17T21:41:14.504Z] [INFO]: [EscrowWorker] Order 393905 already claimed by queue — skipping
+[2026-04-17T21:41:14.515Z] [INFO]: [EscrowWorker] Released order 606088 — ₦7.13 credited to seller 20
+[2026-04-17T21:41:14.526Z] [INFO]: [EscrowWorker] Released order 806911 — ₦6.65 credited to seller 287
+[2026-04-17T21:41:14.536Z] [INFO]: [EscrowWorker] Released order 346993 — ₦4.75 credited to seller 442
+[2026-04-17T21:41:14.547Z] [INFO]: [EscrowWorker] Released order 353838 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.559Z] [INFO]: [EscrowWorker] Released order 984508 — ₦4.75 credited to seller 536
+[2026-04-17T21:41:14.569Z] [INFO]: [EscrowWorker] Released order 955308 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.583Z] [INFO]: [EscrowWorker] Released order 735238 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.596Z] [INFO]: [EscrowWorker] Released order 228880 — ₦7.13 credited to seller 20
+[2026-04-17T21:41:14.609Z] [INFO]: [EscrowWorker] Released order 518616 — ₦3.80 credited to seller 536
+[2026-04-17T21:41:14.623Z] [INFO]: [EscrowWorker] Released order 254014 — ₦3.80 credited to seller 536
+[2026-04-17T21:41:14.636Z] [INFO]: [EscrowWorker] Released order 539546 — ₦4.75 credited to seller 536
+[2026-04-17T21:41:14.639Z] [INFO]: [EscrowWorker] Order 539546 already claimed by queue — skipping
+[2026-04-17T21:41:14.641Z] [INFO]: [EscrowWorker] Order 539546 already claimed by queue — skipping
+[2026-04-17T21:41:14.654Z] [INFO]: [EscrowWorker] Released order 107639 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.666Z] [INFO]: [EscrowWorker] Released order 918669 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.679Z] [INFO]: [EscrowWorker] Released order 645717 — ₦4.75 credited to seller 536
+[2026-04-17T21:41:14.692Z] [INFO]: [EscrowWorker] Released order 667631 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.706Z] [INFO]: [EscrowWorker] Released order 922544 — ₦2.85 credited to seller 622
+[2026-04-17T21:41:14.710Z] [INFO]: [EscrowWorker] Order 922544 already claimed by queue — skipping
+[2026-04-17T21:41:14.712Z] [INFO]: [EscrowWorker] Order 922544 already claimed by queue — skipping
+[2026-04-17T21:41:14.724Z] [INFO]: [EscrowWorker] Released order 997526 — ₦4.75 credited to seller 536
+[2026-04-17T21:41:14.735Z] [INFO]: [EscrowWorker] Released order 111535 — ₦3.80 credited to seller 536
+[2026-04-17T21:41:14.746Z] [INFO]: [EscrowWorker] Released order 873744 — ₦4.75 credited to seller 442
+[2026-04-17T21:41:14.748Z] [INFO]: [EscrowWorker] Order 873744 already claimed by queue — skipping
+[2026-04-17T21:41:14.751Z] [INFO]: [EscrowWorker] Order 873744 already claimed by queue — skipping
+[2026-04-17T21:41:14.754Z] [INFO]: [EscrowWorker] Order 873744 already claimed by queue — skipping
+[2026-04-17T21:41:14.766Z] [INFO]: [EscrowWorker] Released order 481301 — ₦4.75 credited to seller 555
+[2026-04-17T21:41:14.768Z] [INFO]: [EscrowWorker] Order 481301 already claimed by queue — skipping
+[2026-04-17T21:41:14.771Z] [INFO]: [EscrowWorker] Order 481301 already claimed by queue — skipping
+[2026-04-17T21:41:14.774Z] [INFO]: [EscrowWorker] Order 481301 already claimed by queue — skipping
+[2026-04-17T21:41:14.777Z] [INFO]: [EscrowWorker] Order 481301 already claimed by queue — skipping
+[2026-04-17T21:41:14.790Z] [INFO]: [EscrowWorker] Released order 743876 — ₦7.13 credited to seller 20
+[2026-04-17T21:41:14.802Z] [INFO]: [EscrowWorker] Released order 222176 — ₦5.70 credited to seller 564
+[2026-04-17T21:41:14.814Z] [INFO]: [EscrowWorker] Released order 766676 — ₦3.80 credited to seller 536
+[2026-04-17T21:41:14.826Z] [INFO]: [EscrowWorker] Released order 152980 — ₦2.85 credited to seller 20
+[2026-04-17T21:41:14.839Z] [INFO]: [EscrowWorker] Released order 628918 — ₦2.85 credited to seller 20
+[2026-04-17T21:41:14.851Z] [INFO]: [EscrowWorker] Released order 198501 — ₦5.70 credited to seller 564
+[2026-04-17T21:41:14.863Z] [INFO]: [EscrowWorker] Released order 966139 — ₦5.89 credited to seller 20
+[2026-04-17T21:41:14.874Z] [INFO]: [EscrowWorker] Released order 748879 — ₦2.38 credited to seller 287
+[2026-04-17T21:41:14.887Z] [INFO]: [EscrowWorker] Released order 279037 — ₦4.75 credited to seller 733
+[2026-04-17T21:41:14.901Z] [INFO]: [EscrowWorker] Released order 675720 — ₦5.70 credited to seller 733
+[2026-04-17T21:41:14.913Z] [INFO]: [EscrowWorker] Released order 115299 — ₦4.75 credited to seller 536
+[2026-04-17T21:41:14.924Z] [INFO]: [EscrowWorker] Released order 326935 — ₦3.80 credited to seller 536
+[2026-04-17T21:41:14.936Z] [INFO]: [EscrowWorker] Released order 473506 — ₦2.85 credited to seller 20
+[2026-04-17T21:46:14.454Z] [INFO]: [EscrowWorker] 50 expired escrow order(s) found
+[2026-04-17T21:46:14.488Z] [INFO]: [EscrowWorker] Released order 432547 — ₦2.85 credited to seller 20
+[2026-04-17T21:46:14.501Z] [INFO]: [EscrowWorker] Released order 703597 — ₦3.33 credited to seller 287
+[2026-04-17T21:46:14.513Z] [INFO]: [EscrowWorker] Released order 968596 — ₦5.70 credited to seller 733
+[2026-04-17T21:46:14.523Z] [INFO]: [EscrowWorker] Released order 554023 — ₦3.80 credited to seller 536
+[2026-04-17T21:46:14.526Z] [INFO]: [EscrowWorker] Order 554023 already claimed by queue — skipping
+[2026-04-17T21:46:14.539Z] [INFO]: [EscrowWorker] Released order 559465 — ₦3.80 credited to seller 536
+[2026-04-17T21:46:14.551Z] [INFO]: [EscrowWorker] Released order 647981 — ₦5.70 credited to seller 287
+[2026-04-17T21:46:14.562Z] [INFO]: [EscrowWorker] Released order 838524 — ₦4.75 credited to seller 536
+[2026-04-17T21:46:14.573Z] [INFO]: [EscrowWorker] Released order 202769 — ₦6.17 credited to seller 20
+[2026-04-17T21:46:14.584Z] [INFO]: [EscrowWorker] Released order 764054 — ₦4.75 credited to seller 733
+[2026-04-17T21:46:14.594Z] [INFO]: [EscrowWorker] Released order 313989 — ₦6.65 credited to seller 287
+[2026-04-17T21:46:14.607Z] [INFO]: [EscrowWorker] Released order 417062 — ₦4.75 credited to seller 536
+[2026-04-17T21:46:14.619Z] [INFO]: [EscrowWorker] Released order 173759 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.632Z] [INFO]: [EscrowWorker] Released order 118778 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.645Z] [INFO]: [EscrowWorker] Released order 301366 — ₦3.80 credited to seller 536
+[2026-04-17T21:46:14.658Z] [INFO]: [EscrowWorker] Released order 465337 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.668Z] [INFO]: [EscrowWorker] Released order 837043 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.679Z] [INFO]: [EscrowWorker] Released order 294744 — ₦7.13 credited to seller 20
+[2026-04-17T21:46:14.691Z] [INFO]: [EscrowWorker] Released order 425495 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.702Z] [INFO]: [EscrowWorker] Released order 712820 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.714Z] [INFO]: [EscrowWorker] Released order 701561 — ₦4.28 credited to seller 287
+[2026-04-17T21:46:14.725Z] [INFO]: [EscrowWorker] Released order 954080 — ₦7.13 credited to seller 20
+[2026-04-17T21:46:14.736Z] [INFO]: [EscrowWorker] Released order 453032 — ₦5.70 credited to seller 733
+[2026-04-17T21:46:14.749Z] [INFO]: [EscrowWorker] Released order 920041 — ₦5.70 credited to seller 733
+[2026-04-17T21:46:14.762Z] [INFO]: [EscrowWorker] Released order 120183 — ₦2.38 credited to seller 1046
+[2026-04-17T21:46:14.774Z] [INFO]: [EscrowWorker] Released order 223441 — ₦5.70 credited to seller 733
+[2026-04-17T21:46:14.783Z] [INFO]: [EscrowWorker] Released order 611838 — ₦2.38 credited to seller 1046
+[2026-04-17T21:46:14.793Z] [INFO]: [EscrowWorker] Released order 926274 — ₦4.75 credited to seller 733
+[2026-04-17T21:46:14.803Z] [INFO]: [EscrowWorker] Released order 209437 — ₦2.85 credited to seller 1092
+[2026-04-17T21:46:14.814Z] [INFO]: [EscrowWorker] Released order 989211 — ₦2.85 credited to seller 1092
+[2026-04-17T21:46:14.816Z] [INFO]: [EscrowWorker] Order 989211 already claimed by queue — skipping
+[2026-04-17T21:46:14.828Z] [INFO]: [EscrowWorker] Released order 966900 — ₦3.33 credited to seller 1092
+[2026-04-17T21:46:14.840Z] [INFO]: [EscrowWorker] Released order 544726 — ₦2.85 credited to seller 20
+[2026-04-17T21:46:14.851Z] [INFO]: [EscrowWorker] Released order 750059 — ₦3.80 credited to seller 20
+[2026-04-17T21:46:14.861Z] [INFO]: [EscrowWorker] Released order 741059 — ₦3.33 credited to seller 19
+[2026-04-17T21:46:14.871Z] [INFO]: [EscrowWorker] Released order 911789 — ₦3.33 credited to seller 1092
+[2026-04-17T21:46:14.873Z] [INFO]: [EscrowWorker] Order 911789 already claimed by queue — skipping
+[2026-04-17T21:46:14.885Z] [INFO]: [EscrowWorker] Released order 183839 — ₦5.70 credited to seller 733
+[2026-04-17T21:46:14.894Z] [INFO]: [EscrowWorker] Released order 702332 — ₦2.85 credited to seller 1092
+[2026-04-17T21:46:14.903Z] [INFO]: [EscrowWorker] Released order 454266 — ₦2.38 credited to seller 1046
+[2026-04-17T21:46:14.913Z] [INFO]: [EscrowWorker] Released order 456676 — ₦2.85 credited to seller 20
+[2026-04-17T21:46:14.924Z] [INFO]: [EscrowWorker] Released order 319355 — ₦3.33 credited to seller 1092
+[2026-04-17T21:46:14.938Z] [INFO]: [EscrowWorker] Released order 915301 — ₦3.33 credited to seller 1092
+[2026-04-17T21:46:14.941Z] [INFO]: [EscrowWorker] Order 915301 already claimed by queue — skipping
+[2026-04-17T21:46:14.953Z] [INFO]: [EscrowWorker] Released order 146007 — ₦5.70 credited to seller 733
+[2026-04-17T21:46:14.966Z] [INFO]: [EscrowWorker] Released order 724935 — ₦3.33 credited to seller 1092
+[2026-04-17T21:46:14.978Z] [INFO]: [EscrowWorker] Released order 573627 — ₦5.70 credited to seller 564
+[2026-04-17T21:46:14.989Z] [INFO]: [EscrowWorker] Released order 261165 — ₦2.85 credited to seller 1092
+[2026-04-17T21:46:15.003Z] [INFO]: [EscrowWorker] Released order 617472 — ₦11.40 credited to seller 1089
+[2026-04-17T21:46:15.015Z] [INFO]: [EscrowWorker] Released order 142170 — ₦3.80 credited to seller 20
+[2026-04-17T21:51:14.454Z] [INFO]: [EscrowWorker] 50 expired escrow order(s) found
+[2026-04-17T21:51:14.489Z] [INFO]: [EscrowWorker] Released order 776890 — ₦8.07 credited to seller 735
+[2026-04-17T21:51:14.501Z] [INFO]: [EscrowWorker] Released order 835584 — ₦3.33 credited to seller 20
+[2026-04-17T21:51:14.512Z] [INFO]: [EscrowWorker] Released order 878300 — ₦4.28 credited to seller 287
+[2026-04-17T21:51:14.522Z] [INFO]: [EscrowWorker] Released order 220241 — ₦5.70 credited to seller 564
+[2026-04-17T21:51:14.532Z] [INFO]: [EscrowWorker] Released order 185162 — ₦2.85 credited to seller 132
+[2026-04-17T21:51:14.543Z] [INFO]: [EscrowWorker] Released order 887260 — ₦4.28 credited to seller 287
+[2026-04-17T21:51:14.555Z] [INFO]: [EscrowWorker] Released order 862533 — ₦2.85 credited to seller 1092
+[2026-04-17T21:51:14.566Z] [INFO]: [EscrowWorker] Released order 911412 — ₦7.13 credited to seller 1092
+[2026-04-17T21:51:14.577Z] [INFO]: [EscrowWorker] Released order 882632 — ₦2.85 credited to seller 132
+[2026-04-17T21:51:14.588Z] [INFO]: [EscrowWorker] Released order 239553 — ₦2.85 credited to seller 132
+[2026-04-17T21:51:14.599Z] [INFO]: [EscrowWorker] Released order 672412 — ₦3.33 credited to seller 1047
+[2026-04-17T21:51:14.610Z] [INFO]: [EscrowWorker] Released order 160562 — ₦2.85 credited to seller 132
+[2026-04-17T21:51:14.613Z] [INFO]: [EscrowWorker] Order 160562 already claimed by queue — skipping
+[2026-04-17T21:51:14.624Z] [INFO]: [EscrowWorker] Released order 693903 — ₦6.46 credited to seller 20
+[2026-04-17T21:51:14.635Z] [INFO]: [EscrowWorker] Released order 777207 — ₦3.33 credited to seller 1092
+[2026-04-17T21:51:14.648Z] [INFO]: [EscrowWorker] Released order 312668 — ₦3.80 credited to seller 20
+[2026-04-17T21:51:14.660Z] [INFO]: [EscrowWorker] Released order 654423 — ₦2.85 credited to seller 132
+[2026-04-17T21:51:14.671Z] [INFO]: [EscrowWorker] Released order 895675 — ₦2.85 credited to seller 1092
+[2026-04-17T21:51:14.674Z] [INFO]: [EscrowWorker] Order 895675 already claimed by queue — skipping
+[2026-04-17T21:51:14.686Z] [INFO]: [EscrowWorker] Released order 613193 — ₦4.75 credited to seller 20
+[2026-04-17T21:51:14.699Z] [INFO]: [EscrowWorker] Released order 797551 — ₦3.33 credited to seller 1047
+[2026-04-17T21:51:14.707Z] [INFO]: [EscrowWorker] Released order 354188 — ₦4.28 credited to seller 287
+[2026-04-17T21:51:14.716Z] [INFO]: [EscrowWorker] Released order 833247 — ₦3.33 credited to seller 1046
+[2026-04-17T21:51:14.726Z] [INFO]: [EscrowWorker] Released order 875924 — ₦4.75 credited to seller 20
+[2026-04-17T21:51:14.736Z] [INFO]: [EscrowWorker] Released order 405990 — ₦2.85 credited to seller 132
+[2026-04-17T21:51:14.745Z] [INFO]: [EscrowWorker] Released order 627784 — ₦3.33 credited to seller 1092
+[2026-04-17T21:51:14.747Z] [INFO]: [EscrowWorker] Order 627784 already claimed by queue — skipping
+[2026-04-17T21:51:14.757Z] [INFO]: [EscrowWorker] Released order 646868 — ₦4.75 credited to seller 20
+[2026-04-17T21:51:14.767Z] [INFO]: [EscrowWorker] Released order 407527 — ₦0.95 credited to seller 287
+[2026-04-17T21:51:14.776Z] [INFO]: [EscrowWorker] Released order 464972 — ₦3.71 credited to seller 20
+[2026-04-17T21:51:14.786Z] [INFO]: [EscrowWorker] Released order 140583 — ₦3.33 credited to seller 1047
+[2026-04-17T21:51:14.797Z] [INFO]: [EscrowWorker] Released order 384947 — ₦7.13 credited to seller 1092
+[2026-04-17T21:51:14.807Z] [INFO]: [EscrowWorker] Released order 224444 — ₦3.99 credited to seller 1046
+[2026-04-17T21:51:14.817Z] [INFO]: [EscrowWorker] Released order 200068 — ₦2.85 credited to seller 1092
+[2026-04-17T21:51:14.828Z] [INFO]: [EscrowWorker] Released order 113507 — ₦6.65 credited to seller 735
+[2026-04-17T21:51:14.831Z] [INFO]: [EscrowWorker] Order 113507 already claimed by queue — skipping
+[2026-04-17T21:51:14.843Z] [INFO]: [EscrowWorker] Released order 650747 — ₦3.33 credited to seller 1047
+[2026-04-17T21:51:14.857Z] [INFO]: [EscrowWorker] Released order 388527 — ₦5.70 credited to seller 733
+[2026-04-17T21:51:14.869Z] [INFO]: [EscrowWorker] Released order 848912 — ₦2.85 credited to seller 1092
+[2026-04-17T21:51:14.879Z] [INFO]: [EscrowWorker] Released order 463272 — ₦14.25 credited to seller 1091
+[2026-04-17T21:51:14.890Z] [INFO]: [EscrowWorker] Released order 178780 — ₦6.65 credited to seller 735
+[2026-04-17T21:51:14.892Z] [INFO]: [EscrowWorker] Order 178780 already claimed by queue — skipping
+[2026-04-17T21:51:14.895Z] [INFO]: [EscrowWorker] Order 178780 already claimed by queue — skipping
+[2026-04-17T21:51:14.905Z] [INFO]: [EscrowWorker] Released order 371997 — ₦7.13 credited to seller 1092
+[2026-04-17T21:51:14.916Z] [INFO]: [EscrowWorker] Released order 978868 — ₦3.33 credited to seller 1046
+[2026-04-17T21:51:14.926Z] [INFO]: [EscrowWorker] Released order 315698 — ₦2.85 credited to seller 20
+[2026-04-17T21:51:14.936Z] [INFO]: [EscrowWorker] Released order 812061 — ₦3.33 credited to seller 1092
+[2026-04-17T21:51:14.949Z] [INFO]: [EscrowWorker] Released order 211232 — ₦2.85 credited to seller 20
+[2026-04-17T21:51:14.961Z] [INFO]: [EscrowWorker] Released order 771641 — ₦7.13 credited to seller 1092
+[2026-04-17T21:51:14.973Z] [INFO]: [EscrowWorker] Released order 293868 — ₦4.75 credited to seller 536
+[2026-04-17T21:56:14.454Z] [INFO]: [EscrowWorker] 27 expired escrow order(s) found
+[2026-04-17T21:56:14.490Z] [INFO]: [EscrowWorker] Released order 782067 — ₦3.33 credited to seller 1092
+[2026-04-17T21:56:14.503Z] [INFO]: [EscrowWorker] Released order 550287 — ₦3.80 credited to seller 536
+[2026-04-17T21:56:14.507Z] [INFO]: [EscrowWorker] Order 550287 already claimed by queue — skipping
+[2026-04-17T21:56:14.519Z] [INFO]: [EscrowWorker] Released order 862245 — ₦3.71 credited to seller 20
+[2026-04-17T21:56:14.531Z] [INFO]: [EscrowWorker] Released order 788267 — ₦3.80 credited to seller 536
+[2026-04-17T21:56:14.543Z] [INFO]: [EscrowWorker] Released order 947351 — ₦3.80 credited to seller 536
+[2026-04-17T21:56:14.545Z] [INFO]: [EscrowWorker] Order 947351 already claimed by queue — skipping
+[2026-04-17T21:56:14.549Z] [INFO]: [EscrowWorker] Order 947351 already claimed by queue — skipping
+[2026-04-17T21:56:14.550Z] [INFO]: [EscrowWorker] Order 947351 already claimed by queue — skipping
+[2026-04-17T21:56:14.552Z] [INFO]: [EscrowWorker] Order 947351 already claimed by queue — skipping
+[2026-04-17T21:56:14.563Z] [INFO]: [EscrowWorker] Released order 607656 — ₦2.85 credited to seller 20
+[2026-04-17T21:56:14.573Z] [INFO]: [EscrowWorker] Released order 595177 — ₦3.33 credited to seller 1047
+[2026-04-17T21:56:14.584Z] [INFO]: [EscrowWorker] Released order 981874 — ₦4.75 credited to seller 536
+[2026-04-17T21:56:14.595Z] [INFO]: [EscrowWorker] Released order 146937 — ₦3.80 credited to seller 20
+[2026-04-17T21:56:14.607Z] [INFO]: [EscrowWorker] Released order 140378 — ₦2.85 credited to seller 20
+[2026-04-17T21:56:14.620Z] [INFO]: [EscrowWorker] Released order 137884 — ₦2.85 credited to seller 20
+[2026-04-17T21:56:14.631Z] [INFO]: [EscrowWorker] Released order 233919 — ₦4.75 credited to seller 536
+[2026-04-17T21:56:14.642Z] [INFO]: [EscrowWorker] Released order 502692 — ₦2.85 credited to seller 132
+[2026-04-17T21:56:14.654Z] [INFO]: [EscrowWorker] Released order 403104 — ₦2.85 credited to seller 132
+[2026-04-17T21:56:14.667Z] [INFO]: [EscrowWorker] Released order 562970 — ₦3.80 credited to seller 536
+[2026-04-17T21:56:14.679Z] [INFO]: [EscrowWorker] Released order 673100 — ₦2.38 credited to seller 132
+[2026-04-17T21:56:14.691Z] [INFO]: [EscrowWorker] Released order 103170 — ₦2.38 credited to seller 132
+[2026-04-17T21:56:14.703Z] [INFO]: [EscrowWorker] Released order 446419 — ₦1.90 credited to seller 132
+[2026-04-17T21:56:14.715Z] [INFO]: [EscrowWorker] Released order 509633 — ₦4.75 credited to seller 733
+[2026-04-17T21:56:14.727Z] [INFO]: [EscrowWorker] Released order 345651 — ₦11.40 credited to seller 20
+[2026-04-17T21:56:14.737Z] [INFO]: [EscrowWorker] Released order 130128 — ₦5.70 credited to seller 733
+[2026-04-17T21:56:14.739Z] [INFO]: [EscrowWorker] Order 130128 already claimed by queue — skipping

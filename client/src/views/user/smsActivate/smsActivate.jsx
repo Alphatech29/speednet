@@ -23,6 +23,7 @@ const statusConfig = {
 };
 
 const formatCountdown = (seconds) => {
+  if (seconds == null || isNaN(seconds)) return "--:--";
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
@@ -64,34 +65,24 @@ const SmsActivate = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Sync countdowns to server time whenever messages update
+  // Single tick — uses expiry_unix (clean integer from backend, no parsing needed)
   useEffect(() => {
-    setCountdowns(() => {
+    const tick = () => {
+      const now = Math.floor(Date.now() / 1000);
       const updated = {};
       smsMessages.forEach((sms) => {
-        if (sms.status === 0 && sms.time) {
-          const now = Math.floor(Date.now() / 1000);
-          const remaining = Number(sms.time) - now;
+        if (sms.status === 0 && sms.expiry_unix) {
+          const remaining = sms.expiry_unix - now;
           updated[String(sms.orderid)] = remaining > 0 ? remaining : 0;
         }
       });
-      return updated;
-    });
-  }, [smsMessages]);
+      setCountdowns(updated);
+    };
 
-  // Stable tick — never re-created, just decrements existing values
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdowns((prev) => {
-        const updated = {};
-        Object.entries(prev).forEach(([id, remaining]) => {
-          updated[String(id)] = remaining > 0 ? remaining - 1 : 0;
-        });
-        return updated;
-      });
-    }, 1000);
+    tick();
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [smsMessages]);
 
   const copyToClipboard = (text) => {
     if (!text) return toast.error("Nothing to copy");
@@ -106,18 +97,17 @@ const SmsActivate = () => {
     return isNaN(d) ? "N/A" : d.toLocaleString();
   };
 
-  const formatUnix = (timestamp) => {
-    if (!timestamp) return "N/A";
-    return new Date(Number(timestamp) * 1000).toLocaleTimeString(undefined, {
-      hour: "2-digit", minute: "2-digit",
-    });
+  const formatUnix = (expiry_unix) => {
+    if (!expiry_unix) return "N/A";
+    const d = new Date(expiry_unix * 1000);
+    return isNaN(d) ? "N/A" : d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
   };
 
 
   const stats = [
     {
       label: "Active Numbers",
-      value: smsMessages.filter((m) => m.status === 0).length,
+      value: smsMessages.filter((m) => m.status === 0 || m.status === 1).length,
       icon: FaPhone,
       iconBg: "bg-blue-500",
       cardBg: "bg-blue-50 dark:bg-blue-500/10",
@@ -246,7 +236,7 @@ const SmsActivate = () => {
             {smsMessages.map((sms, idx) => {
               const flagUrl = getCountryFlag(sms?.country);
               const countdown = countdowns[String(sms.orderid)];
-              const isLocallyExpired = sms.status === 0 && countdown === 0 && sms.time;
+              const isLocallyExpired = sms.status === 0 && countdown === 0 && sms.expiry_unix;
               const effectiveStatus = isLocallyExpired ? 2 : sms.status;
               const statusCfg = statusConfig[effectiveStatus] ?? statusConfig[0];
 
@@ -345,7 +335,7 @@ const SmsActivate = () => {
 
                   <div className="flex items-center justify-between mt-2">
                     <p className="text-[10px] text-gray-400 dark:text-slate-600">Ordered: {formatDate(sms?.created_at)}</p>
-                    {sms?.time && <p className="text-[10px] text-gray-400 dark:text-slate-600">Expires: {formatUnix(sms.time)}</p>}
+                    {sms?.expiry_unix && <p className="text-[10px] text-gray-400 dark:text-slate-600">Expires: {formatUnix(sms.expiry_unix)}</p>}
                   </div>
                 </motion.div>
               );

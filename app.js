@@ -127,6 +127,19 @@ try {
   console.error("Darkshop worker load failed:", err);
 }
 
+// Escrow Release Worker (NON-CRITICAL)
+try {
+  const { startEscrowWorker } = require("./utility/escrowWorker");
+  startEscrowWorker();
+  logger.info("Escrow release worker started.");
+} catch (err) {
+  logger.error("Failed to start escrow release worker", {
+    message: err.message,
+    stack: err.stack,
+  });
+  console.error("Escrow worker load failed:", err);
+}
+
 // Start HTTP Server
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {

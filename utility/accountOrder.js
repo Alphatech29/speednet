@@ -142,9 +142,46 @@ const getEscrowExpiryByOrderNo = async (orderNo) => {
   }
 };
 
+// Get all orders whose escrow window has passed and haven't been released yet.
+// Returns rows with: order_no, seller_id, product_id, price
+const getExpiredUnreleasedEscrowOrders = async () => {
+  try {
+    const [rows] = await pool.execute(
+      `SELECT order_no, seller_id, account_id AS product_id, price
+       FROM account_order
+       WHERE payment_status = 'Completed'
+         AND escrow_expires_at IS NOT NULL
+         AND escrow_expires_at <= NOW()
+       LIMIT 50`
+    );
+    return rows;
+  } catch (error) {
+    logger.error(`[getExpiredUnreleasedEscrowOrders] DB error: ${error.message}`);
+    return [];
+  }
+};
+
+// Atomically claim an order for release.
+// Returns true if this caller won the lock (0 → 1 rows updated means another process got there first).
+const claimEscrowRelease = async (order_no) => {
+  try {
+    const [result] = await pool.execute(
+      `UPDATE account_order SET payment_status = 'Released'
+       WHERE order_no = ? AND payment_status = 'Completed'`,
+      [order_no]
+    );
+    return result.affectedRows > 0;
+  } catch (error) {
+    logger.error(`[claimEscrowRelease] DB error for order ${order_no}: ${error.message}`);
+    return false;
+  }
+};
+
 module.exports = {
   storeOrder,
   storeOrderHistory,
   getOrdersByUser,
   getEscrowExpiryByOrderNo,
+  getExpiredUnreleasedEscrowOrders,
+  claimEscrowRelease,
 };

@@ -7,7 +7,7 @@ const {
   updateTransactionStatus,
 } = require('./merchantHistory');
 const { generateUniqueRandomNumber } = require('./random');
-const { getEscrowExpiryByOrderNo } = require('./accountOrder');
+const { getEscrowExpiryByOrderNo, claimEscrowRelease } = require('./accountOrder');
 const logger = require('./logger');
 
 const TIMEZONE = 'Africa/Lagos';
@@ -31,6 +31,13 @@ queue.process(async (jobData) => {
       order_no,
       commission,
     } = jobData;
+
+    // Atomically claim this order — if the escrow worker already released it, skip
+    const claimed = await claimEscrowRelease(order_no);
+    if (!claimed) {
+      logger.info(`[QUEUE SKIP] Order ${order_no} already released by worker — skipping`);
+      return;
+    }
 
     const user = await getUserDetailsByUid(seller_id);
     if (!user) throw new Error(`Seller not found for ID ${seller_id}`);

@@ -124,7 +124,7 @@ const getServicesByCountry = async (countryId) => {
       price = Number((price * (1 + percentIncrease / 100)).toFixed(4));
     }
     return {
-      ID: svc.code,   // keep ID so frontend stays compatible
+      ID: svc.code,
       code: svc.code,
       name: svc.name,
       count: info?.count ?? 0,
@@ -215,6 +215,17 @@ const cancelActivation = async (activationId) => {
   }
 };
 
+// Resolve the stored `time` field (whatever MySQL returns) to a Unix timestamp in seconds.
+// Handles: plain integer, numeric string, ISO string, JS Date object.
+const resolveExpiryUnix = (t) => {
+  if (!t) return null;
+  if (t instanceof Date) return Math.floor(t.getTime() / 1000);
+  const num = Number(t);
+  if (!isNaN(num) && num > 1e9) return Math.floor(num); // already Unix seconds
+  const d = new Date(t);
+  return isNaN(d.getTime()) ? null : Math.floor(d.getTime() / 1000);
+};
+
 // Get SMS service records by user
 async function getSmsServiceByUserId(req, res) {
   try {
@@ -229,7 +240,9 @@ async function getSmsServiceByUserId(req, res) {
 
     if (!rows.length) return res.status(404).json({ success: false, message: "No records found for this user" });
 
-    return res.status(200).json({ success: true, data: rows });
+    // Attach expiry_unix so the frontend gets a clean integer regardless of how MySQL stores/returns `time`
+    const data = rows.map((row) => ({ ...row, expiry_unix: resolveExpiryUnix(row.time) }));
+    return res.status(200).json({ success: true, data });
   } catch (error) {
     console.error("Error fetching SMS service records:", error);
     return res.status(500).json({ success: false, message: "Database error", error: error.message });

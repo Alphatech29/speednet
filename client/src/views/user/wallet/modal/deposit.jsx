@@ -302,19 +302,7 @@ const Deposit = ({ onClose }) => {
                   className="flex-1 bg-transparent pr-4 py-3.5 text-base font-bold text-gray-800 dark:text-white placeholder:text-gray-300 dark:placeholder:text-slate-600 focus:outline-none"
                 />
               </div>
-              {/* Naira equivalent */}
-              <AnimatePresence>
-                {hasAmount && nairaRate > 0 && (
-                  <motion.p
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="text-xs text-primary-600 font-semibold mt-1.5 pl-1"
-                  >
-                    ≈ ₦{Number(nairaAmount).toLocaleString("en-NG", { minimumFractionDigits: 2 })}
-                  </motion.p>
-                )}
-              </AnimatePresence>
+           
             </div>
 
             {/* Payment methods */}

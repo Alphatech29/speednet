@@ -46,7 +46,7 @@ const WhatsAppSupport = () => {
       <button
         onClick={restore}
         title="Show WhatsApp support"
-        className="fixed bottom-6 right-5 z-50 pc:z-[9999] w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 shadow flex items-center justify-center text-[#25d366] hover:scale-110 transition-all opacity-50 hover:opacity-100"
+        className="fixed bottom-6 mobile:bottom-[69px] right-5 z-50 pc:z-[9999] w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 shadow flex items-center justify-center text-[#25d366] hover:scale-110 transition-all opacity-50 hover:opacity-100"
       >
         <FaWhatsapp size={15} />
       </button>
@@ -54,7 +54,7 @@ const WhatsAppSupport = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-5 z-[9999] flex flex-col items-end gap-3 pointer-events-none">
+    <div className="fixed bottom-6 mobile:bottom-[69px] right-5 z-[9999] flex flex-col items-end gap-3 pointer-events-none">
 
       {/* Greeting bubble */}
       <AnimatePresence>
@@ -148,10 +148,22 @@ const WhatsAppSupport = () => {
         )}
       </AnimatePresence>
 
+      {/* FAB + hide button row */}
+      <div className="pointer-events-auto flex items-center gap-2">
+        {/* Hide button — sm only */}
+        <button
+          onClick={hide}
+          title="Hide support"
+          className="sm:hidden flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-white/10 shadow text-[11px] font-semibold text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-500/30 transition-all"
+        >
+          <HiX size={10} />
+          Hide
+        </button>
+
       {/* FAB Button */}
       <button
         onClick={() => { setOpen((p) => !p); setShowBubble(false); }}
-        className="pointer-events-auto relative w-14 h-14 rounded-full bg-[#25d366] hover:bg-[#1ebe5d] text-white shadow-lg shadow-[#25d366]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+        className="relative w-14 h-14 rounded-full bg-[#25d366] hover:bg-[#1ebe5d] text-white shadow-lg shadow-[#25d366]/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95"
       >
         {/* Pulse ring */}
         {!open && (
@@ -181,6 +193,7 @@ const WhatsAppSupport = () => {
           )}
         </AnimatePresence>
       </button>
+      </div>
     </div>
   );
 };

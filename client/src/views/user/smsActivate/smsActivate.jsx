@@ -11,8 +11,8 @@ import { HiPlus } from "react-icons/hi";
 import { MdRefresh } from "react-icons/md";
 import {
   getSmsServiceByUserId,
-  getSmsPoolCountries,
 } from "../../../components/backendApis/sms-service/sms-service";
+import ServiceLogo, { getCountryFlag } from "./ServiceLogo";
 
 const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } };
 
@@ -23,9 +23,11 @@ const statusConfig = {
 };
 
 const formatCountdown = (seconds) => {
-  const m = Math.floor(seconds / 60);
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
-  return `${m}:${s.toString().padStart(2, "0")}`;
+  if (h > 0) return `${h}h ${m.toString().padStart(2, "0")}m ${s.toString().padStart(2, "0")}s`;
+  return `${m}m ${s.toString().padStart(2, "0")}s`;
 };
 
 const SmsActivate = () => {
@@ -33,7 +35,6 @@ const SmsActivate = () => {
   const [smsMessages, setSmsMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countdowns, setCountdowns] = useState({});
-  const [countries, setCountries] = useState([]);
 
   const fetchSmsMessages = async () => {
     setLoading(true);
@@ -55,20 +56,6 @@ const SmsActivate = () => {
     }
   };
 
-  const fetchCountries = async () => {
-    try {
-      const cached = localStorage.getItem("smsCountries");
-      if (cached) { setCountries(JSON.parse(cached)); return; }
-      const res = await getSmsPoolCountries();
-      if (res.success && Array.isArray(res.data)) {
-        setCountries(res.data);
-        localStorage.setItem("smsCountries", JSON.stringify(res.data));
-      }
-    } catch (err) {
-      console.error("Error fetching countries:", err);
-    }
-  };
-
   useEffect(() => {
     const cachedSms = localStorage.getItem("smsMessages");
     if (cachedSms) setSmsMessages(JSON.parse(cachedSms));
@@ -77,24 +64,34 @@ const SmsActivate = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => { fetchCountries(); }, []);
+  // Sync countdowns to server time whenever messages update
+  useEffect(() => {
+    setCountdowns(() => {
+      const updated = {};
+      smsMessages.forEach((sms) => {
+        if (sms.status === 0 && sms.time) {
+          const now = Math.floor(Date.now() / 1000);
+          const remaining = Number(sms.time) - now;
+          updated[String(sms.orderid)] = remaining > 0 ? remaining : 0;
+        }
+      });
+      return updated;
+    });
+  }, [smsMessages]);
 
+  // Stable tick — never re-created, just decrements existing values
   useEffect(() => {
     const interval = setInterval(() => {
-      setCountdowns(() => {
+      setCountdowns((prev) => {
         const updated = {};
-        smsMessages.forEach((sms) => {
-          if (sms.status === 0 && sms.time) {
-            const now = Math.floor(Date.now() / 1000);
-            const remaining = Number(sms.time) - now;
-            updated[sms.orderid] = remaining > 0 ? remaining : 0;
-          }
+        Object.entries(prev).forEach(([id, remaining]) => {
+          updated[String(id)] = remaining > 0 ? remaining - 1 : 0;
         });
         return updated;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [smsMessages]);
+  }, []);
 
   const copyToClipboard = (text) => {
     if (!text) return toast.error("Nothing to copy");
@@ -103,19 +100,19 @@ const SmsActivate = () => {
       .catch(() => toast.error("Failed to copy"));
   };
 
-  const formatDate = (dateString) =>
-    dateString ? new Date(dateString).toLocaleString() : "N/A";
-
-  const getCountryShortName = (country) => {
-    if (!country || !countries.length) return null;
-    const match = countries.find(
-      (c) => c.name?.toLowerCase() === country?.toLowerCase() || String(c.id) === String(country)
-    );
-    return match?.short_name || null;
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const d = new Date(dateString);
+    return isNaN(d) ? "N/A" : d.toLocaleString();
   };
 
-  const getFlagUrl = (shortName) =>
-    shortName ? `https://flagcdn.com/w20/${shortName.toLowerCase()}.png` : null;
+  const formatUnix = (timestamp) => {
+    if (!timestamp) return "N/A";
+    return new Date(Number(timestamp) * 1000).toLocaleTimeString(undefined, {
+      hour: "2-digit", minute: "2-digit",
+    });
+  };
+
 
   const stats = [
     {
@@ -247,10 +244,11 @@ const SmsActivate = () => {
         ) : (
           <div className="divide-y divide-gray-50 dark:divide-slate-800">
             {smsMessages.map((sms, idx) => {
-              const shortName = getCountryShortName(sms?.country);
-              const flagUrl = getFlagUrl(shortName);
-              const statusCfg = statusConfig[sms.status] ?? statusConfig[0];
-              const countdown = countdowns[sms.orderid];
+              const flagUrl = getCountryFlag(sms?.country);
+              const countdown = countdowns[String(sms.orderid)];
+              const isLocallyExpired = sms.status === 0 && countdown === 0 && sms.time;
+              const effectiveStatus = isLocallyExpired ? 2 : sms.status;
+              const statusCfg = statusConfig[effectiveStatus] ?? statusConfig[0];
 
               return (
                 <motion.div
@@ -264,9 +262,7 @@ const SmsActivate = () => {
                   {/* Top row */}
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-2xl bg-primary-600/10 flex items-center justify-center flex-shrink-0">
-                        <FaPhone className="text-primary-600 text-sm" />
-                      </div>
+                      <ServiceLogo name={sms?.service || "unknown"} />
                       <div>
                         <p className="text-base font-extrabold text-gray-900 dark:text-white tracking-wide">
                           +{sms?.number || "N/A"}
@@ -276,22 +272,21 @@ const SmsActivate = () => {
                             <img
                               src={flagUrl}
                               alt={sms?.country}
-                              className="w-4 h-3 rounded-sm object-cover"
+                              className="w-4 h-3 rounded-sm object-cover flex-shrink-0"
                             />
                           )}
-                          <span className="text-xs text-gray-400 dark:text-slate-500">
-                            {sms?.service || "Unknown service"}
+                          <span className="text-xs text-gray-400 dark:text-slate-500 truncate">
+                            {sms?.service || "Unknown"}
                           </span>
+                          {sms?.country && (
+                            <span className="text-xs text-gray-400 dark:text-slate-500 flex-shrink-0">
+                              · {sms.country}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      {sms.status === 0 && countdown > 0 && (
-                        <span className="text-xs font-bold text-primary-600 bg-primary-600/10 px-2.5 py-1 rounded-xl flex items-center gap-1">
-                          <BsClockHistory size={11} />
-                          {formatCountdown(countdown)}
-                        </span>
-                      )}
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusCfg.className}`}>
                         {statusCfg.label}
                       </span>
@@ -299,7 +294,7 @@ const SmsActivate = () => {
                   </div>
 
                   {/* Status content */}
-                  {sms.status === 1 ? (
+                  {effectiveStatus === 1 ? (
                     <div className="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/30 rounded-2xl p-3">
                       <p className="text-xs text-green-700 dark:text-green-400 font-semibold mb-2">
                         SMS received! Your verification code is ready.
@@ -319,7 +314,7 @@ const SmsActivate = () => {
                         </button>
                       </div>
                     </div>
-                  ) : sms.status === 2 ? (
+                  ) : effectiveStatus === 2 ? (
                     <div className="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800/30 rounded-2xl p-3 flex items-center gap-3">
                       <ImCancelCircle className="text-red-500 text-lg flex-shrink-0" />
                       <p className="text-xs text-red-600 dark:text-red-400">
@@ -330,9 +325,14 @@ const SmsActivate = () => {
                     <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/30 rounded-2xl p-3 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <BsClockHistory className="text-amber-500 text-lg animate-pulse flex-shrink-0" />
-                        <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
-                          Waiting for SMS...
-                        </p>
+                        <div>
+                          <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
+                            Waiting for SMS...
+                          </p>
+                          <p className="text-sm font-extrabold text-amber-600 dark:text-amber-300 tabular-nums mt-0.5">
+                            {formatCountdown(countdown)}
+                          </p>
+                        </div>
                       </div>
                       <button
                         onClick={() => copyToClipboard(sms?.number)}
@@ -343,7 +343,10 @@ const SmsActivate = () => {
                     </div>
                   )}
 
-                  <p className="text-[10px] text-gray-400 dark:text-slate-600 mt-2">{formatDate(sms?.created_at)}</p>
+                  <div className="flex items-center justify-between mt-2">
+                    <p className="text-[10px] text-gray-400 dark:text-slate-600">Ordered: {formatDate(sms?.created_at)}</p>
+                    {sms?.time && <p className="text-[10px] text-gray-400 dark:text-slate-600">Expires: {formatUnix(sms.time)}</p>}
+                  </div>
                 </motion.div>
               );
             })}

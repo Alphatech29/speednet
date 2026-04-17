@@ -14091,3 +14091,11 @@
 [2026-04-17T15:00:17.056Z] [INFO]: API expiry alert sent to admin:
 [2026-04-17T15:00:20.602Z] [INFO]: API expiry alert sent to admin:
 [2026-04-17T15:00:23.775Z] [INFO]: API expiry alert sent to admin:
+[2026-04-17T15:12:43.235Z] [INFO]: API expiry cron job loaded successfully.
+[2026-04-17T15:12:43.238Z] [INFO]: Escrow job queue loaded successfully.
+[2026-04-17T15:12:43.268Z] [INFO]: Darkshop product maintenance job started.
+[2026-04-17T15:12:43.270Z] [INFO]: Darkshop pending-order worker started.
+[2026-04-17T15:12:43.277Z] [INFO]: Server started on http://localhost:8000
+[2026-04-17T15:12:44.447Z] [INFO]: Transporter is ready to send emails
+[2026-04-17T15:12:47.343Z] [INFO]: API expiry alert sent to admin:
+[2026-04-17T15:12:50.621Z] [INFO]: API expiry alert sent to admin:

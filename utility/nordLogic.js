@@ -3,6 +3,7 @@ const { createNordHistory } = require("./nordVpn");
 const {
   sendLowNordBalanceAlertEmailToAdmin,
 } = require("../email/mails/nordAdminBalance");
+const monitor = require("./monitor");
 
 async function handleNordSubscription(
   email,
@@ -28,6 +29,7 @@ async function handleNordSubscription(
     // Ensure balance does not go below 200
     const minimumBalance = 200;
     if (adminBalance - amount < minimumBalance) {
+      monitor.warn("NordVPN admin balance below minimum — subscription blocked", { adminBalance, amount, minimumBalance });
       // Send alert email in background
       sendLowNordBalanceAlertEmailToAdmin({
         balance: adminBalance.toFixed(2),
@@ -65,6 +67,7 @@ async function handleNordSubscription(
 
     console.log("Subscription history saved.");
     console.log("handleNordSubscription completed successfully.");
+    monitor.success("NordVPN subscription processed from admin balance", { user_id, plan_id: plan.id, amount, remainingBalance: adminBalance - amount });
 
     return {
       success: true,
@@ -73,6 +76,7 @@ async function handleNordSubscription(
       remainingBalance: adminBalance - amount,
     };
   } catch (error) {
+    monitor.error("NordVPN subscription processing crashed", { stack: error.stack, message: error.message, user_id });
     console.error("handleNordSubscription Error:", error.message);
     throw new Error(`Subscription failed: ${error.message}`);
   }

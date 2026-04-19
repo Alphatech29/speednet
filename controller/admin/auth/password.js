@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const pool = require("../../../model/db");
+const monitor = require("../../../utility/monitor");
 
 const adminUpdatePassword = async (req, res) => {
   try {
@@ -40,6 +41,7 @@ const adminUpdatePassword = async (req, res) => {
     // Compare old password
     const isMatch = await bcrypt.compare(oldPassword, admin.password);
     if (!isMatch) {
+      monitor.warn("Admin password change failed — wrong old password", { userId });
       return res.status(401).json({
         code: "INVALID_PASSWORD",
         message: "Old password is incorrect",
@@ -50,12 +52,14 @@ const adminUpdatePassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await pool.query(`UPDATE admin SET password = ? WHERE uid = ?`, [hashedPassword, userId]);
 
+    monitor.success("Admin password changed successfully", { userId });
     return res.status(200).json({
       success: true,
       message: "Password updated successfully",
     });
 
   } catch (error) {
+    monitor.error("Admin password change crashed", { stack: error.stack, message: error.message });
     console.error("System Error:", error.message);
     return res.status(500).json({
       code: "SYSTEM_ERROR",

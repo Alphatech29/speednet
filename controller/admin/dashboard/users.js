@@ -1,4 +1,5 @@
 const db = require("../../../model/db");
+const monitor = require("../../../utility/monitor");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -78,11 +79,13 @@ const updateUserById = async (req, res) => {
       });
     }
 
+    monitor.success("Admin updated user record", { uid, fields: Object.keys(fields) });
     return res.status(200).json({
       success: true,
       message: "User updated successfully",
     });
   } catch (error) {
+    monitor.error("Admin user update crashed", { stack: error.stack, message: error.message, uid });
     console.error("Update error:", error);
     return res.status(500).json({
       success: false,

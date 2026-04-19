@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 const { apis } = require("./apis");
 const sendApiExpiryAlertToAdmin = require("../email/mails/sendApiExpiryAlertToAdmin");
+const monitor = require("./monitor");
 
 const ALERT_THRESHOLD_DAYS = 10;
 
@@ -23,13 +24,9 @@ const checkAndSendAlerts = async () => {
     if (type) {
       try {
         await sendApiExpiryAlertToAdmin({ api, type });
-        console.log(
-          `Alert sent: ${api.name} ${
-            type === "expired"
-              ? "has expired."
-              : `is expiring in ${api.days_remaining} days.`
-          }`
-        );
+        const label = type === "expired" ? "has expired" : `expiring in ${api.days_remaining} days`;
+        monitor.warn(`API key alert: ${api.name} ${label}`, { apiName: api.name, daysRemaining: api.days_remaining, type });
+        console.log(`Alert sent: ${api.name} ${type === "expired" ? "has expired." : `is expiring in ${api.days_remaining} days.`}`);
       } catch (err) {
         console.error("Failed to send API alert:", err);
       }

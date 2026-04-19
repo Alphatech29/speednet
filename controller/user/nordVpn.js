@@ -3,6 +3,7 @@ const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userIn
 const { createTransactionHistory } = require("../../utility/history");
 const { handleNordSubscription } = require("../../utility/nordLogic");
 const {sendVpnOrderPendingEmail} = require("../../email/mails/vpnOrder");
+const monitor = require("../../utility/monitor");
 
 const NordPurchase = async (req, res) => {
   const payload = req.body;
@@ -42,6 +43,7 @@ const NordPurchase = async (req, res) => {
       await handleNordSubscription(email, plan, userId, full_name, country, zip_code);
       console.log("handleNordSubscription executed.");
     } catch (subscriptionError) {
+      monitor.error("NordVPN subscription processing failed", { stack: subscriptionError.stack, message: subscriptionError.message, userId, plan: plan.package_name });
       console.error("Error in handleNordSubscription:", subscriptionError);
       return res.status(500).json({
         success: false,
@@ -98,6 +100,8 @@ const NordPurchase = async (req, res) => {
     }
 
     // Return response
+    monitor.success("NordVPN purchased", { userId, plan: plan.package_name, amount: purchaseAmount, reference });
+
     return res.status(201).json({
       success: true,
       message: `Nordvpn_${plan.package_name} purchase successful`,
@@ -115,6 +119,7 @@ const NordPurchase = async (req, res) => {
     });
 
   } catch (error) {
+    monitor.error("NordVPN purchase system error", { stack: error.stack, message: error.message, userId });
     console.error("Unexpected error in NordPurchase:", error);
     return res.status(500).json({
       success: false,

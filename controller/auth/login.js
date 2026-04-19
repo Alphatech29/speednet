@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const pool = require("../../model/db");
 const { sendLoginNotificationEmail } = require("../../email/mails/login");
+const monitor = require("../../utility/monitor");
 
 const ACCESS_EXPIRY = 12 * 60 * 60 * 1000;
 
@@ -32,6 +33,7 @@ const login = async (req, res) => {
 
     // ✅ Check if user status is inactive (e.g., blocked, deactivated)
     if (user.status !== 1) {
+      monitor.warn("Suspended account login attempt", { userId: user.uid, email: user.email, ip: req.ip });
       return res.status(403).json({
         code: "ACCOUNT_INACTIVE",
         message: "Your account is subspended. Please contact support.",
@@ -41,6 +43,7 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password.trim(), user.password);
 
     if (!isMatch) {
+      monitor.warn("Failed login attempt — wrong password", { email, ip: req.ip });
       return res.status(401).json({
         code: "INVALID_CREDENTIALS",
         message: "Incorrect password",
@@ -63,6 +66,8 @@ const login = async (req, res) => {
       maxAge: ACCESS_EXPIRY,
     });
 
+    monitor.success("User logged in", { userId: user.uid, email: user.email, ip: req.ip });
+
     try {
       await sendLoginNotificationEmail(user, req.ip, req.headers["user-agent"]);
     } catch (emailErr) {
@@ -75,6 +80,7 @@ const login = async (req, res) => {
       tokenMetadata: { expiresIn: ACCESS_EXPIRY },
     });
   } catch (error) {
+    monitor.error("Login system error", { stack: error.stack, message: error.message });
     console.error("System Error:", error.message);
     return res.status(500).json({
       code: "SYSTEM_ERROR",

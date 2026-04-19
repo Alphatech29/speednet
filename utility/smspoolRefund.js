@@ -1,6 +1,7 @@
 const { getSmsServiceRecord, updateSmsServiceRecord, createTransactionHistory } = require("./history");
 const { getUserDetailsByUid, updateUserBalance } = require("./userInfo");
 const { cancelActivation } = require("./smspool");
+const monitor = require("./monitor");
 
 async function smspoolRefund(time, orderid) {
   if (!time || !orderid) {
@@ -56,6 +57,8 @@ async function smspoolRefund(time, orderid) {
         "Refund for Unused SMS service",
         "completed"
       );
+
+      monitor.success("SMS refund issued — no code received", { userId, orderId: orderid, amount });
 
       return {
         success: true,

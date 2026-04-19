@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { getUserPinByUid, insertUserPinByUid } = require("../../utility/pinValidation");
+const monitor = require("../../utility/monitor");
 
 /**
  * Set or update a user's transaction PIN
@@ -30,6 +31,7 @@ const setTransactionPin = async (req, res) => {
 
       const isOldPinCorrect = await bcrypt.compare(oldPin, existingHashedPin);
       if (!isOldPinCorrect) {
+        monitor.warn("Transaction PIN change failed — wrong old PIN", { userId });
         return res.status(401).json({
           status: false,
           message: "Old PIN is incorrect.",
@@ -41,6 +43,7 @@ const setTransactionPin = async (req, res) => {
     const hashedNewPin = await bcrypt.hash(newPin, 10);
     await insertUserPinByUid(userId, hashedNewPin);
 
+    monitor.success(existingHashedPin ? "Transaction PIN changed" : "Transaction PIN set", { userId });
     return res.status(200).json({
       status: true,
       message: existingHashedPin
@@ -49,6 +52,7 @@ const setTransactionPin = async (req, res) => {
     });
 
   } catch (err) {
+    monitor.error("Transaction PIN set/change crashed", { stack: err.stack, message: err.message, userId });
     console.error(" Error setting PIN:", err.message);
     return res.status(500).json({
       status: false,

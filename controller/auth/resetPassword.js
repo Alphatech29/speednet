@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../../model/db");
+const monitor = require("../../utility/monitor");
 
 const resetPassword = async (req, res) => {
   try {
@@ -44,11 +45,13 @@ const resetPassword = async (req, res) => {
     // Update user's password
     await pool.query("UPDATE users SET password = ? WHERE uid = ?", [hashedPassword, user.uid]);
 
+    monitor.success("User reset password", { email: userEmail, userId: user.uid });
     return res.json({
       success: true,
       message: "Password reset successful.",
     });
   } catch (error) {
+    monitor.error("Reset password system error", { stack: error.stack, message: error.message });
     console.error("Reset Password Error:", error.message);
     return res.status(500).json({
       code: "SYSTEM_ERROR",

@@ -1,8 +1,9 @@
-const { 
+const {
   getCategoryCommissions,
   addCategoryCommission,
   updateCategoryCommission
 } = require("../../../utility/darkshopCommission");
+const monitor = require("../../../utility/monitor");
 
 /**
  * GET /api/category-commissions
@@ -50,12 +51,14 @@ async function addCategoryCommissionController(req, res) {
 
     const result = await addCategoryCommission(category_id, commission_rate);
 
+    monitor.success("Category commission added", { category_id, commission_rate });
     return res.status(201).json({
       success: true,
       message: "Category commission added successfully",
       data: result,
     });
   } catch (error) {
+    monitor.error("Add category commission crashed", { stack: error.stack, message: error.message });
     console.error("Controller error:", error.message || error);
     return res.status(500).json({
       success: false,
@@ -83,12 +86,14 @@ async function updateCategoryCommissionController(req, res) {
 
     const result = await updateCategoryCommission(category_id, commission_rate);
 
+    monitor.success("Category commission updated", { category_id, commission_rate });
     return res.status(200).json({
       success: true,
       message: "Category commission updated successfully",
       data: result,
     });
   } catch (error) {
+    monitor.error("Update category commission crashed", { stack: error.stack, message: error.message });
     console.error("Controller error:", error.message || error);
     return res.status(500).json({
       success: false,

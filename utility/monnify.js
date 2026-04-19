@@ -3,6 +3,7 @@ const { getWebSettings } = require("./general");
 const { generateUniqueRandomNumber } = require("./random");
 const { getUserDetailsByUid } = require("./userInfo");
 const { createTransactionHistory } = require("../utility/history");
+const monitor = require("./monitor");
 
 /**
  * Build secure wallet redirect URL
@@ -169,6 +170,7 @@ async function initializeMonnifyTransaction(payload) {
       data.transactionReference
     );
 
+    monitor.info("Monnify payment initialized", { user_id: payload.user_id, usdAmount, paymentReference });
     /** ---------------- RESPONSE ---------------- */
     return {
       transactionReference: data.transactionReference,
@@ -180,6 +182,7 @@ async function initializeMonnifyTransaction(payload) {
       redirectUrl: redirectUrl,
     };
   } catch (error) {
+    monitor.error("Monnify payment initialization failed", { stack: error.stack, message: error.message, user_id: payload?.user_id });
     console.error(
       "Monnify Init Transaction Error:",
       error?.response?.data || error.message

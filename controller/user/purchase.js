@@ -30,6 +30,7 @@ const {
 const {
   processPendingDarkOrders,
 } = require("../../utility/darkshopPendingProcessor");
+const monitor = require("../../utility/monitor");
 
 // Darkshop system sellers only
 const DARKSHOP_SYSTEM_SELLER_IDS = [4];
@@ -181,6 +182,8 @@ const collectOrder = async (req, res) => {
             status: "Completed",
           });
 
+          monitor.error("Darkshop order failed — refund issued", { userId: safeUserId, productId, orderNo, amount: amountToDeduct, reason: darkOrder.data?.message });
+
           return res.status(500).json({
             success: false,
             message: `Order failed: ${
@@ -329,6 +332,8 @@ const collectOrder = async (req, res) => {
         status: "Completed",
       });
 
+      monitor.error("Normal order failed — refund issued", { userId: safeUserId, orderNo, amount: amountToDeduct, message: normalError.message, stack: normalError.stack });
+
       return res.status(500).json({
         success: false,
         message: normalError.message || " Order failed. Amount refunded.",
@@ -340,6 +345,8 @@ const collectOrder = async (req, res) => {
       setTimeout(() => creditEscrow(pendingEscrow).catch(() => {}), 2000);
     }
     taskVerification(safeUserId).catch(() => {});
+
+    monitor.success("Order completed", { userId: safeUserId, orderNo, totalAmount: amountToDeduct, normalCount: normalProducts.length, darkCount: darkProductIds.length });
 
     res.status(200).json({
       success: true,
@@ -357,6 +364,7 @@ const collectOrder = async (req, res) => {
 
   } catch (error) {
     console.error("ORDER ERROR:", error);
+    monitor.error("Order system error — refund issued", { stack: error.stack, message: error.message, userId: safeUserId, totalAmount });
 
     // REFUND USER IF ANY OTHER ERROR OCCURS
     if (safeUserId && originalBalance !== null) {

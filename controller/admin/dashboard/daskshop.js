@@ -1,6 +1,7 @@
 const {
   getCategoriesWithGroups, deleteCategory, deleteGroup
 } = require("../../../utility/darkshopCategories");
+const monitor = require("../../../utility/monitor");
 const {
   getDarkShopProducts,
   getDarkShopProductById,
@@ -91,9 +92,11 @@ async function deleteCategoryController(req, res) {
     const result = await deleteCategory(id);
     if (!result.success) return res.status(404).json(result);
 
+    monitor.success("Darkshop category deleted", { id });
     console.log(`Category deleted successfully: ID = ${id}`);
     return res.status(200).json(result);
   } catch (error) {
+    monitor.error("Delete darkshop category crashed", { stack: error.stack, message: error.message, id: req.params.id });
     console.error("Controller error:", error);
     return res.status(500).json({ success: false, message: "Internal server error" });
   }
@@ -111,9 +114,11 @@ async function deleteGroupController(req, res) {
     const result = await deleteGroup(id);
     if (!result.success) return res.status(404).json(result);
 
+    monitor.success("Darkshop group deleted", { id });
     console.log(`Group deleted successfully: ID = ${id}`);
     return res.status(200).json(result);
   } catch (error) {
+    monitor.error("Delete darkshop group crashed", { stack: error.stack, message: error.message, id: req.params.id });
     console.error("Controller error:", error);
     return res.status(500).json({ success: false, message: "Internal server error" });
   }
@@ -245,8 +250,10 @@ async function updateDarkShopProductController(req, res) {
     const updated = await updateDarkShopProductById(id, name.trim(), description.trim());
     if (!updated) return res.status(404).json({ success: false, message: "Product not found or no changes made" });
 
+    monitor.success("Darkshop product updated", { id });
     return res.status(200).json({ success: true, message: "Product updated successfully" });
   } catch (error) {
+    monitor.error("Update darkshop product crashed", { stack: error.stack, message: error.message });
     console.error("Controller error:", error.message || error);
     return res.status(500).json({ success: false, message: "Internal server error" });
   }
@@ -263,8 +270,10 @@ async function assignProductToVendorController(req, res) {
     }
 
     await assignProductToVendor(productId, vendorId);
+    monitor.success("Darkshop product assigned to vendor", { productId, vendorId });
     return res.status(200).json({ success: true, message: `Product ID ${productId} assigned to Vendor ID ${vendorId} successfully` });
   } catch (error) {
+    monitor.error("Assign darkshop product to vendor crashed", { stack: error.stack, message: error.message });
     console.error("Controller error:", error.message || error);
     return res.status(500).json({ success: false, message: "Internal server error" });
   }

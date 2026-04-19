@@ -1,6 +1,7 @@
 const { createPayment } = require("../../utility/cryptomus");
 const { fapshiPayment } = require("../../utility/fapshi");
 const { initializeFlutterwaveTransaction } = require("../../utility/flutterwave");
+const monitor = require("../../utility/monitor");
 
 const Deposit = async (req, res) => {
   const { amount, currency, user_id, email, paymentMethod } = req.body;
@@ -52,6 +53,8 @@ const Deposit = async (req, res) => {
           userUid: order_id,
         });
 
+        monitor.info("Cryptomus deposit initiated", { user_id, amount, currency });
+
         return res.status(200).json({
           status: "success",
           message: "Cryptomus payment initiated",
@@ -67,6 +70,8 @@ const Deposit = async (req, res) => {
           user_id: String(user_id),
           email: String(email),
         });
+
+        monitor.info("Fapshi deposit initiated", { user_id, amount, currency });
 
         return res.status(200).json({
           status: "success",
@@ -85,6 +90,8 @@ const Deposit = async (req, res) => {
         };
 
         const payment = await initializeFlutterwaveTransaction(payload);
+
+        monitor.info("Flutterwave deposit initiated", { user_id, amount, currency });
 
         return res.status(200).json({
           status: "success",
@@ -109,6 +116,7 @@ const Deposit = async (req, res) => {
     }
   } catch (error) {
     console.error("Deposit error:", error);
+    monitor.error("Deposit initiation error", { stack: error.stack, message: error.message, user_id, amount, paymentMethod });
 
     return res.status(500).json({
       status: "error",

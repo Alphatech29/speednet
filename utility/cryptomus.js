@@ -2,6 +2,7 @@ const axios = require('axios');
 const crypto = require('crypto');
 const { getWebSettings } = require('./general');
 const logger = require('../utility/logger');
+const monitor = require('./monitor');
 
 async function createPayment({ amount, currency, userUid }) {
 
@@ -55,6 +56,7 @@ async function createPayment({ amount, currency, userUid }) {
       throw new Error(data.message || 'Payment creation failed.');
     }
 
+    monitor.info("Cryptomus payment initiated", { userUid, amount, currency, order_id });
     logger.info('[createPayment] Payment URL generated successfully for order:', order_id);
     return {
       payment_url: data.result.url,
@@ -63,6 +65,7 @@ async function createPayment({ amount, currency, userUid }) {
     };
   } catch (error) {
     const errData = error.response?.data || error.message;
+    monitor.error("Cryptomus payment initiation failed", { stack: error.stack, message: error.message, userUid });
     logger.error('[createPayment] Cryptomus API error:', errData);
     throw new Error(`Cryptomus API error: ${JSON.stringify(errData)}`);
   }

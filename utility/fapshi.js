@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { getWebSettings } = require('./general');
 const logger = require('../utility/logger');
+const monitor = require('./monitor');
 
 // Function to convert USD to XAF
 async function convertUsdToXaf(usdAmount, xafRate) {
@@ -84,10 +85,11 @@ async function fapshiPayment({ amount, user_id, email }) {
       redirect_url: redirectUrl
     };
 
-  
+    monitor.info("Fapshi payment initiated", { user_id, amount: usdAmount, transId: data.transId });
     return result;
   } catch (error) {
     const errData = error.response?.data || error.message || 'Unknown error';
+    monitor.error("Fapshi payment initiation failed", { stack: error.stack, message: error.message, user_id });
     logger.error(`Fapshi API Error: ${errData}`);
     console.error('Fapshi API Error:', errData);
     throw new Error(`Fapshi API error: ${JSON.stringify(errData)}`);

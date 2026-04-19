@@ -1,5 +1,6 @@
 const { getUserDetailsByUid, updateUserBalance } = require("../../../utility/userInfo");
 const { createTransactionHistory } = require("../../../utility/history");
+const monitor = require("../../../utility/monitor");
 
 const transfer = async (req, res) => {
   try {
@@ -102,6 +103,8 @@ const transfer = async (req, res) => {
     };
 
 
+    monitor.success("Admin funded user account", { userId, amount: numericAmount, previousBalance, newBalance });
+
     return res.status(200).json({
       success: true,
       message: `Transferred $${numericAmount} to ${user.full_name || user.email}.`,
@@ -109,6 +112,7 @@ const transfer = async (req, res) => {
     });
 
   } catch (error) {
+    monitor.error("Admin transfer error", { stack: error.stack, message: error.message, userId, amount });
     console.error("Transfer Error:", error);
     return res.status(500).json({
       success: false,

@@ -5,8 +5,16 @@ const {
   updateUser,
 } = require("../../utility/userInfo");
 const logger = require("../../utility/logger");
+const monitor = require("../../utility/monitor");
 const { storeMerchantTransaction } = require("../../utility/merchantHistory");
 const { sendWithdrawalNotificationEmail } = require("../../email/mails/withdrawal");
+
+// Minimum withdrawal per method
+const MIN_WITHDRAWAL = {
+  Bank:   10,
+  Crypto: 15,
+  MOMO:   5,
+};
 
 const WithdrawalRequest = async (req, res) => {
   try {
@@ -44,6 +52,17 @@ const WithdrawalRequest = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Insufficient balance for this withdrawal." });
+    }
+
+    // Enforce per-method minimum
+    const minAllowed = MIN_WITHDRAWAL[method];
+    if (minAllowed === undefined) {
+      return res.status(400).json({ message: "Invalid withdrawal method." });
+    }
+    if (withdrawalAmount < minAllowed) {
+      return res.status(400).json({
+        message: `Minimum withdrawal for ${method} is $${minAllowed}.`,
+      });
     }
 
     // Deduct new balance and update
@@ -103,8 +122,6 @@ const WithdrawalRequest = async (req, res) => {
         withdrawalData.momoNumber = momoNumber;
         break;
 
-      default:
-        return res.status(400).json({ message: "Invalid withdrawal method." });
     }
 
     // Store the withdrawal
@@ -145,6 +162,8 @@ const WithdrawalRequest = async (req, res) => {
       });
     }
 
+    monitor.success("Withdrawal request submitted", { userId, amount: withdrawalAmount, method, reference });
+
     // Success response
     return res.status(201).json({
       message: "Withdrawal request received successfully.",
@@ -161,6 +180,7 @@ const WithdrawalRequest = async (req, res) => {
       stack: error.stack,
       requestBody: req.body,
     });
+    monitor.error("Withdrawal request error", { stack: error.stack, message: error.message, userId: req.body?.userId });
     return res.status(500).json({ message: "Internal server error." });
   }
 };

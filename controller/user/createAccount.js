@@ -1,6 +1,7 @@
 const { createAccount, getPlatformsData } = require('../../utility/accounts');
 const { sendProductSubmissionEmailToAdmin } = require('../../email/mails/product-submitted');
 const { getUserDetailsByUid } = require('../../utility/userInfo');
+const monitor = require('../../utility/monitor');
 
 const accountCreation = async (req, res) => {
   try {
@@ -84,9 +85,11 @@ const accountCreation = async (req, res) => {
       console.warn('⚠️ Failed to fetch merchant details. Admin email not sent.');
     }
 
+    monitor.success("Account listing submitted for review", { userId: userUid, platform: name, title, price });
     return res.status(200).json({ status: 'success', data: creationResult });
 
   } catch (error) {
+    monitor.error("Account listing creation error", { stack: error.stack, message: error.message, userId: req.body?.userUid });
     console.error('❌ Account creation error:', error);
     return res.status(500).json({ status: 'error', message: 'Internal server error. Please try again.' });
   }

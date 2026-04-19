@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const pool = require("../../../model/db");
 const jwt = require("jsonwebtoken");
+const monitor = require("../../../utility/monitor");
 
 const validateJWTConfig = () => {
   if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
@@ -39,6 +40,7 @@ const adminLogin = async (req, res) => {
 
     const isMatch = await bcrypt.compare(passwordInput, user.password);
     if (!isMatch) {
+      monitor.warn("Admin failed login — wrong password", { username: sanitizedUsername, ip: req.ip });
       return res.status(401).json({
         code: "INVALID_CREDENTIALS",
         message: "Incorrect password",
@@ -54,6 +56,8 @@ const adminLogin = async (req, res) => {
       { expiresIn }
     );
 
+    monitor.success("Admin logged in", { username: sanitizedUsername, ip: req.ip });
+
     return res.status(200).json({
       success: true,
       message: "Login successful",
@@ -63,6 +67,7 @@ const adminLogin = async (req, res) => {
     });
 
   } catch (error) {
+    monitor.error("Admin login system error", { stack: error.stack, message: error.message });
     console.error("System Error:", error.message);
     return res.status(500).json({
       code: "SYSTEM_ERROR",

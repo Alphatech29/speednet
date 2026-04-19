@@ -3,6 +3,7 @@ const { updateUserBalance, getUserDetailsByUid } = require('../utility/userInfo'
 const { createTransactionHistory, getTransactionByTransactionNo, updateTransactionStatusByTransactionNo } = require('../utility/history');
 const { taskVerification } = require('../utility/referralVerification');
 const logger = require('../utility/logger');
+const monitor = require('../utility/monitor');
 
 require('dotenv').config();
 
@@ -45,6 +46,7 @@ const fapshiWebhook = async (req, res) => {
     const updateResult = await updateUserBalance(userId, newBalance);
     if (!updateResult.success) {
       logger.error('Failed to update user balance', { userId, currentBalance, newBalance });
+      monitor.error('Fapshi: balance update failed', { userId, currentBalance, newBalance });
       return res.status(500).json({ error: 'Failed to update user balance' });
     }
 
@@ -59,6 +61,8 @@ const fapshiWebhook = async (req, res) => {
       logger.warn('Transaction history creation failed', { userId });
     }
 
+    monitor.success('Fapshi deposit credited', { userId, usdAmount, transId });
+
     // Respond first
     res.status(200).json({ success: true });
 
@@ -69,6 +73,7 @@ const fapshiWebhook = async (req, res) => {
 
   } catch (error) {
     logger.error('Unhandled error during Fapshi webhook', { error: error.message });
+    monitor.error('Fapshi webhook crash', { stack: error.stack, message: error.message });
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -86,6 +91,7 @@ const cryptomusWebhook = async (req, res) => {
 
     if (!clientIP.includes(allowedIP)) {
       logger.warn('Blocked: Unauthorized IP', { clientIP });
+      monitor.warn('Cryptomus: blocked unauthorized IP', { clientIP });
       return res.status(403).json({ error: 'Forbidden - Unauthorized IP' });
     }
 
@@ -116,10 +122,13 @@ const cryptomusWebhook = async (req, res) => {
     const updateResult = await updateUserBalance(userUid, newBalance);
     if (!updateResult.success) {
       logger.error('Balance update failed', { userUid, currentBalance, newBalance });
+      monitor.error('Cryptomus: balance update failed', { userUid, currentBalance, newBalance });
       return res.status(500).json({ error: 'Balance update failed' });
     }
 
     await createTransactionHistory(userUid, amount, 'Cryptomus Deposit', 'completed');
+
+    monitor.success('Cryptomus deposit credited', { userUid, amount, order_id });
 
     // Respond to webhook
     res.status(200).json({ success: true });
@@ -131,6 +140,7 @@ const cryptomusWebhook = async (req, res) => {
 
   } catch (error) {
     logger.error('Webhook Error (cryptomus)', { error: error.message });
+    monitor.error('Cryptomus webhook crash', { stack: error.stack, message: error.message });
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -211,10 +221,12 @@ const flutterwaveWebhook = async (req, res) => {
     const balanceUpdate = await updateUserBalance(user_uid, newBalance);
     if (!balanceUpdate.success) {
       console.error("Flutterwave balance update failed", { user_uid, currentBalance, newBalance });
+      monitor.error("Flutterwave: balance update failed", { user_uid, currentBalance, newBalance, tx_ref });
       return;
     }
 
     console.log("Flutterwave user balance updated successfully", { user_uid, newBalance });
+    monitor.success("Flutterwave deposit credited", { user_uid, amount, tx_ref });
 
     // -------- REFERRAL TASK --------
     taskVerification(user_uid)
@@ -223,6 +235,7 @@ const flutterwaveWebhook = async (req, res) => {
 
   } catch (error) {
     console.error("Flutterwave webhook crash", { error: error.message });
+    monitor.error("Flutterwave webhook crash", { stack: error.stack, message: error.message });
     res.status(200).end();
   }
 };

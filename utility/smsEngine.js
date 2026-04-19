@@ -2,6 +2,7 @@
 const cron = require("node-cron");
 const { updateSmsServiceRecord, getPendingSmsServiceRecords } = require("./history");
 const { getState } = require("./smsActivate");
+const monitor = require("./monitor");
 
 /**
  * Poll SMS states using cron
@@ -31,10 +32,14 @@ async function checkSmsStates() {
         const status = finalCode ? 1 : 0;
 
         await updateSmsServiceRecord(tzid, finalCode, status);
+        if (finalCode) {
+          monitor.success("SMS code received via cron poll", { tzid, code: finalCode });
+        }
         console.log(`Updated record for tzid ${tzid} with code: ${finalCode}`);
       }
     }
   } catch (err) {
+    monitor.error("SMS engine cron job crashed", { stack: err.stack, message: err.message });
     console.error("Error in cron job:", err);
   }
 }

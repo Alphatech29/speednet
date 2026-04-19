@@ -7,6 +7,7 @@ const {
 const {
   sendWithdrawalNotificationEmail
 } = require('../../../email/mails/withdrawal-approved');
+const monitor = require('../../../utility/monitor');
 
 
 // GET all withdrawals
@@ -127,6 +128,8 @@ const updateWithdrawalStatus = async (req, res) => {
       }
     }
 
+    monitor.success(`Withdrawal ${normalizedStatus} by admin`, { withdrawalId: id, reference: withdrawal.reference, amount: withdrawal.amount, method: withdrawal.method, status: normalizedStatus });
+
     return res.status(200).json({
       success: true,
       message: `Withdrawal and transaction marked as ${normalizedStatus}.`,
@@ -137,6 +140,7 @@ const updateWithdrawalStatus = async (req, res) => {
       error: error.message,
       stack: error.stack,
     });
+    monitor.error("Admin withdrawal status update error", { stack: error.stack, message: error.message, withdrawalId: id });
 
     return res.status(500).json({
       success: false,

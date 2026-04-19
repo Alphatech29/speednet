@@ -2,6 +2,7 @@ const { getDepositTransactionsByUserUid } = require('./history');
 const { getReferralByReferredUser, updateReferralById } = require('./referral');
 const { getOrdersByUser } = require('./accountOrder');
 const { getUserDetailsByUid, updateReferralBalance } = require('./userInfo');
+const monitor = require('./monitor');
 
 /**
  * Verifies if a referred user made a valid deposit (≥ $25) and placed an order.
@@ -55,10 +56,14 @@ async function taskVerification(userId) {
 
     const balanceUpdate = await updateReferralBalance(referral1Id, newBalance);
     if (!balanceUpdate.success) {
+      monitor.error("Referral bonus credit failed", { referral1Id, referralBonus, message: balanceUpdate.message || balanceUpdate.error });
       console.error(`Failed to credit referral1 (${referral1Id}):`, balanceUpdate.message || balanceUpdate.error);
+    } else {
+      monitor.success("Referral bonus credited to referrer", { referral1Id, referralBonus, referredUserId: userId });
     }
 
   } catch (error) {
+    monitor.error("Referral verification crashed", { stack: error.stack, message: error.message, userId });
     console.error(`Error in task verification for user ${userId}:`, error.message);
   }
 }

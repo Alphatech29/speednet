@@ -3,6 +3,7 @@ const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userIn
 const { createTransactionHistory, createSmsServiceRecord } = require("../../utility/history");
 const { getWebSettings } = require("../../utility/general");
 const { smspoolRefund } = require("../../utility/smspoolRefund");
+const monitor = require("../../utility/monitor");
 
 const resolveOrderError = (type) => {
   if (type === "NO_NUMBERS")    return "No numbers available for this service right now. Try a different country or service.";
@@ -90,6 +91,7 @@ const orderSMSController = async (req, res) => {
     if (!orderResult?.order?.success) {
       const errorType = orderResult?.order?.type || orderResult?.order?.message || "UNKNOWN";
       console.error(`[orderSMS] Order failed — type: ${errorType}`);
+      monitor.error("SMS order failed", { userId, country, service, price, errorType });
       return res.status(errorType === "NO_NUMBERS" ? 503 : 500).json({ success: false, message: resolveOrderError(errorType), type: errorType });
     }
     console.log(`[orderSMS] Order placed successfully — orderId: ${orderResult.order.orderid}, number: ${orderResult.order.number}`);
@@ -132,9 +134,11 @@ const orderSMSController = async (req, res) => {
       console.error("[orderSMS] Refund watcher error for order", smsRecord.orderid, ":", err.message)
     );
 
+    monitor.success("SMS number ordered", { userId, orderId: smsRecord.orderid, number: smsRecord.number, service: serviceName, country: countryName, price });
     console.log(`[orderSMS] Order complete — userId: ${userId}, orderId: ${smsRecord.orderid}, newBalance: ${newBalance}`);
     return res.status(200).json({ success: true, order: orderResult.order, userBalance: newBalance, smsRecordId: dbResult.insertId });
   } catch (error) {
+    monitor.error("SMS order system error", { stack: error.stack, message: error.message, userId });
     console.error("[orderSMS] Unhandled error:", error.response?.data || error.message, error.stack);
     return res.status(500).json({ success: false, message: error.message });
   }

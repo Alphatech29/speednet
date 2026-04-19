@@ -1,4 +1,5 @@
 const db = require("../../../model/db");
+const monitor = require("../../../utility/monitor");
 
 // This function retrieves all web settings from the database.
 const getAllWebSettings = async (req, res) => {
@@ -69,6 +70,7 @@ const updateWebSettings = async (req, res) => {
 
     const [result] = await db.execute(sql, values);
 
+    monitor.success("Web settings updated by admin", { fields: Object.keys(updatedData) });
     return res.status(200).json({
       success: true,
       message: "Web settings updated successfully.",
@@ -76,6 +78,7 @@ const updateWebSettings = async (req, res) => {
     });
 
   } catch (error) {
+    monitor.error("Web settings update crashed", { stack: error.stack, message: error.message });
     console.error("Error updating web settings:", error);
     return res.status(500).json({
       success: false,

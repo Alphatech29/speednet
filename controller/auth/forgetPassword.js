@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const pool = require("../../model/db");
 const { getWebSettings } = require("../../utility/general");
 const { sendResetPasswordEmail } = require("../../email/mails/resetPassword");
+const monitor = require("../../utility/monitor");
 
 const forgotPassword = async (req, res) => {
   try {
@@ -38,12 +39,14 @@ const forgotPassword = async (req, res) => {
 
    await sendResetPasswordEmail(user.email, user.full_name, resetLink);
 
+    monitor.info("Password reset link sent", { email, userId: user.uid });
 
     return res.json({
       success: true,
       message: "Password reset link sent to your email",
     });
   } catch (error) {
+    monitor.error("Forgot password system error", { stack: error.stack, message: error.message });
     console.error("Forgot Password Error:", error.message);
     return res.status(500).json({
       code: "SYSTEM_ERROR",

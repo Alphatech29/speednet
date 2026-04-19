@@ -2,6 +2,7 @@ const pool = require('../model/db');
 const { getWebSettings } = require('./general');
 const { createTransactionHistory } = require('./history');
 const { sendMerchantActivationEmail } = require('../email/mails/merchant_activation');
+const monitor = require('./monitor');
 
 const getUserDetailsDirectly = async (userUid) => {
     try {
@@ -37,6 +38,7 @@ const activateAccount = async (req, res) => {
         const userBalance = parseFloat(userDetails.account_balance) || 0;
 
         if (userBalance < activationFee) {
+            monitor.warn("Merchant activation failed — insufficient balance", { userUid, userBalance, activationFee });
             return res.status(400).json({ success: false, message: 'Insufficient balance' });
         }
 
@@ -60,8 +62,10 @@ const activateAccount = async (req, res) => {
             currencySymbol: webSettings.currency_symbol || "$"
         });
 
+        monitor.success("Merchant account activated", { userUid, activationFee });
         return res.status(200).json({ success: true, message: 'Account activated successfully' });
     } catch (error) {
+        monitor.error("Merchant activation crashed", { stack: error.stack, message: error.message });
         console.error('Error activating account:', error.message || error);
         return res.status(500).json({ success: false, message: 'An error occurred while activating the merchant account' });
     }

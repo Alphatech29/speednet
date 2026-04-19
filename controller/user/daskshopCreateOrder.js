@@ -1,6 +1,7 @@
 // controllers/darkshop.controller.js
 
 const { createDarkshopOrder } = require("../../utility/daskshopCreateOrder");
+const monitor = require("../../utility/monitor");
 
 async function createDarkshopOrderController(req, res) {
   try {
@@ -47,15 +48,18 @@ async function createDarkshopOrderController(req, res) {
     });
 
     if (!result.success) {
+      monitor.warn("Darkshop order creation failed", { userId, product, quantity, error: result.error });
       return res.status(result.code || 400).json(result);
     }
 
+    monitor.success("Darkshop order created", { userId, product, quantity });
     return res.status(201).json({
       success: true,
       message: "Order created successfully",
       data: result,
     });
   } catch (error) {
+    monitor.error("Darkshop order controller crashed", { stack: error.stack, message: error.message, userId });
     console.error("Darkshop order controller error:", error);
 
     return res.status(500).json({

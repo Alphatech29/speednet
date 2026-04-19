@@ -8,6 +8,7 @@ const { getUserDetailsByUid, updateUser } = require('./userInfo');
 const { storeMerchantTransaction } = require('./merchantHistory');
 const { generateUniqueRandomNumber } = require('./random');
 const logger = require('./logger');
+const monitor = require('./monitor');
 
 const INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -52,6 +53,7 @@ const releaseOne = async (order, commission) => {
     product_id,
   });
 
+  monitor.success(`Escrow released — order ${order_no}`, { seller_id, order_no, finalAmount: finalAmount.toFixed(2), commission: commissionAmt.toFixed(2) });
   logger.info(`[EscrowWorker] Released order ${order_no} — ₦${finalAmount.toFixed(2)} credited to seller ${seller_id}`);
 };
 
@@ -75,6 +77,7 @@ const runEscrowWorker = async () => {
 
       await releaseOne(order, commission).catch((err) => {
         logger.error(`[EscrowWorker] Failed to release order ${order.order_no}: ${err.message}`);
+        monitor.error(`Escrow release failed — order ${order.order_no}`, { stack: err.stack, message: err.message, seller_id: order.seller_id });
       });
     }
   } catch (err) {

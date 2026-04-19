@@ -5,6 +5,7 @@ const {
   updateDarkShopOrderContent,
 } = require("./darkshopProduct");
 const { translateRussianToEnglish } = require("./contentTranslate");
+const monitor = require("./monitor");
 
 // ── config ────────────────────────────────────────────────────────────────────
 const POLL_INTERVAL_MS   = 4000;   // 4s between status checks
@@ -41,6 +42,7 @@ async function saveCompleted(id, link, content) {
       darkshop_content:  translated || null,
       payment_status:    "Completed",
     });
+    monitor.success(`Darkshop order completed`, { darkshopOrderId: id });
     console.log(`[DarkshopWorker] ✓ Order ${id} → Completed`);
   } catch (err) {
     console.error(`[DarkshopWorker] DB write failed for order ${id}:`, err.message);
@@ -56,6 +58,7 @@ async function saveFailed(id, status) {
       darkshop_content:  null,
       payment_status:    "Failed",
     });
+    monitor.error(`Darkshop order failed`, { darkshopOrderId: id, status });
     console.log(`[DarkshopWorker] ✗ Order ${id} → ${status} (marked Failed)`);
   } catch (err) {
     console.error(`[DarkshopWorker] DB write failed for order ${id}:`, err.message);

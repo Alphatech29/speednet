@@ -1,4 +1,5 @@
 const { updateUser } = require("../../utility/userInfo");
+const monitor = require("../../utility/monitor");
 
 const updateUserProfile = async (req, res) => {
   try {
@@ -23,6 +24,7 @@ const updateUserProfile = async (req, res) => {
       return res.status(500).json({ message: "Failed to update avatar." });
     }
 
+    monitor.success("User avatar updated", { uid });
     return res.status(200).json({
       success: true,
       message: "Avatar updated successfully.",
@@ -30,6 +32,7 @@ const updateUserProfile = async (req, res) => {
     });
 
   } catch (error) {
+    monitor.error("Avatar update crashed", { stack: error.stack, message: error.message });
     console.error("Error updating avatar:", error.message);
     return res.status(500).json({ message: "Internal server error", error: error.message });
   }

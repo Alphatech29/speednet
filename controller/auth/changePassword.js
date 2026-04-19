@@ -1,5 +1,6 @@
 const { getUserDetailsByUid, updateUser } = require("../../utility/userInfo");
 const bcrypt = require("bcryptjs");
+const monitor = require("../../utility/monitor");
 
 const changePassword = async (req, res) => {
   try {
@@ -21,6 +22,7 @@ const changePassword = async (req, res) => {
     const isMatch = await bcrypt.compare(oldPassword, user.password);
 
     if (!isMatch) {
+      monitor.warn("Password change failed — wrong old password", { userId: uid });
       return res.status(401).json({ message: "Old password is incorrect" });
     }
 
@@ -34,8 +36,10 @@ const changePassword = async (req, res) => {
       return res.status(500).json({ message: "Failed to update password" });
     }
 
+    monitor.success("User changed password", { userId: uid });
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
+    monitor.error("Change password system error", { stack: error.stack, message: error.message, userId: uid });
     return res.status(500).json({ message: "Server error", error });
   }
 };

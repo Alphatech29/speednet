@@ -4,6 +4,7 @@ const { getUserDetailsByUid, updateUserBalance } = require("../../utility/userIn
 const { validateTransactionPin } = require("../../controller/user/TransactionPin");
 const { convertNairaToDollar } = require("../../utility/convertNaira");
 const { createTransactionHistory } = require("../../utility/history");
+const monitor = require("../../utility/monitor");
 
 const ALLOWED_NETWORK_TYPES = ["mtn", "glo", "airtel", "9mobile"];
 
@@ -119,6 +120,7 @@ const airtimePurchase = asyncHandler(async (req, res) => {
       console.error("Failed to log transaction history:", err);
     }
 
+    monitor.success("Airtime purchased", { userId, amount: amountInDollar, phone, network: type });
     return res.status(200).json({
       status: true,
       message: "Airtime purchase successful.",
@@ -126,7 +128,7 @@ const airtimePurchase = asyncHandler(async (req, res) => {
     });
   }
 
-  // Recharge failed - log warning and return failure response
+  monitor.warn("Airtime recharge failed — no deduction made", { userId, amount: amountInDollar, phone, network: type });
   console.warn(`Airtime recharge failed for user ${userId}. Amount $${amountInDollar} not deducted.`);
 
   return res.status(400).json({
@@ -214,6 +216,7 @@ const dataPurchase = asyncHandler(async (req, res) => {
       console.error("Failed to log transaction history:", err);
     }
 
+    monitor.success("Data purchased", { userId, amount: amountInDollar, serviceID });
     return res.status(200).json({
       status: true,
       message: "Data purchase successful.",
@@ -221,6 +224,7 @@ const dataPurchase = asyncHandler(async (req, res) => {
     });
   }
 
+  monitor.warn("Data recharge failed — no deduction made", { userId, amount: amountInDollar, serviceID });
   console.warn(`Data recharge failed for user ${userId}. Amount $${amountInDollar} not deducted.`);
 
   return res.status(400).json({
@@ -375,6 +379,7 @@ const internationalPurchase = asyncHandler(async (req, res) => {
       console.error("❌ Failed to log transaction history:", err.message);
     }
 
+    monitor.success("International airtime purchased", { userId, amount: amountInDollar, countryCode, phone });
     return res.status(200).json({
       status: true,
       message: "International purchase successful.",
@@ -382,6 +387,7 @@ const internationalPurchase = asyncHandler(async (req, res) => {
     });
   }
 
+  monitor.warn("International recharge failed — no deduction made", { userId, amount: amountInDollar, countryCode, phone });
   console.warn("❌ Recharge failed or not delivered. No deduction made.");
   return res.status(400).json({
     status: false,

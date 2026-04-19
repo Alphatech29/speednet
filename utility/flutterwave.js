@@ -3,6 +3,7 @@ const { getWebSettings } = require("./general");
 const { generateUniqueRandomNumber } = require("./random");
 const { getUserDetailsByUid } = require("./userInfo");
 const { createTransactionHistory } = require("./history");
+const monitor = require("./monitor");
 
 const FLW_BASE_URL = "https://api.flutterwave.com/v3";
 
@@ -121,6 +122,7 @@ async function initializeFlutterwaveTransaction(payload) {
       tx_ref
     );
 
+    monitor.info("Flutterwave payment initialized", { user_id: payload.user_id, usdAmount, tx_ref });
     /** ---------------- RESPONSE ---------------- */
     return {
       transactionReference: tx_ref,
@@ -132,6 +134,7 @@ async function initializeFlutterwaveTransaction(payload) {
       redirectUrl,
     };
   } catch (error) {
+    monitor.error("Flutterwave payment initialization failed", { stack: error.stack, message: error.message, user_id: payload?.user_id });
     console.error(
       "Flutterwave Init Transaction Error:",
       error?.response?.data || error.message

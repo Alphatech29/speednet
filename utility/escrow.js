@@ -9,6 +9,7 @@ const {
 const { generateUniqueRandomNumber } = require('./random');
 const { getEscrowExpiryByOrderNo, claimEscrowRelease } = require('./accountOrder');
 const logger = require('./logger');
+const monitor = require('./monitor');
 
 const TIMEZONE = 'Africa/Lagos';
 
@@ -83,9 +84,11 @@ queue.process(async (jobData) => {
 
     const now = moment.tz(TIMEZONE);
     logger.info(`[QUEUE TIME] Order ${order_no} processed at: ${now.format('YYYY-MM-DD HH:mm:ss')} WAT / UTC: ${now.toISOString()}`);
+    monitor.success(`Escrow released via queue — order ${order_no}`, { seller_id, order_no, finalAmount: finalAmount.toFixed(2), commission: commissionAmt.toFixed(2) });
     logger.info(`[RELEASED] Order ${order_no} processed. Final: ₦${finalAmount.toFixed(2)}, Commission: ₦${commissionAmt.toFixed(2)}`);
     logger.info(`[QUEUE END] Order ${order_no} completed`);
   } catch (error) {
+    monitor.error(`Escrow queue error — order ${jobData?.order_no}`, { stack: error.stack, message: error.message, seller_id: jobData?.seller_id });
     console.error(`[QUEUE ERROR] Failed to process order ${jobData?.order_no}:`, error);
     logger.error(`[QUEUE ERROR] Failed to process order ${jobData?.order_no}`, {
       message: error.message,

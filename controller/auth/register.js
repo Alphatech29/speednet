@@ -5,6 +5,7 @@ const { getUserDetailsByUid } = require("../../utility/userInfo");
 const { getReferralCommission } = require("../../utility/general");
 const { insertUser } = require("../../utility/user");
 const logger = require("../../utility/logger");
+const monitor = require("../../utility/monitor");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
@@ -163,6 +164,8 @@ const register = async (req, res) => {
       }
     }
 
+    monitor.success("New user registered", { userId: userUid, email, username, country });
+
     res.status(201).json({
       success: true,
       message: "User created successfully.",
@@ -182,6 +185,7 @@ const register = async (req, res) => {
     });
 
   } catch (error) {
+    monitor.error("Registration system error", { stack: error.stack, message: error.message });
     logger.error("Unexpected error during registration", {
       error: error.stack || error.message,
     });
